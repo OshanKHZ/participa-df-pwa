@@ -1,0 +1,384 @@
+{
+  "orgaos": [
+    {
+      "id": "01041",
+      "name": "ADASA - Agência Reguladora de Águas, Energia e Saneamento"
+    },
+    {
+      "id": "01009",
+      "name": "Administração Águas Claras - RA XX"
+    },
+    {
+      "id": "01152",
+      "name": "Administração Arapoanga - RA XXXIV"
+    },
+    {
+      "id": "01111",
+      "name": "Administração Arniqueira - RA XXXIII"
+    },
+    {
+      "id": "01010",
+      "name": "Administração Brazlândia - RA IV"
+    },
+    {
+      "id": "01011",
+      "name": "Administração Candangolândia - RA XIX"
+    },
+    {
+      "id": "01012",
+      "name": "Administração Ceilândia - RA IX"
+    },
+    {
+      "id": "01013",
+      "name": "Administração Cruzeiro - RA XI"
+    },
+    {
+      "id": "01014",
+      "name": "Administração Fercal - RA XXXI"
+    },
+    {
+      "id": "01015",
+      "name": "Administração Gama - RA II"
+    },
+    {
+      "id": "01016",
+      "name": "Administração Guará - RA X"
+    },
+    {
+      "id": "01017",
+      "name": "Administração Itapoã - RA XXVIII"
+    },
+    {
+      "id": "01018",
+      "name": "Administração Jardim Botânico - RA XXVII"
+    },
+    {
+      "id": "01019",
+      "name": "Administração Lago Norte - RA-XVIII"
+    },
+    {
+      "id": "01020",
+      "name": "Administração Lago Sul - RA XVI"
+    },
+    {
+      "id": "01021",
+      "name": "Administração Núcleo Bandeirante - RA VIII"
+    },
+    {
+      "id": "01022",
+      "name": "Administração Paranoá - RA VII"
+    },
+    {
+      "id": "01023",
+      "name": "Administração Park Way - RA XXIV"
+    },
+    {
+      "id": "01024",
+      "name": "Administração Planaltina - RA VI"
+    },
+    {
+      "id": "01025",
+      "name": "Administração Plano Piloto - RA I"
+    },
+    {
+      "id": "01026",
+      "name": "Administração Recanto das Emas - RA XV"
+    },
+    {
+      "id": "01153",
+      "name": "Administração Regional de Água Quente - RA XXXV"
+    },
+    {
+      "id": "01027",
+      "name": "Administração Riacho Fundo I - RA XVII"
+    },
+    {
+      "id": "01028",
+      "name": "Administração Riacho Fundo II - RA XXI"
+    },
+    {
+      "id": "01029",
+      "name": "Administração S.C.I.A / Estrutural - RA XXV"
+    },
+    {
+      "id": "01030",
+      "name": "Administração S.I.A - RA XXIX"
+    },
+    {
+      "id": "01031",
+      "name": "Administração Samambaia - RA XII"
+    },
+    {
+      "id": "01032",
+      "name": "Administração Santa Maria - RA XIII"
+    },
+    {
+      "id": "01033",
+      "name": "Administração São Sebastião - RA XIV"
+    },
+    {
+      "id": "01034",
+      "name": "Administração Sobradinho - RA V"
+    },
+    {
+      "id": "01035",
+      "name": "Administração Sobradinho II - RA XXVI"
+    },
+    {
+      "id": "01119",
+      "name": "Administração Sol Nascente/Pôr do Sol  - RA XXXII"
+    },
+    {
+      "id": "01036",
+      "name": "Administração Sudoeste / Octogonal - RA XXII"
+    },
+    {
+      "id": "01037",
+      "name": "Administração Taguatinga - RA III"
+    },
+    {
+      "id": "01038",
+      "name": "Administração Varjão - RA XXIII"
+    },
+    {
+      "id": "01039",
+      "name": "Administração Vicente Pires - RA XXX"
+    },
+    {
+      "id": "01042",
+      "name": "ArPDF - Arquivo Público do Distrito Federal"
+    },
+    {
+      "id": "01043",
+      "name": "BRB - Banco de Brasília S/A"
+    },
+    {
+      "id": "01071",
+      "name": "CACI - Casa Civil do Distrito Federal"
+    },
+    {
+      "id": "01048",
+      "name": "CAESB - Companhia de Saneamento do Distrito Federal"
+    },
+    {
+      "id": "01044",
+      "name": "CAMI-Casa Militar do Distrito Federal"
+    },
+    {
+      "id": "01053",
+      "name": "CBMDF - Corpo de Bombeiros Militar do Distrito Federal"
+    },
+    {
+      "id": "01045",
+      "name": "CEASA - Centrais de Abastecimento do Distrito Federal"
+    },
+    {
+      "id": "01050",
+      "name": "CEB - Companhia Energética de Brasília"
+    },
+    {
+      "id": "01046",
+      "name": "CODHAB - Companhia de Desenvolvimento Habitacional do Distrito Federal"
+    },
+    {
+      "id": "01055",
+      "name": "DER - Departamento de Estradas de Rodagem"
+    },
+    {
+      "id": "01056",
+      "name": "DETRAN - Departamento de Trânsito"
+    },
+    {
+      "id": "01040",
+      "name": "DFLEGAL - Secretaria de Estado de Proteção da Ordem Urbanística do Distrito Federal"
+    },
+    {
+      "id": "01054",
+      "name": "DPDF - Defensoria Pública do Distrito Federal"
+    },
+    {
+      "id": "01057",
+      "name": "EMATER - Empresa de Assistência Técnica e Extensão Rural"
+    },
+    {
+      "id": "01059",
+      "name": "FAP - Fundação de Apoio à Pesquisa"
+    },
+    {
+      "id": "01060",
+      "name": "FEPECS - Fundação de Ensino e Pesquisa em Ciência da Saúde"
+    },
+    {
+      "id": "01061",
+      "name": "FHB - Fundação Hemocentro de Brasília"
+    },
+    {
+      "id": "01062",
+      "name": "FJZB - Fundação Jardim Zoológico de Brasilia"
+    },
+    {
+      "id": "01058",
+      "name": "FUNAP - Fundação de Amparo ao Trabalhador Preso"
+    },
+    {
+      "id": "01065",
+      "name": "IBRAM - Instituto do Meio Ambiente e Recursos Hídricos do Distrito Federal - Brasília Ambiental"
+    },
+    {
+      "id": "01114",
+      "name": "INAS - Instituto de Assistência à Saúde dos Servidores do DF"
+    },
+    {
+      "id": "01047",
+      "name": "IPEDF - Instituto de Pesquisa e Estatística do Distrito Federal - Codeplan"
+    },
+    {
+      "id": "01064",
+      "name": "IPREV/DF - Instituto de Previdência dos Servidores"
+    },
+    {
+      "id": "01066",
+      "name": "JBB - Jardim Botânico de Brasília"
+    },
+    {
+      "id": "01109",
+      "name": "JUCIS-DF - Junta Comercial, Industrial e Serviços do Distrito Federal"
+    },
+    {
+      "id": "01049",
+      "name": "METRÔ - Companhia do Metropolitano do Distrito Federal"
+    },
+    {
+      "id": "01052",
+      "name": "NOVACAP - Companhia Urbanizadora da Nova Capital do Brasil"
+    },
+    {
+      "id": "01067",
+      "name": "PCDF - Polícia Civil do Distrito Federal"
+    },
+    {
+      "id": "01069",
+      "name": "PGDF - Procuradoria Geral do Distrito Federal"
+    },
+    {
+      "id": "01068",
+      "name": "PMDF - Polícia Militar do Distrito Federal"
+    },
+    {
+      "id": "01063",
+      "name": "PROCON/DF - Instituto de Defesa do Consumidor do Distrito Federal"
+    },
+    {
+      "id": "01149",
+      "name": "SEAC - Secretaria de Atendimento à Comunidade"
+    },
+    {
+      "id": "01070",
+      "name": "SEAGRI - Secretaria de Estado da Agricultura, Abastecimento e Desenvolvimento Rural do Distrito Federal"
+    },
+    {
+      "id": "01113",
+      "name": "SEAPE - Secretaria de Estado de Administração Penitenciária"
+    },
+    {
+      "id": "01072",
+      "name": "SECEC - Secretaria de Estado de Cultura e Econ. Criativa do DF"
+    },
+    {
+      "id": "01093",
+      "name": "SECOM - Secretaria de Estado de Comunicação do Distrito Federal"
+    },
+    {
+      "id": "01104",
+      "name": "SECTI - Secretaria de Estado de Ciência, Tecnologia e Inovação do Distrito Federal"
+    },
+    {
+      "id": "01082",
+      "name": "SEDES - Secretaria de Estado de Desenvolvimento Social do Distrito Federal"
+    },
+    {
+      "id": "01098",
+      "name": "SEDET - Secretaria  de  Estado  de  Desenvolvimento  Econômico,  Trabalho  e  Renda  do  Distrito Federal"
+    },
+    {
+      "id": "01090",
+      "name": "SEDUH - Secretaria de Estado de Desenvolvimento Urbano e Habitação do Distrito Federal"
+    },
+    {
+      "id": "01074",
+      "name": "SEE - Secretaria de Estado de Educação do Distrito Federal"
+    },
+    {
+      "id": "01075",
+      "name": "SEFAZ - Secretaria de Estado de Fazenda do Distrito Federal"
+    },
+    {
+      "id": "01106",
+      "name": "SEFJ - Secretaria de Estado da Família e Juventude do Distrito Federal"
+    },
+    {
+      "id": "01108",
+      "name": "SEGOV - Secretaria de Estado de Governo"
+    },
+    {
+      "id": "01077",
+      "name": "SEJUS - Secretaria de Estado de Justiça e Cidadania do Distrito do Distrito Federal"
+    },
+    {
+      "id": "01088",
+      "name": "SELDF - Secretaria de Estado do Esporte e Lazer do Distrito Federal"
+    },
+    {
+      "id": "01083",
+      "name": "SEMA - Secretaria de Estado do Meio Ambiente do Distrito Federal"
+    },
+    {
+      "id": "01078",
+      "name": "SEMOB - Secretaria de Estado de Transporte e Mobilidade do Distrito Federal"
+    },
+    {
+      "id": "01150",
+      "name": "SEPLAD - Secretaria de Estado de Planejamento, Orçamento e Administração"
+    },
+    {
+      "id": "01001",
+      "name": "SES - Secretaria de Estado de Saúde do Distrito Federal"
+    },
+    {
+      "id": "01097",
+      "name": "SETUR - Secretaria de Estado de Turismo do Distrito Federal"
+    },
+    {
+      "id": "01084",
+      "name": "SLU - Serviço de Limpeza Urbana"
+    },
+    {
+      "id": "01107",
+      "name": "SMDF - Secretaria de Estado da Mulher do Distrito Federal"
+    },
+    {
+      "id": "01076",
+      "name": "SODF - Secretaria de Estado de Obras e Infraestrutura do Distrito Federal"
+    },
+    {
+      "id": "01081",
+      "name": "SSP - Secretaria de Estado da Segurança Pública do Distrito Federal"
+    },
+    {
+      "id": "01085",
+      "name": "TCB - Sociedade de Transportes Coletivos de Brasília"
+    },
+    {
+      "id": "01051",
+      "name": "TERRACAP - Companhia Imobiliária de Brasília"
+    },
+    {
+      "id": "01117",
+      "name": "UnDF - Universidade do Distrito Federal Professor Jorge Amaury Maia Nunes"
+    },
+    {
+      "id": "01087",
+      "name": "VICEGOV - Vice Governadoria do DF"
+    }
+  ]
+}

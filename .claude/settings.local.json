@@ -1,0 +1,5 @@
+{
+  "permissions": {
+    "allow": ["mcp__chrome-devtools__get_network_request"]
+  }
+}

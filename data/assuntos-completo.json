@@ -1,0 +1,4888 @@
+{
+  "assunto": [
+    {
+      "id": 229,
+      "name": "Abastecimento de água da CAESB"
+    },
+    {
+      "id": 1644,
+      "name": "Abastecimento e distribuição de fraldas em unidades de saúde pública"
+    },
+    {
+      "id": 899,
+      "name": "Abate indevido de animais"
+    },
+    {
+      "id": 1,
+      "name": "Abordagem social"
+    },
+    {
+      "id": 908,
+      "name": "Abordagem violenta de policial civil"
+    },
+    {
+      "id": 927,
+      "name": "Abordagem violenta de policial militar"
+    },
+    {
+      "id": 877,
+      "name": "Abuso de autoridade praticado por policial civil"
+    },
+    {
+      "id": 931,
+      "name": "Abuso de autoridade praticado por policial militar"
+    },
+    {
+      "id": 869,
+      "name": "Abuso sexual"
+    },
+    {
+      "id": 383,
+      "name": "Abuso sexual contra criança ou adolescente"
+    },
+    {
+      "id": 610,
+      "name": "Abuso Sexual em ambiente escolar"
+    },
+    {
+      "id": 233,
+      "name": "Ação do Governo de Brasília"
+    },
+    {
+      "id": 234,
+      "name": "Ação política no DF"
+    },
+    {
+      "id": 414,
+      "name": "Acessibilidade em espaço cultural"
+    },
+    {
+      "id": 531,
+      "name": "Acessibilidade em ônibus"
+    },
+    {
+      "id": 615,
+      "name": "Acessibilidade nas escolas"
+    },
+    {
+      "id": 565,
+      "name": "Acessibilidade no táxi"
+    },
+    {
+      "id": 1448,
+      "name": "Acessibilidade no Zoológico"
+    },
+    {
+      "id": 1381,
+      "name": "Acesso às áreas do Zoológico"
+    },
+    {
+      "id": 1592,
+      "name": "Acumulador de entulho"
+    },
+    {
+      "id": 1310,
+      "name": "Acúmulo irregular de cargo público"
+    },
+    {
+      "id": 1496,
+      "name": "Agenci@net"
+    },
+    {
+      "id": 51,
+      "name": "Agência do Trabalhador"
+    },
+    {
+      "id": 55,
+      "name": "Agência virtual do trabalhador"
+    },
+    {
+      "id": 1423,
+      "name": "Agenda Virtual do Trabalho"
+    },
+    {
+      "id": 1290,
+      "name": "Agendamento de Cirurgias"
+    },
+    {
+      "id": 1291,
+      "name": "Agendamento de Consultas"
+    },
+    {
+      "id": 1643,
+      "name": "Agendamento de consultas - Hospital Veterinário Público (Hvep)"
+    },
+    {
+      "id": 1289,
+      "name": "Agendamento de Exames"
+    },
+    {
+      "id": 1262,
+      "name": "Agendamento de visitas no Zoológico"
+    },
+    {
+      "id": 1406,
+      "name": "Agendamento em Órgão Público"
+    },
+    {
+      "id": 218,
+      "name": "Agendamento em serviços da CAESB"
+    },
+    {
+      "id": 8,
+      "name": "Agendamento em Serviços Públicos"
+    },
+    {
+      "id": 721,
+      "name": "Agendamento para programa habitacional"
+    },
+    {
+      "id": 730,
+      "name": "Agendamento para visita guiada no Jardim Botânico"
+    },
+    {
+      "id": 1419,
+      "name": "Agilidade de processos"
+    },
+    {
+      "id": 937,
+      "name": "Agressão praticada por policial militar"
+    },
+    {
+      "id": 1059,
+      "name": "Aleitamento artificial"
+    },
+    {
+      "id": 1060,
+      "name": "Alimentação de acompanhante de paciente internado"
+    },
+    {
+      "id": 1061,
+      "name": "Alimentação de paciente internado"
+    },
+    {
+      "id": 1062,
+      "name": "Alimentação de servidores em unidades de saúde pública"
+    },
+    {
+      "id": 109,
+      "name": "Alistamento ao Serviço Militar"
+    },
+    {
+      "id": 1063,
+      "name": "Alteração de carga horaria"
+    },
+    {
+      "id": 947,
+      "name": "Alteração do fluxo da via para pessoas,veículos"
+    },
+    {
+      "id": 1064,
+      "name": "Ambulâncias da rede SUS,SAMU"
+    },
+    {
+      "id": 851,
+      "name": "Ameaça de morte"
+    },
+    {
+      "id": 609,
+      "name": "Ameaça de morte em ambiente escolar"
+    },
+    {
+      "id": 1066,
+      "name": "Ampliação de  horários de funcionamento em unidades de saúde"
+    },
+    {
+      "id": 428,
+      "name": "Ampliar horário de funcionamento de Biblioteca "
+    },
+    {
+      "id": 355,
+      "name": "Análise de documentação habitacional"
+    },
+    {
+      "id": 230,
+      "name": "Análise dos requerimentos e recursos da CAESB"
+    },
+    {
+      "id": 214,
+      "name": "Andamento de obras da CAESB"
+    },
+    {
+      "id": 224,
+      "name": "Andamento de processo de multas na CAESB"
+    },
+    {
+      "id": 452,
+      "name": "Andamento de processo de multas trânsito"
+    },
+    {
+      "id": 1067,
+      "name": "Animais em ambientes inadequados"
+    },
+    {
+      "id": 1271,
+      "name": "Animais silvestres machucados"
+    },
+    {
+      "id": 1007,
+      "name": "Animais soltos em vias públicas"
+    },
+    {
+      "id": 1069,
+      "name": "Aplicação de inseticida pelo carro Fumacê"
+    },
+    {
+      "id": 1586,
+      "name": "Aplicativo e-Cidades"
+    },
+    {
+      "id": 1532,
+      "name": "Aplicativo e-GDF"
+    },
+    {
+      "id": 1502,
+      "name": "Aplicativos BRB"
+    },
+    {
+      "id": 405,
+      "name": "Apoio a atividades culturais"
+    },
+    {
+      "id": 416,
+      "name": "Apoio a programas e projetos culturais"
+    },
+    {
+      "id": 662,
+      "name": "Apoio financeiro à pesquisa científica, tecnológica ou de inovação"
+    },
+    {
+      "id": 977,
+      "name": "Apoio jurídico ao consumidor"
+    },
+    {
+      "id": 361,
+      "name": "Apoio na regularização habitacional"
+    },
+    {
+      "id": 903,
+      "name": "Apologia à violência"
+    },
+    {
+      "id": 875,
+      "name": "Apologia ao crime"
+    },
+    {
+      "id": 849,
+      "name": "Apologia as drogas"
+    },
+    {
+      "id": 426,
+      "name": "Aquisição de ingressos para eventos artísticos, culturais e desportivos"
+    },
+    {
+      "id": 759,
+      "name": "Área de proteção ambiental"
+    },
+    {
+      "id": 1070,
+      "name": "Armazenamento de cilindro de oxigênio em unidade de saúde pública"
+    },
+    {
+      "id": 1071,
+      "name": "Armazenamento de lixo hospitalar"
+    },
+    {
+      "id": 1020,
+      "name": "Armazenamento,despejo de agrotóxicos"
+    },
+    {
+      "id": 1072,
+      "name": "Armazenamento,distribuição de medicamentos"
+    },
+    {
+      "id": 1582,
+      "name": "Artesanato"
+    },
+    {
+      "id": 1523,
+      "name": "Assédio Moral em Ambiente Escolar"
+    },
+    {
+      "id": 907,
+      "name": "Assédio moral no serviço público"
+    },
+    {
+      "id": 1524,
+      "name": "Assédio Sexual em Ambiente Escolar"
+    },
+    {
+      "id": 40,
+      "name": "Assedio sexual no serviço público"
+    },
+    {
+      "id": 1016,
+      "name": "Assentamento rural"
+    },
+    {
+      "id": 532,
+      "name": "Assento preferencial em ônibus"
+    },
+    {
+      "id": 785,
+      "name": "Assento preferencial no metrô"
+    },
+    {
+      "id": 627,
+      "name": "Assessoramento agroindustrial"
+    },
+    {
+      "id": 639,
+      "name": "Assessoramento ambiental e regularização fundiária"
+    },
+    {
+      "id": 1253,
+      "name": "Assinatura de acordos, negociação de débitos de imóveis em atraso (Terracap)"
+    },
+    {
+      "id": 380,
+      "name": "Assistência à criança carente"
+    },
+    {
+      "id": 1074,
+      "name": "Assistência a deficientes físicos em unidades de saúde pública do DF"
+    },
+    {
+      "id": 696,
+      "name": "Assistência à família da vítima"
+    },
+    {
+      "id": 695,
+      "name": "Assistência à família do presidiário"
+    },
+    {
+      "id": 382,
+      "name": "Assistência a menino de rua"
+    },
+    {
+      "id": 73,
+      "name": "Assistência a Pessoa com Deficiência - PCD"
+    },
+    {
+      "id": 3,
+      "name": "Assistência a pessoa em situação de rua"
+    },
+    {
+      "id": 1075,
+      "name": "Assistência ao dependente químico"
+    },
+    {
+      "id": 750,
+      "name": "Assistência aos presidiários"
+    },
+    {
+      "id": 631,
+      "name": "Assistência técnica agrícola"
+    },
+    {
+      "id": 593,
+      "name": "Associação de Pais e Mestres - APM"
+    },
+    {
+      "id": 1400,
+      "name": "Assuntos funerários"
+    },
+    {
+      "id": 246,
+      "name": "Assuntos militares no Governo de Brasília"
+    },
+    {
+      "id": 824,
+      "name": "Ata de audiência pública"
+    },
+    {
+      "id": 998,
+      "name": "Ata de registro de preços"
+    },
+    {
+      "id": 195,
+      "name": "Atendimento 115"
+    },
+    {
+      "id": 677,
+      "name": "Atendimento a pessoas com coagulopatias hereditárias"
+    },
+    {
+      "id": 1633,
+      "name": "Atendimento à população em situação de vulnerabilidade"
+    },
+    {
+      "id": 1574,
+      "name": "Atendimento Ambulatorial (Policlínicas e Saúde Mental)"
+    },
+    {
+      "id": 648,
+      "name": "Atendimento ao cidadão em órgão, entidade pública do DF"
+    },
+    {
+      "id": 346,
+      "name": "Atendimento Central 156"
+    },
+    {
+      "id": 1084,
+      "name": "Atendimento central 160"
+    },
+    {
+      "id": 349,
+      "name": "Atendimento Central 162"
+    },
+    {
+      "id": 471,
+      "name": "Atendimento da Central 154"
+    },
+    {
+      "id": 975,
+      "name": "Atendimento da central de teleatendimento 151"
+    },
+    {
+      "id": 1077,
+      "name": "Atendimento de agente comunitário de saúde,agentes de endemias"
+    },
+    {
+      "id": 1078,
+      "name": "Atendimento de equipe saúde da família"
+    },
+    {
+      "id": 1076,
+      "name": "Atendimento de paciente morador de outra área,abrangência"
+    },
+    {
+      "id": 669,
+      "name": "Atendimento de professores da FEPECS"
+    },
+    {
+      "id": 1079,
+      "name": "Atendimento de profissionais de saúde não médico"
+    },
+    {
+      "id": 1578,
+      "name": "Atendimento de Servidor da SES - Especialista em Saúde"
+    },
+    {
+      "id": 1579,
+      "name": "Atendimento de Servidor da SES - Técnico em Saúde (Nível Médio)"
+    },
+    {
+      "id": 276,
+      "name": "Atendimento de solicitação de ambulância do bombeiro"
+    },
+    {
+      "id": 1546,
+      "name": "Atendimento de vendedores no Zoológico"
+    },
+    {
+      "id": 1634,
+      "name": "Atendimento em práticas integrativas em saúde"
+    },
+    {
+      "id": 1573,
+      "name": "Atendimento em Unidade Básica de Saúde (Centros de Saúde, Postos de Saúde)"
+    },
+    {
+      "id": 1572,
+      "name": "Atendimento em Unidade de Pronto Atendimento (UPA)"
+    },
+    {
+      "id": 1571,
+      "name": "Atendimento em Unidade Hospitalar (Hospitais Regionais)"
+    },
+    {
+      "id": 745,
+      "name": "Atendimento em unidade penal"
+    },
+    {
+      "id": 1082,
+      "name": "Atendimento em urgência , emergência"
+    },
+    {
+      "id": 1083,
+      "name": "Atendimento médico"
+    },
+    {
+      "id": 1474,
+      "name": "Atendimento na Central 190"
+    },
+    {
+      "id": 1366,
+      "name": "Atendimento na GRC-DFTRANS"
+    },
+    {
+      "id": 1052,
+      "name": "Atendimento na perícia médica"
+    },
+    {
+      "id": 614,
+      "name": "Atendimento na Rede de Ouvidorias do DF"
+    },
+    {
+      "id": 221,
+      "name": "Atendimento nas agências da CAESB"
+    },
+    {
+      "id": 1047,
+      "name": "Atendimento nas agências da receita SEEC"
+    },
+    {
+      "id": 739,
+      "name": "Atendimento nas agências do NA HORA"
+    },
+    {
+      "id": 1577,
+      "name": "Atendimento no componente especializado da assistência farmacêutica (Alto Custo)"
+    },
+    {
+      "id": 1364,
+      "name": "Atendimento nos postos do BRT"
+    },
+    {
+      "id": 678,
+      "name": "Atendimento para doação de sangue"
+    },
+    {
+      "id": 38,
+      "name": "Atendimento preferencial em órgão público"
+    },
+    {
+      "id": 1085,
+      "name": "Atendimento preferencial em unidade de saúde pública"
+    },
+    {
+      "id": 1420,
+      "name": "Atendimento presencial"
+    },
+    {
+      "id": 182,
+      "name": "Atendimento presencial prestado pelo banco"
+    },
+    {
+      "id": 1588,
+      "name": "Atendimento prestado pelos servidores nas unidades do Centro de Referência de Assistência Social"
+    },
+    {
+      "id": 1086,
+      "name": "Atendimento prestado por residentes"
+    },
+    {
+      "id": 220,
+      "name": "Atendimento prioritário/preferencial em órgão público"
+    },
+    {
+      "id": 685,
+      "name": "Atendimento realizado nas agências transfusionais"
+    },
+    {
+      "id": 269,
+      "name": "Atendimento telefônico 193"
+    },
+    {
+      "id": 1087,
+      "name": "Atendimento telefônico em unidade de saúde pública"
+    },
+    {
+      "id": 1475,
+      "name": "Atendimento Virtual Secretaria de Estado de Fazenda"
+    },
+    {
+      "id": 1447,
+      "name": "Atendimento/Serviço prestado pelo zoológico"
+    },
+    {
+      "id": 1463,
+      "name": "Aterramento"
+    },
+    {
+      "id": 1207,
+      "name": "Aterro Sanitário de Brasília"
+    },
+    {
+      "id": 132,
+      "name": "Atestado de conclusão (concedida às obras objetos de licença, como obras em geral e edificações provisórias)"
+    },
+    {
+      "id": 673,
+      "name": "Atestado de doação de sangue"
+    },
+    {
+      "id": 752,
+      "name": "Atividades de readaptação de presos"
+    },
+    {
+      "id": 394,
+      "name": "Atividades sócioeducativas"
+    },
+    {
+      "id": 1088,
+      "name": "Atraso de médico"
+    },
+    {
+      "id": 374,
+      "name": "Atraso na execução de obra de programa habitacional"
+    },
+    {
+      "id": 411,
+      "name": "Atraso no repasse de verba de incentivo a cultura"
+    },
+    {
+      "id": 934,
+      "name": "Atuação da PMDF em eventos"
+    },
+    {
+      "id": 842,
+      "name": "Atuação da polícia civil"
+    },
+    {
+      "id": 932,
+      "name": "Atuação da polícia rodoviária "
+    },
+    {
+      "id": 766,
+      "name": "Atuação da segurança do metrô"
+    },
+    {
+      "id": 921,
+      "name": "Atuação inadequada da PM em Blitz e rondas"
+    },
+    {
+      "id": 1569,
+      "name": "Atualização de cadastro"
+    },
+    {
+      "id": 1684,
+      "name": "Audiência Pública - IPREV/DF"
+    },
+    {
+      "id": 1685,
+      "name": "Audiência Pública – Lei de Diretrizes Orçamentárias"
+    },
+    {
+      "id": 1688,
+      "name": "Audiência Pública – Lei Orçamentária Anual - LOA"
+    },
+    {
+      "id": 916,
+      "name": "Aumento do efetivo policial"
+    },
+    {
+      "id": 793,
+      "name": "Auto-atendimento nas estações do metrô"
+    },
+    {
+      "id": 449,
+      "name": "Autoescola"
+    },
+    {
+      "id": 275,
+      "name": "Autorização para corte total da árvore"
+    },
+    {
+      "id": 794,
+      "name": "Autorização para poda de árvore em área particular"
+    },
+    {
+      "id": 441,
+      "name": "Autuação,notificação de trânsito"
+    },
+    {
+      "id": 1632,
+      "name": "Auxílio Calamidade"
+    },
+    {
+      "id": 1589,
+      "name": "Auxilio Excepcionalidade"
+    },
+    {
+      "id": 1594,
+      "name": "Auxílio funeral"
+    },
+    {
+      "id": 1593,
+      "name": "Auxílio natalidade"
+    },
+    {
+      "id": 1619,
+      "name": "Auxílio por Morte"
+    },
+    {
+      "id": 27,
+      "name": "Auxílio Vulnerabilidade"
+    },
+    {
+      "id": 1441,
+      "name": "Avaliação de desempenho"
+    },
+    {
+      "id": 1257,
+      "name": "Avaliação de imóveis para particulares"
+    },
+    {
+      "id": 1089,
+      "name": "Avaliação técnica sobre medicamentos"
+    },
+    {
+      "id": 619,
+      "name": "Batalhão Escolar"
+    },
+    {
+      "id": 1449,
+      "name": "Bebedouros no zoológico"
+    },
+    {
+      "id": 1618,
+      "name": "Benefício de Prestação Continuada - BPC"
+    },
+    {
+      "id": 1598,
+      "name": "Benefício Previdenciário - Aposentadoria e Pensão - Servidores da Educação do DF"
+    },
+    {
+      "id": 1323,
+      "name": "Benefício Previdenciário - Aposentadoria e Pensão - Servidores do GDF"
+    },
+    {
+      "id": 1456,
+      "name": "Biblioteca do zoológico"
+    },
+    {
+      "id": 113,
+      "name": "Biblioteca pública"
+    },
+    {
+      "id": 1343,
+      "name": "Bilheteria do Zoológico"
+    },
+    {
+      "id": 771,
+      "name": "Bilheterias do metrô"
+    },
+    {
+      "id": 1464,
+      "name": "Biometria Facial"
+    },
+    {
+      "id": 1606,
+      "name": "Biometria para CNH"
+    },
+    {
+      "id": 589,
+      "name": "Boletim Escolar"
+    },
+    {
+      "id": 666,
+      "name": "Bolsa universitária"
+    },
+    {
+      "id": 1450,
+      "name": "Borboletário do Zoológico"
+    },
+    {
+      "id": 186,
+      "name": "Brb banknet"
+    },
+    {
+      "id": 1696,
+      "name": "Bullying"
+    },
+    {
+      "id": 1518,
+      "name": "Cadastro (Grandes Geradores de resíduos / Transporte de resíduos da construção civil)"
+    },
+    {
+      "id": 643,
+      "name": "Cadastro ambiental rural do distrito federal - CAR"
+    },
+    {
+      "id": 1090,
+      "name": "Cadastro nacional de estabelecimento de saúde - CNES"
+    },
+    {
+      "id": 676,
+      "name": "Cadastro para doação de medula"
+    },
+    {
+      "id": 28,
+      "name": "Cadastro Único para Programas Sociais"
+    },
+    {
+      "id": 185,
+      "name": "Caixa eletrônico"
+    },
+    {
+      "id": 1322,
+      "name": "Cálculo de tempo de serviço para aposentadoria - Servidores do GDF"
+    },
+    {
+      "id": 1222,
+      "name": "Câmeras de monitoramento na cidade"
+    },
+    {
+      "id": 780,
+      "name": "Campanha educativa no metrô"
+    },
+    {
+      "id": 670,
+      "name": "Campanhas de doação de sangue"
+    },
+    {
+      "id": 1091,
+      "name": "Campanhas de vacina"
+    },
+    {
+      "id": 1206,
+      "name": "Campanhas educativas do Governo de Brasília"
+    },
+    {
+      "id": 467,
+      "name": "Campanhas educativas no trânsito"
+    },
+    {
+      "id": 1030,
+      "name": "Capacitação técnica, tecnológica e gerencial das empresas beneficiadas por programas vinculados à secretaria"
+    },
+    {
+      "id": 930,
+      "name": "Capacitação,treinamento da polícia"
+    },
+    {
+      "id": 95,
+      "name": "Captação de água de córrego ou rio"
+    },
+    {
+      "id": 96,
+      "name": "Captação de água de nascente"
+    },
+    {
+      "id": 97,
+      "name": "Captação por caminhões pipa de água de córregos,rios"
+    },
+    {
+      "id": 98,
+      "name": "Captação por meio de canais em corpos hídricos do DF"
+    },
+    {
+      "id": 116,
+      "name": "Carta de Habite-se"
+    },
+    {
+      "id": 1335,
+      "name": "Carta de Serviços"
+    },
+    {
+      "id": 514,
+      "name": "Cartão Cidadão - Bilhete Único"
+    },
+    {
+      "id": 1539,
+      "name": "Cartão Creche"
+    },
+    {
+      "id": 1092,
+      "name": "Cartão de vacina"
+    },
+    {
+      "id": 769,
+      "name": "Cartão do metrô"
+    },
+    {
+      "id": 636,
+      "name": "Cartão do produtor rural"
+    },
+    {
+      "id": 525,
+      "name": "Cartão Estudante / Passe Livre Estudantil"
+    },
+    {
+      "id": 1394,
+      "name": "Cartão Funcional - Rodoviário"
+    },
+    {
+      "id": 1679,
+      "name": "Cartão Gás"
+    },
+    {
+      "id": 1549,
+      "name": "Cartão Material Escolar - CME"
+    },
+    {
+      "id": 1093,
+      "name": "Cartão nacional de saúde , cartão SUS"
+    },
+    {
+      "id": 77,
+      "name": "Cartão PCD"
+    },
+    {
+      "id": 1697,
+      "name": "Cartão Uniforme Escolar"
+    },
+    {
+      "id": 518,
+      "name": "Cartão Vale-Transporte"
+    },
+    {
+      "id": 1603,
+      "name": "Carteira de idoso para Transporte Interestadual"
+    },
+    {
+      "id": 52,
+      "name": "Carteira de Trabalho"
+    },
+    {
+      "id": 607,
+      "name": "Carteira Estudantil"
+    },
+    {
+      "id": 76,
+      "name": "Carteira para pessoa com deficiência (PCD)"
+    },
+    {
+      "id": 90,
+      "name": "Casa abrigo - acolhimento institucional para mulheres vítimas de violência"
+    },
+    {
+      "id": 398,
+      "name": "Casa abrigo de menores"
+    },
+    {
+      "id": 1446,
+      "name": "Casa da Mulher Brasileira"
+    },
+    {
+      "id": 1201,
+      "name": "Catação de recicláveis em área pública"
+    },
+    {
+      "id": 1336,
+      "name": "Cemitério"
+    },
+    {
+      "id": 1430,
+      "name": "Central de Acolhimento para Crianças e Adolescentes"
+    },
+    {
+      "id": 1583,
+      "name": "Centro de Atendimento ao Turista - CAT"
+    },
+    {
+      "id": 79,
+      "name": "Centro de Intérpretes de línguas"
+    },
+    {
+      "id": 13,
+      "name": "Centro de Referência da Diversidade Sexual, Religiosa e Racial"
+    },
+    {
+      "id": 9,
+      "name": "Centro de Referência Especializado de Assistência Social – CREAS"
+    },
+    {
+      "id": 11,
+      "name": "Centro de Referência Especializado para Pessoas em Situação de Rua - Centro POP"
+    },
+    {
+      "id": 92,
+      "name": "Centro especializado de atendimento à mulher – Ceam"
+    },
+    {
+      "id": 591,
+      "name": "Centro Interescolar de Línguas - CIL"
+    },
+    {
+      "id": 1457,
+      "name": "Centro Multifuncional de Acessibilidade (CEMFA)"
+    },
+    {
+      "id": 1425,
+      "name": "Centros de Convivência e Fortalecimento de Vínculos"
+    },
+    {
+      "id": 1333,
+      "name": "Centros Olímpicos"
+    },
+    {
+      "id": 1416,
+      "name": "Cercamento de área particular"
+    },
+    {
+      "id": 1218,
+      "name": "Cercamento de área pública "
+    },
+    {
+      "id": 1676,
+      "name": "Certidão cidadão – consultar débitos e emitir ou validar certidão"
+    },
+    {
+      "id": 1677,
+      "name": "Certidão Cidadão – Incluir ou Alterar Cadastro de Pessoa Física"
+    },
+    {
+      "id": 796,
+      "name": "Certidão da NOVACAP para fins e habite-se junto às administrações regionais"
+    },
+    {
+      "id": 1637,
+      "name": "Certidões (Não Emissão)"
+    },
+    {
+      "id": 578,
+      "name": "Certificado Escolar"
+    },
+    {
+      "id": 1694,
+      "name": "Cesta do Trabalhador"
+    },
+    {
+      "id": 29,
+      "name": "Cesta Emergencial"
+    },
+    {
+      "id": 1620,
+      "name": "Cesta Verde"
+    },
+    {
+      "id": 1542,
+      "name": "CEU das Artes/Praça dos Direitos"
+    },
+    {
+      "id": 1521,
+      "name": "chamamento público"
+    },
+    {
+      "id": 1559,
+      "name": "CHAT online / Fale Conosco"
+    },
+    {
+      "id": 1411,
+      "name": "Ciclovia ou ciclofaixa em via urbana"
+    },
+    {
+      "id": 1626,
+      "name": "Circulação de carroças nas ruas do DF"
+    },
+    {
+      "id": 357,
+      "name": "Classificação no programa habitacional"
+    },
+    {
+      "id": 469,
+      "name": "Clínicas credenciadas ao Detran"
+    },
+    {
+      "id": 1621,
+      "name": "CNH Social Detran DF"
+    },
+    {
+      "id": 1616,
+      "name": "CNH-Carteira Nacional de Habilitação"
+    },
+    {
+      "id": 1095,
+      "name": "Cobertura de procedimentos pelo SUS"
+    },
+    {
+      "id": 882,
+      "name": "Cobrança de propina"
+    },
+    {
+      "id": 716,
+      "name": "Cobrança de serviço,taxa de órgão,entidade pública"
+    },
+    {
+      "id": 450,
+      "name": "Cobrança de taxa do Detran"
+    },
+    {
+      "id": 94,
+      "name": "Cobrança de valores na conta de água CAESB"
+    },
+    {
+      "id": 984,
+      "name": "Cobrança indevida de tarifa bancária do cliente,consumidor"
+    },
+    {
+      "id": 1384,
+      "name": "Colaboradores e voluntários"
+    },
+    {
+      "id": 427,
+      "name": "Colegiado setorial de cultura"
+    },
+    {
+      "id": 1682,
+      "name": "Coleta - Caixa de gordura"
+    },
+    {
+      "id": 1193,
+      "name": "Coleta convencional (lixo orgânico e indiferenciados)"
+    },
+    {
+      "id": 1192,
+      "name": "Coleta de entulho (resto de obra) em local irregular"
+    },
+    {
+      "id": 814,
+      "name": "Coleta de galhos e troncos de árvores (área pública urbana)"
+    },
+    {
+      "id": 1600,
+      "name": "Coleta de inservíveis (móveis e equipamentos eletrônicos)"
+    },
+    {
+      "id": 1514,
+      "name": "Coleta seletiva (materiais recicláveis)"
+    },
+    {
+      "id": 1096,
+      "name": "Combate ao foco da dengue"
+    },
+    {
+      "id": 993,
+      "name": "Combustíveis adulterado"
+    },
+    {
+      "id": 999,
+      "name": "Comercialização de medicamentos controlados"
+    },
+    {
+      "id": 1405,
+      "name": "Comércio Irregular"
+    },
+    {
+      "id": 251,
+      "name": "Comitê de combate ao uso irregular do solo"
+    },
+    {
+      "id": 774,
+      "name": "Companhia metrô"
+    },
+    {
+      "id": 1545,
+      "name": "Competência de outra esfera"
+    },
+    {
+      "id": 1304,
+      "name": "Composto orgânico (venda / doação)"
+    },
+    {
+      "id": 982,
+      "name": "Comunicação de órgão,entidade pública com o cidadão"
+    },
+    {
+      "id": 429,
+      "name": "Concessão de desconto na aquisição de ingressos para eventos artísticos, culturais e desportivos"
+    },
+    {
+      "id": 756,
+      "name": "Concessão de licença ambiental"
+    },
+    {
+      "id": 1691,
+      "name": "Conciliação de barulho"
+    },
+    {
+      "id": 1318,
+      "name": "Concurso público no DF"
+    },
+    {
+      "id": 1008,
+      "name": "Condição higiênico-sanitária"
+    },
+    {
+      "id": 1097,
+      "name": "Condições de trabalho de profissional da saúde"
+    },
+    {
+      "id": 819,
+      "name": "Condução da audiência judicial com a autoridades"
+    },
+    {
+      "id": 451,
+      "name": "Conduta de servidor do Detran,DF"
+    },
+    {
+      "id": 1046,
+      "name": "Conduta do auditor fiscal da receita do DF"
+    },
+    {
+      "id": 536,
+      "name": "Conduta do cobrador de ônibus"
+    },
+    {
+      "id": 549,
+      "name": "Conduta do fiscal da TCB"
+    },
+    {
+      "id": 535,
+      "name": "Conduta do motorista de ônibus"
+    },
+    {
+      "id": 555,
+      "name": "Conduta do motorista de táxi"
+    },
+    {
+      "id": 786,
+      "name": "Conduta do piloto no trem do metrô"
+    },
+    {
+      "id": 1690,
+      "name": "Conduta Ética"
+    },
+    {
+      "id": 928,
+      "name": "Conduta inadequada de PM fora do exercício da função"
+    },
+    {
+      "id": 870,
+      "name": "Conduta inadequada de Policial Civil fora exercício da função"
+    },
+    {
+      "id": 1388,
+      "name": "Conferência Distrital do Meio Ambiente 2017"
+    },
+    {
+      "id": 1541,
+      "name": "Conselheiro Tutelar"
+    },
+    {
+      "id": 1431,
+      "name": "Conselho de Assistência Social - CAS"
+    },
+    {
+      "id": 1434,
+      "name": "Conselho de Defesa de Direitos da Pessoa com Deficiência"
+    },
+    {
+      "id": 1436,
+      "name": "Conselho de Defesa dos Direitos do Negro"
+    },
+    {
+      "id": 1432,
+      "name": "Conselho de Direitos da Mulher"
+    },
+    {
+      "id": 1098,
+      "name": "Conselho de saúde"
+    },
+    {
+      "id": 1439,
+      "name": "Conselho Distrital de Promoção dos Direitos Humanos e Cidadania Lésbicas, Gays, Bissexuais, Travestis e Transexuais"
+    },
+    {
+      "id": 1433,
+      "name": "Conselho Distrital de Promoção e Defesa de Direitos Humanos"
+    },
+    {
+      "id": 1438,
+      "name": "Conselho Intersetorial de Segurança Alimentar e Nutricional - CAISAN"
+    },
+    {
+      "id": 1540,
+      "name": "Conselho Tutelar"
+    },
+    {
+      "id": 1277,
+      "name": "Conservação das ruas,vias do Zoológico"
+    },
+    {
+      "id": 412,
+      "name": "Conservação de espaço cultural"
+    },
+    {
+      "id": 415,
+      "name": "Conservação do patrimônio cultural"
+    },
+    {
+      "id": 556,
+      "name": "Conservação do táxi"
+    },
+    {
+      "id": 969,
+      "name": "Conservação,Limpeza em Órgão,Entidade Pública"
+    },
+    {
+      "id": 865,
+      "name": "Constrangimento ilegal praticado p, policial civil"
+    },
+    {
+      "id": 935,
+      "name": "Constrangimento ilegal praticado p, policial militar"
+    },
+    {
+      "id": 713,
+      "name": "Construção das unidades habitacionais"
+    },
+    {
+      "id": 797,
+      "name": "Construção de calçadas"
+    },
+    {
+      "id": 560,
+      "name": "Construção de ciclovia ou ciclofaixa em rodovia"
+    },
+    {
+      "id": 592,
+      "name": "Construção de Escolas Públicas"
+    },
+    {
+      "id": 563,
+      "name": "Construção de estacionamento público"
+    },
+    {
+      "id": 258,
+      "name": "Construção irregular de obras privadas"
+    },
+    {
+      "id": 1211,
+      "name": "Construção irregular em área pública"
+    },
+    {
+      "id": 123,
+      "name": "Consulta de dimensões oficiais de lotes particulares"
+    },
+    {
+      "id": 1490,
+      "name": "Consumo de Cigarros em Órgãos Públicos"
+    },
+    {
+      "id": 1334,
+      "name": "Consumo de cigarros em órgãos públicos"
+    },
+    {
+      "id": 1099,
+      "name": "Consumo de cigarros em unidades de saúde"
+    },
+    {
+      "id": 194,
+      "name": "Conta de água"
+    },
+    {
+      "id": 1022,
+      "name": "Contaminação ambiental"
+    },
+    {
+      "id": 1517,
+      "name": "Conteiner - Vistoria / Orientação para instalação"
+    },
+    {
+      "id": 1204,
+      "name": "Contêiner danificado - SLU"
+    },
+    {
+      "id": 594,
+      "name": "Conteúdo Pedagógico"
+    },
+    {
+      "id": 879,
+      "name": "Contrabando"
+    },
+    {
+      "id": 1565,
+      "name": "Contratações emergenciais COVID-19"
+    },
+    {
+      "id": 799,
+      "name": "Controle de cupinzeiros e formigueiros"
+    },
+    {
+      "id": 820,
+      "name": "Cooperação técnica judicial"
+    },
+    {
+      "id": 369,
+      "name": "Cooperativas,entidades de habitação"
+    },
+    {
+      "id": 575,
+      "name": "Coordenação Regional de Ensino"
+    },
+    {
+      "id": 254,
+      "name": "Corpo de Bombeiros"
+    },
+    {
+      "id": 1314,
+      "name": "Corrupção no setor público"
+    },
+    {
+      "id": 209,
+      "name": "Corte de água"
+    },
+    {
+      "id": 800,
+      "name": "Corte total da árvore - erradicação"
+    },
+    {
+      "id": 1635,
+      "name": "CRAS - Vagas para atendimento no CRAS"
+    },
+    {
+      "id": 1520,
+      "name": "Creches Públicas"
+    },
+    {
+      "id": 1609,
+      "name": "Credencial de Estacionamento - Idoso, PCD, Autista"
+    },
+    {
+      "id": 580,
+      "name": "Credenciamento de Instituição de Ensino"
+    },
+    {
+      "id": 1100,
+      "name": "Criação de animais"
+    },
+    {
+      "id": 1012,
+      "name": "Criação de animais em áreas rurais"
+    },
+    {
+      "id": 561,
+      "name": "Criação de bicicletários"
+    },
+    {
+      "id": 763,
+      "name": "Criação de parque ecológico"
+    },
+    {
+      "id": 830,
+      "name": "Crime ambiental"
+    },
+    {
+      "id": 257,
+      "name": "Crime praticado por bombeiro"
+    },
+    {
+      "id": 868,
+      "name": "Crime praticado por policial civil"
+    },
+    {
+      "id": 860,
+      "name": "Crimes pela internet"
+    },
+    {
+      "id": 392,
+      "name": "Crimes pela internet à criança e adolescente"
+    },
+    {
+      "id": 667,
+      "name": "Critérios de avaliação do concurso,vestibular da FEPECS"
+    },
+    {
+      "id": 672,
+      "name": "Critérios para doação de sangue"
+    },
+    {
+      "id": 354,
+      "name": "Critérios,normas do programa habitacional"
+    },
+    {
+      "id": 1689,
+      "name": "Curso de Ambientação para novos ouvidores 2023"
+    },
+    {
+      "id": 940,
+      "name": "Curso de formação da PM"
+    },
+    {
+      "id": 1612,
+      "name": "Curso de Reciclagem de Condutores"
+    },
+    {
+      "id": 124,
+      "name": "Curso profissionalizante"
+    },
+    {
+      "id": 1471,
+      "name": "Curso, Instituição de Ensino não encontrado"
+    },
+    {
+      "id": 600,
+      "name": "Cursos técnicos"
+    },
+    {
+      "id": 1466,
+      "name": "Dados desatualizados"
+    },
+    {
+      "id": 1631,
+      "name": "Dados pessoais – LGPD (Lei 13.709/2018)"
+    },
+    {
+      "id": 972,
+      "name": "Dano,Degradação do Meio Ambiente"
+    },
+    {
+      "id": 212,
+      "name": "Débito automático da conta de água"
+    },
+    {
+      "id": 825,
+      "name": "Decisão judicial envolvendo o Governo do Distrito Federal"
+    },
+    {
+      "id": 637,
+      "name": "Declaração de aptidão ao PRONAF"
+    },
+    {
+      "id": 1248,
+      "name": "Declaração de baixa de alienação fiduciária (Terracap)"
+    },
+    {
+      "id": 1250,
+      "name": "Declaração de baixa de obrigação de fazer,construir (Terracap)"
+    },
+    {
+      "id": 1249,
+      "name": "Declaração de baixa de retrovenda (Terracap)"
+    },
+    {
+      "id": 642,
+      "name": "Declaração de conformidade da atividade agropecuária – DCAA"
+    },
+    {
+      "id": 1251,
+      "name": "Declaração de nada consta PRÓ-DF"
+    },
+    {
+      "id": 638,
+      "name": "Declaração de produção agrícola"
+    },
+    {
+      "id": 1252,
+      "name": "Declaração de quitação (Terracap)"
+    },
+    {
+      "id": 630,
+      "name": "Degradação de recursos naturais"
+    },
+    {
+      "id": 1021,
+      "name": "Degradação do solo"
+    },
+    {
+      "id": 723,
+      "name": "Degradação dos espaços do Jardim Botânico"
+    },
+    {
+      "id": 1255,
+      "name": "Demarcação de lotes para particulares"
+    },
+    {
+      "id": 1385,
+      "name": "DEMARCAÇÃO VAGAS ESTACIONAMENTO"
+    },
+    {
+      "id": 896,
+      "name": "Demora do resgate de vítimas"
+    },
+    {
+      "id": 360,
+      "name": "Demora na entrega de escrituras habitacional (CODHAB)"
+    },
+    {
+      "id": 892,
+      "name": "Denúncia crime de calúnia"
+    },
+    {
+      "id": 1003,
+      "name": "Denúncia de empresa fantasma"
+    },
+    {
+      "id": 878,
+      "name": "Depredação de bem público"
+    },
+    {
+      "id": 432,
+      "name": "Desacato a servidor público"
+    },
+    {
+      "id": 103,
+      "name": "Desassoreamento em corpos hídricos do DF (Autorização)"
+    },
+    {
+      "id": 184,
+      "name": "Descontos errados no banco"
+    },
+    {
+      "id": 1331,
+      "name": "Descumprimento da Lei de Acesso à Informação"
+    },
+    {
+      "id": 372,
+      "name": "Descumprimento de acordo contratual de programa de habitação"
+    },
+    {
+      "id": 981,
+      "name": "Descumprimento de acordo em contrato privado"
+    },
+    {
+      "id": 1101,
+      "name": "Descumprimento de carga horária de servidor da saúde"
+    },
+    {
+      "id": 387,
+      "name": "Descumprimento de determinação judicial "
+    },
+    {
+      "id": 1296,
+      "name": "Descumprimento de tabela horária dos ônibus"
+    },
+    {
+      "id": 1488,
+      "name": "DESCUMPRIMENTO PRAZO LEGAL - PROCESSOS"
+    },
+    {
+      "id": 337,
+      "name": "Descumprimento prazo remanejamento rede elétrica"
+    },
+    {
+      "id": 925,
+      "name": "Descumprimento, normas,estatuto policial militar"
+    },
+    {
+      "id": 1027,
+      "name": "Desenvolvimento Sustentável das Áreas, Polos e Parques de Desenvolvimento Econômico"
+    },
+    {
+      "id": 205,
+      "name": "Desmembramento da ligação de água"
+    },
+    {
+      "id": 217,
+      "name": "Despejo irregular de resíduos químicos na água, esgoto"
+    },
+    {
+      "id": 1465,
+      "name": "Desrespeito aos assentos preferenciais"
+    },
+    {
+      "id": 1329,
+      "name": "Desvio de função de cargo público"
+    },
+    {
+      "id": 1401,
+      "name": "Desvio de Verba Creche Comunitária"
+    },
+    {
+      "id": 1444,
+      "name": "DF SOCIAL"
+    },
+    {
+      "id": 1417,
+      "name": "DFnoPonto"
+    },
+    {
+      "id": 603,
+      "name": "Diário Escolar Eletrônico"
+    },
+    {
+      "id": 1311,
+      "name": "Diário Oficial do Distrito Federal - DODF"
+    },
+    {
+      "id": 656,
+      "name": "Dificuldade de acesso ao edital de pesquisa da FAP"
+    },
+    {
+      "id": 862,
+      "name": "Dificuldade em registrar boletim de ocorrência"
+    },
+    {
+      "id": 1407,
+      "name": "Dificuldade Locomoção - Necessidades Especiais"
+    },
+    {
+      "id": 456,
+      "name": "Direção perigosa em via pública"
+    },
+    {
+      "id": 85,
+      "name": "Direitos Humanos"
+    },
+    {
+      "id": 222,
+      "name": "Discordância referente ao valor da tarifa de água"
+    },
+    {
+      "id": 67,
+      "name": "Discriminação"
+    },
+    {
+      "id": 72,
+      "name": "Discriminação contra a mulher"
+    },
+    {
+      "id": 1403,
+      "name": "Discriminação contra homens"
+    },
+    {
+      "id": 1404,
+      "name": "Discriminação contra LGBTTT"
+    },
+    {
+      "id": 1402,
+      "name": "Discriminação contra transgênero"
+    },
+    {
+      "id": 606,
+      "name": "Discriminação Étnico Racial nas escolas"
+    },
+    {
+      "id": 68,
+      "name": "Discriminação étnico-racial"
+    },
+    {
+      "id": 395,
+      "name": "Discriminação étnico-racial contra crianças"
+    },
+    {
+      "id": 70,
+      "name": "Discriminação por orientação sexual"
+    },
+    {
+      "id": 69,
+      "name": "Discriminação religiosa"
+    },
+    {
+      "id": 938,
+      "name": "Disparo por arma de fogo"
+    },
+    {
+      "id": 894,
+      "name": "Disparo por arma de fogo por policial"
+    },
+    {
+      "id": 1389,
+      "name": "Distribuição de mapas do Zoológico"
+    },
+    {
+      "id": 1102,
+      "name": "Distribuição de preservativos"
+    },
+    {
+      "id": 629,
+      "name": "Distribuição de sementes, mudas, plantas e insumos"
+    },
+    {
+      "id": 1103,
+      "name": "Distribuição de senhas em unidades de saúde pública"
+    },
+    {
+      "id": 1614,
+      "name": "Dívida Ativa Detran/DF"
+    },
+    {
+      "id": 1048,
+      "name": "Dívida ativa no DF"
+    },
+    {
+      "id": 801,
+      "name": "Doação de mudas de árvore, arbustos, erva, flores e grama"
+    },
+    {
+      "id": 1104,
+      "name": "Doação de órgãos"
+    },
+    {
+      "id": 596,
+      "name": "Documentação Escolar"
+    },
+    {
+      "id": 1105,
+      "name": "Documentos e formulários da saúde"
+    },
+    {
+      "id": 485,
+      "name": "Duplicação de estradas,rodovias"
+    },
+    {
+      "id": 660,
+      "name": "Edital de pesquisa,projeto,convênio,evento"
+    },
+    {
+      "id": 597,
+      "name": "Educação Inclusiva"
+    },
+    {
+      "id": 601,
+      "name": "Educação Integral"
+    },
+    {
+      "id": 634,
+      "name": "Educação sanitária vegetal e animal"
+    },
+    {
+      "id": 1695,
+      "name": "Educador Social Voluntário - ESV"
+    },
+    {
+      "id": 1189,
+      "name": "Elaboração de projetos de infraestrutura urbana"
+    },
+    {
+      "id": 379,
+      "name": "Eleição para conselheiros tutelares"
+    },
+    {
+      "id": 458,
+      "name": "Emissão da CNH"
+    },
+    {
+      "id": 1607,
+      "name": "Emissão de Autorização para Transferência de Propriedade de Veículo -ATPV (antigo CRV/DUT)"
+    },
+    {
+      "id": 1597,
+      "name": "Emissão de boletos (Terracap)"
+    },
+    {
+      "id": 1284,
+      "name": "Emissão de Carteira de Identidade"
+    },
+    {
+      "id": 1410,
+      "name": "Emissão do CRLV - Certificado de Registro e Licenciamento de Veículo"
+    },
+    {
+      "id": 718,
+      "name": "Emissão ou envio de boleto de impostos oriundos de programas habitacionais (CODHAB)"
+    },
+    {
+      "id": 472,
+      "name": "Emplacamento de veículos"
+    },
+    {
+      "id": 65,
+      "name": "Empreendedorismo"
+    },
+    {
+      "id": 690,
+      "name": "Emprego para trabalhador preso"
+    },
+    {
+      "id": 413,
+      "name": "Empresa organizadora de evento cultural"
+    },
+    {
+      "id": 1106,
+      "name": "Empresa prestadora,terceirizada na saúde pública"
+    },
+    {
+      "id": 188,
+      "name": "Empréstimos"
+    },
+    {
+      "id": 39,
+      "name": "Entidades sociais conveniadas"
+    },
+    {
+      "id": 213,
+      "name": "Entrega da conta de água"
+    },
+    {
+      "id": 362,
+      "name": "Entrega de emprrendimento em programa habitacional"
+    },
+    {
+      "id": 1595,
+      "name": "Entrega de escrituras de imóveis (Terracap)"
+    },
+    {
+      "id": 701,
+      "name": "Entrega de escrituras habitacional (CODHAB)"
+    },
+    {
+      "id": 1491,
+      "name": "Equipamento de Segurança"
+    },
+    {
+      "id": 1107,
+      "name": "Equipamento hospitalar"
+    },
+    {
+      "id": 776,
+      "name": "Equipamentos no trem do metrô"
+    },
+    {
+      "id": 1601,
+      "name": "Erosão"
+    },
+    {
+      "id": 1108,
+      "name": "Erro médico"
+    },
+    {
+      "id": 611,
+      "name": "Escola de Aperfeiçoamento dos Profissionais da Educação - EAPE"
+    },
+    {
+      "id": 1320,
+      "name": "Escola de Governo do DF - EGOV"
+    },
+    {
+      "id": 668,
+      "name": "Escolas ,cursos credenciados na FEPECS"
+    },
+    {
+      "id": 605,
+      "name": "Escolas Extintas"
+    },
+    {
+      "id": 1237,
+      "name": "Escritura de imóveis (CODHAB)"
+    },
+    {
+      "id": 227,
+      "name": "Estação de tratamento de água"
+    },
+    {
+      "id": 228,
+      "name": "Estação de tratamento de esgotos"
+    },
+    {
+      "id": 1109,
+      "name": "Estacionamento em unidade de saúde pública"
+    },
+    {
+      "id": 680,
+      "name": "Estacionamento para doadores de sangue"
+    },
+    {
+      "id": 1415,
+      "name": "Estacionamento privado"
+    },
+    {
+      "id": 1527,
+      "name": "Estacionamento Público"
+    },
+    {
+      "id": 775,
+      "name": "Estações do metrô"
+    },
+    {
+      "id": 537,
+      "name": "Estado de conservação,manutenção de ônibus"
+    },
+    {
+      "id": 731,
+      "name": "Estágio de Pesquisa Científica no Jardim Botânico"
+    },
+    {
+      "id": 1308,
+      "name": "Estágio em órgão,entidade pública"
+    },
+    {
+      "id": 871,
+      "name": "Estelionato"
+    },
+    {
+      "id": 1110,
+      "name": "Esterilização de material médico hospitalar"
+    },
+    {
+      "id": 792,
+      "name": "Estratégia de despachos de trens do metrô"
+    },
+    {
+      "id": 704,
+      "name": "Etapas posteriores à habilitação de programa habitacional"
+    },
+    {
+      "id": 1111,
+      "name": "Evasão de paciente sem alta hospitalar"
+    },
+    {
+      "id": 602,
+      "name": "Evento Cultural na Escola"
+    },
+    {
+      "id": 126,
+      "name": "Evento esportivo cultural e de lazer"
+    },
+    {
+      "id": 236,
+      "name": "Eventos do Governo de Brasília"
+    },
+    {
+      "id": 622,
+      "name": "Exame Nacional Certificação Competências Jovens e Adultos - ENCCEJA"
+    },
+    {
+      "id": 617,
+      "name": "Exame Nacional do Ensino Médio - ENEM"
+    },
+    {
+      "id": 462,
+      "name": "Exames para CNH"
+    },
+    {
+      "id": 1190,
+      "name": "Execução das obras públicas na área de infraestrutura urbana"
+    },
+    {
+      "id": 1315,
+      "name": "Execução de Obra pública"
+    },
+    {
+      "id": 876,
+      "name": "Exercício inadequado da profissão,policial civil"
+    },
+    {
+      "id": 1254,
+      "name": "Extrato da situação financeira de imóveis (Terracap)"
+    },
+    {
+      "id": 1112,
+      "name": "Extravio da guia de atendimento de emergência - GAE"
+    },
+    {
+      "id": 1113,
+      "name": "Extravio de pertences de paciente na internação"
+    },
+    {
+      "id": 1114,
+      "name": "Extravio de prontuário em unidades de saúde"
+    },
+    {
+      "id": 482,
+      "name": "Faixa de pedestre"
+    },
+    {
+      "id": 494,
+      "name": "Faixa de trânsito reversa"
+    },
+    {
+      "id": 738,
+      "name": "Falha em procedimento do órgão,entidade pública"
+    },
+    {
+      "id": 906,
+      "name": "Falsificação de assinatura"
+    },
+    {
+      "id": 873,
+      "name": "Falsificação de documento em órgão público"
+    },
+    {
+      "id": 864,
+      "name": "Falsificação de documentos"
+    },
+    {
+      "id": 900,
+      "name": "Falsificação de documentos feita por médico perito"
+    },
+    {
+      "id": 1115,
+      "name": "Falta de  servidores em unidade de saúde pública"
+    },
+    {
+      "id": 192,
+      "name": "Falta de água"
+    },
+    {
+      "id": 1116,
+      "name": "Falta de água em unidade de saúde pública"
+    },
+    {
+      "id": 324,
+      "name": "Falta de Iluminação Pública"
+    },
+    {
+      "id": 433,
+      "name": "Falta de manutenção em equipamentos e,ou órgãos e unidades da secretaria de cultura"
+    },
+    {
+      "id": 1117,
+      "name": "Falta de material,insumos médico - hospitalar em unidade de saúde pública"
+    },
+    {
+      "id": 1118,
+      "name": "Falta de medicamento"
+    },
+    {
+      "id": 1119,
+      "name": "Falta de médicos"
+    },
+    {
+      "id": 698,
+      "name": "Falta de moradia,habitação popular"
+    },
+    {
+      "id": 1295,
+      "name": "Falta de ônibus"
+    },
+    {
+      "id": 1120,
+      "name": "Falta de profissional em unidade de saúde pública"
+    },
+    {
+      "id": 867,
+      "name": "Falta de providência pós chamada  197"
+    },
+    {
+      "id": 377,
+      "name": "Falta manutenção em unidade habitacional entregue"
+    },
+    {
+      "id": 1121,
+      "name": "Faturamento ambulatorial,sistema de informação ambulatorial - SIA"
+    },
+    {
+      "id": 1122,
+      "name": "Faturamento hospitalar,sistema de informação hospitalar - SIH"
+    },
+    {
+      "id": 104,
+      "name": "Fechamento de poço artesiano ou cisterna sem os procedimentos regulamentados"
+    },
+    {
+      "id": 635,
+      "name": "Feiras agrícolas"
+    },
+    {
+      "id": 1123,
+      "name": "Filas em unidades de saúde"
+    },
+    {
+      "id": 1245,
+      "name": "Financiamento com consignação em folha de pagamento de imóveis"
+    },
+    {
+      "id": 960,
+      "name": "Fiscalização - Área De Preservação Permanente - APP"
+    },
+    {
+      "id": 964,
+      "name": "Fiscalização - Atividade ou Empreendimento Licenciável"
+    },
+    {
+      "id": 961,
+      "name": "Fiscalização - Criação e Comércio Ilegal de Animais "
+    },
+    {
+      "id": 966,
+      "name": "Fiscalização - Danos a Jardins Públicos"
+    },
+    {
+      "id": 958,
+      "name": "Fiscalização - Degradação do Solo"
+    },
+    {
+      "id": 956,
+      "name": "Fiscalização - Degradação Dos Recursos Hídricos"
+    },
+    {
+      "id": 1652,
+      "name": "Fiscalização - Direito do Consumidor"
+    },
+    {
+      "id": 959,
+      "name": "Fiscalização - Parques E Unidades De Conservação"
+    },
+    {
+      "id": 954,
+      "name": "Fiscalização - Poluição Sonora em Estabelecimento Comercial"
+    },
+    {
+      "id": 957,
+      "name": "Fiscalização - Poluição Visual"
+    },
+    {
+      "id": 963,
+      "name": "Fiscalização - Transporte de Produtos Perigosos"
+    },
+    {
+      "id": 1124,
+      "name": "Fiscalização ambulante do ramo alimentar"
+    },
+    {
+      "id": 1640,
+      "name": "Fiscalização Coronav��rus (Aglomeração em Bar, restaurante ou festa paga)"
+    },
+    {
+      "id": 1624,
+      "name": "Fiscalização Coronavírus (Descumprimento de orientações de saúde)"
+    },
+    {
+      "id": 1625,
+      "name": "Fiscalização Coronavírus (estabelecimentos em geral)"
+    },
+    {
+      "id": 1424,
+      "name": "fiscalização da incineração de resíduos sólidos"
+    },
+    {
+      "id": 1191,
+      "name": "Fiscalização das obras públicas na área de infraestrutura urbana"
+    },
+    {
+      "id": 165,
+      "name": "Fiscalização de Ambulantes"
+    },
+    {
+      "id": 470,
+      "name": "Fiscalização de clínicas credenciadas ao Detran"
+    },
+    {
+      "id": 1338,
+      "name": "Fiscalização de consumo de cigarros em estabelecimentos comerciais (Lei Anti-fumo)"
+    },
+    {
+      "id": 1414,
+      "name": "Fiscalização de Contrato"
+    },
+    {
+      "id": 279,
+      "name": "Fiscalização de festas,eventos públicos"
+    },
+    {
+      "id": 1126,
+      "name": "Fiscalização de mercados e supermercados"
+    },
+    {
+      "id": 1216,
+      "name": "Fiscalização de Obra"
+    },
+    {
+      "id": 1024,
+      "name": "Fiscalização de Obras em Construção em ADE"
+    },
+    {
+      "id": 543,
+      "name": "Fiscalização de ônibus"
+    },
+    {
+      "id": 1127,
+      "name": "Fiscalização de quiosque do ramo alimentar"
+    },
+    {
+      "id": 454,
+      "name": "Fiscalização de som automotivo"
+    },
+    {
+      "id": 552,
+      "name": "Fiscalização de taxi"
+    },
+    {
+      "id": 478,
+      "name": "Fiscalização de trânsito em estradas,rodovias"
+    },
+    {
+      "id": 439,
+      "name": "Fiscalização de trânsito em vias e ruas"
+    },
+    {
+      "id": 553,
+      "name": "Fiscalização de transporte clandestino (pirata)"
+    },
+    {
+      "id": 1495,
+      "name": "Fiscalização em academias"
+    },
+    {
+      "id": 140,
+      "name": "Fiscalização em Acessibilidade"
+    },
+    {
+      "id": 148,
+      "name": "Fiscalização em Agência de veículos"
+    },
+    {
+      "id": 168,
+      "name": "Fiscalização em Águas servidas"
+    },
+    {
+      "id": 146,
+      "name": "Fiscalização em Antena de telefonia celular - ERB"
+    },
+    {
+      "id": 848,
+      "name": "Fiscalização em área de proteção ambiental - apa"
+    },
+    {
+      "id": 159,
+      "name": "Fiscalização em Banca de revistas"
+    },
+    {
+      "id": 149,
+      "name": "Fiscalização em bares, lanchonete e restaurante"
+    },
+    {
+      "id": 143,
+      "name": "Fiscalização em Canteiro de obras"
+    },
+    {
+      "id": 166,
+      "name": "Fiscalização em Casas Noturnas"
+    },
+    {
+      "id": 147,
+      "name": "Fiscalização em Central de gás"
+    },
+    {
+      "id": 145,
+      "name": "Fiscalização em Cercamento em área pública comercial"
+    },
+    {
+      "id": 144,
+      "name": "Fiscalização em Cercamento em área pública residencial"
+    },
+    {
+      "id": 655,
+      "name": "Fiscalização em clubes"
+    },
+    {
+      "id": 175,
+      "name": "Fiscalização em Colagem de cartazes (bens públicos)"
+    },
+    {
+      "id": 158,
+      "name": "Fiscalização em Comércio estabelecido com mercadorias,equipamentos em área pública"
+    },
+    {
+      "id": 446,
+      "name": "Fiscalização em congestionamentos de veículos"
+    },
+    {
+      "id": 169,
+      "name": "Fiscalização em Contêiner, recipiente para lixo (conservação)"
+    },
+    {
+      "id": 170,
+      "name": "Fiscalização em Entulho,resíduo em área pública"
+    },
+    {
+      "id": 256,
+      "name": "Fiscalização em estabelecimento comercial"
+    },
+    {
+      "id": 1013,
+      "name": "Fiscalização em estabelecimentos agropecuários e petshops"
+    },
+    {
+      "id": 167,
+      "name": "Fiscalização em Eventos,festas particulares"
+    },
+    {
+      "id": 176,
+      "name": "Fiscalização em Faixas,panfletos"
+    },
+    {
+      "id": 161,
+      "name": "Fiscalização em Feiras"
+    },
+    {
+      "id": 150,
+      "name": "Fiscalização em Instituições de ensino"
+    },
+    {
+      "id": 151,
+      "name": "Fiscalização em Lava-jato"
+    },
+    {
+      "id": 171,
+      "name": "Fiscalização em Lixo fora do horário de coleta"
+    },
+    {
+      "id": 152,
+      "name": "Fiscalização em Loja de material de construção"
+    },
+    {
+      "id": 172,
+      "name": "Fiscalização em Lote vazio sujo"
+    },
+    {
+      "id": 142,
+      "name": "Fiscalização em Manutenção e conservação do imóvel"
+    },
+    {
+      "id": 160,
+      "name": "Fiscalização em Mobiliário Urbano"
+    },
+    {
+      "id": 135,
+      "name": "Fiscalização em Obra em Área em Regularização"
+    },
+    {
+      "id": 136,
+      "name": "Fiscalização em Obra em área ilegal"
+    },
+    {
+      "id": 138,
+      "name": "Fiscalização em Obra em área pública comercial"
+    },
+    {
+      "id": 137,
+      "name": "Fiscalização em Obra em área pública residencial"
+    },
+    {
+      "id": 134,
+      "name": "Fiscalização em Obra em Área Regular"
+    },
+    {
+      "id": 141,
+      "name": "Fiscalização em Obra em situação de risco"
+    },
+    {
+      "id": 153,
+      "name": "Fiscalização em Oficina mecânica"
+    },
+    {
+      "id": 139,
+      "name": "Fiscalização em Parcelamento irregular do solo"
+    },
+    {
+      "id": 154,
+      "name": "Fiscalização em Posto de combustível,loja de conveniência"
+    },
+    {
+      "id": 155,
+      "name": "Fiscalização em Pousada,hotel"
+    },
+    {
+      "id": 163,
+      "name": "Fiscalização em Propaganda em área privada"
+    },
+    {
+      "id": 164,
+      "name": "Fiscalização em Propaganda em área pública"
+    },
+    {
+      "id": 162,
+      "name": "Fiscalização em Quiosque,trailer,food truck,similares"
+    },
+    {
+      "id": 173,
+      "name": "Fiscalização em Resíduos de saúde"
+    },
+    {
+      "id": 174,
+      "name": "Fiscalização em Resíduos perigosos"
+    },
+    {
+      "id": 156,
+      "name": "Fiscalização em Serralheria,marcenaria, marmoraria"
+    },
+    {
+      "id": 157,
+      "name": "Fiscalização em Templo religioso"
+    },
+    {
+      "id": 468,
+      "name": "Fiscalização em transporte escolar"
+    },
+    {
+      "id": 376,
+      "name": "Fiscalização em unidade habitacional "
+    },
+    {
+      "id": 772,
+      "name": "Fiscalização no sistema do metrô"
+    },
+    {
+      "id": 768,
+      "name": "Fiscalização no vagão exclusivo do metrô"
+    },
+    {
+      "id": 1037,
+      "name": "Fiscalização Tributária em Estabelecimento"
+    },
+    {
+      "id": 1128,
+      "name": "Fiscalização vigilância sanitária"
+    },
+    {
+      "id": 1009,
+      "name": "Fiscalização,inspeção de produtos animal,vegetal"
+    },
+    {
+      "id": 340,
+      "name": "Fiscalização/Retirada de obstáculos da calçada"
+    },
+    {
+      "id": 841,
+      "name": "Flanelinhas,guardadores de carro"
+    },
+    {
+      "id": 1533,
+      "name": "Fraude em eleição para Direção de Unidade Educacional"
+    },
+    {
+      "id": 381,
+      "name": "Fraude em eleição para o Conselho Tutelar"
+    },
+    {
+      "id": 1302,
+      "name": "Fraude em licitação"
+    },
+    {
+      "id": 223,
+      "name": "Funcionamento das agências da CAESB"
+    },
+    {
+      "id": 674,
+      "name": "Funcionamento das agências transfusionais"
+    },
+    {
+      "id": 1129,
+      "name": "Funcionamento de aparelho de eletroencefalograma em unidade de saúde pública"
+    },
+    {
+      "id": 1130,
+      "name": "Funcionamento de aparelho de Raio-X em unidade de saúde pública"
+    },
+    {
+      "id": 1131,
+      "name": "Funcionamento de ecógrafo,ultrassom em unidade de saúde pública"
+    },
+    {
+      "id": 1132,
+      "name": "Funcionamento de eletrocardiógrafo em unidade de saúde pública"
+    },
+    {
+      "id": 1133,
+      "name": "Funcionamento de lanchonete em unidade de saúde pública"
+    },
+    {
+      "id": 1014,
+      "name": "Funcionamento de matadouro,abatedouro"
+    },
+    {
+      "id": 758,
+      "name": "Funcionamento de órgão público"
+    },
+    {
+      "id": 1134,
+      "name": "Funcionamento de programa ,projeto na saúde"
+    },
+    {
+      "id": 1136,
+      "name": "Funcionamento de tomógrafo em unidade de saúde pública"
+    },
+    {
+      "id": 399,
+      "name": "Funcionamento de unidade de internação de menores"
+    },
+    {
+      "id": 202,
+      "name": "Funcionamento do hidrômetro"
+    },
+    {
+      "id": 1137,
+      "name": "Funcionamento do SAMU"
+    },
+    {
+      "id": 988,
+      "name": "Funcionamento irregular de escolas"
+    },
+    {
+      "id": 58,
+      "name": "FUNGER -  Fundo para a Geração de Emprego e Renda do DF"
+    },
+    {
+      "id": 847,
+      "name": "Furto"
+    },
+    {
+      "id": 1138,
+      "name": "Furto em unidade de saúde pública"
+    },
+    {
+      "id": 1319,
+      "name": "Furtos em orgãos,entidades públicas"
+    },
+    {
+      "id": 802,
+      "name": "Galeria de águas pluviais"
+    },
+    {
+      "id": 1581,
+      "name": "Gestão de Pessoas"
+    },
+    {
+      "id": 238,
+      "name": "Governador de Brasília"
+    },
+    {
+      "id": 1567,
+      "name": "Gratuidade no Transporte Público Coletivo do DF – Profissionais da Saúde"
+    },
+    {
+      "id": 599,
+      "name": "Greve"
+    },
+    {
+      "id": 828,
+      "name": "Grilagem em área pública"
+    },
+    {
+      "id": 1017,
+      "name": "Guia de trânsito animal - GTA"
+    },
+    {
+      "id": 1561,
+      "name": "Higienização em Condomínio (Coronavírus)"
+    },
+    {
+      "id": 576,
+      "name": "Histórico Escolar"
+    },
+    {
+      "id": 425,
+      "name": "Horário de funcionamento de biblioteca "
+    },
+    {
+      "id": 1267,
+      "name": "Horário de funcionamento dos setores Administrativos do Zoológico"
+    },
+    {
+      "id": 1140,
+      "name": "Horário de funcionamento unidade saúde"
+    },
+    {
+      "id": 1383,
+      "name": "Horário de funcionamentos de recintos do Zoológico"
+    },
+    {
+      "id": 1141,
+      "name": "Horário de visita em hospital público"
+    },
+    {
+      "id": 693,
+      "name": "Horário de visitação ao presidiário,detento,interno"
+    },
+    {
+      "id": 1263,
+      "name": "Horário e dia de funcionamento do Zoológico"
+    },
+    {
+      "id": 770,
+      "name": "Horário funcionamento do metrô"
+    },
+    {
+      "id": 41,
+      "name": "Idoso"
+    },
+    {
+      "id": 325,
+      "name": "Iluminação Pública (Funcionamento)"
+    },
+    {
+      "id": 328,
+      "name": "Iluminação Pública (Instalação de poste)"
+    },
+    {
+      "id": 334,
+      "name": "Iluminação pública (Remanejamento de poste)"
+    },
+    {
+      "id": 657,
+      "name": "Implantação da bolsa de pesquisa"
+    },
+    {
+      "id": 102,
+      "name": "Implantação de  barragens em corpos hídricos do DF"
+    },
+    {
+      "id": 918,
+      "name": "Implantação de posto policial"
+    },
+    {
+      "id": 204,
+      "name": "Implantação de rede de esgoto"
+    },
+    {
+      "id": 991,
+      "name": "Implantação de unidade de atendimento ao consumidor"
+    },
+    {
+      "id": 803,
+      "name": "Implantação e conservação de gramados, bosques, parques e jardins"
+    },
+    {
+      "id": 967,
+      "name": "Implantação e Manutenção de Programas e Projetos ambientais"
+    },
+    {
+      "id": 633,
+      "name": "Implementação de tecnologias para atividades agrícolas e pecuárias"
+    },
+    {
+      "id": 215,
+      "name": "Impossibilidade de leitura de hidrômetro por impedimentos"
+    },
+    {
+      "id": 1337,
+      "name": "Improbidade Administrativa"
+    },
+    {
+      "id": 406,
+      "name": "Incentivo a cultura e ao turismo local"
+    },
+    {
+      "id": 686,
+      "name": "Incentivo para o doador de sangue"
+    },
+    {
+      "id": 1026,
+      "name": "Incentivos Econômicos no Governo de Brasília"
+    },
+    {
+      "id": 1501,
+      "name": "Inclusão de assunto no sistema de ouvidoria"
+    },
+    {
+      "id": 1243,
+      "name": "Inclusão de imóvel disponível em licitação"
+    },
+    {
+      "id": 1596,
+      "name": "Inclusão de imóvel disponível em licitação pública (Terracap)"
+    },
+    {
+      "id": 1142,
+      "name": "Infecção hospitalar"
+    },
+    {
+      "id": 1239,
+      "name": "Informação sobre regularização de imóvel "
+    },
+    {
+      "id": 1240,
+      "name": "Informação sobre regularização de lotes"
+    },
+    {
+      "id": 1307,
+      "name": "Infraestrutura em órgão,entidade pública"
+    },
+    {
+      "id": 1143,
+      "name": "Infraestrutura em unidade de saúde pública"
+    },
+    {
+      "id": 616,
+      "name": "Injúrias no ambiente escolar"
+    },
+    {
+      "id": 231,
+      "name": "Inovação tecnológica em órgão,entidade pública"
+    },
+    {
+      "id": 373,
+      "name": "Insatisfação com normas de contrato de programa de habitação"
+    },
+    {
+      "id": 754,
+      "name": "Inspeção em unidade penal"
+    },
+    {
+      "id": 586,
+      "name": "Inspeção Escolar"
+    },
+    {
+      "id": 200,
+      "name": "Inspeção rede de água"
+    },
+    {
+      "id": 201,
+      "name": "Inspeção rede de esgotos"
+    },
+    {
+      "id": 196,
+      "name": "Instalação de fossa"
+    },
+    {
+      "id": 1198,
+      "name": "Instalação e manutenção de lixeiras (papeleiras)"
+    },
+    {
+      "id": 179,
+      "name": "Instalações inadequadas do órgão,entidade pública"
+    },
+    {
+      "id": 522,
+      "name": "Integração tarifária"
+    },
+    {
+      "id": 1557,
+      "name": "Integrador"
+    },
+    {
+      "id": 1144,
+      "name": "Internação domiciliar"
+    },
+    {
+      "id": 1145,
+      "name": "Internação em Hospital Público do DF"
+    },
+    {
+      "id": 1451,
+      "name": "Internet,Whifi do zoológico"
+    },
+    {
+      "id": 911,
+      "name": "Intolerância religiosa"
+    },
+    {
+      "id": 1395,
+      "name": "Invasão de Área Pública"
+    },
+    {
+      "id": 1214,
+      "name": "Invasão de lotes em áreas de interesse social"
+    },
+    {
+      "id": 1213,
+      "name": "Invasão de propriedade rural"
+    },
+    {
+      "id": 1217,
+      "name": "Invasão de terreno da Terracap"
+    },
+    {
+      "id": 852,
+      "name": "Invasão domiciliar"
+    },
+    {
+      "id": 1018,
+      "name": "Invasão em área pública rural"
+    },
+    {
+      "id": 1647,
+      "name": "IPTU/TLP - Cadastro de Imóveis"
+    },
+    {
+      "id": 1648,
+      "name": "IPTU/TLP - Calendário de Vencimento – de IPTU/TLP"
+    },
+    {
+      "id": 1649,
+      "name": "IPTU/TLP - consulta e emissão de DAR de IPTU/TLP e pagamento direto no banco"
+    },
+    {
+      "id": 1650,
+      "name": "IPTU/TLP - Impugnação (cobrança indevida), prescrição e restituição"
+    },
+    {
+      "id": 1481,
+      "name": "IPTU/TLP - Imunidade e Isenção"
+    },
+    {
+      "id": 1651,
+      "name": "IPTU/TLP - Outros Serviços"
+    },
+    {
+      "id": 1041,
+      "name": "IPVA – Cadastro de Veículos"
+    },
+    {
+      "id": 1653,
+      "name": "IPVA – Calendários de Vencimentos"
+    },
+    {
+      "id": 1654,
+      "name": "IPVA – Consulta e emissão de DAR e pagamento direto no banco"
+    },
+    {
+      "id": 1655,
+      "name": "IPVA – Impugnação (cobranças indevidas), prescrição e restituição"
+    },
+    {
+      "id": 1656,
+      "name": "IPVA – Isenção"
+    },
+    {
+      "id": 1657,
+      "name": "IPVA – Não incidência e remissão"
+    },
+    {
+      "id": 1658,
+      "name": "IPVA – Valor de veículo e base de cálculo"
+    },
+    {
+      "id": 664,
+      "name": "Irregularidade em convênio,contrato,cooperação da FAP"
+    },
+    {
+      "id": 393,
+      "name": "Irregularidade em unidade de internação de menores"
+    },
+    {
+      "id": 375,
+      "name": "Irregularidade na execução de obra de programa habitacional"
+    },
+    {
+      "id": 1000,
+      "name": "Irregularidades em comercialização de produtos aos consumidores"
+    },
+    {
+      "id": 32,
+      "name": "Irregularidades em programas sociais"
+    },
+    {
+      "id": 262,
+      "name": "Irregularidades na infraestrutura"
+    },
+    {
+      "id": 675,
+      "name": "Isenção da taxa de concurso p,doadores de sangue"
+    },
+    {
+      "id": 1659,
+      "name": "ITBI – Cancelamento, impugnação, prescrição e restituição"
+    },
+    {
+      "id": 1660,
+      "name": "ITBI – Consulta e emissão de DAR"
+    },
+    {
+      "id": 1661,
+      "name": "ITBI – Imunidade e isenção"
+    },
+    {
+      "id": 1662,
+      "name": "ITBI – Não incidência"
+    },
+    {
+      "id": 1664,
+      "name": "ITBI – Valor venal de imóvel e base de cálculo"
+    },
+    {
+      "id": 1665,
+      "name": "ITCD – Cancelamento, impugnação, prescrição e restituição"
+    },
+    {
+      "id": 1666,
+      "name": "ITCD – Doação de bens e direitos, inclusive dinheiro"
+    },
+    {
+      "id": 1667,
+      "name": "ITCD – Emitir segunda via"
+    },
+    {
+      "id": 1669,
+      "name": "ITCD – Imunidade"
+    },
+    {
+      "id": 1671,
+      "name": "ITCD – Separação, divórcio ou dissolução de união estável"
+    },
+    {
+      "id": 788,
+      "name": "Itinerário do metrô"
+    },
+    {
+      "id": 835,
+      "name": "Jogos de azar"
+    },
+    {
+      "id": 101,
+      "name": "Lançamento de águas pluviais em corpo hídrico do DF"
+    },
+    {
+      "id": 99,
+      "name": "Lançamento de efluentes em corpos hídricos do DF"
+    },
+    {
+      "id": 671,
+      "name": "Lanche para doadores de sangue"
+    },
+    {
+      "id": 621,
+      "name": "Lanchonete , Cantina Escolar"
+    },
+    {
+      "id": 1264,
+      "name": "Lanchonetes/Restaurantes do Zoológico"
+    },
+    {
+      "id": 125,
+      "name": "Laudo de topografia"
+    },
+    {
+      "id": 757,
+      "name": "Legislação ambiental"
+    },
+    {
+      "id": 1019,
+      "name": "Legislação de agricultura, pecuária e abastecimento"
+    },
+    {
+      "id": 444,
+      "name": "Legislação de trânsito"
+    },
+    {
+      "id": 782,
+      "name": "Legislação inerente ao metrô"
+    },
+    {
+      "id": 1325,
+      "name": "Legislação para aposentadoria do Servidor do GDF"
+    },
+    {
+      "id": 1032,
+      "name": "Legislação tributária"
+    },
+    {
+      "id": 1443,
+      "name": "Lei Orgânica de Cultura - LOC"
+    },
+    {
+      "id": 1613,
+      "name": "Leilão de veículos"
+    },
+    {
+      "id": 241,
+      "name": "Leis e decretos do Governo de Brasília"
+    },
+    {
+      "id": 1292,
+      "name": "Leitos de UTI"
+    },
+    {
+      "id": 1001,
+      "name": "Lesão ao consumidor em emprestimos bancários"
+    },
+    {
+      "id": 366,
+      "name": "Liberação de escritura de imóvel (CODHAB)"
+    },
+    {
+      "id": 714,
+      "name": "Liberação de outorga para programas,projetos habitacionais"
+    },
+    {
+      "id": 117,
+      "name": "Licença de Demolição"
+    },
+    {
+      "id": 114,
+      "name": "Licença de Funcionamento , Alvará"
+    },
+    {
+      "id": 129,
+      "name": "Licença de funcionamento de comércio local estabelecido"
+    },
+    {
+      "id": 121,
+      "name": "Licença de Obras"
+    },
+    {
+      "id": 118,
+      "name": "Licença de Publicidade"
+    },
+    {
+      "id": 119,
+      "name": "Licença de Reforma"
+    },
+    {
+      "id": 120,
+      "name": "Licença de Tapume"
+    },
+    {
+      "id": 130,
+      "name": "Licença eventual (uso do espaço público por período limitado)"
+    },
+    {
+      "id": 112,
+      "name": "Licença eventual para eventos em espaço público ou privado"
+    },
+    {
+      "id": 128,
+      "name": "Licença para bancas de feira"
+    },
+    {
+      "id": 127,
+      "name": "Licença para quiosques e bancas de jornais"
+    },
+    {
+      "id": 1256,
+      "name": "Licenciamento ambiental dos empreendimentos da Terracap"
+    },
+    {
+      "id": 1316,
+      "name": "Licitação Pública"
+    },
+    {
+      "id": 203,
+      "name": "Ligação clandestina de água"
+    },
+    {
+      "id": 206,
+      "name": "Ligação clandestina de esgotos"
+    },
+    {
+      "id": 199,
+      "name": "Ligação de água"
+    },
+    {
+      "id": 211,
+      "name": "Ligação de esgotos"
+    },
+    {
+      "id": 1445,
+      "name": "Limpeza de bueiro / Boca de lobo"
+    },
+    {
+      "id": 1519,
+      "name": "Limpeza de eventos"
+    },
+    {
+      "id": 539,
+      "name": "Limpeza de ônibus"
+    },
+    {
+      "id": 1148,
+      "name": "Limpeza e conservação"
+    },
+    {
+      "id": 1195,
+      "name": "Limpeza e lavagem de equipamentos públicos"
+    },
+    {
+      "id": 1272,
+      "name": "Limpeza nos recintos dos animais do Zoológico"
+    },
+    {
+      "id": 1346,
+      "name": "Linha de ônibus"
+    },
+    {
+      "id": 646,
+      "name": "Linhas de crédito rural"
+    },
+    {
+      "id": 584,
+      "name": "Livro Didático"
+    },
+    {
+      "id": 1555,
+      "name": "Livros digitais"
+    },
+    {
+      "id": 733,
+      "name": "Locação de áreas no Jardim Botânico"
+    },
+    {
+      "id": 1149,
+      "name": "Locais de vacinação animal"
+    },
+    {
+      "id": 1150,
+      "name": "Locais de vacinação humana"
+    },
+    {
+      "id": 1276,
+      "name": "Localização de documentos perdidos em órgão,entidade pública do DF"
+    },
+    {
+      "id": 1244,
+      "name": "Localização de imóveis disponibilizados em edital"
+    },
+    {
+      "id": 909,
+      "name": "Localização de pessoas desaparecidas"
+    },
+    {
+      "id": 1151,
+      "name": "Localização de unidade de saúde pública"
+    },
+    {
+      "id": 886,
+      "name": "Localizacao de veiculos roubados"
+    },
+    {
+      "id": 1152,
+      "name": "Lotação , remoção de servidor da saúde pública"
+    },
+    {
+      "id": 1483,
+      "name": "Malha Fiscal"
+    },
+    {
+      "id": 420,
+      "name": "Manifestações culturais"
+    },
+    {
+      "id": 1153,
+      "name": "Manipulação de medicamentos"
+    },
+    {
+      "id": 339,
+      "name": "Manutenção de bueiro / Boca de Lobo"
+    },
+    {
+      "id": 815,
+      "name": "Manutenção de calçadas (irregulares ou danificadas)"
+    },
+    {
+      "id": 562,
+      "name": "Manutenção de ciclovia ou ciclofaixa em rodovia"
+    },
+    {
+      "id": 720,
+      "name": "Manutenção e conservação da edificação oriunda de programa habitacional"
+    },
+    {
+      "id": 968,
+      "name": "Manutenção e Segurança de Parques e Unidades de Conservação"
+    },
+    {
+      "id": 480,
+      "name": "Manutenção em estradas,rodovias"
+    },
+    {
+      "id": 1010,
+      "name": "Manutenção em estradas,rodovias rurais"
+    },
+    {
+      "id": 1628,
+      "name": "Manutenção em Rede de Esgoto"
+    },
+    {
+      "id": 724,
+      "name": "Manutenção predial em Órgão,Entidade Pública"
+    },
+    {
+      "id": 1275,
+      "name": "Manutenção/limpeza geral no Zoológico"
+    },
+    {
+      "id": 1265,
+      "name": "Marcação de visita monitorada no Zoológico"
+    },
+    {
+      "id": 1154,
+      "name": "Material , insumos médico - hospitalar em unidade de saúde pública"
+    },
+    {
+      "id": 1309,
+      "name": "Material de expediente em órgão,entidade pública"
+    },
+    {
+      "id": 1506,
+      "name": "Material Escolar"
+    },
+    {
+      "id": 1155,
+      "name": "Maternidade de hospital público do DF"
+    },
+    {
+      "id": 389,
+      "name": "Maus tratos a alunos menores"
+    },
+    {
+      "id": 746,
+      "name": "Maus tratos a custodiados"
+    },
+    {
+      "id": 385,
+      "name": "Maus tratos a custodiados menores"
+    },
+    {
+      "id": 1534,
+      "name": "Maus tratos de Animais Domésticos"
+    },
+    {
+      "id": 1535,
+      "name": "Maus tratos de Animais Não Domésticos"
+    },
+    {
+      "id": 1157,
+      "name": "Medicamento SUS"
+    },
+    {
+      "id": 1544,
+      "name": "Medida Socioeducativa"
+    },
+    {
+      "id": 1454,
+      "name": "Meio de locomoção no interior do Zoológico"
+    },
+    {
+      "id": 582,
+      "name": "Merenda escolar"
+    },
+    {
+      "id": 61,
+      "name": "Microcrédito"
+    },
+    {
+      "id": 1247,
+      "name": "Migração do sistema de financiamento Price,SAC"
+    },
+    {
+      "id": 588,
+      "name": "Monitores nas Escolas"
+    },
+    {
+      "id": 1158,
+      "name": "Móveis em unidade de saúde pública"
+    },
+    {
+      "id": 1293,
+      "name": "Mudança de Categoria da CNH"
+    },
+    {
+      "id": 1487,
+      "name": "Multa de transito"
+    },
+    {
+      "id": 1455,
+      "name": "Museu do zoológico"
+    },
+    {
+      "id": 1367,
+      "name": "Não atendimento na GRC-DFTRANS"
+    },
+    {
+      "id": 1365,
+      "name": "Não atendimento nos postos do BRT"
+    },
+    {
+      "id": 1486,
+      "name": "Não Emissão de Nota Fiscal"
+    },
+    {
+      "id": 1298,
+      "name": "NEPOTISMO"
+    },
+    {
+      "id": 804,
+      "name": "Nivelamento do asfalto"
+    },
+    {
+      "id": 1498,
+      "name": "Nota Fiscal Eletrônica - x - Outras Informações"
+    },
+    {
+      "id": 1038,
+      "name": "Nota legal"
+    },
+    {
+      "id": 91,
+      "name": "Núcleo de atendimento a família e aos autores de violência doméstica – Nafavd"
+    },
+    {
+      "id": 390,
+      "name": "Núcleo de atendimento a família e autores de violência doméstica"
+    },
+    {
+      "id": 779,
+      "name": "Objetos perdidos no metrô"
+    },
+    {
+      "id": 717,
+      "name": "Obra de programa habitacional inacabada"
+    },
+    {
+      "id": 477,
+      "name": "Obra pública em vias públicas"
+    },
+    {
+      "id": 783,
+      "name": "Obras no metrô"
+    },
+    {
+      "id": 1004,
+      "name": "Obrigatoriedade de recebimento de vencimentos pelo BRB"
+    },
+    {
+      "id": 277,
+      "name": "Omissão de socorro por Bombeiro"
+    },
+    {
+      "id": 250,
+      "name": "Ordem pública no Distrito Federal"
+    },
+    {
+      "id": 1516,
+      "name": "Orientação ambiental SLU"
+    },
+    {
+      "id": 989,
+      "name": "Orientação sobre ressarcimento de pagamentos ao consumidor"
+    },
+    {
+      "id": 974,
+      "name": "Orientações sobre direito do consumidor"
+    },
+    {
+      "id": 1159,
+      "name": "Órtese,prótese na saúde"
+    },
+    {
+      "id": 1160,
+      "name": "Padronização de medicamento"
+    },
+    {
+      "id": 418,
+      "name": "Pagamento a fornecedor do Governo de Brasília"
+    },
+    {
+      "id": 1006,
+      "name": "Pagamento de consumidor à fornecedor"
+    },
+    {
+      "id": 445,
+      "name": "Pagamento de multas de trânsito"
+    },
+    {
+      "id": 1617,
+      "name": "Pagamento multas de trânsito do DER-DF"
+    },
+    {
+      "id": 1611,
+      "name": "Pagamento multas de trânsito do DETRAN-DF"
+    },
+    {
+      "id": 1675,
+      "name": "Pagamento Parcelamento Precatório – Refiz"
+    },
+    {
+      "id": 1442,
+      "name": "Palestra"
+    },
+    {
+      "id": 727,
+      "name": "Palestra sobre educação ambiental"
+    },
+    {
+      "id": 1515,
+      "name": "Papa-Entulho (Ponto de Entrega Voluntária – PEV)"
+    },
+    {
+      "id": 1680,
+      "name": "Papa-lixo (contêiner semienterrado)"
+    },
+    {
+      "id": 1392,
+      "name": "Parada , Abrigo de Ônibus"
+    },
+    {
+      "id": 1509,
+      "name": "Parecer em processo"
+    },
+    {
+      "id": 822,
+      "name": "Parecer jurídico"
+    },
+    {
+      "id": 805,
+      "name": "Parquinhos infantis"
+    },
+    {
+      "id": 408,
+      "name": "Participação em evento cultural"
+    },
+    {
+      "id": 623,
+      "name": "PAS"
+    },
+    {
+      "id": 1317,
+      "name": "Patrimônio público"
+    },
+    {
+      "id": 806,
+      "name": "Pavimentação urbana - asfalto"
+    },
+    {
+      "id": 624,
+      "name": "PDAF,PDDE"
+    },
+    {
+      "id": 396,
+      "name": "Pedofilia"
+    },
+    {
+      "id": 901,
+      "name": "Pedofilia"
+    },
+    {
+      "id": 100,
+      "name": "Perfuração de poço artesiano e,ou cisterna"
+    },
+    {
+      "id": 706,
+      "name": "Período para novo cadastramento habitacional"
+    },
+    {
+      "id": 1161,
+      "name": "Permanência de acompanhante em unidade de saúde pública"
+    },
+    {
+      "id": 1303,
+      "name": "Permissão de Uso"
+    },
+    {
+      "id": 1537,
+      "name": "Perturbação do Sossego"
+    },
+    {
+      "id": 1687,
+      "name": "Pesquisa a documento histórico"
+    },
+    {
+      "id": 1235,
+      "name": "Pesquisa de índice de criminalidade do DF"
+    },
+    {
+      "id": 1197,
+      "name": "Pintura de meio-fio"
+    },
+    {
+      "id": 734,
+      "name": "Piquenique no Jardim Botânico"
+    },
+    {
+      "id": 131,
+      "name": "Pista de skate"
+    },
+    {
+      "id": 1379,
+      "name": "Placa de trânsito ilegal ou em local indevido"
+    },
+    {
+      "id": 1513,
+      "name": "Placa Proibido Jogar Lixo"
+    },
+    {
+      "id": 1390,
+      "name": "Placas de sinalização de identificação de animais"
+    },
+    {
+      "id": 1452,
+      "name": "Placas de sinalização e identificação dos animais do Zoológico"
+    },
+    {
+      "id": 1526,
+      "name": "Placas rodoviárias, de endereçamento e turismo do Distrito Federal"
+    },
+    {
+      "id": 1605,
+      "name": "Plano de Saúde- GDF Saúde"
+    },
+    {
+      "id": 640,
+      "name": "Plano de utilização"
+    },
+    {
+      "id": 110,
+      "name": "Planta de imóvel, localizado na jurisdição da Região Administrativa"
+    },
+    {
+      "id": 807,
+      "name": "Plantação em área pública"
+    },
+    {
+      "id": 323,
+      "name": "Poda de árvore em área pública"
+    },
+    {
+      "id": 965,
+      "name": "Poda ou Corte Irregular de Árvore"
+    },
+    {
+      "id": 926,
+      "name": "Polícia militar"
+    },
+    {
+      "id": 949,
+      "name": "Policial Envolvido com o tráfico de drogas"
+    },
+    {
+      "id": 628,
+      "name": "Política de adoção de extensão rural"
+    },
+    {
+      "id": 86,
+      "name": "Políticas de combate ao racismo"
+    },
+    {
+      "id": 955,
+      "name": "Poluição do Ar - Produtos Químicos"
+    },
+    {
+      "id": 809,
+      "name": "Pontes e viadutos"
+    },
+    {
+      "id": 810,
+      "name": "Ponto de encontro comunitário – PEC"
+    },
+    {
+      "id": 558,
+      "name": "Ponto de táxi"
+    },
+    {
+      "id": 1584,
+      "name": "Pontos Turísticos"
+    },
+    {
+      "id": 463,
+      "name": "Pontuação de CNH"
+    },
+    {
+      "id": 791,
+      "name": "Pontualidade dos trens do metrô"
+    },
+    {
+      "id": 1566,
+      "name": "Portal COVID-19 do Distrito Federal"
+    },
+    {
+      "id": 1630,
+      "name": "Portal da Transparência"
+    },
+    {
+      "id": 1497,
+      "name": "Portal de Serviços da Receita"
+    },
+    {
+      "id": 1646,
+      "name": "Portal de serviços do GDF"
+    },
+    {
+      "id": 872,
+      "name": "Porte ilegal de arma de fogo"
+    },
+    {
+      "id": 1391,
+      "name": "Postos SBA - Sistema de Bilhetagem Automático"
+    },
+    {
+      "id": 811,
+      "name": "Praças e jardins"
+    },
+    {
+      "id": 1580,
+      "name": "Práticas Integrativas de Saúde"
+    },
+    {
+      "id": 225,
+      "name": "Prazo de atendimento dos serviços prestados pela CAESB"
+    },
+    {
+      "id": 370,
+      "name": "Prazo para construção das unidades habitacionais"
+    },
+    {
+      "id": 1672,
+      "name": "Precatório – pagamento direto no banco sem emissão de DAR"
+    },
+    {
+      "id": 1673,
+      "name": "Precatório – pagamento, consulta e emissão de DAR ou dívida ativa"
+    },
+    {
+      "id": 1674,
+      "name": "Precatório – parcelamento, emissão de DAR de parcelamento e compensação com precatório"
+    },
+    {
+      "id": 1162,
+      "name": "Pré-natal em unidade de saúde pública do DF"
+    },
+    {
+      "id": 1279,
+      "name": "Preservação da fauna e flora."
+    },
+    {
+      "id": 760,
+      "name": "Preservação de parques"
+    },
+    {
+      "id": 1642,
+      "name": "Preservação de Parques Ecológicos"
+    },
+    {
+      "id": 722,
+      "name": "Preservação,Conservação dos espaços do Jardim Botânico"
+    },
+    {
+      "id": 193,
+      "name": "Pressão de água"
+    },
+    {
+      "id": 904,
+      "name": "Prevaricação"
+    },
+    {
+      "id": 1489,
+      "name": "Privatização de Estacionamento Público"
+    },
+    {
+      "id": 270,
+      "name": "Problema não-especificado com animais"
+    },
+    {
+      "id": 1186,
+      "name": "Problemas com animais sinantrópicos"
+    },
+    {
+      "id": 570,
+      "name": "Procedimento da Direção de Escola Pública"
+    },
+    {
+      "id": 1550,
+      "name": "Processo aprovado na JUCIS-DF"
+    },
+    {
+      "id": 457,
+      "name": "Processo da CNH"
+    },
+    {
+      "id": 1551,
+      "name": "Processo de registro de empresas com pendência/exigência"
+    },
+    {
+      "id": 1610,
+      "name": "Processo em andamento - DETRAN/DF"
+    },
+    {
+      "id": 604,
+      "name": "Processo Seletivo e Estágio"
+    },
+    {
+      "id": 1025,
+      "name": "PRO-DF - Programa de Apoio ao Empreendimento Produtivo do Distrito Federal"
+    },
+    {
+      "id": 1259,
+      "name": "PRÓ-DF II - programa de apoio ao empreendimento produtivo"
+    },
+    {
+      "id": 595,
+      "name": "Professor de Contrato Temporário"
+    },
+    {
+      "id": 573,
+      "name": "Professor(a)"
+    },
+    {
+      "id": 20,
+      "name": "Programa Auxílio Brasil (Bolsa Família)"
+    },
+    {
+      "id": 644,
+      "name": "Programa de aquisição da produção da agricultura – PAPA,DF"
+    },
+    {
+      "id": 645,
+      "name": "Programa de aquisição de alimentos – PAA,DF"
+    },
+    {
+      "id": 1590,
+      "name": "Programa Prato Cheio"
+    },
+    {
+      "id": 641,
+      "name": "Programa reflorestar"
+    },
+    {
+      "id": 1591,
+      "name": "Programa Renda minima"
+    },
+    {
+      "id": 1163,
+      "name": "Programa saúde bucal , dentistas em unidades de saúde pública"
+    },
+    {
+      "id": 421,
+      "name": "Programação de eventos culturais"
+    },
+    {
+      "id": 1029,
+      "name": "Programas de incentivo às exportações"
+    },
+    {
+      "id": 239,
+      "name": "Programas e projetos de governo"
+    },
+    {
+      "id": 367,
+      "name": "Programas habitacionais"
+    },
+    {
+      "id": 16,
+      "name": "Programas Sociais"
+    },
+    {
+      "id": 812,
+      "name": "Projetos e obras de infraestrutura urbana"
+    },
+    {
+      "id": 979,
+      "name": "Propaganda enganosa ao consumidor"
+    },
+    {
+      "id": 840,
+      "name": "Prostituição"
+    },
+    {
+      "id": 397,
+      "name": "Prostituição de infantil"
+    },
+    {
+      "id": 1477,
+      "name": "Prova Prática / Teórica - DETRAN"
+    },
+    {
+      "id": 813,
+      "name": "Quadras de esporte"
+    },
+    {
+      "id": 207,
+      "name": "Qualidade da água"
+    },
+    {
+      "id": 581,
+      "name": "Qualidade de Ensino"
+    },
+    {
+      "id": 973,
+      "name": "Qualidade no atendimento em unidade Procon"
+    },
+    {
+      "id": 1164,
+      "name": "Qualificação de profissional de saúde"
+    },
+    {
+      "id": 1397,
+      "name": "Quantidade de animais no Zoológico"
+    },
+    {
+      "id": 1547,
+      "name": "Quantidade de borboletas no Zoológico"
+    },
+    {
+      "id": 538,
+      "name": "Quantidade de ônibus"
+    },
+    {
+      "id": 789,
+      "name": "Quantidade de passageiros nos trens do metrô"
+    },
+    {
+      "id": 35,
+      "name": "Quantidade de servidores no órgão,entidade pública"
+    },
+    {
+      "id": 787,
+      "name": "Quantidades de trens do metrô"
+    },
+    {
+      "id": 1493,
+      "name": "Quebra de Sigilo e,ou Confidencialidade no Serviço de Ouvidoria"
+    },
+    {
+      "id": 1494,
+      "name": "Quebra de Sigilo e,ou Confidencialidade no Serviço Público"
+    },
+    {
+      "id": 484,
+      "name": "Quebra-molas"
+    },
+    {
+      "id": 1305,
+      "name": "Queimada em Área de Proteção Permanente - APP"
+    },
+    {
+      "id": 1585,
+      "name": "Queimadas em área pública"
+    },
+    {
+      "id": 1283,
+      "name": "Queimadas em terrenos particulares"
+    },
+    {
+      "id": 1165,
+      "name": "Quimioterapia em hospital público do DF"
+    },
+    {
+      "id": 486,
+      "name": "Radares de trânsito"
+    },
+    {
+      "id": 1166,
+      "name": "Radioterapia em hospital público do DF"
+    },
+    {
+      "id": 1599,
+      "name": "Recadastramento/Prova de Vida de aposentados e pensionistas do IPREV"
+    },
+    {
+      "id": 1636,
+      "name": "Recapeamento asfáltico"
+    },
+    {
+      "id": 874,
+      "name": "Recebimento de propina"
+    },
+    {
+      "id": 19,
+      "name": "Recebimento irregular de programas sociais"
+    },
+    {
+      "id": 888,
+      "name": "Receptação de mercadorias roubadas"
+    },
+    {
+      "id": 1274,
+      "name": "Recinto dos animais do Zoológico"
+    },
+    {
+      "id": 1167,
+      "name": "Reclamação sobre a realização de exames"
+    },
+    {
+      "id": 272,
+      "name": "Recolhimento de animais de pequeno porte"
+    },
+    {
+      "id": 1525,
+      "name": "Recolhimento de animais mortos em locais públicos"
+    },
+    {
+      "id": 1627,
+      "name": "Recomposição do asfalto ou calçada após obra da Caesb"
+    },
+    {
+      "id": 1188,
+      "name": "Recuperação de equipamentos públicos"
+    },
+    {
+      "id": 1639,
+      "name": "Recuperação de senha no Participa-DF"
+    },
+    {
+      "id": 1553,
+      "name": "Recuperação de Senha no Portal de Serviços da JUCIS-DF"
+    },
+    {
+      "id": 1570,
+      "name": "Recuperação de senha no Portal de Serviços da JUCIS-DF"
+    },
+    {
+      "id": 725,
+      "name": "Recuperação de vias e ruas no Jardim Botânico"
+    },
+    {
+      "id": 663,
+      "name": "Recurso contra análise de prestação de contas FAP"
+    },
+    {
+      "id": 661,
+      "name": "Recurso contra resultado de final,parcial de edital FAP"
+    },
+    {
+      "id": 1330,
+      "name": "Recursos Hídricos"
+    },
+    {
+      "id": 419,
+      "name": "Recursos para incentivo à produção cultural"
+    },
+    {
+      "id": 1168,
+      "name": "Recusa de atendimento do SAMU / Corpo de Bombeiros"
+    },
+    {
+      "id": 1576,
+      "name": "Recusa de recebimento de equipes do SAMU/Corpo de Bombeiros na urgência e emergência"
+    },
+    {
+      "id": 1531,
+      "name": "Redes Sociais Governamentais"
+    },
+    {
+      "id": 1529,
+      "name": "Redução de tabela horária de ônibus - férias"
+    },
+    {
+      "id": 767,
+      "name": "Reembolso de tarifa/crédito"
+    },
+    {
+      "id": 1500,
+      "name": "Reembolso de taxa"
+    },
+    {
+      "id": 1015,
+      "name": "Reforma agrária"
+    },
+    {
+      "id": 423,
+      "name": "Reforma em centro cultural"
+    },
+    {
+      "id": 1065,
+      "name": "Reforma em unidades de saúde"
+    },
+    {
+      "id": 1031,
+      "name": "Região integrada de desenvolvimento do distrito federal e entorno – RIDE"
+    },
+    {
+      "id": 1623,
+      "name": "Regiões Administrativas do DF"
+    },
+    {
+      "id": 1522,
+      "name": "Registro Público de Empresas e Atividades Afins"
+    },
+    {
+      "id": 715,
+      "name": "Regularização das áreas rurais do DF"
+    },
+    {
+      "id": 699,
+      "name": "Regularização de escritura habitacional (CODHAB)"
+    },
+    {
+      "id": 1260,
+      "name": "Regularização de imóveis,terrenos de entidades religiosas ou de assistência social"
+    },
+    {
+      "id": 368,
+      "name": "Regularização de imóvel "
+    },
+    {
+      "id": 365,
+      "name": "Regularização de lotes"
+    },
+    {
+      "id": 359,
+      "name": "Regularização de lotes em becos"
+    },
+    {
+      "id": 697,
+      "name": "Regularização de unidade habitacional"
+    },
+    {
+      "id": 442,
+      "name": "Regularização de veículo"
+    },
+    {
+      "id": 1169,
+      "name": "Relatório,parecer médico"
+    },
+    {
+      "id": 197,
+      "name": "Religação de água"
+    },
+    {
+      "id": 577,
+      "name": "Remanejamento Escolar"
+    },
+    {
+      "id": 459,
+      "name": "Renovação da CNH"
+    },
+    {
+      "id": 658,
+      "name": "Repasse de verba de pesquisa,projeto,convênio,evento"
+    },
+    {
+      "id": 826,
+      "name": "Requerimentos e recursos judiciais"
+    },
+    {
+      "id": 267,
+      "name": "Resgate de vítimas"
+    },
+    {
+      "id": 1681,
+      "name": "Resíduos da Construção Civil – RCC"
+    },
+    {
+      "id": 694,
+      "name": "Ressocialização"
+    },
+    {
+      "id": 80,
+      "name": "Restaurante Comunitário"
+    },
+    {
+      "id": 36,
+      "name": "Restaurante do Anexo do Palácio do Buriti"
+    },
+    {
+      "id": 1552,
+      "name": "Restituição de DAR"
+    },
+    {
+      "id": 683,
+      "name": "Resultado de exames médicos realizados no HEMOCENTRO"
+    },
+    {
+      "id": 1170,
+      "name": "Resultados de exames"
+    },
+    {
+      "id": 688,
+      "name": "Resultados de exames para doação disponíveis por meio eletrônico"
+    },
+    {
+      "id": 1200,
+      "name": "Retirada de animal de grande porte em vias públicas"
+    },
+    {
+      "id": 111,
+      "name": "Retirada de faixas de publicidade irregular em área pública"
+    },
+    {
+      "id": 1564,
+      "name": "Retorno às aulas na Rede de Ensino"
+    },
+    {
+      "id": 816,
+      "name": "Roçagem de mato,capim"
+    },
+    {
+      "id": 1011,
+      "name": "Roçagem rural"
+    },
+    {
+      "id": 1622,
+      "name": "Rodoviária do Plano Piloto e Área Central de Brasília"
+    },
+    {
+      "id": 924,
+      "name": "Ronda escolar"
+    },
+    {
+      "id": 923,
+      "name": "Ronda ostensiva"
+    },
+    {
+      "id": 1172,
+      "name": "Rotinas,protocolos de unidade de saúde pública"
+    },
+    {
+      "id": 859,
+      "name": "Roubo de veículos "
+    },
+    {
+      "id": 216,
+      "name": "Saneamento básico"
+    },
+    {
+      "id": 1440,
+      "name": "SBA - Cadastro"
+    },
+    {
+      "id": 242,
+      "name": "Secretários de Estado de Brasília"
+    },
+    {
+      "id": 1173,
+      "name": "Segurança , vigilância em órgão,entidade pública"
+    },
+    {
+      "id": 247,
+      "name": "Segurança da informação e comunicação do Governo de Brasília"
+    },
+    {
+      "id": 245,
+      "name": "Segurança das autoridades do Governo de Brasília"
+    },
+    {
+      "id": 244,
+      "name": "Segurança do Governador e família"
+    },
+    {
+      "id": 598,
+      "name": "Segurança nas Escolas"
+    },
+    {
+      "id": 249,
+      "name": "Segurança orgânica das sedes do Governo de Brasília"
+    },
+    {
+      "id": 898,
+      "name": "Segurança pública"
+    },
+    {
+      "id": 1230,
+      "name": "Segurança pública em estacionamentos"
+    },
+    {
+      "id": 60,
+      "name": "Seguro desemprego"
+    },
+    {
+      "id": 481,
+      "name": "Semáforos"
+    },
+    {
+      "id": 743,
+      "name": "Senha para atendimento no órgão público"
+    },
+    {
+      "id": 1174,
+      "name": "Serviço de banco de leite"
+    },
+    {
+      "id": 232,
+      "name": "Serviço de esgotamento sanitário"
+    },
+    {
+      "id": 248,
+      "name": "Serviço de inteligência do Governo de Brasília"
+    },
+    {
+      "id": 557,
+      "name": "Serviço de táxi "
+    },
+    {
+      "id": 568,
+      "name": "Serviço de Transporte Individual Privado por Aplicativos - STIP"
+    },
+    {
+      "id": 534,
+      "name": "Serviço de transporte público do DF"
+    },
+    {
+      "id": 983,
+      "name": "Serviço prestado por órgão/entidade do Governo do DF"
+    },
+    {
+      "id": 189,
+      "name": "Serviços BRB"
+    },
+    {
+      "id": 1175,
+      "name": "Serviços e controles da vigilância em saúde "
+    },
+    {
+      "id": 990,
+      "name": "Serviços prestados por empresas conveniadas ao GDF"
+    },
+    {
+      "id": 105,
+      "name": "Serviços públicos de água e saneamento, prestados pela Caesb em desacordo com as normas reguladas pela Adasa"
+    },
+    {
+      "id": 106,
+      "name": "Serviços públicos de água e saneamento, prestados pela Novacap em desacordo com as normas reguladas pela Adasa"
+    },
+    {
+      "id": 107,
+      "name": "Serviços públicos de água e saneamento, prestados pelo SLU em desacordo com as normas reguladas pela Adasa"
+    },
+    {
+      "id": 1294,
+      "name": "Servidor Público"
+    },
+    {
+      "id": 1205,
+      "name": "Servidor Terceirizado do Serviço Público do DF"
+    },
+    {
+      "id": 1458,
+      "name": "Servidor,Funcionário do Zoológico"
+    },
+    {
+      "id": 1176,
+      "name": "Siga Brasília - escala médica"
+    },
+    {
+      "id": 1504,
+      "name": "Simplificação de processos"
+    },
+    {
+      "id": 569,
+      "name": "Sinalização de ciclovia ou ciclofaixa em rodovia"
+    },
+    {
+      "id": 479,
+      "name": "Sinalização de trânsito/vias públicas"
+    },
+    {
+      "id": 732,
+      "name": "Sinalização de trilhas no Jardim Botânico"
+    },
+    {
+      "id": 1050,
+      "name": "Sintegra"
+    },
+    {
+      "id": 784,
+      "name": "Sistema automático"
+    },
+    {
+      "id": 181,
+      "name": "Sistema bancário fora do ar"
+    },
+    {
+      "id": 1002,
+      "name": "Sistema de empresa privada fora do ar"
+    },
+    {
+      "id": 1692,
+      "name": "Sistema de protocolo eletrônico (e-Protocolo)"
+    },
+    {
+      "id": 777,
+      "name": "Sistema de sonorização dos trens"
+    },
+    {
+      "id": 765,
+      "name": "Sistema do metrô"
+    },
+    {
+      "id": 1543,
+      "name": "Sistema Socioeducativo"
+    },
+    {
+      "id": 1177,
+      "name": "Sistemas de informação de saúde"
+    },
+    {
+      "id": 187,
+      "name": "Site do BRB"
+    },
+    {
+      "id": 530,
+      "name": "Site do Dftrans"
+    },
+    {
+      "id": 1297,
+      "name": "Site governamental"
+    },
+    {
+      "id": 1236,
+      "name": "Solicitação de apoio jurídico"
+    },
+    {
+      "id": 747,
+      "name": "Solicitação de assistência ao dependente de droga"
+    },
+    {
+      "id": 436,
+      "name": "Solicitação de assistência jurídica"
+    },
+    {
+      "id": 1409,
+      "name": "Solicitação de audiência"
+    },
+    {
+      "id": 63,
+      "name": "Solicitação de emprego"
+    },
+    {
+      "id": 358,
+      "name": "Solicitação de escrituras habitacional (CODHAB)"
+    },
+    {
+      "id": 1413,
+      "name": "Solicitação de Extrato de Cartão -DFTRANS"
+    },
+    {
+      "id": 1344,
+      "name": "Solicitação de horário , ônibus"
+    },
+    {
+      "id": 122,
+      "name": "Solicitação de Mapas"
+    },
+    {
+      "id": 829,
+      "name": "Solicitação de policiamento"
+    },
+    {
+      "id": 1482,
+      "name": "Substituição Tributária (ICMS)"
+    },
+    {
+      "id": 762,
+      "name": "Sugestão de obras de saneamento"
+    },
+    {
+      "id": 1507,
+      "name": "Sugestões para o Plano Plurianual (PPA), Lei de Diretrizes Orçamentárias (LDO) e Orçamento Anual (LOA)"
+    },
+    {
+      "id": 424,
+      "name": "Superfaturamento em eventos culturais"
+    },
+    {
+      "id": 400,
+      "name": "Superlotação de unidade de internação de menores"
+    },
+    {
+      "id": 1231,
+      "name": "Superlotação de unidade penal"
+    },
+    {
+      "id": 497,
+      "name": "Superlotação em ônibus"
+    },
+    {
+      "id": 1418,
+      "name": "Suposta Conduta Criminosa"
+    },
+    {
+      "id": 817,
+      "name": "Tapa buraco - vias públicas"
+    },
+    {
+      "id": 1399,
+      "name": "Tarifa de Ônibus"
+    },
+    {
+      "id": 566,
+      "name": "Tarifa de taxi"
+    },
+    {
+      "id": 567,
+      "name": "Tarifa do metrô"
+    },
+    {
+      "id": 1258,
+      "name": "Taxa de alteração de destinação - Onalt"
+    },
+    {
+      "id": 971,
+      "name": "Taxas Ambientais"
+    },
+    {
+      "id": 1178,
+      "name": "Teleatendimento"
+    },
+    {
+      "id": 183,
+      "name": "Teleatendimento prestado pelo banco"
+    },
+    {
+      "id": 574,
+      "name": "Telematrícula"
+    },
+    {
+      "id": 1179,
+      "name": "Tempo de espera atendimento em unidade de saúde pública"
+    },
+    {
+      "id": 992,
+      "name": "Tempo de espera do consumidor em filas"
+    },
+    {
+      "id": 57,
+      "name": "Tempo de espera para atendimento em órgão,entidade pública"
+    },
+    {
+      "id": 1575,
+      "name": "Tempo espera em serviço hospitalar de emergência"
+    },
+    {
+      "id": 1393,
+      "name": "Terminal de Ônibus"
+    },
+    {
+      "id": 1340,
+      "name": "Terraplanagem"
+    },
+    {
+      "id": 1563,
+      "name": "Teste Covid-19"
+    },
+    {
+      "id": 953,
+      "name": "Tortura"
+    },
+    {
+      "id": 64,
+      "name": "Trabalhador autônomo"
+    },
+    {
+      "id": 50,
+      "name": "Trabalho"
+    },
+    {
+      "id": 384,
+      "name": "Trabalho escravo infantil"
+    },
+    {
+      "id": 1280,
+      "name": "Trabalho voluntário em órgão,entidade pública do DF"
+    },
+    {
+      "id": 827,
+      "name": "Tráfico de drogas e entorpecentes"
+    },
+    {
+      "id": 401,
+      "name": "Tráfico de drogas envolvendo menor de idade"
+    },
+    {
+      "id": 884,
+      "name": "Tráfico de pessoas"
+    },
+    {
+      "id": 1180,
+      "name": "Traje usado por profissional de saúde"
+    },
+    {
+      "id": 461,
+      "name": "Transferência da CNH"
+    },
+    {
+      "id": 1246,
+      "name": "Transferência de imóveis com financiamento da Terracap"
+    },
+    {
+      "id": 447,
+      "name": "Transferência de veículo"
+    },
+    {
+      "id": 1461,
+      "name": "Trânsito de veículos no Zoológico"
+    },
+    {
+      "id": 1181,
+      "name": "Transplantes"
+    },
+    {
+      "id": 554,
+      "name": "Transporte de bagagens em táxi"
+    },
+    {
+      "id": 1339,
+      "name": "Transporte de bicicletas no BRT Expresso Sul"
+    },
+    {
+      "id": 781,
+      "name": "Transporte de bicicletas nos trens do metrô"
+    },
+    {
+      "id": 684,
+      "name": "Transporte disponível para doação de sangue"
+    },
+    {
+      "id": 579,
+      "name": "Transporte Escolar"
+    },
+    {
+      "id": 1270,
+      "name": "Tratamento dado aos animais do Zoológico"
+    },
+    {
+      "id": 219,
+      "name": "Tratamento de efluentes e resíduos"
+    },
+    {
+      "id": 1182,
+      "name": "Tratamento fora do domicílio - TFD"
+    },
+    {
+      "id": 550,
+      "name": "Treinamento profissional para os motoristas e cobradores de ônibus"
+    },
+    {
+      "id": 1427,
+      "name": "Unidade de Acolhimento para Adultos e Famílias Areal (Albergue)"
+    },
+    {
+      "id": 1428,
+      "name": "Unidade de Acolhimento para Mulheres"
+    },
+    {
+      "id": 1426,
+      "name": "Unidade de Proteção Social 24 horas"
+    },
+    {
+      "id": 572,
+      "name": "Unidade Educacional Particular"
+    },
+    {
+      "id": 571,
+      "name": "Unidade Educacional Pública"
+    },
+    {
+      "id": 608,
+      "name": "Unidade Escolar Conveniada"
+    },
+    {
+      "id": 14,
+      "name": "Unidades de Acolhimento Institucional"
+    },
+    {
+      "id": 1683,
+      "name": "Unidades de transbordo e destinação final de resíduos"
+    },
+    {
+      "id": 93,
+      "name": "Unidades móveis de atendimento as mulheres do campo e do cerrado"
+    },
+    {
+      "id": 687,
+      "name": "Unidades para coleta de sangue"
+    },
+    {
+      "id": 891,
+      "name": "Uso de bens públicos para fins privados"
+    },
+    {
+      "id": 889,
+      "name": "Uso de documento falso"
+    },
+    {
+      "id": 618,
+      "name": "Uso de drogas na escola"
+    },
+    {
+      "id": 1562,
+      "name": "Uso de máscara em estabelecimentos em geral"
+    },
+    {
+      "id": 1560,
+      "name": "Uso de máscara em locais públicos"
+    },
+    {
+      "id": 1053,
+      "name": "Uso de veículo oficial"
+    },
+    {
+      "id": 1382,
+      "name": "Uso dos banheiros,fraldários do Zoológico"
+    },
+    {
+      "id": 1469,
+      "name": "Uso Indevido"
+    },
+    {
+      "id": 895,
+      "name": "Uso indevido da viatura da policia civil"
+    },
+    {
+      "id": 929,
+      "name": "Uso indevido da viatura da policia militar"
+    },
+    {
+      "id": 944,
+      "name": "Utilização de armas não letais"
+    },
+    {
+      "id": 559,
+      "name": "Utilização do taxímetro"
+    },
+    {
+      "id": 1602,
+      "name": "Vacina COVID-19"
+    },
+    {
+      "id": 1183,
+      "name": "Vacina em domicílio"
+    },
+    {
+      "id": 1184,
+      "name": "Vacinas animais"
+    },
+    {
+      "id": 1185,
+      "name": "Vacinas humanas"
+    },
+    {
+      "id": 1472,
+      "name": "Vagas em creches públicas"
+    },
+    {
+      "id": 585,
+      "name": "Vagas nas Escolas"
+    },
+    {
+      "id": 726,
+      "name": "Valor cobrado de serviço,taxa no Jardim Botânico"
+    },
+    {
+      "id": 344,
+      "name": "Valor cobrado em serviço,taxa de órgão,entidade pública"
+    },
+    {
+      "id": 1269,
+      "name": "Valor do ingresso do Zoológico"
+    },
+    {
+      "id": 407,
+      "name": "Valorização das manifestações culturais"
+    },
+    {
+      "id": 1511,
+      "name": "Varrição de Vias e Ruas"
+    },
+    {
+      "id": 191,
+      "name": "Vazamento de água"
+    },
+    {
+      "id": 190,
+      "name": "Vazamento de esgoto"
+    },
+    {
+      "id": 1300,
+      "name": "Veículo abandonado"
+    },
+    {
+      "id": 1615,
+      "name": "Veículo apreendido em depósito"
+    },
+    {
+      "id": 438,
+      "name": "Veículo estacionado em local irregular"
+    },
+    {
+      "id": 473,
+      "name": "Veículos apreendidos"
+    },
+    {
+      "id": 1242,
+      "name": "Venda de imóveis por meio de licitação pública"
+    },
+    {
+      "id": 818,
+      "name": "Venda de mudas sobressalentes de árvores, arbustos, ervas e flores"
+    },
+    {
+      "id": 1470,
+      "name": "Venda Ilegal"
+    },
+    {
+      "id": 866,
+      "name": "Venda ilegal de animais"
+    },
+    {
+      "id": 710,
+      "name": "Venda ilegal de box comercial"
+    },
+    {
+      "id": 364,
+      "name": "Venda,aluguel indevida de unidades habitacionais"
+    },
+    {
+      "id": 665,
+      "name": "Verba para pesquisa, projeto, convênio , evento"
+    },
+    {
+      "id": 590,
+      "name": "Verbas nas Escolas"
+    },
+    {
+      "id": 1558,
+      "name": "Viabilidade de Legado e/ou Licenciamento"
+    },
+    {
+      "id": 778,
+      "name": "Viagens negativas no metrô"
+    },
+    {
+      "id": 492,
+      "name": "Viaturas de trânsito"
+    },
+    {
+      "id": 922,
+      "name": "Viaturas policiais"
+    },
+    {
+      "id": 243,
+      "name": "Vice-Governador de Brasília"
+    },
+    {
+      "id": 1187,
+      "name": "Vigilância epidemiológica"
+    },
+    {
+      "id": 1548,
+      "name": "Vigilantes/Guardas/Seguranças do Zoológico"
+    },
+    {
+      "id": 88,
+      "name": "Violência contra a mulher"
+    },
+    {
+      "id": 89,
+      "name": "Violência contra a mulher no transporte público"
+    },
+    {
+      "id": 378,
+      "name": "Violência contra criança ou adolescente "
+    },
+    {
+      "id": 890,
+      "name": "Violência física"
+    },
+    {
+      "id": 402,
+      "name": "Violência moral"
+    },
+    {
+      "id": 1473,
+      "name": "Violência nas escolas"
+    },
+    {
+      "id": 391,
+      "name": "Violência psicológica à criança e adolescente"
+    },
+    {
+      "id": 883,
+      "name": "Violência sexual"
+    },
+    {
+      "id": 735,
+      "name": "Visita aos espaços do Jardim Botânico"
+    },
+    {
+      "id": 744,
+      "name": "Visita em unidade penal"
+    },
+    {
+      "id": 1460,
+      "name": "Visitação no zoológico"
+    },
+    {
+      "id": 632,
+      "name": "Visitas técnicas EMATER"
+    },
+    {
+      "id": 1285,
+      "name": "Vistoria de Segurança Contra Incêndio"
+    },
+    {
+      "id": 252,
+      "name": "Vistoria em edificações privadas"
+    },
+    {
+      "id": 259,
+      "name": "Vistoria em edificações públicas"
+    },
+    {
+      "id": 466,
+      "name": "Vistorias de veículos"
+    },
+    {
+      "id": 1530,
+      "name": "Vistorias em áreas de risco"
+    },
+    {
+      "id": 1462,
+      "name": "Visualização dos animais nos recintos"
+    },
+    {
+      "id": 790,
+      "name": "VLT - Veículo leve sobre trilho"
+    },
+    {
+      "id": 1459,
+      "name": "Voluntários do zoológico"
+    }
+  ]
+}

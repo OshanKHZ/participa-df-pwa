@@ -1,0 +1,32 @@
+{
+  "classificacao": [
+    {
+      "id": 1,
+      "name": "Denúncia"
+    },
+    {
+      "id": 2,
+      "name": "Reclamação"
+    },
+    {
+      "id": 3,
+      "name": "Solicitação"
+    },
+    {
+      "id": 4,
+      "name": "Sugestão"
+    },
+    {
+      "id": 5,
+      "name": "Informação"
+    },
+    {
+      "id": 6,
+      "name": "Elogio"
+    },
+    {
+      "id": 999,
+      "name": "Valor utilizado quando a robô IZA estiver indisponível"
+    }
+  ]
+}
