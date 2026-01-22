@@ -25,8 +25,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         // Redirect to default 'from' email in development
         // This ensures testing works without sending to real emails or hitting unverified domain errors
-        const to =
-          process.env.NODE_ENV === 'development' ? provider.from : identifier
+        const to = identifier
 
         const transport = createTransport(provider.server)
         const result = await transport.sendMail({
