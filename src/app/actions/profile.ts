@@ -44,6 +44,6 @@ export async function getUserStats() {
     .where(eq(manifestations.userId, session.user.id))
 
   return {
-    manifestationsCount: result[0]?.value,
+    manifestationsCount: result[0]?.value ?? 0,
   }
 }
