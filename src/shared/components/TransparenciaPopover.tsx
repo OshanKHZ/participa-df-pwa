@@ -6,7 +6,7 @@ import { RiExternalLinkLine } from 'react-icons/ri'
 interface TransparenciaPopoverProps {
   isOpen: boolean
   onClose: () => void
-  triggerRef: React.RefObject<HTMLElement>
+  triggerRef: React.RefObject<HTMLElement | null>
 }
 
 export function TransparenciaPopover({

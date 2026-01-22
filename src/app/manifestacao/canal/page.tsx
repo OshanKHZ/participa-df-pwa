@@ -82,7 +82,11 @@ export default function ChannelSelectionPage() {
   return (
     <div className="min-h-screen bg-background pb-40">
       {/* Header */}
-      <AccessibleHeader currentStep={STEPS.CHANNEL} totalSteps={STEPS.TOTAL} completedSteps={COMPLETED_STEPS.AT_CHANNEL} />
+      <AccessibleHeader
+        currentStep={STEPS.CHANNEL}
+        totalSteps={STEPS.TOTAL}
+        completedSteps={COMPLETED_STEPS.AT_CHANNEL}
+      />
 
       {/* Main Content */}
       <main className="px-4 py-6">

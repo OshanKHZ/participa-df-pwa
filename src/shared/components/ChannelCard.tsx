@@ -29,7 +29,9 @@ export function ChannelCard({ channel, compact = false }: ChannelCardProps) {
                   href={item.link}
                   target={item.link.startsWith('http') ? '_blank' : undefined}
                   rel={
-                    item.link.startsWith('http') ? 'noopener noreferrer' : undefined
+                    item.link.startsWith('http')
+                      ? 'noopener noreferrer'
+                      : undefined
                   }
                   className="text-xs text-secondary hover:underline block"
                 >
@@ -65,14 +67,18 @@ export function ChannelCard({ channel, compact = false }: ChannelCardProps) {
                 href={item.link}
                 target={item.link.startsWith('http') ? '_blank' : undefined}
                 rel={
-                  item.link.startsWith('http') ? 'noopener noreferrer' : undefined
+                  item.link.startsWith('http')
+                    ? 'noopener noreferrer'
+                    : undefined
                 }
                 className="text-sm font-medium text-secondary hover:underline block"
               >
                 {item.value}
               </a>
             ) : (
-              <p className="text-sm font-medium text-foreground">{item.value}</p>
+              <p className="text-sm font-medium text-foreground">
+                {item.value}
+              </p>
             )}
           </div>
         ))}

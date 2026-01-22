@@ -7,7 +7,7 @@ import { AccessibleHeader } from '@/features/manifestation/components/Accessible
 import { NavigationFooter } from '@/features/manifestation/components/NavigationFooter'
 import { getStepProgress } from '@/shared/utils/stepProgress'
 import { useStepNavigation } from '@/shared/hooks/useStepNavigation'
-import { TOGGLE, STEPS } from '@/shared/constants/designTokens'
+import { TOGGLE, STEPS, COMPLETED_STEPS } from '@/shared/constants/designTokens'
 
 export default function PersonalDataPage() {
   const router = useRouter()
@@ -58,7 +58,11 @@ export default function PersonalDataPage() {
   return (
     <div className="min-h-screen bg-background pb-40">
       {/* Header */}
-      <AccessibleHeader currentStep={STEPS.CONTENT} totalSteps={STEPS.TOTAL} completedSteps={COMPLETED_STEPS.AT_CONTENT} />
+      <AccessibleHeader
+        currentStep={STEPS.CONTENT}
+        totalSteps={STEPS.TOTAL}
+        completedSteps={COMPLETED_STEPS.AT_CONTENT}
+      />
 
       {/* Main Content */}
       <main className="px-4 py-6">
@@ -69,7 +73,10 @@ export default function PersonalDataPage() {
             </h2>
             <button
               onClick={() => {
-                if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+                if (
+                  typeof window !== 'undefined' &&
+                  'speechSynthesis' in window
+                ) {
                   window.speechSynthesis.cancel()
                   const utterance = new SpeechSynthesisUtterance(
                     'Identificação opcional. Você pode se identificar ou manter o anonimato'

@@ -92,7 +92,9 @@ export function AccessibilityMenu() {
             <div className="flex items-center justify-between p-4 border-b border-border">
               <div className="flex items-center gap-2">
                 <RiEyeLine className="w-5 h-5 text-secondary" />
-                <h3 className="font-semibold text-foreground">Acessibilidade</h3>
+                <h3 className="font-semibold text-foreground">
+                  Acessibilidade
+                </h3>
               </div>
               <button
                 onClick={() => setIsOpen(false)}
@@ -157,7 +159,9 @@ export function AccessibilityMenu() {
                 >
                   <div
                     className={`w-5 h-5 bg-white rounded-full shadow transition-transform ${
-                      audioEnabled ? TOGGLE.TRANSITION_ON : TOGGLE.TRANSITION_OFF
+                      audioEnabled
+                        ? TOGGLE.TRANSITION_ON
+                        : TOGGLE.TRANSITION_OFF
                     }`}
                   />
                 </button>
@@ -181,12 +185,16 @@ export function AccessibilityMenu() {
                     highContrast ? 'bg-secondary' : 'bg-muted'
                   }`}
                   aria-label={
-                    highContrast ? 'Desativar alto contraste' : 'Ativar alto contraste'
+                    highContrast
+                      ? 'Desativar alto contraste'
+                      : 'Ativar alto contraste'
                   }
                 >
                   <div
                     className={`w-5 h-5 bg-white rounded-full shadow transition-transform ${
-                      highContrast ? TOGGLE.TRANSITION_ON : TOGGLE.TRANSITION_OFF
+                      highContrast
+                        ? TOGGLE.TRANSITION_ON
+                        : TOGGLE.TRANSITION_OFF
                     }`}
                   />
                 </button>

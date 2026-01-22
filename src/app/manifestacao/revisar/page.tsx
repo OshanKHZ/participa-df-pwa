@@ -8,7 +8,11 @@ import { AccessibleHeader } from '@/features/manifestation/components/Accessible
 import { NavigationFooter } from '@/features/manifestation/components/NavigationFooter'
 import { getStepProgress } from '@/shared/utils/stepProgress'
 import { useStepNavigation } from '@/shared/hooks/useStepNavigation'
-import { DURATION, STEPS } from '@/shared/constants/designTokens'
+import {
+  DURATION,
+  STEPS,
+  COMPLETED_STEPS,
+} from '@/shared/constants/designTokens'
 
 interface ManifestationData {
   type: string
@@ -64,7 +68,9 @@ export default function ReviewPage() {
     setIsSubmitting(true)
 
     // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, DURATION.FONT_LEVEL_DISPLAY))
+    await new Promise(resolve =>
+      setTimeout(resolve, DURATION.FONT_LEVEL_DISPLAY)
+    )
 
     // Generate protocol
     const protocol = `${new Date().toISOString().split('T')[0]?.replace(/-/g, '') ?? ''}-${Math.floor(1000 + Math.random() * 9000)}`
@@ -98,7 +104,11 @@ export default function ReviewPage() {
   return (
     <div className="min-h-screen bg-background pb-40">
       {/* Header */}
-      <AccessibleHeader currentStep={STEPS.REVIEW} totalSteps={STEPS.TOTAL} completedSteps={COMPLETED_STEPS.AT_REVIEW} />
+      <AccessibleHeader
+        currentStep={STEPS.REVIEW}
+        totalSteps={STEPS.TOTAL}
+        completedSteps={COMPLETED_STEPS.AT_REVIEW}
+      />
 
       {/* Main Content */}
       <main className="px-4 py-6 space-y-4">
@@ -109,7 +119,10 @@ export default function ReviewPage() {
             </h2>
             <button
               onClick={() => {
-                if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+                if (
+                  typeof window !== 'undefined' &&
+                  'speechSynthesis' in window
+                ) {
                   window.speechSynthesis.cancel()
                   const utterance = new SpeechSynthesisUtterance(
                     'Revise sua manifestação. Confira se todas as informações estão corretas'

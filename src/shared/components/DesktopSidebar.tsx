@@ -37,12 +37,16 @@ export function DesktopSidebar({
             </Link>
             <div className="relative">
               <button
-                ref={transparenciaTriggerRef as React.RefObject<HTMLButtonElement>}
+                ref={
+                  transparenciaTriggerRef as React.RefObject<HTMLButtonElement>
+                }
                 onClick={onTransparenciaToggle}
                 className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-accent transition-colors text-sm w-full text-left"
               >
                 <RiBarChartBoxLine className="size-4 text-secondary" />
-                <span className="text-foreground font-medium">Transparência</span>
+                <span className="text-foreground font-medium">
+                  Transparência
+                </span>
               </button>
               <TransparenciaPopover
                 isOpen={isTransparenciaOpen}

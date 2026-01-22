@@ -12,6 +12,7 @@ import {
   RiFileTextLine,
   RiSettings4Line,
 } from 'react-icons/ri'
+import { signIn } from 'next-auth/react'
 
 interface MenuDrawerProps {
   isOpen: boolean
@@ -91,16 +92,15 @@ export function MenuDrawer({
               <p className="text-sm text-muted-foreground mb-3">
                 Entre ou cadastre-se para acompanhar suas manifestações
               </p>
-              <Link
-                href="/login"
-                onClick={onClose}
+              <button
+                onClick={() => signIn()}
                 className="flex items-center justify-center gap-2 w-full bg-secondary hover:bg-secondary-hover text-secondary-foreground font-medium py-2.5 px-4 rounded-lg transition-colors"
               >
                 <RiLoginBoxLine className="size-5" />
                 Entrar
-              </Link>
+              </button>
               <button
-                onClick={onClose}
+                onClick={() => signIn()}
                 className="flex items-center justify-center gap-2 w-full bg-card hover:bg-accent text-foreground font-medium py-2.5 px-4 rounded-lg border border-border transition-colors"
               >
                 <RiUserAddLine className="size-5" />

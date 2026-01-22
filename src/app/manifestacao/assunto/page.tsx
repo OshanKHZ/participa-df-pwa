@@ -9,7 +9,11 @@ import { NavigationFooter } from '@/features/manifestation/components/Navigation
 import { getStepProgress } from '@/shared/utils/stepProgress'
 import { useStepNavigation } from '@/shared/hooks/useStepNavigation'
 import { useTextToSpeech } from '@/shared/hooks/useTextToSpeech'
-import { COMPLETED_STEPS, DURATION, STEPS } from '@/shared/constants/designTokens'
+import {
+  COMPLETED_STEPS,
+  DURATION,
+  STEPS,
+} from '@/shared/constants/designTokens'
 import assuntosData from '@/data/assuntos-completo.json'
 
 interface Assunto {
@@ -375,7 +379,11 @@ export default function AssuntoPage() {
   return (
     <div className="min-h-screen bg-background pb-40">
       {/* Header */}
-      <AccessibleHeader currentStep={STEPS.SUBJECT} totalSteps={STEPS.TOTAL} completedSteps={COMPLETED_STEPS.AT_SUBJECT} />
+      <AccessibleHeader
+        currentStep={STEPS.SUBJECT}
+        totalSteps={STEPS.TOTAL}
+        completedSteps={COMPLETED_STEPS.AT_SUBJECT}
+      />
 
       {/* Main Content */}
       <main className="px-4 py-6">

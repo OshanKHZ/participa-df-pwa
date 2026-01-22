@@ -17,7 +17,12 @@ import { NavigationFooter } from '@/features/manifestation/components/Navigation
 import { getStepProgress } from '@/shared/utils/stepProgress'
 import { useStepNavigation } from '@/shared/hooks/useStepNavigation'
 import { useTextToSpeech } from '@/shared/hooks/useTextToSpeech'
-import { LIMITS, STEPS } from '@/shared/constants/designTokens'
+import {
+  LIMITS,
+  STEPS,
+  DURATION,
+  COMPLETED_STEPS,
+} from '@/shared/constants/designTokens'
 
 type FileWithPreview = File & { preview?: string }
 
@@ -258,7 +263,11 @@ export default function ContentPage() {
   return (
     <div className="min-h-screen bg-background pb-40">
       {/* Header */}
-      <AccessibleHeader currentStep={STEPS.CONTENT} totalSteps={STEPS.TOTAL} completedSteps={COMPLETED_STEPS.AT_CONTENT} />
+      <AccessibleHeader
+        currentStep={STEPS.CONTENT}
+        totalSteps={STEPS.TOTAL}
+        completedSteps={COMPLETED_STEPS.AT_CONTENT}
+      />
 
       {/* Tabs */}
       {effectiveTabs.length > 1 && (

@@ -17,7 +17,12 @@ import { MobileBottomNav } from '@/shared/components/MobileBottomNav'
 import { MenuDrawer } from '@/shared/components/MenuDrawer'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
 
-export function HomePage() {
+interface HomePageProps {
+  isAuthenticated?: boolean
+  userName?: string
+}
+
+export function HomePage({ isAuthenticated, userName }: HomePageProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
   return (
@@ -57,7 +62,8 @@ export function HomePage() {
       <MenuDrawer
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
-        isAuthenticated={false}
+        isAuthenticated={isAuthenticated}
+        userName={userName}
       />
 
       {/* Main Content */}
@@ -102,7 +108,8 @@ export function HomePage() {
                   </h2>
                   <p className="text-muted-foreground">
                     Faça denúncias, elogios, sugestões ou reclamações de forma
-                    simples e rápida. Sua voz é importante para transformar o DF.
+                    simples e rápida. Sua voz é importante para transformar o
+                    DF.
                   </p>
                 </div>
               </div>

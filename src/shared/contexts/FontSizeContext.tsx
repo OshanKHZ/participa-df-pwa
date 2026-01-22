@@ -21,7 +21,7 @@ const FONT_SIZE_CLASSES = [
 ]
 
 export function FontSizeProvider({ children }: { children: React.ReactNode }) {
-  const [fontSizeLevel, setFontSizeLevel] = useState(FONT_LEVELS.MIN)
+  const [fontSizeLevel, setFontSizeLevel] = useState<number>(FONT_LEVELS.MIN)
 
   // Apply font size to document root
   useEffect(() => {
