@@ -29,11 +29,10 @@ export function MobileBottomNav({ activeTab }: MobileBottomNavProps) {
         <div className="flex items-center justify-around py-2">
           <Link
             href="/"
-            className={`flex flex-col items-center justify-center gap-0.5 w-14 h-14 rounded-lg transition-colors ${
-              activeTab === 'home'
+            className={`flex flex-col items-center justify-center gap-0.5 w-14 h-14 rounded-lg transition-colors ${activeTab === 'home'
                 ? 'text-secondary bg-secondary/10'
                 : 'text-muted-foreground'
-            }`}
+              }`}
           >
             <RiHomeLine className="size-6" />
             <span className="text-xs font-medium">Início</span>
@@ -41,11 +40,10 @@ export function MobileBottomNav({ activeTab }: MobileBottomNavProps) {
 
           <Link
             href="/servicos"
-            className={`flex flex-col items-center justify-center gap-0.5 w-14 h-14 rounded-lg transition-colors ${
-              activeTab === 'services'
+            className={`flex flex-col items-center justify-center gap-0.5 w-14 h-14 rounded-lg transition-colors ${activeTab === 'services'
                 ? 'text-secondary bg-secondary/10'
                 : 'text-muted-foreground'
-            }`}
+              }`}
           >
             <RiAppsLine className="size-6" />
             <span className="text-xs font-medium">Serviços</span>
@@ -60,26 +58,25 @@ export function MobileBottomNav({ activeTab }: MobileBottomNavProps) {
 
           <Link
             href="/ajuda"
-            className={`flex flex-col items-center justify-center gap-0.5 w-14 h-14 rounded-lg transition-colors ${
-              activeTab === 'help'
+            className={`flex flex-col items-center justify-center gap-0.5 w-14 h-14 rounded-lg transition-colors ${activeTab === 'help'
                 ? 'text-secondary bg-secondary/10'
                 : 'text-muted-foreground'
-            }`}
+              }`}
           >
             <RiQuestionLine className="size-6" />
             <span className="text-xs font-medium">Ajuda</span>
           </Link>
 
-          <button
-            className={`flex flex-col items-center justify-center gap-0.5 w-14 h-14 rounded-lg transition-colors ${
-              activeTab === 'profile'
+          <Link
+            href="/perfil"
+            className={`flex flex-col items-center justify-center gap-0.5 w-14 h-14 rounded-lg transition-colors ${activeTab === 'profile'
                 ? 'text-secondary bg-secondary/10'
                 : 'text-muted-foreground'
-            }`}
+              }`}
           >
             <RiUserLine className="size-6" />
             <span className="text-xs font-medium">Perfil</span>
-          </button>
+          </Link>
         </div>
       </nav>
     </>

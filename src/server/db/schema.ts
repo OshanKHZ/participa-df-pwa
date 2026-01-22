@@ -15,6 +15,7 @@ export const users = pgTable('user', {
   email: text('email').unique(),
   emailVerified: timestamp('emailVerified', { mode: 'date' }),
   image: text('image'),
+  accessibility_info: text('accessibility_info'),
 })
 
 export const accounts = pgTable(
@@ -62,3 +63,18 @@ export const verificationTokens = pgTable(
     }),
   ]
 )
+
+export const manifestations = pgTable('manifestation', {
+  id: text('id')
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  userId: text('userId')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
+  protocol: text('protocol').notNull().unique(), // e.g., OUV-2024-001
+  type: text('type').notNull(), // Denúncia, Elogio, etc.
+  description: text('description'),
+  status: text('status').notNull().default('received'), // received, analyzing, done
+  createdAt: timestamp('createdAt', { mode: 'date' }).defaultNow().notNull(),
+  updatedAt: timestamp('updatedAt', { mode: 'date' }).defaultNow().notNull(),
+})

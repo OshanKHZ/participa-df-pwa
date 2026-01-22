@@ -59,9 +59,8 @@ export function MenuDrawer({
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 right-0 h-full w-80 drawer-width-mobile bg-background z-drawer shadow-2xl transform transition-transform duration-300 ease-in-out ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
+        className={`fixed top-0 right-0 h-full w-80 drawer-width-mobile bg-background z-drawer shadow-2xl transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
       >
         {/* Header */}
         <div className="bg-primary text-primary-foreground p-4 flex items-center justify-between">
@@ -78,7 +77,7 @@ export function MenuDrawer({
         {/* User Section */}
         <div className="border-b border-border p-4">
           {isAuthenticated ? (
-            <div className="flex items-center gap-3">
+            <Link href="/perfil" onClick={onClose} className="flex items-center gap-3">
               <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
                 <RiUserLine className="size-6 text-white" />
               </div>
@@ -86,7 +85,7 @@ export function MenuDrawer({
                 <p className="font-semibold text-foreground">{userName}</p>
                 <p className="text-xs text-muted-foreground">Ver perfil</p>
               </div>
-            </div>
+            </Link>
           ) : (
             <div className="space-y-2">
               <p className="text-sm text-muted-foreground mb-3">
@@ -144,13 +143,14 @@ export function MenuDrawer({
             </li>
             {isAuthenticated && (
               <li>
-                <button
+                <Link
+                  href="/perfil"
                   onClick={onClose}
                   className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-accent transition-colors text-foreground"
                 >
                   <RiSettings4Line className="size-5 text-muted-foreground" />
                   <span className="font-medium">Configurações</span>
-                </button>
+                </Link>
               </li>
             )}
           </ul>

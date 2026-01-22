@@ -3,11 +3,28 @@ import { createTransport } from 'nodemailer'
 import { DrizzleAdapter } from '@auth/drizzle-adapter'
 import Google from 'next-auth/providers/google'
 import Nodemailer from 'next-auth/providers/nodemailer'
+import Credentials from 'next-auth/providers/credentials'
 import { db } from './db'
+import { users } from './db/schema'
+import { eq } from 'drizzle-orm'
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: DrizzleAdapter(db),
   providers: [
+    Credentials({
+      name: 'Anonymous',
+      credentials: {
+        email: { label: 'Email', type: 'email' },
+      },
+      async authorize(credentials) {
+        if (!credentials?.email) return null
+        const email = credentials.email as string
+        const user = await db.query.users.findFirst({
+          where: eq(users.email, email),
+        })
+        return user || null
+      },
+    }),
     Google,
     Nodemailer({
       server: {
