@@ -66,25 +66,25 @@ export function ExitConfirmModal({
           <div className="p-4 border-t border-border space-y-2">
             <button
               onClick={onSaveAndExit}
-              className="w-full py-3 px-4 bg-secondary text-secondary-foreground rounded-lg hover:bg-secondary-hover transition-colors flex items-center justify-center gap-2 font-medium"
+              className="w-full py-3 px-4 bg-success text-white rounded-lg hover:opacity-90 transition-colors flex items-center justify-center gap-2 font-medium"
             >
               <RiSaveLine className="size-5" />
               Salvar como rascunho
             </button>
 
             <button
-              onClick={onExitWithoutSaving}
+              onClick={onClose}
               className="w-full py-3 px-4 border-2 border-border text-foreground rounded-lg hover:bg-accent transition-colors flex items-center justify-center gap-2 font-medium"
             >
-              <RiDeleteBinLine className="size-5" />
-              Descartar alterações
+              Continuar preenchendo
             </button>
 
             <button
-              onClick={onClose}
-              className="w-full py-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+              onClick={onExitWithoutSaving}
+              className="w-full py-3 px-4 text-destructive hover:text-destructive/80 transition-colors flex items-center justify-center gap-2 font-medium"
             >
-              Continuar preenchendo
+              <RiDeleteBinLine className="size-5" />
+              Descartar alterações
             </button>
           </div>
         </div>

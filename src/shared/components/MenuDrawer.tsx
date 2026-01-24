@@ -9,10 +9,11 @@ import {
   RiUserAddLine,
   RiHomeLine,
   RiQuestionLine,
-  RiFileTextLine,
+  RiBarChartBoxLine,
   RiSettings4Line,
+  RiCustomerService2Line,
+  RiFileListLine,
 } from 'react-icons/ri'
-import { signIn } from 'next-auth/react'
 
 interface MenuDrawerProps {
   isOpen: boolean
@@ -87,24 +88,26 @@ export function MenuDrawer({
               </div>
             </Link>
           ) : (
-            <div className="space-y-2">
-              <p className="text-sm text-muted-foreground mb-3">
+            <div className="space-y-3">
+              <p className="text-sm text-muted-foreground">
                 Entre ou cadastre-se para acompanhar suas manifestações
               </p>
-              <button
-                onClick={() => signIn()}
+              <Link
+                href="/entrar"
+                onClick={onClose}
                 className="flex items-center justify-center gap-2 w-full bg-secondary hover:bg-secondary-hover text-secondary-foreground font-medium py-2.5 px-4 rounded-lg transition-colors"
               >
                 <RiLoginBoxLine className="size-5" />
                 Entrar
-              </button>
-              <button
-                onClick={() => signIn()}
-                className="flex items-center justify-center gap-2 w-full bg-card hover:bg-accent text-foreground font-medium py-2.5 px-4 rounded-lg border border-border transition-colors"
+              </Link>
+              <Link
+                href="/cadastrar"
+                onClick={onClose}
+                className="w-full text-secondary hover:text-secondary-hover font-medium py-2 text-sm flex items-center justify-center gap-2"
               >
-                <RiUserAddLine className="size-5" />
+                <RiUserAddLine className="size-4" />
                 Cadastrar-se
-              </button>
+              </Link>
             </div>
           )}
         </div>
@@ -116,40 +119,61 @@ export function MenuDrawer({
               <Link
                 href="/"
                 onClick={onClose}
-                className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-accent transition-colors text-foreground"
+                className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-accent transition-colors text-foreground"
               >
                 <RiHomeLine className="size-5 text-muted-foreground" />
-                <span className="font-medium">Início</span>
+                <span className="font-medium text-sm">Início</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/historico"
+                onClick={onClose}
+                className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-accent transition-colors text-foreground"
+              >
+                <RiFileListLine className="size-5 text-muted-foreground" />
+                <span className="font-medium text-sm">Minhas Manifestações</span>
               </Link>
             </li>
             <li>
               <Link
                 href="/ajuda"
                 onClick={onClose}
-                className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-accent transition-colors text-foreground"
+                className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-accent transition-colors text-foreground"
               >
                 <RiQuestionLine className="size-5 text-muted-foreground" />
-                <span className="font-medium">Central de Ajuda</span>
+                <span className="font-medium text-sm">Central de Ajuda</span>
               </Link>
             </li>
             <li>
-              <button
+              <Link
+                href="/canais"
                 onClick={onClose}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-accent transition-colors text-foreground"
+                className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-accent transition-colors text-foreground"
               >
-                <RiFileTextLine className="size-5 text-muted-foreground" />
-                <span className="font-medium">Minhas Manifestações</span>
-              </button>
+                <RiCustomerService2Line className="size-5 text-muted-foreground" />
+                <span className="font-medium text-sm">Canais de Atendimento</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/transparencia"
+                onClick={onClose}
+                className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-accent transition-colors text-foreground"
+              >
+                <RiBarChartBoxLine className="size-5 text-muted-foreground" />
+                <span className="font-medium text-sm">Transparência</span>
+              </Link>
             </li>
             {isAuthenticated && (
               <li>
                 <Link
                   href="/perfil"
                   onClick={onClose}
-                  className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-accent transition-colors text-foreground"
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-accent transition-colors text-foreground"
                 >
                   <RiSettings4Line className="size-5 text-muted-foreground" />
-                  <span className="font-medium">Configurações</span>
+                  <span className="font-medium text-sm">Configurações</span>
                 </Link>
               </li>
             )}

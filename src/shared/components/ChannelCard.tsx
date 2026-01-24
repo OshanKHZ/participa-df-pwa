@@ -12,7 +12,7 @@ export function ChannelCard({ channel, compact = false }: ChannelCardProps) {
 
   if (compact) {
     return (
-      <div className="bg-card border border-border rounded-lg p-4 hover:border-secondary hover:shadow-md transition-all">
+      <div className="bg-card border border-border rounded-lg p-4 hover:border-secondary transition-all">
         <div className="flex items-center gap-3 mb-2">
           <div className="w-10 h-10 bg-secondary/10 rounded-lg flex items-center justify-center flex-shrink-0">
             <Icon className="size-5 text-secondary" />

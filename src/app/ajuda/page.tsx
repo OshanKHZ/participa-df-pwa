@@ -2,8 +2,9 @@
 
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import {
-  RiArrowLeftLine,
+  RiMenuLine,
   RiSearchLine,
   RiArrowDownSLine,
   RiArrowUpSLine,
@@ -14,6 +15,8 @@ import {
   RiMailLine,
 } from 'react-icons/ri'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
+import { MobileBottomNav } from '@/shared/components/MobileBottomNav'
+import { MenuDrawer } from '@/shared/components/MenuDrawer'
 
 interface FAQItem {
   question: string
@@ -92,6 +95,7 @@ const categoryIcons: Record<string, React.ElementType> = {
 }
 
 export default function AjudaPage() {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [openIndex, setOpenIndex] = useState<number | null>(null)
@@ -127,23 +131,44 @@ export default function AjudaPage() {
       {/* Desktop Header */}
       <DesktopHeader />
 
-      <div className="min-h-screen bg-background pb-24 lg:pb-8">
-        {/* Header - Mobile only */}
-        <header className="lg:hidden bg-primary text-primary-foreground">
-          <div className="px-4 py-3 flex items-center gap-3">
-            <Link
-              href="/"
-              className="p-2 -ml-2 hover:bg-white/10 rounded-lg transition-colors"
-              aria-label="Voltar para página inicial"
-            >
-              <RiArrowLeftLine className="size-5 text-white/70" />
-            </Link>
-            <h1 className="text-lg font-semibold">Central de Ajuda</h1>
-          </div>
-        </header>
+      {/* Mobile Header */}
+      <header className="lg:hidden bg-primary text-primary-foreground">
+        <div className="px-3 py-3 flex items-center justify-between">
+          <Image
+            src="/logo.svg"
+            alt="Participa DF"
+            width={126}
+            height={32}
+            priority
+            className="h-7 w-auto"
+          />
+          <button
+            onClick={() => setIsDrawerOpen(true)}
+            className="w-10 h-10 flex items-center justify-center hover:bg-white/10 rounded-lg transition-colors"
+            aria-label="Menu"
+          >
+            <RiMenuLine className="size-6 text-white" />
+          </button>
+        </div>
+
+        {/* Slogan Section */}
+        <div className="bg-primary-light px-4 py-2.5">
+          <p className="text-center text-xs font-medium text-white">
+            Você no controle!
+          </p>
+        </div>
+      </header>
+
+      {/* Menu Drawer */}
+      <MenuDrawer
+        isOpen={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+      />
+
+      <div className="min-h-screen bg-background pb-24 lg:pb-8 lg:max-w-6xl lg:mx-auto">
 
         {/* Main Content */}
-        <main className="px-4 py-4 lg:px-8 lg:py-8 lg:max-w-6xl lg:mx-auto">
+        <main className="px-4 py-4 lg:px-8 lg:py-8">
           {/* Desktop Title */}
           <div className="hidden lg:block mb-8">
             <h1 className="text-2xl font-bold text-foreground mb-2">
@@ -348,7 +373,10 @@ export default function AjudaPage() {
             </p>
           </div>
         </main>
-      </div>
-    </>
-  )
+
+        {/* Mobile Bottom Nav */}
+        <MobileBottomNav activeTab="help" isAuthenticated={false} />
+        </div>
+      </>
+    )
 }

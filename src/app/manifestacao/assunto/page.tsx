@@ -463,7 +463,7 @@ export default function AssuntoPage() {
                     className={`w-full p-3 rounded-lg border-2 text-left transition-all ${
                       isSelected
                         ? 'border-success bg-success/10'
-                        : 'border-border bg-card hover:bg-accent hover:shadow-md'
+                        : 'border-border bg-card hover:bg-accent'
                     }`}
                   >
                     <p

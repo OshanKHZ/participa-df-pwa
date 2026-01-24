@@ -10,7 +10,9 @@ import { TransparenciaPopover } from '@/shared/components/TransparenciaPopover'
 export function DesktopHeader() {
   const pathname = usePathname()
   const [isTransparenciaOpen, setIsTransparenciaOpen] = useState(false)
+  const [isAuthOpen, setIsAuthOpen] = useState(false)
   const transparenciaTriggerRef = useRef<HTMLButtonElement>(null)
+  const authTriggerRef = useRef<HTMLButtonElement>(null)
 
   const isActive = (path: string) => pathname === path
 
@@ -41,10 +43,34 @@ export function DesktopHeader() {
               />
             </Link>
 
-            <button className="flex items-center gap-2 px-4 py-2 text-sm text-white/90 hover:text-white transition-colors">
-              <RiUserLine className="size-4" />
-              <span>Entrar</span>
-            </button>
+            <div
+              className="relative"
+            >
+              <button
+                onClick={() => setIsAuthOpen(!isAuthOpen)}
+                className="flex items-center gap-2 px-4 py-2 text-sm text-white/70 hover:text-white transition-colors cursor-pointer"
+              >
+                <RiUserLine className="size-4" />
+                <span>Entrar / Cadastrar</span>
+              </button>
+
+              {isAuthOpen && (
+                <div className="absolute top-full right-0 mt-2 bg-white shadow-lg border border-border py-1 min-w-[180px]">
+                  <Link
+                    href="/entrar"
+                    className="block px-5 py-3 text-sm font-medium text-foreground hover:bg-accent hover:text-secondary transition-colors"
+                  >
+                    Entrar
+                  </Link>
+                  <Link
+                    href="/cadastrar"
+                    className="block px-5 py-3 text-sm font-medium text-foreground hover:bg-accent hover:text-secondary transition-colors"
+                  >
+                    Cadastrar
+                  </Link>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
@@ -58,7 +84,7 @@ export function DesktopHeader() {
 
               <Link
                 href="/manifestacao"
-                className="flex items-center gap-2 px-6 py-3 text-sm font-semibold bg-manifestation-cta text-white shadow-sm -my-3 hover:bg-white hover:text-secondary hover:shadow-xl transition-all duration-200"
+                className="flex items-center gap-2 px-6 py-3 text-sm font-semibold bg-manifestation-cta text-white -my-3 hover:bg-white hover:text-secondary transition-all duration-200 cursor-pointer"
               >
                 <RiAddLine className="size-4" />
                 <span>Nova Manifestação</span>

@@ -16,7 +16,7 @@ export default function CanaisPage() {
         <div className="px-4 py-3">
           <div className="flex items-center gap-3">
             <button
-              onClick={() => router.push('/')}
+              onClick={() => router.back()}
               className="p-2 -ml-2 hover:bg-white/10 rounded-lg transition-colors"
               aria-label="Voltar"
             >
@@ -81,7 +81,7 @@ export default function CanaisPage() {
       </main>
 
       {/* Bottom Navigation */}
-      <MobileBottomNav activeTab="services" />
+      <MobileBottomNav activeTab="services" isAuthenticated={false} />
     </div>
   )
 }

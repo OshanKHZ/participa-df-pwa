@@ -11,7 +11,7 @@ function SubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg focus:outline-none focus:shadow-outline transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+      className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg focus:outline-none transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
     >
       {pending ? 'Entrando...' : 'Entrar Agora'}
     </button>
@@ -22,7 +22,7 @@ export function AnonymousRegisterForm() {
   const [needsAccessibility, setNeedsAccessibility] = useState(false)
 
   return (
-    <div className="w-full max-w-md bg-white rounded-xl shadow-md p-8 border border-gray-100">
+    <div className="w-full max-w-md bg-white rounded-xl p-8 border border-gray-100">
       <div className="text-center mb-6">
         <h2 className="text-2xl font-bold text-gray-800">Acesso Rápido</h2>
         <p className="text-gray-500 text-sm mt-1">

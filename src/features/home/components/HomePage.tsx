@@ -12,6 +12,7 @@ import {
   RiQuestionLine,
   RiBarChartBoxLine,
   RiMenuLine,
+  RiLightbulbLine,
 } from 'react-icons/ri'
 import { MobileBottomNav } from '@/shared/components/MobileBottomNav'
 import { MenuDrawer } from '@/shared/components/MenuDrawer'
@@ -118,7 +119,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
               <div className="flex flex-wrap gap-3">
                 <Link
                   href="/manifestacao"
-                  className="inline-flex items-center gap-2 bg-secondary hover:bg-secondary-hover text-secondary-foreground font-medium py-3 px-6 rounded-lg btn-hover shadow-sm transition-colors"
+                  className="inline-flex items-center gap-2 bg-secondary hover:bg-secondary-hover text-secondary-foreground font-medium py-3 px-6 rounded-lg transition-colors"
                 >
                   <RiAddLine className="size-5" />
                   Nova Manifestação
@@ -138,7 +139,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
             <div className="lg:hidden w-full space-y-3">
               <Link
                 href="/manifestacao"
-                className="block w-full bg-secondary hover:bg-secondary-hover text-secondary-foreground font-medium py-3 px-6 rounded-md btn-hover shadow-sm"
+                className="block w-full bg-secondary hover:bg-secondary-hover text-secondary-foreground font-medium py-3 px-6 rounded-md transition-colors"
               >
                 <span className="flex items-center justify-center gap-2">
                   <RiAddLine className="size-5" />
@@ -173,14 +174,38 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
           </div>
 
           <div className="border border-border rounded-lg divide-y divide-border">
-            {/* Consultar protocolo */}
+            {/* O que é a Ouvidoria */}
             <Link
-              href="/historico"
+              href="/o-que-e-ouvidoria"
               className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors"
             >
-              <RiSearchLine className="size-5 text-secondary flex-shrink-0" />
+              <RiMegaphoneLine className="size-5 text-secondary flex-shrink-0" />
               <span className="flex-1 text-sm font-medium text-foreground">
-                Consultar protocolo
+                Sobre a Ouvidoria
+              </span>
+              <RiArrowRightSLine className="size-5 text-muted-foreground flex-shrink-0" />
+            </Link>
+
+            {/* Orientações */}
+            <Link
+              href="/orientacoes"
+              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors"
+            >
+              <RiLightbulbLine className="size-5 text-secondary flex-shrink-0" />
+              <span className="flex-1 text-sm font-medium text-foreground">
+                Orientações para o registro
+              </span>
+              <RiArrowRightSLine className="size-5 text-muted-foreground flex-shrink-0" />
+            </Link>
+
+            {/* Perguntas frequentes */}
+            <Link
+              href="/ajuda"
+              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors"
+            >
+              <RiQuestionLine className="size-5 text-secondary flex-shrink-0" />
+              <span className="flex-1 text-sm font-medium text-foreground">
+                Perguntas frequentes
               </span>
               <RiArrowRightSLine className="size-5 text-muted-foreground flex-shrink-0" />
             </Link>
@@ -196,37 +221,13 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
               </span>
               <RiArrowRightSLine className="size-5 text-muted-foreground flex-shrink-0" />
             </Link>
-
-            {/* FAQ - Perguntas frequentes */}
-            <Link
-              href="/ajuda"
-              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors"
-            >
-              <RiQuestionLine className="size-5 text-secondary flex-shrink-0" />
-              <span className="flex-1 text-sm font-medium text-foreground">
-                Perguntas frequentes
-              </span>
-              <RiArrowRightSLine className="size-5 text-muted-foreground flex-shrink-0" />
-            </Link>
-
-            {/* Transparência - Link simples no mobile */}
-            <Link
-              href="/transparencia"
-              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors"
-            >
-              <RiBarChartBoxLine className="size-5 text-secondary flex-shrink-0" />
-              <span className="flex-1 text-sm font-medium text-foreground">
-                Transparência
-              </span>
-              <RiArrowRightSLine className="size-5 text-muted-foreground flex-shrink-0" />
-            </Link>
           </div>
         </div>
       </main>
 
       {/* Bottom Navigation - Mobile only */}
       <div className="lg:hidden">
-        <MobileBottomNav activeTab="home" />
+        <MobileBottomNav activeTab="home" isAuthenticated={isAuthenticated} />
       </div>
     </>
   )

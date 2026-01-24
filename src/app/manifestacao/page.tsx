@@ -14,6 +14,7 @@ import {
 } from 'react-icons/ri'
 import { AccessibleHeader } from '@/features/manifestation/components/AccessibleHeader'
 import { NavigationFooter } from '@/features/manifestation/components/NavigationFooter'
+import { ExitConfirmModal } from '@/shared/components/ExitConfirmModal'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
 import { useTextToSpeech } from '@/shared/hooks/useTextToSpeech'
 import { AUDIO_TEXTS, getAudioText } from '@/shared/constants/audioTexts'
@@ -65,6 +66,7 @@ export default function ManifestationTypePage() {
   const { speak } = useTextToSpeech()
   const { navigateToStep } = useStepNavigation()
   const [selectedType, setSelectedType] = useState<string | null>(null)
+  const [showExitModal, setShowExitModal] = useState(false)
 
   useEffect(() => {
     const saved = localStorage.getItem('manifestation_type')
@@ -94,6 +96,23 @@ export default function ManifestationTypePage() {
   }
 
   const handleBack = () => {
+    // Check if there's filled data that should trigger exit confirmation
+    const hasData = selectedType || localStorage.getItem('manifestation_type')
+    if (hasData) {
+      setShowExitModal(true)
+    } else {
+      router.push('/')
+    }
+  }
+
+  const handleConfirmExit = () => {
+    setShowExitModal(false)
+    router.push('/')
+  }
+
+  const handleSaveAndExit = () => {
+    // TODO: Implement save draft logic
+    setShowExitModal(false)
     router.push('/')
   }
 
@@ -143,7 +162,7 @@ export default function ManifestationTypePage() {
                 <button
                   key={type.id}
                   onClick={() => handleSelectType(type.id)}
-                  className={`w-full bg-card rounded-lg p-3 btn-hover text-left flex items-center gap-3 hover:shadow-md transition-all ${
+                  className={`w-full bg-card rounded-lg p-3 text-left flex items-center gap-3 hover:bg-accent transition-all ${
                     isSelected ? 'border-2 border-success' : 'card-border'
                   }`}
                 >
@@ -183,6 +202,14 @@ export default function ManifestationTypePage() {
           steps={getStepProgress(STEPS.TYPE)}
         />
       </div>
+
+      {/* Exit Confirmation Modal */}
+      <ExitConfirmModal
+        isOpen={showExitModal}
+        onClose={() => setShowExitModal(false)}
+        onSaveAndExit={handleSaveAndExit}
+        onExitWithoutSaving={handleConfirmExit}
+      />
     </>
   )
 }
