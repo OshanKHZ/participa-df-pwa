@@ -4,14 +4,18 @@ import { useRouter } from 'next/navigation'
 import { RiArrowLeftLine } from 'react-icons/ri'
 import { MobileBottomNav } from '@/shared/components/MobileBottomNav'
 import { AuthForm } from '@/shared/components/AuthForm'
+import { DesktopHeader } from '@/shared/components/DesktopHeader'
 
 export default function CadastrarPage() {
   const router = useRouter()
 
   return (
-    <div className="min-h-screen bg-background pb-20 md:pb-6">
-      {/* Header */}
-      <header className="bg-primary text-white sticky top-0 z-header">
+    <>
+      {/* Desktop Header */}
+      <DesktopHeader />
+
+      {/* Mobile Header */}
+      <header className="lg:hidden bg-primary text-white sticky top-0 z-header">
         <div className="px-4 py-3">
           <div className="flex items-center gap-3">
             <button
@@ -27,12 +31,32 @@ export default function CadastrarPage() {
       </header>
 
       {/* Main Content */}
-      <main className="px-4 py-6">
-        <AuthForm mode="register" />
+      <main className="min-h-screen bg-background">
+        {/* Desktop Container */}
+        <div className="hidden lg:block">
+          <div className="max-w-md mx-auto px-8 py-16">
+            <div className="text-center mb-8">
+              <h1 className="text-2xl font-semibold text-foreground mb-2">
+                Criar Conta
+              </h1>
+              <p className="text-muted-foreground">
+                Cadastre-se para acompanhar suas manifestações
+              </p>
+            </div>
+            <AuthForm mode="register" />
+          </div>
+        </div>
+
+        {/* Mobile Container */}
+        <div className="lg:hidden px-4 py-6 pb-20">
+          <AuthForm mode="register" />
+        </div>
       </main>
 
-      {/* Bottom Navigation */}
-      <MobileBottomNav activeTab="home" />
-    </div>
+      {/* Bottom Navigation - Mobile only */}
+      <div className="lg:hidden">
+        <MobileBottomNav activeTab="home" />
+      </div>
+    </>
   )
 }
