@@ -330,13 +330,18 @@ export default function ContentPage() {
                 </div>
 
                 <div>
+                  <label htmlFor="manifestation-text" className="sr-only">
+                    Descrição da manifestação
+                  </label>
                   <textarea
+                    id="manifestation-text"
                     value={textContent}
                     onChange={handleTextChange}
                     placeholder="Descreva sua manifestação aqui..."
+                    aria-describedby="char-feedback"
                     className="w-full min-h-textarea p-4 border card-border rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-secondary"
                   />
-                  <div className="flex items-center justify-between mt-2 text-xs">
+                  <div className="flex items-center justify-between mt-2 text-xs" id="char-feedback">
                     <span
                       className={
                         charCount < minChars
@@ -363,7 +368,7 @@ export default function ContentPage() {
                 {/* Tips */}
                 <div className="bg-accent rounded-lg p-4">
                   <h3 className="font-semibold text-accent-foreground text-sm mb-2">
-                    💡 Escreva todos os detalhes:
+                    <span aria-hidden="true">💡</span> Escreva todos os detalhes:
                   </h3>
                   <ul className="text-xs text-accent-foreground space-y-1 ml-4 list-disc">
                     <li>

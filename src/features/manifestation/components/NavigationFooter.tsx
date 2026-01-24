@@ -19,6 +19,7 @@ interface NavigationFooterProps {
   onNext?: () => void
   onNavigateToStep?: (step: number) => void
   nextDisabled?: boolean
+  nextLoading?: boolean
   showAnonymousInfo?: boolean
   steps?: Step[]
 }
@@ -30,6 +31,7 @@ export function NavigationFooter({
   onNext,
   onNavigateToStep,
   nextDisabled = false,
+  nextLoading = false,
   showAnonymousInfo = true,
   steps = DEFAULT_STEPS,
 }: NavigationFooterProps) {
@@ -178,17 +180,26 @@ export function NavigationFooter({
             {/* Next button */}
             <button
               onClick={onNext}
-              disabled={nextDisabled || !onNext}
+              disabled={nextDisabled || nextLoading || !onNext}
               className={`flex-1 py-3.5 px-4 rounded font-medium transition-colors ${
-                nextDisabled || !onNext
+                nextDisabled || nextLoading || !onNext
                   ? 'bg-muted text-muted-foreground cursor-not-allowed'
                   : 'bg-success text-white hover:opacity-90'
               }`}
               aria-label="Avançar"
             >
               <div className="flex items-center justify-center gap-2">
-                <span className="text-sm font-semibold">Avançar</span>
-                <RiArrowRightLine className="size-5" />
+                {nextLoading ? (
+                  <>
+                    <span className="text-sm font-semibold">Enviando...</span>
+                    <div className="size-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  </>
+                ) : (
+                  <>
+                    <span className="text-sm font-semibold">Avançar</span>
+                    <RiArrowRightLine className="size-5" />
+                  </>
+                )}
               </div>
             </button>
           </div>

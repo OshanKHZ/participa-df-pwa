@@ -2,10 +2,19 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { RiSearchLine, RiCloseLine, RiVolumeUpLine } from 'react-icons/ri'
+import { RiSearchLine, RiCloseLine, RiVolumeUpLine, RiArrowRightLine } from 'react-icons/ri'
 import { create, insertMultiple, search, type AnyOrama } from '@orama/orama'
 import { AccessibleHeader } from '@/features/manifestation/components/AccessibleHeader'
 import { NavigationFooter } from '@/features/manifestation/components/NavigationFooter'
+import { DesktopHeader } from '@/shared/components/DesktopHeader'
+import { Button } from '@/shared/components/Button'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/shared/components/Select'
 import { getStepProgress } from '@/shared/utils/stepProgress'
 import { useStepNavigation } from '@/shared/hooks/useStepNavigation'
 import { useTextToSpeech } from '@/shared/hooks/useTextToSpeech'
@@ -377,131 +386,222 @@ export default function AssuntoPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background pb-40">
-      {/* Header */}
-      <AccessibleHeader
-        currentStep={STEPS.SUBJECT}
-        totalSteps={STEPS.TOTAL}
-        completedSteps={COMPLETED_STEPS.AT_SUBJECT}
-      />
+    <>
+      {/* Desktop Header */}
+      <DesktopHeader />
 
-      {/* Main Content */}
-      <main className="px-4 py-6">
-        <div className="mb-6">
-          <h2 className="text-xl font-bold text-foreground mb-2">
-            Qual o assunto da sua manifestação?{' '}
-            <button
-              onClick={() =>
-                speak(
-                  'Qual o assunto da sua manifestação? Selecione o assunto que mais se aproxima da sua manifestação'
-                )
-              }
-              className="inline-flex size-5 rounded-full bg-secondary hover:bg-secondary-hover items-center justify-center transition-colors align-middle"
-              aria-label="Ouvir instruções"
-            >
-              <RiVolumeUpLine className="size-3 text-white" />
-            </button>
-          </h2>
-          <p className="text-sm text-muted-foreground">
-            Selecione o assunto que mais se aproxima da sua manifestação
-          </p>
-        </div>
+      {/* Mobile Container */}
+      <div className="lg:hidden min-h-screen bg-background pb-40">
+        {/* Header */}
+        <AccessibleHeader
+          currentStep={STEPS.SUBJECT}
+          totalSteps={STEPS.TOTAL}
+          completedSteps={COMPLETED_STEPS.AT_SUBJECT}
+        />
 
-        {/* Search Input */}
-        <div className="mb-4">
-          <div className="relative">
-            <RiSearchLine className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-muted-foreground" />
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={e => setSearchTerm(e.target.value)}
-              placeholder="Busca inteligente de assuntos..."
-              className="w-full pl-10 pr-10 py-3 border-2 border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary focus:border-secondary"
-              aria-label="Buscar assunto"
-            />
-            {isSearching ? (
-              <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                <div className="size-5 border-2 border-secondary border-t-transparent rounded-full animate-spin" />
-              </div>
-            ) : (
-              searchTerm && (
-                <button
-                  onClick={handleClearSearch}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 size-6 flex items-center justify-center hover:bg-muted rounded-full transition-colors"
-                  aria-label="Limpar busca"
-                >
-                  <RiCloseLine className="size-5 text-muted-foreground" />
-                </button>
-              )
-            )}
-          </div>
-        </div>
-
-        {/* Selected Subject Display */}
-        {selectedAssunto && (
-          <div className="mb-4 p-4 bg-success/10 border-2 border-success rounded-lg">
-            <p className="text-xs font-semibold text-success mb-1">
-              Assunto selecionado:
-            </p>
-            <p className="text-sm text-foreground font-medium">
-              {selectedAssunto.name}
+        {/* Main Content */}
+        <main className="px-4 py-6">
+          <div className="mb-6">
+            <h2 className="text-xl font-bold text-foreground mb-2">
+              Qual o assunto da sua manifestação?{' '}
+              <button
+                onClick={() =>
+                  speak(
+                    'Qual o assunto da sua manifestação? Selecione o assunto que mais se aproxima da sua manifestação'
+                  )
+                }
+                className="inline-flex size-5 rounded-full bg-secondary hover:bg-secondary-hover items-center justify-center transition-colors align-middle"
+                aria-label="Ouvir instruções"
+              >
+                <RiVolumeUpLine className="size-3 text-white" />
+              </button>
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              Selecione o assunto que mais se aproxima da sua manifestação
             </p>
           </div>
-        )}
 
-        {/* Subjects List - Only show when searching */}
-        {searchTerm && (
-          <div className="space-y-2">
-            {filteredAssuntos.length > 0 ? (
-              filteredAssuntos.map((assunto: Assunto) => {
-                const isSelected = selectedAssunto?.id === assunto.id
-
-                return (
+          {/* Search Input */}
+          <div className="mb-4">
+            <div className="relative">
+              <RiSearchLine className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-muted-foreground" />
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={e => setSearchTerm(e.target.value)}
+                placeholder="Busca inteligente de assuntos..."
+                className="w-full pl-10 pr-10 py-3 border-2 border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary focus:border-secondary"
+                aria-label="Buscar assunto"
+              />
+              {isSearching ? (
+                <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                  <div className="size-5 border-2 border-secondary border-t-transparent rounded-full animate-spin" />
+                </div>
+              ) : (
+                searchTerm && (
                   <button
-                    key={assunto.id}
-                    onClick={() => handleSelectAssunto(assunto)}
-                    className={`w-full p-3 rounded-lg border-2 text-left transition-all ${
-                      isSelected
-                        ? 'border-success bg-success/10'
-                        : 'border-border bg-card hover:bg-accent hover:shadow-md'
-                    }`}
+                    onClick={handleClearSearch}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 size-6 flex items-center justify-center hover:bg-muted rounded-full transition-colors"
+                    aria-label="Limpar busca"
                   >
-                    <p
-                      className={`text-sm font-medium ${isSelected ? 'text-success' : 'text-foreground'}`}
-                    >
-                      {assunto.name}
-                    </p>
+                    <RiCloseLine className="size-5 text-muted-foreground" />
                   </button>
                 )
-              })
-            ) : (
-              <div className="text-center py-12">
-                <p className="text-muted-foreground">
-                  Nenhum assunto encontrado para "{searchTerm}"
-                </p>
-                <button
-                  onClick={handleClearSearch}
-                  className="mt-4 text-secondary hover:text-secondary-hover font-medium"
-                >
-                  Limpar busca
-                </button>
-              </div>
-            )}
+              )}
+            </div>
           </div>
-        )}
-      </main>
 
-      {/* Footer */}
-      <NavigationFooter
-        currentStep={STEPS.SUBJECT}
-        totalSteps={STEPS.TOTAL}
-        onBack={handleBack}
-        onNext={handleNext}
-        onNavigateToStep={navigateToStep}
-        nextDisabled={!selectedAssunto}
-        showAnonymousInfo={false}
-        steps={getStepProgress(STEPS.SUBJECT)}
-      />
-    </div>
+          {/* Selected Subject Display */}
+          {selectedAssunto && (
+            <div className="mb-4 p-4 bg-success/10 border-2 border-success rounded-lg">
+              <p className="text-xs font-semibold text-success mb-1">
+                Assunto selecionado:
+              </p>
+              <p className="text-sm text-foreground font-medium">
+                {selectedAssunto.name}
+              </p>
+            </div>
+          )}
+
+          {/* Subjects List - Only show when searching */}
+          {searchTerm && (
+            <div className="space-y-2">
+              {filteredAssuntos.length > 0 ? (
+                filteredAssuntos.map((assunto: Assunto) => {
+                  const isSelected = selectedAssunto?.id === assunto.id
+
+                  return (
+                    <button
+                      key={assunto.id}
+                      onClick={() => handleSelectAssunto(assunto)}
+                      className={`w-full px-3 py-2 rounded-lg border-2 text-left transition-all ${
+                        isSelected
+                          ? 'border-success bg-success/10'
+                          : 'border-border bg-card hover:bg-accent'
+                      }`}
+                    >
+                      <p
+                        className={`text-sm font-medium ${isSelected ? 'text-success' : 'text-foreground'}`}
+                      >
+                        {assunto.name}
+                      </p>
+                    </button>
+                  )
+                })
+              ) : (
+                <div className="text-center py-12">
+                  <p className="text-muted-foreground">
+                    Nenhum assunto encontrado para "{searchTerm}"
+                  </p>
+                  <button
+                    onClick={handleClearSearch}
+                    className="mt-4 text-secondary hover:text-secondary-hover font-medium"
+                  >
+                    Limpar busca
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+        </main>
+
+        {/* Footer */}
+        <NavigationFooter
+          currentStep={STEPS.SUBJECT}
+          totalSteps={STEPS.TOTAL}
+          onBack={handleBack}
+          onNext={handleNext}
+          onNavigateToStep={navigateToStep}
+          nextDisabled={!selectedAssunto}
+          showAnonymousInfo={false}
+          steps={getStepProgress(STEPS.SUBJECT)}
+        />
+      </div>
+
+      {/* Desktop Container */}
+      <div className="hidden lg:block min-h-screen bg-background">
+        <main className="lg:max-w-2xl lg:mx-auto lg:px-8 lg:py-12">
+          {/* Progress Steps */}
+          <div className="mb-10">
+            <div className="flex items-center justify-between">
+              {[
+                { num: 1, label: 'Tipo', current: false },
+                { num: 2, label: 'Assunto', current: true },
+                { num: 3, label: 'Canal', current: false },
+                { num: 4, label: 'Anonimato', current: false },
+                { num: 5, label: 'Confirmação', current: false },
+              ].map((step, index) => (
+                <div key={step.num} className="flex flex-col items-center flex-1">
+                  <span className={`text-xs font-medium mb-2 ${
+                    step.current ? 'text-foreground' : 'text-muted-foreground'
+                  }`}>
+                    {step.label}
+                  </span>
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold border-2 ${
+                    step.current
+                      ? 'bg-secondary border-secondary text-white'
+                      : 'bg-card border-border text-muted-foreground'
+                  }`}>
+                    {step.num}
+                  </div>
+                  {index < 4 && (
+                    <div className="flex-1 h-0.5 bg-border -mt-5 mx-2 self-start translate-x-1/2" />
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Title */}
+          <div className="mb-8">
+            <h1 className="text-xl font-semibold text-foreground mb-2">
+              Nova Manifestação
+            </h1>
+            <p className="text-muted-foreground">
+              Selecione o assunto da sua manifestação.
+            </p>
+          </div>
+
+          {/* Subject Select */}
+          <div className="mb-8">
+            <label htmlFor="subject-select" className="block text-sm font-medium text-foreground mb-2">
+              Assunto
+            </label>
+            <Select value={selectedAssunto?.id.toString() || ''} onValueChange={(value) => handleSelectAssunto(assuntos.find(a => a.id === parseInt(value))!)}>
+              <SelectTrigger id="subject-select">
+                <SelectValue placeholder="Digite para buscar ou selecione..." />
+              </SelectTrigger>
+              <SelectContent>
+                {filteredAssuntos.length > 0 ? (
+                  filteredAssuntos.slice(0, 20).map((assunto: Assunto) => (
+                    <SelectItem key={assunto.id} value={assunto.id.toString()}>
+                      {assunto.name}
+                    </SelectItem>
+                  ))
+                ) : (
+                  <div className="px-4 py-3 text-sm text-muted-foreground text-center">
+                    Nenhum assunto encontrado
+                  </div>
+                )}
+              </SelectContent>
+            </Select>
+            <p className="text-xs text-muted-foreground mt-2">
+              Selecione um assunto para continuar
+            </p>
+          </div>
+
+          {/* Desktop Navigation */}
+          <div className="flex items-center justify-between pt-6 border-t border-border">
+            <Button variant="link" onClick={handleBack}>
+              Voltar
+            </Button>
+            <Button onClick={handleNext} disabled={!selectedAssunto}>
+              Avançar
+              <RiArrowRightLine className="size-5" />
+            </Button>
+          </div>
+        </main>
+      </div>
+    </>
   )
 }
