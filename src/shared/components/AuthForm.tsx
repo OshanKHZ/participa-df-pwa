@@ -101,7 +101,7 @@ export function AuthForm({ mode }: AuthFormProps) {
         <p className="text-sm text-muted-foreground mb-6">
           {successMessage} <strong>{email}</strong>. {successSubtext}
         </p>
-        <button onClick={() => router.push('/')} className={BUTTON.primary}>
+        <button type="button" onClick={() => router.push('/')} className={BUTTON.primary}>
           Voltar ao início
         </button>
       </div>
@@ -123,7 +123,7 @@ export function AuthForm({ mode }: AuthFormProps) {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className={SPACING.form}>
+      <form onSubmit={handleSubmit} noValidate className={SPACING.form}>
         {!isLogin && (
           <div className={SPACING.inputGroup}>
             <label
@@ -142,6 +142,7 @@ export function AuthForm({ mode }: AuthFormProps) {
                 placeholder="Seu nome"
                 required
                 aria-required="true"
+                autoComplete="name"
                 className="w-full pl-10 pr-4 py-3 bg-card border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent transition-all"
                 disabled={isLoading}
               />
@@ -166,6 +167,7 @@ export function AuthForm({ mode }: AuthFormProps) {
               placeholder="seu@email.com"
               required
               aria-required="true"
+              autoComplete="email"
               className="w-full pl-10 pr-4 py-3 bg-card border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent transition-all"
               disabled={isLoading}
             />
@@ -194,6 +196,7 @@ export function AuthForm({ mode }: AuthFormProps) {
         </div>
 
         <button
+          type="button"
           onClick={handleGoogleLogin}
           disabled={isLoading}
           className={BUTTON.outline}

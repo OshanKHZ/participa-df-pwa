@@ -4,11 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useState, useRef } from 'react'
-import {
-  RiAddLine,
-  RiUserLine,
-  RiArrowDownSLine,
-} from 'react-icons/ri'
+import { RiAddLine, RiUserLine, RiArrowDownSLine } from 'react-icons/ri'
 import { TransparenciaPopover } from '@/shared/components/TransparenciaPopover'
 
 export function DesktopHeader() {
@@ -83,7 +79,7 @@ export function DesktopHeader() {
             <nav className="flex items-center justify-center gap-1">
               <Link
                 href="/manifestacao"
-                className="flex items-center gap-2 px-6 py-3 text-sm font-semibold bg-manifestation-cta text-white -my-3 hover:bg-white hover:text-secondary transition-all duration-200 cursor-pointer"
+                className="flex items-center gap-2 px-6 py-3 text-sm font-semibold bg-manifestation-cta text-white -my-3 hover:bg-gray-200 hover:text-secondary transition-all duration-200 cursor-pointer"
               >
                 <RiAddLine className="size-4" />
                 <span>Nova Manifestação</span>

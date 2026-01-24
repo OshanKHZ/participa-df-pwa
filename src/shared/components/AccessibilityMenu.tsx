@@ -68,6 +68,7 @@ export function AccessibilityMenu() {
       {/* Floating Toggle Button - Desktop only */}
       {!isOpen && (
         <button
+          type="button"
           onClick={() => setIsOpen(true)}
           className="fixed bottom-8 right-8 z-fab w-14 h-14 bg-secondary hover:bg-secondary-hover text-white rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2"
           aria-label="Acessibilidade"
@@ -97,8 +98,9 @@ export function AccessibilityMenu() {
                 </h3>
               </div>
               <button
+                type="button"
                 onClick={() => setIsOpen(false)}
-                className="w-8 h-8 rounded-lg hover:bg-muted flex items-center justify-center transition-colors"
+                className="w-8 h-8 rounded-lg hover:bg-muted flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-secondary"
                 aria-label="Fechar"
               >
                 <RiCloseLine className="w-5 h-5 text-muted-foreground" />
@@ -117,6 +119,7 @@ export function AccessibilityMenu() {
                 </div>
                 <div className="flex items-center gap-2">
                   <button
+                    type="button"
                     onClick={handleDecreaseFont}
                     disabled={fontSizeLevel <= FONT_LEVELS.MIN}
                     className="flex-1 py-2 px-3 bg-muted hover:bg-muted-foreground/20 disabled:opacity-40 disabled:cursor-not-allowed rounded-lg flex items-center justify-center transition-colors"
@@ -124,10 +127,11 @@ export function AccessibilityMenu() {
                   >
                     <RiSubtractLine className="w-4 h-4" />
                   </button>
-                  <span className="text-sm font-medium text-muted-foreground min-w-[3rem] text-center">
+                  <span className="text-sm font-medium text-muted-foreground min-w-[3rem] text-center" aria-live="polite">
                     {fontSizeLevel + 1}
                   </span>
                   <button
+                    type="button"
                     onClick={handleIncreaseFont}
                     disabled={fontSizeLevel >= FONT_LEVELS.MAX}
                     className="flex-1 py-2 px-3 bg-muted hover:bg-muted-foreground/20 disabled:opacity-40 disabled:cursor-not-allowed rounded-lg flex items-center justify-center transition-colors"
@@ -151,8 +155,11 @@ export function AccessibilityMenu() {
                   </span>
                 </div>
                 <button
+                  type="button"
                   onClick={toggleAudio}
-                  className={`w-11 h-6 rounded-full transition-colors ${
+                  role="switch"
+                  aria-checked={audioEnabled}
+                  className={`w-11 h-6 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 ${
                     audioEnabled ? 'bg-secondary' : 'bg-muted'
                   }`}
                   aria-label={audioEnabled ? 'Desativar áudio' : 'Ativar áudio'}
@@ -180,8 +187,11 @@ export function AccessibilityMenu() {
                   </span>
                 </div>
                 <button
+                  type="button"
                   onClick={toggleHighContrast}
-                  className={`w-11 h-6 rounded-full transition-colors ${
+                  role="switch"
+                  aria-checked={highContrast}
+                  className={`w-11 h-6 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 ${
                     highContrast ? 'bg-secondary' : 'bg-muted'
                   }`}
                   aria-label={
@@ -202,8 +212,9 @@ export function AccessibilityMenu() {
 
               {/* Reset */}
               <button
+                type="button"
                 onClick={resetAll}
-                className="w-full py-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="w-full py-2 text-sm text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus:underline"
               >
                 Restaurar padrões
               </button>

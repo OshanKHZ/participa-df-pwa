@@ -72,6 +72,7 @@ export default function PersonalDataPage() {
               Identificação (opcional)
             </h2>
             <button
+              type="button"
               onClick={() => {
                 if (
                   typeof window !== 'undefined' &&
@@ -85,7 +86,7 @@ export default function PersonalDataPage() {
                   window.speechSynthesis.speak(utterance)
                 }
               }}
-              className="size-5 rounded-full bg-secondary hover:bg-secondary-hover flex items-center justify-center transition-colors flex-shrink-0"
+              className="size-5 rounded-full bg-secondary hover:bg-secondary-hover flex items-center justify-center transition-colors flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
               aria-label="Ouvir instruções"
             >
               <RiVolumeUpLine className="size-3 text-white" />
@@ -114,8 +115,12 @@ export default function PersonalDataPage() {
                   Manifestação Anônima
                 </h3>
                 <button
+                  type="button"
                   onClick={() => setIsAnonymous(!isAnonymous)}
-                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                  role="switch"
+                  aria-checked={isAnonymous}
+                  aria-label={isAnonymous ? 'Desativar anonimato' : 'Ativar anonimato'}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 ${
                     isAnonymous ? 'bg-secondary' : 'bg-muted'
                   }`}
                 >
@@ -139,27 +144,31 @@ export default function PersonalDataPage() {
         {!isAnonymous && (
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2">
+              <label htmlFor="manifestation-name" className="block text-sm font-medium text-foreground mb-2">
                 Nome completo <span className="text-destructive">*</span>
               </label>
               <input
+                id="manifestation-name"
                 type="text"
                 value={formData.name}
                 onChange={e => handleInputChange('name', e.target.value)}
                 placeholder="Digite seu nome"
+                autoComplete="name"
                 className="w-full p-3 border card-border rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2">
+              <label htmlFor="manifestation-email" className="block text-sm font-medium text-foreground mb-2">
                 Email (opcional)
               </label>
               <input
+                id="manifestation-email"
                 type="email"
                 value={formData.email}
                 onChange={e => handleInputChange('email', e.target.value)}
                 placeholder="seu@email.com"
+                autoComplete="email"
                 className="w-full p-3 border card-border rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary"
               />
               <p className="text-xs text-muted-foreground mt-1">
@@ -168,14 +177,16 @@ export default function PersonalDataPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2">
+              <label htmlFor="manifestation-phone" className="block text-sm font-medium text-foreground mb-2">
                 Telefone (opcional)
               </label>
               <input
+                id="manifestation-phone"
                 type="tel"
                 value={formData.phone}
                 onChange={e => handleInputChange('phone', e.target.value)}
                 placeholder="(00) 00000-0000"
+                autoComplete="tel"
                 className="w-full p-3 border card-border rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary"
               />
             </div>

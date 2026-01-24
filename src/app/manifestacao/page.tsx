@@ -11,11 +11,20 @@ import {
   RiInformationLine,
   RiCheckLine,
   RiVolumeUpLine,
+  RiArrowRightLine,
 } from 'react-icons/ri'
 import { AccessibleHeader } from '@/features/manifestation/components/AccessibleHeader'
 import { NavigationFooter } from '@/features/manifestation/components/NavigationFooter'
 import { ExitConfirmModal } from '@/shared/components/ExitConfirmModal'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
+import { Button } from '@/shared/components/Button'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/shared/components/Select'
 import { useTextToSpeech } from '@/shared/hooks/useTextToSpeech'
 import { AUDIO_TEXTS, getAudioText } from '@/shared/constants/audioTexts'
 import { getStepProgress } from '@/shared/utils/stepProgress'
@@ -28,36 +37,42 @@ const manifestationTypes = [
     ...AUDIO_TEXTS.manifestationType.denuncia,
     icon: RiAlarmWarningLine,
     color: 'bg-type-denuncia',
+    shortDesc: 'Irregularidades',
   },
   {
     id: 'reclamacao',
     ...AUDIO_TEXTS.manifestationType.reclamacao,
     icon: RiErrorWarningLine,
     color: 'bg-type-reclamacao',
+    shortDesc: 'Insatisfação',
   },
   {
     id: 'sugestao',
     ...AUDIO_TEXTS.manifestationType.sugestao,
     icon: RiLightbulbLine,
     color: 'bg-type-sugestao',
+    shortDesc: 'Melhorias',
   },
   {
     id: 'elogio',
     ...AUDIO_TEXTS.manifestationType.elogio,
     icon: RiChatSmile3Line,
     color: 'bg-type-elogio',
+    shortDesc: 'Reconhecimento',
   },
   {
     id: 'solicitacao',
     ...AUDIO_TEXTS.manifestationType.solicitacao,
     icon: RiQuestionLine,
     color: 'bg-type-solicitacao',
+    shortDesc: 'Requisitar serviço',
   },
   {
     id: 'informacao',
     ...AUDIO_TEXTS.manifestationType.informacao,
     icon: RiInformationLine,
     color: 'bg-type-informacao',
+    shortDesc: 'Dados públicos',
   },
 ]
 
@@ -206,90 +221,79 @@ export default function ManifestationTypePage() {
 
       {/* Desktop Container */}
       <div className="hidden lg:block min-h-screen bg-background">
-        <main className="lg:max-w-3xl lg:mx-auto lg:px-8 lg:py-16">
+        <main className="lg:max-w-2xl lg:mx-auto lg:px-8 lg:py-12">
           {/* Progress Steps */}
-          <div className="mb-8">
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <div className="h-1 flex-1 bg-muted rounded-full">
-                <div className="h-full w-1/5 bg-success rounded-full" />
-              </div>
-              <div className="h-1 flex-1 bg-muted rounded-full" />
-              <div className="h-1 flex-1 bg-muted rounded-full" />
-              <div className="h-1 flex-1 bg-muted rounded-full" />
-              <div className="h-1 flex-1 bg-muted rounded-full" />
+          <div className="mb-10">
+            <div className="flex items-center justify-between">
+              {[
+                { num: 1, label: 'Tipo', current: true },
+                { num: 2, label: 'Canal', current: false },
+                { num: 3, label: 'Conteúdo', current: false },
+                { num: 4, label: 'Anonimato', current: false },
+                { num: 5, label: 'Confirmação', current: false },
+              ].map((step, index) => (
+                <div key={step.num} className="flex flex-col items-center flex-1">
+                  <span className={`text-xs font-medium mb-2 ${
+                    step.current ? 'text-foreground' : 'text-muted-foreground'
+                  }`}>
+                    {step.label}
+                  </span>
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold border-2 ${
+                    step.current
+                      ? 'bg-secondary border-secondary text-white'
+                      : 'bg-card border-border text-muted-foreground'
+                  }`}>
+                    {step.num}
+                  </div>
+                  {index < 4 && (
+                    <div className="flex-1 h-0.5 bg-border -mt-5 mx-2 self-start translate-x-1/2" />
+                  )}
+                </div>
+              ))}
             </div>
-            <p className="text-center text-sm text-muted-foreground">
-              Passo 1 de 5
-            </p>
           </div>
 
           {/* Title */}
-          <div className="text-center mb-10">
-            <h1 className="text-2xl font-semibold text-foreground mb-3">
-              Qual tipo de manifestação?
+          <div className="mb-8">
+            <h1 className="text-xl font-semibold text-foreground mb-2">
+              Nova Manifestação
             </h1>
-            <p className="text-muted-foreground max-w-lg mx-auto">
-              {AUDIO_TEXTS.instructions.typeSelection}
+            <p className="text-muted-foreground">
+              Selecione o tipo de manifestação desejada.
             </p>
           </div>
 
-          {/* Types Grid */}
-          <div className="grid grid-cols-2 gap-4 mb-10">
-            {manifestationTypes.map(type => {
-              const Icon = type.icon
-              const isSelected = selectedType === type.id
-              return (
-                <button
-                  key={type.id}
-                  onClick={() => handleSelectType(type.id)}
-                  className={`bg-card border-2 rounded-xl p-6 text-left flex flex-col items-start gap-3 transition-all hover:border-secondary/50 ${
-                    isSelected
-                      ? 'border-success ring-2 ring-success/20'
-                      : 'border-border'
-                  }`}
-                >
-                  <div
-                    className={`w-12 h-12 ${type.color} rounded-xl flex items-center justify-center flex-shrink-0`}
-                  >
-                    <Icon className="size-6 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-foreground mb-1">
-                      {type.label}
-                    </h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {type.description}
-                    </p>
-                  </div>
-                  {isSelected && (
-                    <div className="size-6 bg-success rounded-full flex items-center justify-center flex-shrink-0 ml-auto">
-                      <RiCheckLine className="size-4 text-white" />
+          {/* Types Select */}
+          <div className="mb-8">
+            <label htmlFor="manifestation-type" className="block text-sm font-medium text-foreground mb-2">
+              Tipo de manifestação
+            </label>
+            <Select value={selectedType || ''} onValueChange={handleSelectType}>
+              <SelectTrigger id="manifestation-type">
+                <SelectValue placeholder="Selecione..." />
+              </SelectTrigger>
+              <SelectContent>
+                {manifestationTypes.map(type => (
+                  <SelectItem key={type.id} value={type.id}>
+                    <div className="flex items-center gap-3">
+                      <span className="font-medium text-sm">{type.label}</span>
+                      <span className="text-xs text-muted-foreground">{type.description}</span>
                     </div>
-                  )}
-                </button>
-              )
-            })}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           {/* Desktop Navigation */}
           <div className="flex items-center justify-between pt-6 border-t border-border">
-            <button
-              onClick={handleBack}
-              className="px-6 py-3 text-muted-foreground hover:text-foreground font-medium transition-colors"
-            >
+            <Button variant="link" onClick={handleBack}>
               Cancelar
-            </button>
-            <button
-              onClick={handleNext}
-              disabled={!selectedType}
-              className={`px-8 py-3 rounded-lg font-medium transition-colors ${
-                !selectedType
-                  ? 'bg-muted text-muted-foreground cursor-not-allowed'
-                  : 'bg-secondary text-secondary-foreground hover:bg-secondary-hover'
-              }`}
-            >
-              Continuar
-            </button>
+            </Button>
+            <Button onClick={handleNext} disabled={!selectedType}>
+              Avançar
+              <RiArrowRightLine className="size-5" />
+            </Button>
           </div>
         </main>
       </div>
