@@ -10,7 +10,6 @@ import {
   RiCustomerService2Line,
   RiSearchLine,
   RiQuestionLine,
-  RiBarChartBoxLine,
   RiMenuLine,
   RiLightbulbLine,
 } from 'react-icons/ri'
@@ -84,9 +83,9 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
               />
 
               {/* Title - mobile only */}
-              <h2 className="text-lg font-semibold text-foreground mb-2">
+              <h1 className="text-lg font-semibold text-foreground mb-2">
                 Registre sua manifestação
-              </h2>
+              </h1>
 
               {/* Description - mobile only */}
               <p className="text-sm text-muted-foreground mb-6">
@@ -104,9 +103,9 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
                   <RiMegaphoneLine className="size-6 text-secondary" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-semibold text-foreground mb-2">
+                  <h1 className="text-2xl font-semibold text-foreground mb-2">
                     Registre sua manifestação
-                  </h2>
+                  </h1>
                   <p className="text-muted-foreground">
                     Faça denúncias, elogios, sugestões ou reclamações de forma
                     simples e rápida. Sua voz é importante para transformar o
@@ -119,7 +118,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
               <div className="flex flex-wrap gap-3">
                 <Link
                   href="/manifestacao"
-                  className="inline-flex items-center gap-2 bg-secondary hover:bg-secondary-hover text-secondary-foreground font-medium py-3 px-6 rounded-lg transition-colors"
+                  className="inline-flex items-center gap-2 bg-secondary hover:bg-secondary-hover text-secondary-foreground font-medium py-3 px-6 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
                 >
                   <RiAddLine className="size-5" />
                   Nova Manifestação
@@ -127,7 +126,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
 
                 <Link
                   href="/historico"
-                  className="inline-flex items-center gap-2 text-secondary hover:text-secondary-hover font-medium py-3 px-4 transition-colors"
+                  className="inline-flex items-center gap-2 text-secondary hover:text-secondary-hover font-medium py-3 px-4 transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 rounded"
                 >
                   <RiSearchLine className="size-5" />
                   Consultar protocolo
@@ -177,7 +176,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
             {/* O que é a Ouvidoria */}
             <Link
               href="/o-que-e-ouvidoria"
-              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors"
+              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-inset"
             >
               <RiMegaphoneLine className="size-5 text-secondary flex-shrink-0" />
               <span className="flex-1 text-sm font-medium text-foreground">
@@ -189,7 +188,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
             {/* Orientações */}
             <Link
               href="/orientacoes"
-              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors"
+              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-inset"
             >
               <RiLightbulbLine className="size-5 text-secondary flex-shrink-0" />
               <span className="flex-1 text-sm font-medium text-foreground">
@@ -201,7 +200,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
             {/* Perguntas frequentes */}
             <Link
               href="/ajuda"
-              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors"
+              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-inset"
             >
               <RiQuestionLine className="size-5 text-secondary flex-shrink-0" />
               <span className="flex-1 text-sm font-medium text-foreground">
@@ -213,7 +212,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
             {/* Canais de atendimento */}
             <Link
               href="/canais"
-              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors"
+              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-inset"
             >
               <RiCustomerService2Line className="size-5 text-secondary flex-shrink-0" />
               <span className="flex-1 text-sm font-medium text-foreground">

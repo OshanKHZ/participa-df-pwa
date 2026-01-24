@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { PiPersonArmsSpreadFill } from 'react-icons/pi'
 import {
   RiText,
   RiAddLine,
@@ -10,7 +11,6 @@ import {
   RiContrastDrop2Line,
   RiContrastLine,
   RiCloseLine,
-  RiEyeLine,
 } from 'react-icons/ri'
 import { useFontSize } from '@/shared/contexts/FontSizeContext'
 import { useTextToSpeech } from '@/shared/hooks/useTextToSpeech'
@@ -69,11 +69,11 @@ export function AccessibilityMenu() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-8 right-8 z-fab w-14 h-14 bg-secondary hover:bg-secondary-hover text-white rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-105"
+          className="fixed bottom-8 right-8 z-fab w-14 h-14 bg-secondary hover:bg-secondary-hover text-white rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2"
           aria-label="Acessibilidade"
           title="Acessibilidade"
         >
-          <RiEyeLine className="w-6 h-6" />
+          <PiPersonArmsSpreadFill className="w-6 h-6" />
         </button>
       )}
 
@@ -91,7 +91,7 @@ export function AccessibilityMenu() {
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-border">
               <div className="flex items-center gap-2">
-                <RiEyeLine className="w-5 h-5 text-secondary" />
+                <PiPersonArmsSpreadFill className="w-5 h-5 text-secondary" />
                 <h3 className="font-semibold text-foreground">
                   Acessibilidade
                 </h3>

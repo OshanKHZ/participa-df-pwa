@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import Link from 'next/link'
 import Image from 'next/image'
 import {
   RiMenuLine,
@@ -166,7 +165,6 @@ export default function AjudaPage() {
       />
 
       <div className="min-h-screen bg-background pb-24 lg:pb-8 lg:max-w-6xl lg:mx-auto">
-
         {/* Main Content */}
         <main className="px-4 py-4 lg:px-8 lg:py-8">
           {/* Desktop Title */}
@@ -376,7 +374,7 @@ export default function AjudaPage() {
 
         {/* Mobile Bottom Nav */}
         <MobileBottomNav activeTab="help" isAuthenticated={false} />
-        </div>
-      </>
-    )
+      </div>
+    </>
+  )
 }

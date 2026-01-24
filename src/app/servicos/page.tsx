@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import Link from 'next/link'
 import {
   RiMenuLine,
   RiSearchLine,
@@ -104,6 +103,9 @@ export default function ServicosPage() {
       <div className="min-h-screen bg-background pb-20 md:pb-6 lg:max-w-6xl lg:mx-auto">
         {/* Content */}
         <main className="px-4 py-4">
+          <h1 className="text-xl font-semibold text-foreground mb-4">
+            Serviços da Ouvidoria
+          </h1>
           {/* Services List - Single Column */}
           <div className="border border-border rounded-lg divide-y divide-border bg-card">
             {services.map(service => {
@@ -114,7 +116,7 @@ export default function ServicosPage() {
                   onClick={() =>
                     service.href !== '#' && router.push(service.href)
                   }
-                  className={`w-full flex items-center gap-3 p-3.5 text-left transition-colors ${
+                  className={`w-full flex items-center gap-3 p-3.5 text-left transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-inset ${
                     service.href !== '#'
                       ? 'hover:bg-accent'
                       : 'opacity-50 cursor-not-allowed'

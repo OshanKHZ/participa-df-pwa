@@ -16,7 +16,10 @@ interface MobileBottomNavProps {
   isAuthenticated?: boolean
 }
 
-export function MobileBottomNav({ activeTab, isAuthenticated = false }: MobileBottomNavProps) {
+export function MobileBottomNav({
+  activeTab,
+  isAuthenticated = false,
+}: MobileBottomNavProps) {
   return (
     <>
       {/* Floating accessibility button */}

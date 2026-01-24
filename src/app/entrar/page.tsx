@@ -32,23 +32,7 @@ export default function EntrarPage() {
 
       {/* Main Content */}
       <main className="min-h-screen bg-background">
-        {/* Desktop Container */}
-        <div className="hidden lg:block">
-          <div className="max-w-md mx-auto px-8 py-16">
-            <div className="text-center mb-8">
-              <h1 className="text-2xl font-semibold text-foreground mb-2">
-                Acesso à Conta
-              </h1>
-              <p className="text-muted-foreground">
-                Entre para acompanhar suas manifestações
-              </p>
-            </div>
-            <AuthForm mode="login" />
-          </div>
-        </div>
-
-        {/* Mobile Container */}
-        <div className="lg:hidden px-4 py-6 pb-20">
+        <div className="max-w-md mx-auto px-4 py-6 lg:px-8 lg:py-16 pb-20 lg:pb-16">
           <AuthForm mode="login" />
         </div>
       </main>

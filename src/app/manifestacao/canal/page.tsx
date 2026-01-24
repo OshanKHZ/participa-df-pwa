@@ -125,9 +125,7 @@ export default function ChannelSelectionPage() {
                 key={channel.id}
                 onClick={() => toggleChannel(channel.id)}
                 className={`w-full bg-card rounded-lg p-3 card-border text-left flex items-center gap-3 transition-all ${
-                  isSelected
-                    ? 'ring-2 ring-secondary'
-                    : 'hover:bg-accent'
+                  isSelected ? 'ring-2 ring-secondary' : 'hover:bg-accent'
                 }`}
               >
                 <div

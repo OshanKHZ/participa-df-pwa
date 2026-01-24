@@ -3,7 +3,12 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { RiMailLine, RiUserLine, RiGoogleFill, RiCheckLine, RiErrorWarningLine } from 'react-icons/ri'
+import {
+  RiMailLine,
+  RiUserLine,
+  RiGoogleFill,
+  RiErrorWarningLine,
+} from 'react-icons/ri'
 import { signIn } from 'next-auth/react'
 
 const SPACING = {
@@ -14,9 +19,11 @@ const SPACING = {
 }
 
 const BUTTON = {
-  primary: 'w-full bg-secondary hover:bg-secondary-hover text-secondary-foreground font-medium py-3 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed',
-  outline: 'w-full flex items-center justify-center gap-2 bg-card hover:bg-accent border border-border text-foreground font-medium py-3 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed',
-  text: 'text-secondary hover:text-secondary-hover font-medium py-2 text-sm flex items-center justify-center gap-2',
+  primary:
+    'w-full bg-secondary hover:bg-secondary-hover text-secondary-foreground font-medium py-3 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2',
+  outline:
+    'w-full flex items-center justify-center gap-2 bg-card hover:bg-accent border border-border text-foreground font-medium py-3 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2',
+  text: 'text-secondary hover:text-secondary-hover font-medium py-2 text-sm flex items-center justify-center gap-2 focus:outline-none focus:underline',
 }
 
 type AuthMode = 'login' | 'register'
@@ -34,15 +41,16 @@ export function AuthForm({ mode }: AuthFormProps) {
   const [success, setSuccess] = useState(false)
 
   const isLogin = mode === 'login'
-  const title = isLogin ? 'Entrar' : 'Cadastrar-se'
   const description = isLogin
     ? 'Digite seu email para receber um link de acesso'
     : 'Crie sua conta para acompanhar suas manifestações'
-  const submitText = isLoading ? 'Enviando...' : isLogin ? 'Enviar link de acesso' : 'Criar conta'
+  const submitText = isLoading
+    ? 'Enviando...'
+    : isLogin
+      ? 'Enviar link de acesso'
+      : 'Criar conta'
   const dividerText = isLogin ? 'ou continue com' : 'ou cadastre-se com'
-  const footerText = isLogin
-    ? 'Não tem uma conta?'
-    : 'Já tem uma conta?'
+  const footerText = isLogin ? 'Não tem uma conta?' : 'Já tem uma conta?'
   const footerLink = isLogin ? '/cadastrar' : '/entrar'
   const footerLinkText = isLogin ? 'Cadastre-se' : 'Entrar'
   const successMessage = isLogin
@@ -93,10 +101,7 @@ export function AuthForm({ mode }: AuthFormProps) {
         <p className="text-sm text-muted-foreground mb-6">
           {successMessage} <strong>{email}</strong>. {successSubtext}
         </p>
-        <button
-          onClick={() => router.push('/')}
-          className={BUTTON.primary}
-        >
+        <button onClick={() => router.push('/')} className={BUTTON.primary}>
           Voltar ao início
         </button>
       </div>
@@ -105,12 +110,14 @@ export function AuthForm({ mode }: AuthFormProps) {
 
   return (
     <>
-      <p className="text-sm text-muted-foreground mb-5">
-        {description}
-      </p>
+      <p className="text-sm text-muted-foreground mb-5">{description}</p>
 
       {error && (
-        <div className="mb-5 flex items-start gap-2 p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
+        <div
+          role="alert"
+          aria-live="assertive"
+          className="mb-5 flex items-start gap-2 p-3 bg-destructive/10 border border-destructive/20 rounded-lg"
+        >
           <RiErrorWarningLine className="size-4 text-destructive flex-shrink-0 mt-0.5" />
           <p className="text-sm text-destructive">{error}</p>
         </div>
@@ -119,7 +126,10 @@ export function AuthForm({ mode }: AuthFormProps) {
       <form onSubmit={handleSubmit} className={SPACING.form}>
         {!isLogin && (
           <div className={SPACING.inputGroup}>
-            <label htmlFor="name" className="block text-sm font-medium text-foreground">
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-foreground"
+            >
               Nome completo
             </label>
             <div className="relative">
@@ -128,9 +138,10 @@ export function AuthForm({ mode }: AuthFormProps) {
                 id="name"
                 type="text"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={e => setName(e.target.value)}
                 placeholder="Seu nome"
                 required
+                aria-required="true"
                 className="w-full pl-10 pr-4 py-3 bg-card border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent transition-all"
                 disabled={isLoading}
               />
@@ -139,7 +150,10 @@ export function AuthForm({ mode }: AuthFormProps) {
         )}
 
         <div className={SPACING.inputGroup}>
-          <label htmlFor="email" className="block text-sm font-medium text-foreground">
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-foreground"
+          >
             Email
           </label>
           <div className="relative">
@@ -148,9 +162,10 @@ export function AuthForm({ mode }: AuthFormProps) {
               id="email"
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={e => setEmail(e.target.value)}
               placeholder="seu@email.com"
               required
+              aria-required="true"
               className="w-full pl-10 pr-4 py-3 bg-card border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent transition-all"
               disabled={isLoading}
             />
@@ -190,7 +205,10 @@ export function AuthForm({ mode }: AuthFormProps) {
 
       <p className="mt-6 text-center text-sm text-muted-foreground">
         {footerText}{' '}
-        <Link href={footerLink} className="text-secondary hover:underline font-medium">
+        <Link
+          href={footerLink}
+          className="text-secondary hover:underline font-medium"
+        >
           {footerLinkText}
         </Link>
       </p>

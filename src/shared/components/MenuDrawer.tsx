@@ -60,8 +60,9 @@ export function MenuDrawer({
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 right-0 h-full w-80 drawer-width-mobile bg-background z-drawer shadow-2xl transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full'
-          }`}
+        className={`fixed top-0 right-0 h-full w-80 drawer-width-mobile bg-background z-drawer shadow-2xl transform transition-transform duration-300 ease-in-out ${
+          isOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
       >
         {/* Header */}
         <div className="bg-primary text-primary-foreground p-4 flex items-center justify-between">
@@ -78,7 +79,11 @@ export function MenuDrawer({
         {/* User Section */}
         <div className="border-b border-border p-4">
           {isAuthenticated ? (
-            <Link href="/perfil" onClick={onClose} className="flex items-center gap-3">
+            <Link
+              href="/perfil"
+              onClick={onClose}
+              className="flex items-center gap-3"
+            >
               <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
                 <RiUserLine className="size-6 text-white" />
               </div>
@@ -132,7 +137,9 @@ export function MenuDrawer({
                 className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-accent transition-colors text-foreground"
               >
                 <RiFileListLine className="size-5 text-muted-foreground" />
-                <span className="font-medium text-sm">Minhas Manifestações</span>
+                <span className="font-medium text-sm">
+                  Minhas Manifestações
+                </span>
               </Link>
             </li>
             <li>
@@ -152,7 +159,9 @@ export function MenuDrawer({
                 className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-accent transition-colors text-foreground"
               >
                 <RiCustomerService2Line className="size-5 text-muted-foreground" />
-                <span className="font-medium text-sm">Canais de Atendimento</span>
+                <span className="font-medium text-sm">
+                  Canais de Atendimento
+                </span>
               </Link>
             </li>
             <li>

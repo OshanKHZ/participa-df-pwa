@@ -58,10 +58,11 @@ export default function OQueEOuvidoriaPage() {
         {/* Intro Section */}
         <section className="mb-6">
           <p className="text-sm text-muted-foreground leading-relaxed">
-            A Ouvidoria é um espaço para você se relacionar com o Governo do Distrito
-            Federal, registrando sua solicitação, reclamação, elogio, denúncia ou
-            pedido de informação que tenha relação com os serviços prestados pelo
-            Governo. É dessa forma que vamos garantir que você seja ouvido.
+            A Ouvidoria é um espaço para você se relacionar com o Governo do
+            Distrito Federal, registrando sua solicitação, reclamação, elogio,
+            denúncia ou pedido de informação que tenha relação com os serviços
+            prestados pelo Governo. É dessa forma que vamos garantir que você
+            seja ouvido.
           </p>
         </section>
 
@@ -72,7 +73,7 @@ export default function OQueEOuvidoriaPage() {
           </h3>
 
           <div className="space-y-3">
-            {channels.map((channel) => {
+            {channels.map(channel => {
               const Icon = channel.icon
               return (
                 <div
@@ -100,17 +101,15 @@ export default function OQueEOuvidoriaPage() {
             Rede de Ouvidorias
           </h3>
           <p className="text-xs text-muted-foreground leading-relaxed">
-            As ouvidorias do GDF formam a rede que faz parte do Sistema de Gestão de
-            Ouvidoria do Distrito Federal - SIGO/DF, coordenado pela Ouvidoria-Geral
-            do DF.
+            As ouvidorias do GDF formam a rede que faz parte do Sistema de
+            Gestão de Ouvidoria do Distrito Federal - SIGO/DF, coordenado pela
+            Ouvidoria-Geral do DF.
           </p>
         </section>
 
         {/* CTA Section */}
         <section className="bg-secondary/10 border border-secondary/20 rounded-lg p-4">
-          <p className="text-sm text-foreground mb-2">
-            Tem alguma dúvida?
-          </p>
+          <p className="text-sm text-foreground mb-2">Tem alguma dúvida?</p>
           <Link
             href="/ajuda"
             className="inline-flex items-center gap-2 text-secondary font-medium text-sm hover:underline"
