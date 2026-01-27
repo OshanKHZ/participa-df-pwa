@@ -227,8 +227,8 @@ export default function ManifestationTypePage() {
             <div className="flex items-center justify-between">
               {[
                 { num: 1, label: 'Tipo', current: true },
-                { num: 2, label: 'Canal', current: false },
-                { num: 3, label: 'Conteúdo', current: false },
+                { num: 2, label: 'Assunto', current: false },
+                { num: 3, label: 'Canal', current: false },
                 { num: 4, label: 'Anonimato', current: false },
                 { num: 5, label: 'Confirmação', current: false },
               ].map((step, index) => (

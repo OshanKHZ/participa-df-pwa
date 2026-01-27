@@ -8,13 +8,6 @@ import { AccessibleHeader } from '@/features/manifestation/components/Accessible
 import { NavigationFooter } from '@/features/manifestation/components/NavigationFooter'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
 import { Button } from '@/shared/components/Button'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/shared/components/Select'
 import { getStepProgress } from '@/shared/utils/stepProgress'
 import { useStepNavigation } from '@/shared/hooks/useStepNavigation'
 import { useTextToSpeech } from '@/shared/hooks/useTextToSpeech'
@@ -224,10 +217,12 @@ export default function AssuntoPage() {
   const { navigateToStep } = useStepNavigation()
   const { speak } = useTextToSpeech()
   const [searchTerm, setSearchTerm] = useState('')
+  const [desktopSearchTerm, setDesktopSearchTerm] = useState('')
   const [selectedAssunto, setSelectedAssunto] = useState<Assunto | null>(null)
   const [oramaDB, setOramaDB] = useState<AnyOrama | null>(null)
   const [filteredAssuntos, setFilteredAssuntos] = useState<Assunto[]>([])
   const [isSearching, setIsSearching] = useState(false)
+  const [dropdownOpen, setDropdownOpen] = useState(false)
 
   const assuntos = assuntosData.assunto as Assunto[]
 
@@ -282,7 +277,8 @@ export default function AssuntoPage() {
   // Perform semantic search with Orama
   useEffect(() => {
     async function performSearch() {
-      if (!searchTerm.trim()) {
+      const currentSearchTerm = desktopSearchTerm || searchTerm
+      if (!currentSearchTerm.trim()) {
         setFilteredAssuntos(assuntos)
         setIsSearching(false)
         return
@@ -291,7 +287,7 @@ export default function AssuntoPage() {
       setIsSearching(true)
 
       try {
-        const expandedTerms = expandSearchTerm(searchTerm)
+        const expandedTerms = expandSearchTerm(currentSearchTerm)
         const resultsMap = new Map<number, Assunto>()
 
         if (!oramaDB) {
@@ -352,7 +348,7 @@ export default function AssuntoPage() {
 
     const timeoutId = setTimeout(performSearch, DURATION.SEARCH_DEBOUNCE)
     return () => clearTimeout(timeoutId)
-  }, [searchTerm, oramaDB, assuntos])
+  }, [searchTerm, desktopSearchTerm, oramaDB, assuntos])
 
   // Load saved selection on mount
   useEffect(() => {
@@ -381,7 +377,7 @@ export default function AssuntoPage() {
 
   const handleNext = () => {
     if (selectedAssunto) {
-      router.push('/manifestacao/canal')
+      router.push('/manifestacao/conteudo')
     }
   }
 
@@ -525,11 +521,10 @@ export default function AssuntoPage() {
           <div className="mb-10">
             <div className="flex items-center justify-between">
               {[
-                { num: 1, label: 'Tipo', current: false },
-                { num: 2, label: 'Assunto', current: true },
-                { num: 3, label: 'Canal', current: false },
-                { num: 4, label: 'Anonimato', current: false },
-                { num: 5, label: 'Confirmação', current: false },
+                { num: 1, label: 'Tipo', current: false, completed: true },
+                { num: 2, label: 'Assunto', current: true, completed: false },
+                { num: 3, label: 'Conteúdo', current: false, completed: false },
+                { num: 4, label: 'Confirmação', current: false, completed: false },
               ].map((step, index) => (
                 <div key={step.num} className="flex flex-col items-center flex-1">
                   <span className={`text-xs font-medium mb-2 ${
@@ -540,11 +535,13 @@ export default function AssuntoPage() {
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold border-2 ${
                     step.current
                       ? 'bg-secondary border-secondary text-white'
-                      : 'bg-card border-border text-muted-foreground'
+                      : step.completed
+                        ? 'bg-success border-success text-white'
+                        : 'bg-card border-border text-muted-foreground'
                   }`}>
-                    {step.num}
+                    {step.completed && !step.current ? '✓' : step.num}
                   </div>
-                  {index < 4 && (
+                  {index < 3 && (
                     <div className="flex-1 h-0.5 bg-border -mt-5 mx-2 self-start translate-x-1/2" />
                   )}
                 </div>
@@ -563,30 +560,80 @@ export default function AssuntoPage() {
           </div>
 
           {/* Subject Select */}
-          <div className="mb-8">
-            <label htmlFor="subject-select" className="block text-sm font-medium text-foreground mb-2">
+          <div className="mb-8 relative">
+            <label htmlFor="desktop-subject-search" className="block text-sm font-medium text-foreground mb-2">
               Assunto
             </label>
-            <Select value={selectedAssunto?.id.toString() || ''} onValueChange={(value) => handleSelectAssunto(assuntos.find(a => a.id === parseInt(value))!)}>
-              <SelectTrigger id="subject-select">
-                <SelectValue placeholder="Digite para buscar ou selecione..." />
-              </SelectTrigger>
-              <SelectContent>
-                {filteredAssuntos.length > 0 ? (
-                  filteredAssuntos.slice(0, 20).map((assunto: Assunto) => (
-                    <SelectItem key={assunto.id} value={assunto.id.toString()}>
-                      {assunto.name}
-                    </SelectItem>
-                  ))
-                ) : (
-                  <div className="px-4 py-3 text-sm text-muted-foreground text-center">
-                    Nenhum assunto encontrado
-                  </div>
-                )}
-              </SelectContent>
-            </Select>
+            <div className="relative">
+              <RiSearchLine className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-muted-foreground pointer-events-none" />
+              <input
+                id="desktop-subject-search"
+                type="text"
+                value={desktopSearchTerm}
+                onChange={e => {
+                  setDesktopSearchTerm(e.target.value)
+                  setDropdownOpen(true)
+                }}
+                onFocus={() => setDropdownOpen(true)}
+                placeholder="Digite para buscar assuntos..."
+                className="w-full pl-10 pr-10 py-3 border-2 border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary focus:border-secondary"
+                aria-label="Buscar assunto"
+              />
+              {desktopSearchTerm && (
+                <button
+                  onClick={() => {
+                    setDesktopSearchTerm('')
+                    setDropdownOpen(false)
+                  }}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 size-6 flex items-center justify-center hover:bg-muted rounded-full transition-colors"
+                  aria-label="Limpar busca"
+                >
+                  <RiCloseLine className="size-5 text-muted-foreground" />
+                </button>
+              )}
+            </div>
+
+            {/* Dropdown */}
+            {dropdownOpen && (
+              <>
+                <div
+                  className="fixed inset-0 z-40"
+                  onClick={() => setDropdownOpen(false)}
+                />
+                <div className="absolute z-50 w-full mt-1 bg-card border-2 border-border rounded-lg shadow-lg max-h-[60vh] overflow-y-auto">
+                  {filteredAssuntos.length > 0 ? (
+                    filteredAssuntos.slice(0, 50).map((assunto: Assunto) => {
+                      const isSelected = selectedAssunto?.id === assunto.id
+                      return (
+                        <button
+                          key={assunto.id}
+                          onClick={() => {
+                            handleSelectAssunto(assunto)
+                            setDesktopSearchTerm(assunto.name)
+                            setDropdownOpen(false)
+                          }}
+                          className={`w-full px-4 py-3 text-left border-b border-border last:border-b-0 transition-colors ${
+                            isSelected
+                              ? 'bg-success/10 text-success'
+                              : 'hover:bg-accent text-foreground'
+                          }`}
+                        >
+                          <p className="text-sm font-medium">{assunto.name}</p>
+                        </button>
+                      )
+                    })
+                  ) : (
+                    <div className="px-4 py-8 text-center">
+                      <p className="text-sm text-muted-foreground">
+                        Nenhum assunto encontrado
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
             <p className="text-xs text-muted-foreground mt-2">
-              Selecione um assunto para continuar
+              {selectedAssunto ? `Selecionado: ${selectedAssunto.name}` : 'Digite para buscar e selecione um assunto'}
             </p>
           </div>
 

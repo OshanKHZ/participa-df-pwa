@@ -1,10 +1,7 @@
 'use client'
 
-import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import Image from 'next/image'
 import {
-  RiMenuLine,
   RiSearchLine,
   RiCustomerService2Line,
   RiQuestionLine,
@@ -15,12 +12,11 @@ import {
   RiLightbulbLine,
 } from 'react-icons/ri'
 import { MobileBottomNav } from '@/shared/components/MobileBottomNav'
-import { MenuDrawer } from '@/shared/components/MenuDrawer'
+import { HomeMobileHeader } from '@/shared/components/HomeMobileHeader'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
 
 export default function ServicosPage() {
   const router = useRouter()
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
   const services = [
     {
@@ -67,38 +63,7 @@ export default function ServicosPage() {
       <DesktopHeader />
 
       {/* Mobile Header */}
-      <header className="lg:hidden bg-primary text-primary-foreground">
-        <div className="px-3 py-3 flex items-center justify-between">
-          <Image
-            src="/logo.svg"
-            alt="Participa DF"
-            width={126}
-            height={32}
-            priority
-            className="h-7 w-auto"
-          />
-          <button
-            onClick={() => setIsDrawerOpen(true)}
-            className="w-10 h-10 flex items-center justify-center hover:bg-white/10 rounded-lg transition-colors"
-            aria-label="Menu"
-          >
-            <RiMenuLine className="size-6 text-white" />
-          </button>
-        </div>
-
-        {/* Slogan Section */}
-        <div className="bg-primary-light px-4 py-2.5">
-          <p className="text-center text-xs font-medium text-white">
-            Você no controle!
-          </p>
-        </div>
-      </header>
-
-      {/* Menu Drawer */}
-      <MenuDrawer
-        isOpen={isDrawerOpen}
-        onClose={() => setIsDrawerOpen(false)}
-      />
+      <HomeMobileHeader />
 
       <div className="min-h-screen bg-background pb-20 md:pb-6 lg:max-w-6xl lg:mx-auto">
         {/* Content */}

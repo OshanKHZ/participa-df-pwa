@@ -39,7 +39,7 @@ export default function EntrarPage() {
 
       {/* Bottom Navigation - Mobile only */}
       <div className="lg:hidden">
-        <MobileBottomNav activeTab="home" />
+        <MobileBottomNav activeTab="login" />
       </div>
     </>
   )

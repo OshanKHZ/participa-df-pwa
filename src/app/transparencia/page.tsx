@@ -1,26 +1,15 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
-import { RiArrowLeftLine, RiExternalLinkLine } from 'react-icons/ri'
+import { RiExternalLinkLine } from 'react-icons/ri'
+import { MobileHeader } from '@/shared/components/MobileHeader'
+import { MobileBottomNav } from '@/shared/components/MobileBottomNav'
 
 export default function TransparenciaPage() {
-  const router = useRouter()
-
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="bg-primary text-primary-foreground px-4 py-4">
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => router.back()}
-            className="size-9 flex items-center justify-center hover:bg-white/10 rounded-lg transition-colors"
-            aria-label="Voltar"
-          >
-            <RiArrowLeftLine className="size-6" />
-          </button>
-          <h1 className="text-lg font-bold">Transparência</h1>
-        </div>
-      </header>
+    <>
+      <MobileHeader title="Transparência" />
+
+      <div className="min-h-screen bg-background pb-20">
 
       {/* Main Content */}
       <main className="px-4 py-6">
@@ -103,6 +92,10 @@ export default function TransparenciaPage() {
           </a>
         </div>
       </main>
-    </div>
+
+      {/* Bottom Navigation */}
+      <MobileBottomNav activeTab="services" isAuthenticated={false} />
+      </div>
+    </>
   )
 }

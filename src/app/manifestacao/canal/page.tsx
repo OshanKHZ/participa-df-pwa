@@ -210,11 +210,11 @@ export default function ChannelSelectionPage() {
           <div className="mb-10">
             <div className="flex items-center justify-between">
               {[
-                { num: 1, label: 'Tipo', current: false },
-                { num: 2, label: 'Canal', current: true },
-                { num: 3, label: 'Conteúdo', current: false },
-                { num: 4, label: 'Anonimato', current: false },
-                { num: 5, label: 'Confirmação', current: false },
+                { num: 1, label: 'Tipo', current: false, completed: true },
+                { num: 2, label: 'Assunto', current: false, completed: true },
+                { num: 3, label: 'Canal', current: true, completed: false },
+                { num: 4, label: 'Anonimato', current: false, completed: false },
+                { num: 5, label: 'Confirmação', current: false, completed: false },
               ].map((step, index) => (
                 <div key={step.num} className="flex flex-col items-center flex-1">
                   <span className={`text-xs font-medium mb-2 ${
@@ -225,9 +225,11 @@ export default function ChannelSelectionPage() {
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold border-2 ${
                     step.current
                       ? 'bg-secondary border-secondary text-white'
-                      : 'bg-card border-border text-muted-foreground'
+                      : step.completed
+                        ? 'bg-success border-success text-white'
+                        : 'bg-card border-border text-muted-foreground'
                   }`}>
-                    {step.num}
+                    {step.completed && !step.current ? '✓' : step.num}
                   </div>
                   {index < 4 && (
                     <div className="flex-1 h-0.5 bg-border -mt-5 mx-2 self-start translate-x-1/2" />

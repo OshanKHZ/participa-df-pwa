@@ -7,7 +7,6 @@ import {
   RiUserLine,
   RiLoginBoxLine,
   RiUserAddLine,
-  RiHomeLine,
   RiQuestionLine,
   RiBarChartBoxLine,
   RiSettings4Line,
@@ -120,16 +119,6 @@ export function MenuDrawer({
         {/* Navigation Links */}
         <nav className="p-4">
           <ul className="space-y-1">
-            <li>
-              <Link
-                href="/"
-                onClick={onClose}
-                className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-accent transition-colors text-foreground"
-              >
-                <RiHomeLine className="size-5 text-muted-foreground" />
-                <span className="font-medium text-sm">Início</span>
-              </Link>
-            </li>
             <li>
               <Link
                 href="/historico"

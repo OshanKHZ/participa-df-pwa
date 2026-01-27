@@ -16,6 +16,8 @@ import {
 import { MobileBottomNav } from '@/shared/components/MobileBottomNav'
 import { MenuDrawer } from '@/shared/components/MenuDrawer'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
+import { BlogCarousel } from './BlogCarousel'
+import type { BlogPost } from './BlogCarousel'
 
 interface HomePageProps {
   isAuthenticated?: boolean
@@ -24,6 +26,46 @@ interface HomePageProps {
 
 export function HomePage({ isAuthenticated, userName }: HomePageProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+
+  // Mock blog posts data - replace with real data from API
+  const blogPosts: BlogPost[] = [
+    {
+      id: '1',
+      title: 'Acessibilidade digital',
+      image:
+        '/imagens-blog/Participa-DF-e-Portal-da-Transparencia-passam-a-ser-100-acessiveis-digitalmente-620x420.webp',
+      publishedAt: new Date(Date.now() - 1000 * 60 * 30),
+      slug: 'acessibilidade-digital',
+    },
+    {
+      id: '2',
+      title: 'Ouvidoria do DF',
+      image: '/imagens-blog/ouvidoria-620x620.webp',
+      publishedAt: new Date(Date.now() - 1000 * 60 * 60 * 3),
+      slug: 'conheca-ouvidoria',
+    },
+    {
+      id: '3',
+      title: 'Sua voz transforma',
+      image: '/imagens-blog/09.PartcipaDF.webp',
+      publishedAt: new Date(Date.now() - 1000 * 60 * 60 * 24),
+      slug: 'sua-voz-transforma',
+    },
+    {
+      id: '4',
+      title: 'Canais de atendimento',
+      image: '/imagens-blog/Participa-DF-e-Portal-da-Transparencia-passam-a-ser-100-acessiveis-digitalmente-620x420.webp',
+      publishedAt: new Date(Date.now() - 1000 * 60 * 60 * 48),
+      slug: 'canais-atendimento',
+    },
+    {
+      id: '5',
+      title: 'Novidades do Participa',
+      image: '/imagens-blog/ouvidoria-620x620.webp',
+      publishedAt: new Date(Date.now() - 1000 * 60 * 60 * 72),
+      slug: 'novidades-participa',
+    },
+  ]
 
   return (
     <>
@@ -156,6 +198,12 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
             </div>
           </div>
         </div>
+
+        {/* Gray spacer */}
+        <div className="h-3 bg-muted lg:hidden" />
+
+        {/* Blog Carousel - Mobile only */}
+        <BlogCarousel posts={blogPosts} />
 
         {/* Gray spacer */}
         <div className="h-3 bg-muted lg:hidden" />

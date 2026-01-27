@@ -12,7 +12,7 @@ import {
 } from 'react-icons/ri'
 
 interface MobileBottomNavProps {
-  activeTab?: 'home' | 'services' | 'help' | 'profile'
+  activeTab?: 'home' | 'services' | 'help' | 'profile' | 'login'
   isAuthenticated?: boolean
 }
 
@@ -78,7 +78,7 @@ export function MobileBottomNav({
           <Link
             href={isAuthenticated ? '/perfil' : '/entrar'}
             className={`flex flex-col items-center justify-center gap-0.5 w-14 h-14 rounded-lg transition-colors ${
-              activeTab === 'profile'
+              activeTab === 'profile' || activeTab === 'login'
                 ? 'text-secondary bg-secondary/10'
                 : 'text-muted-foreground'
             }`}

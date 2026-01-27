@@ -1,31 +1,18 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
-import { RiArrowLeftLine, RiTimeLine } from 'react-icons/ri'
+import { RiTimeLine } from 'react-icons/ri'
 import { MobileBottomNav } from '@/shared/components/MobileBottomNav'
+import { MobileHeader } from '@/shared/components/MobileHeader'
 import { ChannelCard } from '@/shared/components/ChannelCard'
 import { channels } from '@/shared/data/channels'
 
 export default function CanaisPage() {
-  const router = useRouter()
 
   return (
-    <div className="min-h-screen bg-background pb-20 md:pb-6">
-      {/* Header */}
-      <header className="bg-primary text-white sticky top-0 z-header">
-        <div className="px-4 py-3">
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => router.back()}
-              className="p-2 -ml-2 hover:bg-white/10 rounded-lg transition-colors"
-              aria-label="Voltar"
-            >
-              <RiArrowLeftLine className="size-5 text-white/70" />
-            </button>
-            <h1 className="text-lg font-semibold">Canais de Atendimento</h1>
-          </div>
-        </div>
-      </header>
+    <>
+      <MobileHeader title="Canais de Atendimento" />
+
+      <div className="min-h-screen bg-background pb-20 md:pb-6">
 
       {/* Content */}
       <main className="px-4 py-6">
@@ -82,6 +69,7 @@ export default function CanaisPage() {
 
       {/* Bottom Navigation */}
       <MobileBottomNav activeTab="services" isAuthenticated={false} />
-    </div>
+      </div>
+    </>
   )
 }
