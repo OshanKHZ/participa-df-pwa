@@ -13,6 +13,7 @@ import { AccessibleHeader } from '@/features/manifestation/components/Accessible
 import { NavigationFooter } from '@/features/manifestation/components/NavigationFooter'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
 import { Button } from '@/shared/components/Button'
+import { Stepper, getDesktopSteps } from '@/shared/components/Stepper'
 import { getStepProgress } from '@/shared/utils/stepProgress'
 import { useStepNavigation } from '@/shared/hooks/useStepNavigation'
 import { useTextToSpeech } from '@/shared/hooks/useTextToSpeech'
@@ -524,46 +525,7 @@ export default function AssuntoPage() {
         <main className="lg:max-w-2xl lg:mx-auto lg:px-8 lg:py-12">
           {/* Progress Steps */}
           <div className="mb-10">
-            <div className="flex items-center justify-between">
-              {[
-                { num: 1, label: 'Tipo', current: false, completed: true },
-                { num: 2, label: 'Assunto', current: true, completed: false },
-                { num: 3, label: 'Conteúdo', current: false, completed: false },
-                {
-                  num: 4,
-                  label: 'Confirmação',
-                  current: false,
-                  completed: false,
-                },
-              ].map((step, index) => (
-                <div
-                  key={step.num}
-                  className="flex flex-col items-center flex-1"
-                >
-                  <span
-                    className={`text-xs font-medium mb-2 ${
-                      step.current ? 'text-foreground' : 'text-muted-foreground'
-                    }`}
-                  >
-                    {step.label}
-                  </span>
-                  <div
-                    className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold border-2 ${
-                      step.current
-                        ? 'bg-secondary border-secondary text-white'
-                        : step.completed
-                          ? 'bg-success border-success text-white'
-                          : 'bg-card border-border text-muted-foreground'
-                    }`}
-                  >
-                    {step.completed && !step.current ? '✓' : step.num}
-                  </div>
-                  {index < 3 && (
-                    <div className="flex-1 h-0.5 bg-border -mt-5 mx-2 self-start translate-x-1/2" />
-                  )}
-                </div>
-              ))}
-            </div>
+            <Stepper steps={getDesktopSteps(STEPS.SUBJECT)} />
           </div>
 
           {/* Title */}

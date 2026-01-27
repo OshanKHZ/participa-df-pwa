@@ -20,7 +20,11 @@ async function fileToBase64(file: File): Promise<string> {
       const result = reader.result as string
       // Extract base64 data (remove data URL prefix)
       const base64 = result.split(',')[1]
-      resolve(base64)
+      if (base64) {
+        resolve(base64)
+      } else {
+        reject(new Error('Failed to convert file to base64'))
+      }
     }
     reader.onerror = reject
     reader.readAsDataURL(file)
@@ -45,7 +49,11 @@ async function blobToBase64(blob: Blob): Promise<string> {
     reader.onload = () => {
       const result = reader.result as string
       const base64 = result.split(',')[1]
-      resolve(base64)
+      if (base64) {
+        resolve(base64)
+      } else {
+        reject(new Error('Failed to convert blob to base64'))
+      }
     }
     reader.onerror = reject
     reader.readAsDataURL(blob)
@@ -100,13 +108,13 @@ async function toSerializable(
   }
 
   // Convert audio Blob to Base64
-  if (draft.content?.audio) {
+  if (draft.content?.audio && serializable.content) {
     serializable.content.audioBase64 = await blobToBase64(draft.content.audio)
     serializable.content.audioType = draft.content.audio.type
   }
 
   // Convert File[] to Base64
-  if (draft.content?.files) {
+  if (draft.content?.files && serializable.content) {
     serializable.content.files = await Promise.all(
       draft.content.files.map(async file => ({
         name: file.name,
