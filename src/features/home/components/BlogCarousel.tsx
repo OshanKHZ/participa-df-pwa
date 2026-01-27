@@ -44,9 +44,8 @@ export function BlogCarousel({ posts }: BlogCarouselProps) {
   const [isAnimating, setIsAnimating] = useState(false)
 
   // Create infinite loop: [last, ...posts, first]
-  const infinitePosts = posts.length > 0
-    ? [posts[posts.length - 1], ...posts, posts[0]]
-    : []
+  const infinitePosts =
+    posts.length > 0 ? [posts[posts.length - 1], ...posts, posts[0]] : []
 
   const totalItems = posts.length
 

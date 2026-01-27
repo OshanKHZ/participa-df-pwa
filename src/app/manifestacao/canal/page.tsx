@@ -124,8 +124,8 @@ export default function ChannelSelectionPage() {
             </div>
             <p className="text-sm text-muted-foreground">
               Escolha{' '}
-              <strong className="text-foreground">uma ou mais formas</strong> para
-              se expressar da maneira mais confortável
+              <strong className="text-foreground">uma ou mais formas</strong>{' '}
+              para se expressar da maneira mais confortável
             </p>
           </div>
 
@@ -165,7 +165,9 @@ export default function ChannelSelectionPage() {
                       isSelected ? 'border-success bg-success' : 'border-muted'
                     }`}
                   >
-                    {isSelected && <RiCheckLine className="size-4 text-white" />}
+                    {isSelected && (
+                      <RiCheckLine className="size-4 text-white" />
+                    )}
                   </div>
                 </button>
               )
@@ -213,22 +215,39 @@ export default function ChannelSelectionPage() {
                 { num: 1, label: 'Tipo', current: false, completed: true },
                 { num: 2, label: 'Assunto', current: false, completed: true },
                 { num: 3, label: 'Canal', current: true, completed: false },
-                { num: 4, label: 'Anonimato', current: false, completed: false },
-                { num: 5, label: 'Confirmação', current: false, completed: false },
+                {
+                  num: 4,
+                  label: 'Anonimato',
+                  current: false,
+                  completed: false,
+                },
+                {
+                  num: 5,
+                  label: 'Confirmação',
+                  current: false,
+                  completed: false,
+                },
               ].map((step, index) => (
-                <div key={step.num} className="flex flex-col items-center flex-1">
-                  <span className={`text-xs font-medium mb-2 ${
-                    step.current ? 'text-foreground' : 'text-muted-foreground'
-                  }`}>
+                <div
+                  key={step.num}
+                  className="flex flex-col items-center flex-1"
+                >
+                  <span
+                    className={`text-xs font-medium mb-2 ${
+                      step.current ? 'text-foreground' : 'text-muted-foreground'
+                    }`}
+                  >
                     {step.label}
                   </span>
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold border-2 ${
-                    step.current
-                      ? 'bg-secondary border-secondary text-white'
-                      : step.completed
-                        ? 'bg-success border-success text-white'
-                        : 'bg-card border-border text-muted-foreground'
-                  }`}>
+                  <div
+                    className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold border-2 ${
+                      step.current
+                        ? 'bg-secondary border-secondary text-white'
+                        : step.completed
+                          ? 'bg-success border-success text-white'
+                          : 'bg-card border-border text-muted-foreground'
+                    }`}
+                  >
                     {step.completed && !step.current ? '✓' : step.num}
                   </div>
                   {index < 4 && (
@@ -251,12 +270,15 @@ export default function ChannelSelectionPage() {
 
           {/* Channels Select */}
           <div className="mb-8">
-            <label htmlFor="channel" className="block text-sm font-medium text-foreground mb-2">
+            <label
+              htmlFor="channel"
+              className="block text-sm font-medium text-foreground mb-2"
+            >
               Canal de manifestação
             </label>
             <Select
               value={selectedChannels[0] || ''}
-              onValueChange={(value) => setSelectedChannels([value])}
+              onValueChange={value => setSelectedChannels([value])}
             >
               <SelectTrigger id="channel">
                 <SelectValue placeholder="Selecione..." />
@@ -265,8 +287,12 @@ export default function ChannelSelectionPage() {
                 {channels.map(channel => (
                   <SelectItem key={channel.id} value={channel.id}>
                     <div className="flex items-center gap-3">
-                      <span className="font-medium text-sm">{channel.label}</span>
-                      <span className="text-xs text-muted-foreground">{channel.description}</span>
+                      <span className="font-medium text-sm">
+                        {channel.label}
+                      </span>
+                      <span className="text-xs text-muted-foreground">
+                        {channel.description}
+                      </span>
                     </div>
                   </SelectItem>
                 ))}
@@ -282,7 +308,10 @@ export default function ChannelSelectionPage() {
             <Button variant="link" onClick={handleBack}>
               Voltar
             </Button>
-            <Button onClick={handleNext} disabled={selectedChannels.length === 0}>
+            <Button
+              onClick={handleNext}
+              disabled={selectedChannels.length === 0}
+            >
               Avançar
               <RiArrowRightLine className="size-5" />
             </Button>

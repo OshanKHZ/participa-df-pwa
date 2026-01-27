@@ -70,19 +70,20 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
  *
  * @note We are not using the 'theme' param yet but it's available for future customization
  */
-function html(params: { url: string; host: string; theme: any }) {
+function html(params: { url: string; host: string; theme: unknown }) {
   const { url, host, theme } = params
+  const t = theme as Record<string, string> | undefined
 
   const escapedHost = host.replace(/\./g, '&#8203;.')
 
-  const brandColor = theme.brandColor || '#346df1'
+  const brandColor = t?.brandColor || '#346df1'
   const color = {
     background: '#f9f9f9',
     text: '#444',
     mainBackground: '#fff',
     buttonBackground: brandColor,
     buttonBorder: brandColor,
-    buttonText: theme.buttonText || '#fff',
+    buttonText: t?.buttonText || '#fff',
   }
 
   return `

@@ -127,7 +127,10 @@ export function AccessibilityMenu() {
                   >
                     <RiSubtractLine className="w-4 h-4" />
                   </button>
-                  <span className="text-sm font-medium text-muted-foreground min-w-[3rem] text-center" aria-live="polite">
+                  <span
+                    className="text-sm font-medium text-muted-foreground min-w-[3rem] text-center"
+                    aria-live="polite"
+                  >
                     {fontSizeLevel + 1}
                   </span>
                   <button

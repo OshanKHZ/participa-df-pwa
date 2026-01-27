@@ -1,6 +1,6 @@
 'use client'
 
-import { forwardRef, ComponentRef } from 'react'
+import { forwardRef, type ComponentRef } from 'react'
 
 export interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   variant?: 'primary' | 'secondary' | 'ghost' | 'link'
@@ -8,8 +8,19 @@ export interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
 }
 
 const Button = forwardRef<ComponentRef<'button'>, ButtonProps>(
-  ({ className, variant = 'primary', size = 'default', children, disabled, ...props }, ref) => {
-    const baseStyles = 'inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 cursor-pointer'
+  (
+    {
+      className,
+      variant = 'primary',
+      size = 'default',
+      children,
+      disabled,
+      ...props
+    },
+    ref
+  ) => {
+    const baseStyles =
+      'inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 cursor-pointer'
 
     const variants = {
       primary: 'bg-success text-white hover:opacity-90',

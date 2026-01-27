@@ -101,7 +101,11 @@ export function AuthForm({ mode }: AuthFormProps) {
         <p className="text-sm text-muted-foreground mb-6">
           {successMessage} <strong>{email}</strong>. {successSubtext}
         </p>
-        <button type="button" onClick={() => router.push('/')} className={BUTTON.primary}>
+        <button
+          type="button"
+          onClick={() => router.push('/')}
+          className={BUTTON.primary}
+        >
           Voltar ao início
         </button>
       </div>

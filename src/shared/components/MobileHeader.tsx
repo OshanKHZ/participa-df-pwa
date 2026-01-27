@@ -11,7 +11,11 @@ interface MobileHeaderProps {
   userName?: string
 }
 
-export function MobileHeader({ title, isAuthenticated = false, userName }: MobileHeaderProps) {
+export function MobileHeader({
+  title,
+  isAuthenticated = false,
+  userName,
+}: MobileHeaderProps) {
   const router = useRouter()
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 

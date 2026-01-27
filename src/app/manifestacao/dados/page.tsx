@@ -119,7 +119,9 @@ export default function PersonalDataPage() {
                   onClick={() => setIsAnonymous(!isAnonymous)}
                   role="switch"
                   aria-checked={isAnonymous}
-                  aria-label={isAnonymous ? 'Desativar anonimato' : 'Ativar anonimato'}
+                  aria-label={
+                    isAnonymous ? 'Desativar anonimato' : 'Ativar anonimato'
+                  }
                   className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 ${
                     isAnonymous ? 'bg-secondary' : 'bg-muted'
                   }`}
@@ -144,7 +146,10 @@ export default function PersonalDataPage() {
         {!isAnonymous && (
           <div className="space-y-4">
             <div>
-              <label htmlFor="manifestation-name" className="block text-sm font-medium text-foreground mb-2">
+              <label
+                htmlFor="manifestation-name"
+                className="block text-sm font-medium text-foreground mb-2"
+              >
                 Nome completo <span className="text-destructive">*</span>
               </label>
               <input
@@ -159,7 +164,10 @@ export default function PersonalDataPage() {
             </div>
 
             <div>
-              <label htmlFor="manifestation-email" className="block text-sm font-medium text-foreground mb-2">
+              <label
+                htmlFor="manifestation-email"
+                className="block text-sm font-medium text-foreground mb-2"
+              >
                 Email (opcional)
               </label>
               <input
@@ -177,7 +185,10 @@ export default function PersonalDataPage() {
             </div>
 
             <div>
-              <label htmlFor="manifestation-phone" className="block text-sm font-medium text-foreground mb-2">
+              <label
+                htmlFor="manifestation-phone"
+                className="block text-sm font-medium text-foreground mb-2"
+              >
                 Telefone (opcional)
               </label>
               <input

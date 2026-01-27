@@ -2,7 +2,11 @@
 
 import * as SelectPrimitive from '@radix-ui/react-select'
 import { RiCheckLine, RiArrowDownSLine, RiArrowUpSLine } from 'react-icons/ri'
-import { forwardRef, ComponentRef, ComponentPropsWithoutRef } from 'react'
+import {
+  forwardRef,
+  type ComponentRef,
+  type ComponentPropsWithoutRef,
+} from 'react'
 
 const Select = SelectPrimitive.Root
 const SelectGroup = SelectPrimitive.Group
@@ -57,7 +61,8 @@ const SelectScrollDownButton = forwardRef<
     <RiArrowDownSLine className="size-4" aria-hidden="true" />
   </SelectPrimitive.ScrollDownButton>
 ))
-SelectScrollDownButton.displayName = SelectPrimitive.ScrollDownButton.displayName
+SelectScrollDownButton.displayName =
+  SelectPrimitive.ScrollDownButton.displayName
 
 const SelectContent = forwardRef<
   ComponentRef<typeof SelectPrimitive.Content>,

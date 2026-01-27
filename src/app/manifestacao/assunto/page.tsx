@@ -2,7 +2,12 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { RiSearchLine, RiCloseLine, RiVolumeUpLine, RiArrowRightLine } from 'react-icons/ri'
+import {
+  RiSearchLine,
+  RiCloseLine,
+  RiVolumeUpLine,
+  RiArrowRightLine,
+} from 'react-icons/ri'
 import { create, insertMultiple, search, type AnyOrama } from '@orama/orama'
 import { AccessibleHeader } from '@/features/manifestation/components/AccessibleHeader'
 import { NavigationFooter } from '@/features/manifestation/components/NavigationFooter'
@@ -524,21 +529,33 @@ export default function AssuntoPage() {
                 { num: 1, label: 'Tipo', current: false, completed: true },
                 { num: 2, label: 'Assunto', current: true, completed: false },
                 { num: 3, label: 'Conteúdo', current: false, completed: false },
-                { num: 4, label: 'Confirmação', current: false, completed: false },
+                {
+                  num: 4,
+                  label: 'Confirmação',
+                  current: false,
+                  completed: false,
+                },
               ].map((step, index) => (
-                <div key={step.num} className="flex flex-col items-center flex-1">
-                  <span className={`text-xs font-medium mb-2 ${
-                    step.current ? 'text-foreground' : 'text-muted-foreground'
-                  }`}>
+                <div
+                  key={step.num}
+                  className="flex flex-col items-center flex-1"
+                >
+                  <span
+                    className={`text-xs font-medium mb-2 ${
+                      step.current ? 'text-foreground' : 'text-muted-foreground'
+                    }`}
+                  >
                     {step.label}
                   </span>
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold border-2 ${
-                    step.current
-                      ? 'bg-secondary border-secondary text-white'
-                      : step.completed
-                        ? 'bg-success border-success text-white'
-                        : 'bg-card border-border text-muted-foreground'
-                  }`}>
+                  <div
+                    className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold border-2 ${
+                      step.current
+                        ? 'bg-secondary border-secondary text-white'
+                        : step.completed
+                          ? 'bg-success border-success text-white'
+                          : 'bg-card border-border text-muted-foreground'
+                    }`}
+                  >
                     {step.completed && !step.current ? '✓' : step.num}
                   </div>
                   {index < 3 && (
@@ -561,7 +578,10 @@ export default function AssuntoPage() {
 
           {/* Subject Select */}
           <div className="mb-8 relative">
-            <label htmlFor="desktop-subject-search" className="block text-sm font-medium text-foreground mb-2">
+            <label
+              htmlFor="desktop-subject-search"
+              className="block text-sm font-medium text-foreground mb-2"
+            >
               Assunto
             </label>
             <div className="relative">
@@ -633,7 +653,9 @@ export default function AssuntoPage() {
               </>
             )}
             <p className="text-xs text-muted-foreground mt-2">
-              {selectedAssunto ? `Selecionado: ${selectedAssunto.name}` : 'Digite para buscar e selecione um assunto'}
+              {selectedAssunto
+                ? `Selecionado: ${selectedAssunto.name}`
+                : 'Digite para buscar e selecione um assunto'}
             </p>
           </div>
 

@@ -10,7 +10,10 @@ interface HomeMobileHeaderProps {
   userName?: string
 }
 
-export function HomeMobileHeader({ isAuthenticated = false, userName }: HomeMobileHeaderProps) {
+export function HomeMobileHeader({
+  isAuthenticated = false,
+  userName,
+}: HomeMobileHeaderProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
   return (

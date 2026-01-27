@@ -232,17 +232,24 @@ export default function ManifestationTypePage() {
                 { num: 4, label: 'Anonimato', current: false },
                 { num: 5, label: 'Confirmação', current: false },
               ].map((step, index) => (
-                <div key={step.num} className="flex flex-col items-center flex-1">
-                  <span className={`text-xs font-medium mb-2 ${
-                    step.current ? 'text-foreground' : 'text-muted-foreground'
-                  }`}>
+                <div
+                  key={step.num}
+                  className="flex flex-col items-center flex-1"
+                >
+                  <span
+                    className={`text-xs font-medium mb-2 ${
+                      step.current ? 'text-foreground' : 'text-muted-foreground'
+                    }`}
+                  >
                     {step.label}
                   </span>
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold border-2 ${
-                    step.current
-                      ? 'bg-secondary border-secondary text-white'
-                      : 'bg-card border-border text-muted-foreground'
-                  }`}>
+                  <div
+                    className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold border-2 ${
+                      step.current
+                        ? 'bg-secondary border-secondary text-white'
+                        : 'bg-card border-border text-muted-foreground'
+                    }`}
+                  >
                     {step.num}
                   </div>
                   {index < 4 && (
@@ -265,7 +272,10 @@ export default function ManifestationTypePage() {
 
           {/* Types Select */}
           <div className="mb-8">
-            <label htmlFor="manifestation-type" className="block text-sm font-medium text-foreground mb-2">
+            <label
+              htmlFor="manifestation-type"
+              className="block text-sm font-medium text-foreground mb-2"
+            >
               Tipo de manifestação
             </label>
             <Select value={selectedType || ''} onValueChange={handleSelectType}>
@@ -277,7 +287,9 @@ export default function ManifestationTypePage() {
                   <SelectItem key={type.id} value={type.id}>
                     <div className="flex items-center gap-3">
                       <span className="font-medium text-sm">{type.label}</span>
-                      <span className="text-xs text-muted-foreground">{type.description}</span>
+                      <span className="text-xs text-muted-foreground">
+                        {type.description}
+                      </span>
                     </div>
                   </SelectItem>
                 ))}

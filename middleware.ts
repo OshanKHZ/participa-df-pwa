@@ -1,4 +1,8 @@
-import { auth } from '@/server/auth'
+import NextAuth from 'next-auth'
+
+export const { auth } = NextAuth({
+  providers: [],
+})
 
 export default auth(req => {
   if (!req.auth && req.nextUrl.pathname !== '/') {

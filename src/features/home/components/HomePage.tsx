@@ -54,7 +54,8 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
     {
       id: '4',
       title: 'Canais de atendimento',
-      image: '/imagens-blog/Participa-DF-e-Portal-da-Transparencia-passam-a-ser-100-acessiveis-digitalmente-620x420.webp',
+      image:
+        '/imagens-blog/Participa-DF-e-Portal-da-Transparencia-passam-a-ser-100-acessiveis-digitalmente-620x420.webp',
       publishedAt: new Date(Date.now() - 1000 * 60 * 60 * 48),
       slug: 'canais-atendimento',
     },

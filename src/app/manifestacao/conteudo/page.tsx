@@ -12,10 +12,9 @@ import {
   RiStopCircleLine,
   RiVolumeUpLine,
   RiArrowRightLine,
-  RiArrowLeftLine,
   RiArrowRightSLine,
+  RiArrowLeftLine,
   RiZoomInLine,
-  RiFileTextLine,
 } from 'react-icons/ri'
 import { AccessibleHeader } from '@/features/manifestation/components/AccessibleHeader'
 import { NavigationFooter } from '@/features/manifestation/components/NavigationFooter'
@@ -207,7 +206,11 @@ export default function ContentPage() {
 
     const filesWithPreview = validFiles.map(file => {
       const fileWithPreview = file as FileWithPreview
-      if (file.type.startsWith('image/') || file.type.startsWith('video/') || file.type.startsWith('audio/')) {
+      if (
+        file.type.startsWith('image/') ||
+        file.type.startsWith('video/') ||
+        file.type.startsWith('audio/')
+      ) {
         fileWithPreview.preview = URL.createObjectURL(file)
       }
       return fileWithPreview
@@ -240,7 +243,12 @@ export default function ContentPage() {
   }
 
   const nextPreview = () => {
-    const mediaFiles = files.filter(f => f.type.startsWith('image/') || f.type.startsWith('video/') || f.type.startsWith('audio/'))
+    const mediaFiles = files.filter(
+      f =>
+        f.type.startsWith('image/') ||
+        f.type.startsWith('video/') ||
+        f.type.startsWith('audio/')
+    )
     const currentIndex = mediaFiles.findIndex(f => f === previewFile)
     const nextIndex = (currentIndex + 1) % mediaFiles.length
     setPreviewFile(mediaFiles[nextIndex] as FileWithPreview)
@@ -248,7 +256,12 @@ export default function ContentPage() {
   }
 
   const prevPreview = () => {
-    const mediaFiles = files.filter(f => f.type.startsWith('image/') || f.type.startsWith('video/') || f.type.startsWith('audio/'))
+    const mediaFiles = files.filter(
+      f =>
+        f.type.startsWith('image/') ||
+        f.type.startsWith('video/') ||
+        f.type.startsWith('audio/')
+    )
     const currentIndex = mediaFiles.findIndex(f => f === previewFile)
     const prevIndex = (currentIndex - 1 + mediaFiles.length) % mediaFiles.length
     setPreviewFile(mediaFiles[prevIndex] as FileWithPreview)
@@ -387,7 +400,8 @@ export default function ContentPage() {
                       </button>
                     </div>
                     <p className="text-sm text-muted-foreground mb-4">
-                      Descreva sua manifestação com o máximo de detalhes possível
+                      Descreva sua manifestação com o máximo de detalhes
+                      possível
                     </p>
                   </div>
 
@@ -403,7 +417,10 @@ export default function ContentPage() {
                       aria-describedby="char-feedback"
                       className="w-full min-h-textarea p-4 border card-border rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-secondary"
                     />
-                    <div className="flex items-center justify-between mt-2 text-xs" id="char-feedback">
+                    <div
+                      className="flex items-center justify-between mt-2 text-xs"
+                      id="char-feedback"
+                    >
                       <span
                         className={
                           charCount < minChars
@@ -430,7 +447,8 @@ export default function ContentPage() {
                   {/* Tips */}
                   <div className="bg-accent rounded-lg p-4">
                     <h3 className="font-semibold text-accent-foreground text-sm mb-2">
-                      <span aria-hidden="true">💡</span> Escreva todos os detalhes:
+                      <span aria-hidden="true">💡</span> Escreva todos os
+                      detalhes:
                     </h3>
                     <ul className="text-xs text-accent-foreground space-y-1 ml-4 list-disc">
                       <li>
@@ -701,21 +719,33 @@ export default function ContentPage() {
                 { num: 1, label: 'Tipo', current: false, completed: true },
                 { num: 2, label: 'Assunto', current: false, completed: true },
                 { num: 3, label: 'Conteúdo', current: true, completed: false },
-                { num: 4, label: 'Confirmação', current: false, completed: false },
+                {
+                  num: 4,
+                  label: 'Confirmação',
+                  current: false,
+                  completed: false,
+                },
               ].map((step, index) => (
-                <div key={step.num} className="flex flex-col items-center flex-1">
-                  <span className={`text-xs font-medium mb-2 ${
-                    step.current ? 'text-foreground' : 'text-muted-foreground'
-                  }`}>
+                <div
+                  key={step.num}
+                  className="flex flex-col items-center flex-1"
+                >
+                  <span
+                    className={`text-xs font-medium mb-2 ${
+                      step.current ? 'text-foreground' : 'text-muted-foreground'
+                    }`}
+                  >
                     {step.label}
                   </span>
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold border-2 ${
-                    step.current
-                      ? 'bg-secondary border-secondary text-white'
-                      : step.completed
-                        ? 'bg-success border-success text-white'
-                        : 'bg-card border-border text-muted-foreground'
-                  }`}>
+                  <div
+                    className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold border-2 ${
+                      step.current
+                        ? 'bg-secondary border-secondary text-white'
+                        : step.completed
+                          ? 'bg-success border-success text-white'
+                          : 'bg-card border-border text-muted-foreground'
+                    }`}
+                  >
                     {step.completed && !step.current ? '✓' : step.num}
                   </div>
                   {index < 3 && (
@@ -739,7 +769,10 @@ export default function ContentPage() {
           <div className="space-y-8">
             {/* Text Section */}
             <div className="space-y-3">
-              <label htmlFor="desktop-text" className="block text-sm font-medium text-foreground">
+              <label
+                htmlFor="desktop-text"
+                className="block text-sm font-medium text-foreground"
+              >
                 Descrição da manifestação
               </label>
               <textarea
@@ -750,10 +783,22 @@ export default function ContentPage() {
                 className="w-full min-h-48 p-4 border-2 border-border rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-secondary focus:border-secondary"
               />
               <div className="flex items-center justify-between text-xs">
-                <span className={charCount < minChars ? 'text-destructive' : 'text-success'}>
-                  {charCount < minChars ? `Mínimo ${minChars} caracteres` : '✓ Mínimo atingido'}
+                <span
+                  className={
+                    charCount < minChars ? 'text-destructive' : 'text-success'
+                  }
+                >
+                  {charCount < minChars
+                    ? `Mínimo ${minChars} caracteres`
+                    : '✓ Mínimo atingido'}
                 </span>
-                <span className={charCount > maxChars * 0.9 ? 'text-destructive' : 'text-muted-foreground'}>
+                <span
+                  className={
+                    charCount > maxChars * 0.9
+                      ? 'text-destructive'
+                      : 'text-muted-foreground'
+                  }
+                >
                   {charCount} / {maxChars}
                 </span>
               </div>
@@ -799,9 +844,14 @@ export default function ContentPage() {
               {audioBlobs.length > 0 && (
                 <div className="space-y-2">
                   {audioBlobs.map((blob, index) => (
-                    <div key={index} className="border-2 border-border rounded-lg p-2">
+                    <div
+                      key={index}
+                      className="border-2 border-border rounded-lg p-2"
+                    >
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs text-muted-foreground">Áudio {index + 1}</span>
+                        <span className="text-xs text-muted-foreground">
+                          Áudio {index + 1}
+                        </span>
                         <button
                           onClick={() => deleteAudio(index)}
                           className="text-xs text-destructive hover:underline"
@@ -809,7 +859,11 @@ export default function ContentPage() {
                           Remover
                         </button>
                       </div>
-                      <audio controls className="w-full h-8" src={URL.createObjectURL(blob)} />
+                      <audio
+                        controls
+                        className="w-full h-8"
+                        src={URL.createObjectURL(blob)}
+                      />
                     </div>
                   ))}
                 </div>
@@ -836,7 +890,9 @@ export default function ContentPage() {
                     htmlFor="file-upload"
                     className="flex-1 text-sm text-muted-foreground cursor-pointer hover:text-foreground"
                   >
-                    {files.length === 0 ? 'Nenhum arquivo selecionado' : `${files.length} arquivo(s)`}
+                    {files.length === 0
+                      ? 'Nenhum arquivo selecionado'
+                      : `${files.length} arquivo(s)`}
                   </label>
                   <label
                     htmlFor="file-upload"
@@ -848,14 +904,18 @@ export default function ContentPage() {
               </div>
 
               <p className="text-xs text-muted-foreground">
-                Formatos: PDF, DOCX, XLSX, PNG, JPG, JPEG, MP3, MP4 • Máx. {maxFiles} arquivos
+                Formatos: PDF, DOCX, XLSX, PNG, JPG, JPEG, MP3, MP4 • Máx.{' '}
+                {maxFiles} arquivos
               </p>
 
               {files.length > 0 && (
                 <div className="grid grid-cols-2 gap-2">
                   {files.map((file, index) => {
                     const fileType = getFileType(file)
-                    const isMedia = fileType === 'image' || fileType === 'video' || fileType === 'audio'
+                    const isMedia =
+                      fileType === 'image' ||
+                      fileType === 'video' ||
+                      fileType === 'audio'
                     const thumbnail = file.preview || undefined
 
                     return (
@@ -868,15 +928,22 @@ export default function ContentPage() {
                         {thumbnail && isMedia ? (
                           <div className="aspect-video bg-muted">
                             {fileType === 'image' && (
-                              <img src={thumbnail} alt={file.name} className="w-full h-full object-cover" />
+                              <img
+                                src={thumbnail}
+                                alt={file.name}
+                                className="w-full h-full object-cover"
+                              />
                             )}
                             {fileType === 'video' && (
-                              <video src={thumbnail} className="w-full h-full object-cover" />
+                              <video
+                                src={thumbnail}
+                                className="w-full h-full object-cover"
+                              />
                             )}
                             {fileType === 'audio' && (
-                                                              <div className="w-full h-full flex items-center justify-center bg-accent">
+                              <div className="w-full h-full flex items-center justify-center bg-accent">
                                 <RiMicLine className="size-8 text-muted-foreground" />
-                                                              </div>
+                              </div>
                             )}
                             {/* Hover overlay */}
                             <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -885,7 +952,9 @@ export default function ContentPage() {
                           </div>
                         ) : (
                           <div className="aspect-video flex flex-col items-center justify-center bg-accent p-4">
-                            <span className="text-2xl">{getFileIcon(file)}</span>
+                            <span className="text-2xl">
+                              {getFileIcon(file)}
+                            </span>
                             <span className="text-xs text-muted-foreground text-center mt-2 truncate w-full">
                               {file.name}
                             </span>
@@ -894,11 +963,14 @@ export default function ContentPage() {
 
                         {/* Info bar */}
                         <div className="p-2 bg-card flex items-center justify-between">
-                          <span className="text-xs text-foreground truncate flex-1" title={file.name}>
+                          <span
+                            className="text-xs text-foreground truncate flex-1"
+                            title={file.name}
+                          >
                             {file.name}
                           </span>
                           <button
-                            onClick={(e) => {
+                            onClick={e => {
                               e.stopPropagation()
                               removeFile(index)
                             }}
@@ -936,7 +1008,7 @@ export default function ContentPage() {
         >
           <div
             className="relative max-w-5xl max-h-[90vh] w-full mx-4"
-            onClick={(e) => e.stopPropagation()}
+            onClick={e => e.stopPropagation()}
           >
             {/* Close button */}
             <button
@@ -982,11 +1054,12 @@ export default function ContentPage() {
                 onClick={prevPreview}
                 className="text-white hover:text-gray-300 transition-colors flex items-center gap-2"
               >
-                <RiArrowLeftSLine className="size-8" />
+                <RiArrowLeftLine className="size-8" />
                 Anterior
               </button>
               <span className="text-white text-sm">
-                {previewIndex + 1} / {files.filter(f => getFileType(f) !== 'document').length}
+                {previewIndex + 1} /{' '}
+                {files.filter(f => getFileType(f) !== 'document').length}
               </span>
               <button
                 onClick={nextPreview}
@@ -1000,7 +1073,9 @@ export default function ContentPage() {
             {/* File info */}
             <div className="mt-2 text-center">
               <p className="text-white text-sm truncate">{previewFile.name}</p>
-              <p className="text-gray-400 text-xs">{formatFileSize(previewFile.size)}</p>
+              <p className="text-gray-400 text-xs">
+                {formatFileSize(previewFile.size)}
+              </p>
             </div>
           </div>
         </div>

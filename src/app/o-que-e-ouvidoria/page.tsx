@@ -37,76 +37,75 @@ export default function OQueEOuvidoriaPage() {
       <MobileHeader title="Sobre a Ouvidoria" />
 
       <div className="min-h-screen bg-background pb-20 md:pb-6">
+        {/* Main Content */}
+        <main className="px-4 py-6">
+          {/* Intro Section */}
+          <section className="mb-6">
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              A Ouvidoria é um espaço para você se relacionar com o Governo do
+              Distrito Federal, registrando sua solicitação, reclamação, elogio,
+              denúncia ou pedido de informação que tenha relação com os serviços
+              prestados pelo Governo. É dessa forma que vamos garantir que você
+              seja ouvido.
+            </p>
+          </section>
 
-      {/* Main Content */}
-      <main className="px-4 py-6">
-        {/* Intro Section */}
-        <section className="mb-6">
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            A Ouvidoria é um espaço para você se relacionar com o Governo do
-            Distrito Federal, registrando sua solicitação, reclamação, elogio,
-            denúncia ou pedido de informação que tenha relação com os serviços
-            prestados pelo Governo. É dessa forma que vamos garantir que você
-            seja ouvido.
-          </p>
-        </section>
+          {/* Channels Section */}
+          <section className="mb-6">
+            <h3 className="text-sm font-semibold text-foreground mb-3">
+              Canais de atendimento
+            </h3>
 
-        {/* Channels Section */}
-        <section className="mb-6">
-          <h3 className="text-sm font-semibold text-foreground mb-3">
-            Canais de atendimento
-          </h3>
-
-          <div className="space-y-3">
-            {channels.map(channel => {
-              const Icon = channel.icon
-              return (
-                <div
-                  key={channel.id}
-                  className="flex items-center gap-3 p-3.5 bg-card border border-border rounded-lg"
-                >
-                  <Icon className="size-5 text-secondary flex-shrink-0" />
-                  <div className="flex-1 min-w-0">
-                    <h4 className="text-sm font-medium text-foreground mb-0.5">
-                      {channel.title}
-                    </h4>
-                    <p className="text-xs text-muted-foreground">
-                      {channel.description}
-                    </p>
+            <div className="space-y-3">
+              {channels.map(channel => {
+                const Icon = channel.icon
+                return (
+                  <div
+                    key={channel.id}
+                    className="flex items-center gap-3 p-3.5 bg-card border border-border rounded-lg"
+                  >
+                    <Icon className="size-5 text-secondary flex-shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <h4 className="text-sm font-medium text-foreground mb-0.5">
+                        {channel.title}
+                      </h4>
+                      <p className="text-xs text-muted-foreground">
+                        {channel.description}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              )
-            })}
-          </div>
-        </section>
+                )
+              })}
+            </div>
+          </section>
 
-        {/* Network Section */}
-        <section className="mb-6">
-          <h3 className="text-sm font-semibold text-foreground mb-2">
-            Rede de Ouvidorias
-          </h3>
-          <p className="text-xs text-muted-foreground leading-relaxed">
-            As ouvidorias do GDF formam a rede que faz parte do Sistema de
-            Gestão de Ouvidoria do Distrito Federal - SIGO/DF, coordenado pela
-            Ouvidoria-Geral do DF.
-          </p>
-        </section>
+          {/* Network Section */}
+          <section className="mb-6">
+            <h3 className="text-sm font-semibold text-foreground mb-2">
+              Rede de Ouvidorias
+            </h3>
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              As ouvidorias do GDF formam a rede que faz parte do Sistema de
+              Gestão de Ouvidoria do Distrito Federal - SIGO/DF, coordenado pela
+              Ouvidoria-Geral do DF.
+            </p>
+          </section>
 
-        {/* CTA Section */}
-        <section className="bg-secondary/10 border border-secondary/20 rounded-lg p-4">
-          <p className="text-sm text-foreground mb-2">Tem alguma dúvida?</p>
-          <Link
-            href="/ajuda"
-            className="inline-flex items-center gap-2 text-secondary font-medium text-sm hover:underline"
-          >
-            Acessar Perguntas Frequentes
-            <RiArrowRightSLine className="size-4" />
-          </Link>
-        </section>
-      </main>
+          {/* CTA Section */}
+          <section className="bg-secondary/10 border border-secondary/20 rounded-lg p-4">
+            <p className="text-sm text-foreground mb-2">Tem alguma dúvida?</p>
+            <Link
+              href="/ajuda"
+              className="inline-flex items-center gap-2 text-secondary font-medium text-sm hover:underline"
+            >
+              Acessar Perguntas Frequentes
+              <RiArrowRightSLine className="size-4" />
+            </Link>
+          </section>
+        </main>
 
-      {/* Bottom Navigation */}
-      <MobileBottomNav activeTab="home" isAuthenticated={false} />
+        {/* Bottom Navigation */}
+        <MobileBottomNav activeTab="home" isAuthenticated={false} />
       </div>
     </>
   )
