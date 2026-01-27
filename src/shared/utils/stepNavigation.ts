@@ -7,7 +7,6 @@ export function getStepUrl(stepNumber: number): string {
   const stepUrls: Record<number, string> = {
     [STEPS.TYPE]: '/manifestacao',
     [STEPS.SUBJECT]: '/manifestacao/assunto',
-    [STEPS.CHANNEL]: '/manifestacao/canal',
     [STEPS.CONTENT]: '/manifestacao/conteudo',
     [STEPS.REVIEW]: '/manifestacao/revisar',
   }

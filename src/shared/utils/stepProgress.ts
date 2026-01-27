@@ -10,7 +10,6 @@ export interface Step {
 export const DEFAULT_STEPS: Step[] = [
   { number: STEPS.TYPE, label: 'Tipo de manifestação', completed: false },
   { number: STEPS.SUBJECT, label: 'Assunto', completed: false },
-  { number: STEPS.CHANNEL, label: 'Como prefere contar', completed: false },
   { number: STEPS.CONTENT, label: 'Sua manifestação', completed: false },
   { number: STEPS.REVIEW, label: 'Revisão final', completed: false },
 ]
@@ -31,7 +30,6 @@ export function getStepProgress(currentStep: number): Step[] {
   // Check localStorage for saved data
   const manifestationType = localStorage.getItem(STORAGE_KEYS.type)
   const manifestationSubject = localStorage.getItem(STORAGE_KEYS.subjectId)
-  const manifestationChannel = localStorage.getItem(STORAGE_KEYS.channels)
   const manifestationContent = localStorage.getItem(STORAGE_KEYS.content)
 
   return DEFAULT_STEPS.map(step => ({
@@ -39,7 +37,6 @@ export function getStepProgress(currentStep: number): Step[] {
     completed:
       (step.number === STEPS.TYPE && !!manifestationType) ||
       (step.number === STEPS.SUBJECT && !!manifestationSubject) ||
-      (step.number === STEPS.CHANNEL && !!manifestationChannel) ||
       (step.number === STEPS.CONTENT && !!manifestationContent) ||
       step.number < currentStep,
   }))

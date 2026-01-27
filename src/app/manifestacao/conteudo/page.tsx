@@ -15,6 +15,7 @@ import {
   RiArrowRightSLine,
   RiArrowLeftLine,
   RiZoomInLine,
+  RiImageAddLine,
 } from 'react-icons/ri'
 import { AccessibleHeader } from '@/features/manifestation/components/AccessibleHeader'
 import { NavigationFooter } from '@/features/manifestation/components/NavigationFooter'
@@ -32,6 +33,27 @@ import {
   DURATION,
   COMPLETED_STEPS,
 } from '@/shared/constants/designTokens'
+
+const channels = [
+  {
+    id: 'texto',
+    label: 'Prefiro escrever',
+    description: 'Vou escrever minha manifestação',
+    icon: RiTextWrap,
+  },
+  {
+    id: 'audio',
+    label: 'Desejo falar',
+    description: 'Vou gravar um áudio explicando',
+    icon: RiMicLine,
+  },
+  {
+    id: 'arquivos',
+    label: 'Tenho fotos ou vídeos',
+    description: 'Vou enviar arquivos de imagem ou vídeo',
+    icon: RiImageAddLine,
+  },
+]
 
 type FileWithPreview = File & { preview?: string }
 
@@ -449,6 +471,91 @@ export default function ContentPage() {
 
         {/* Main Content */}
         <main className="px-4 py-6">
+          {/* Channel Selector */}
+          <div className="mb-6">
+            <div className="flex items-center gap-2 mb-2">
+              <h2 className="text-lg font-bold text-foreground">
+                Como você prefere contar?
+              </h2>
+              <button
+                onClick={() =>
+                  speak(
+                    'Como você prefere contar? Escolha uma ou mais formas para se expressar da maneira mais confortável'
+                  )
+                }
+                className="size-5 rounded-full bg-secondary hover:bg-secondary-hover flex items-center justify-center transition-colors flex-shrink-0"
+                aria-label="Ouvir instruções"
+              >
+                <RiVolumeUpLine className="size-3 text-white" />
+              </button>
+            </div>
+            <p className="text-sm text-muted-foreground mb-3">
+              Escolha{' '}
+              <strong className="text-foreground">uma ou mais formas</strong>{' '}
+              para se expressar
+            </p>
+
+            {/* Channels Grid - Compact */}
+            <div className="grid grid-cols-3 gap-2">
+              {channels.map(channel => {
+                const Icon = channel.icon
+                const isSelected = selectedChannels.includes(channel.id)
+
+                return (
+                  <button
+                    key={channel.id}
+                    onClick={() => {
+                      setSelectedChannels(prev => {
+                        if (prev.includes(channel.id)) {
+                          const newChannels = prev.filter(
+                            id => id !== channel.id
+                          )
+                          localStorage.setItem(
+                            'manifestation_channels',
+                            JSON.stringify(newChannels)
+                          )
+                          return newChannels
+                        } else {
+                          const newChannels = [...prev, channel.id]
+                          localStorage.setItem(
+                            'manifestation_channels',
+                            JSON.stringify(newChannels)
+                          )
+                          return newChannels
+                        }
+                      })
+                    }}
+                    className={`bg-card rounded-lg p-2 card-border text-center transition-all ${
+                      isSelected ? 'ring-2 ring-secondary' : 'hover:bg-accent'
+                    }`}
+                  >
+                    <div
+                      className={`w-8 h-8 border-2 rounded-lg flex items-center justify-center mx-auto mb-1 ${
+                        isSelected ? 'border-secondary' : 'border-border'
+                      }`}
+                    >
+                      <Icon
+                        className={`size-4 ${isSelected ? 'text-secondary' : 'text-muted-foreground'}`}
+                      />
+                    </div>
+                    <p
+                      className={`text-xs font-medium ${isSelected ? 'text-foreground' : 'text-muted-foreground'}`}
+                    >
+                      {channel.label}
+                    </p>
+                  </button>
+                )
+              })}
+            </div>
+
+            {selectedChannels.length > 0 && (
+              <div className="mt-2 text-xs text-muted-foreground">
+                ✓ {selectedChannels.length}{' '}
+                {selectedChannels.length === 1 ? 'selecionado' : 'selecionados'}
+              </div>
+            )}
+          </div>
+
           {/* Texto/Áudio Tab - Combined */}
           {activeTab === 'texto-audio' && (
             <div className="space-y-6">
