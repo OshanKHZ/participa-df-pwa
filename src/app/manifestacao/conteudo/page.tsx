@@ -15,6 +15,7 @@ import {
   RiArrowRightSLine,
   RiArrowLeftLine,
   RiZoomInLine,
+  RiFilePdfLine,
 } from 'react-icons/ri'
 import { AccessibleHeader } from '@/features/manifestation/components/AccessibleHeader'
 import { NavigationFooter } from '@/features/manifestation/components/NavigationFooter'
@@ -23,6 +24,8 @@ import { Button } from '@/shared/components/Button'
 import { getStepProgress } from '@/shared/utils/stepProgress'
 import { useStepNavigation } from '@/shared/hooks/useStepNavigation'
 import { useTextToSpeech } from '@/shared/hooks/useTextToSpeech'
+import { useDraftPersistence } from '@/shared/hooks/useDraftPersistence'
+import { STORAGE_KEYS } from '@/shared/constants/storageKeys'
 import {
   LIMITS,
   STEPS,
@@ -63,13 +66,19 @@ export default function ContentPage() {
 
   // Accepted file types
   const acceptedFileTypes = {
-    documents: '.pdf,.docx,.xlsx',
-    images: '.png,.jpg,.jpeg',
-    audio: '.mp3',
-    video: '.mp4',
+    documents: '.pdf',
+    images: '.png,.jpg,.jpeg,.webp',
+    audio: '.mp3,.wav,.ogg',
+    video: '.mp4,.webm,.mov',
   }
 
   const allAcceptedTypes = Object.values(acceptedFileTypes).join(',')
+
+  // Draft persistence hook
+  const { saveField, loadDraft } = useDraftPersistence({
+    autoSave: true,
+    debounceMs: 1000,
+  })
 
   useEffect(() => {
     const savedChannels = localStorage.getItem('manifestation_channels')
@@ -91,10 +100,63 @@ export default function ContentPage() {
       setCharCount(savedContent.length)
     }
 
+    // Load saved draft from IndexedDB (includes files with blobs)
+    const loadSavedDraft = async () => {
+      try {
+        const savedDraftId = localStorage.getItem(STORAGE_KEYS.currentDraftId)
+        if (savedDraftId) {
+          const draft = await loadDraft(savedDraftId)
+          if (draft?.content?.files) {
+            // Restore files with previews
+            const filesWithPreview = draft.content.files.map(file => {
+              const fileWithPreview = file as FileWithPreview
+              if (
+                file.type.startsWith('image/') ||
+                file.type.startsWith('video/') ||
+                file.type.startsWith('audio/')
+              ) {
+                fileWithPreview.preview = URL.createObjectURL(file)
+              }
+              return fileWithPreview
+            })
+            setFiles(filesWithPreview)
+          }
+          if (draft?.content?.audio) {
+            // Audio restoration would go here if needed
+          }
+        }
+      } catch (e) {
+        console.error('Error loading draft from IndexedDB:', e)
+      }
+    }
+
+    loadSavedDraft()
+
     return () => {
       if (timerRef.current) clearInterval(timerRef.current)
     }
-  }, [])
+  }, [loadDraft])
+
+  // Save draft when files change (using IndexedDB)
+  useEffect(() => {
+    saveField('content.files', files)
+  }, [files, saveField])
+
+  // Save draft when text changes
+  useEffect(() => {
+    saveField('content.text', textContent)
+  }, [textContent, saveField])
+
+  // Cleanup blob URLs when files change
+  useEffect(() => {
+    return () => {
+      files.forEach(file => {
+        if (file?.preview) {
+          URL.revokeObjectURL(file.preview)
+        }
+      })
+    }
+  }, [files])
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const text = e.target.value
@@ -269,21 +331,32 @@ export default function ContentPage() {
   }
 
   const getFileType = (file: File) => {
+    if (!file?.type) return 'document'
     if (file.type.startsWith('image/')) return 'image'
     if (file.type.startsWith('video/')) return 'video'
     if (file.type.startsWith('audio/')) return 'audio'
     return 'document'
   }
 
+  // PDF icon component - using provided image
+  const PdfIcon = () => (
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/8/87/PDF_file_icon.svg"
+      alt="PDF"
+      className="size-12"
+    />
+  )
+
   const getFileIcon = (file: File) => {
-    if (file.type.startsWith('image/')) return '🖼️'
-    if (file.type.startsWith('video/')) return '🎥'
-    if (file.type.startsWith('audio/')) return '🎵'
-    if (file.type.includes('pdf')) return '📄'
-    if (file.type.includes('word') || file.type.includes('document'))
-      return '📝'
-    if (file.type.includes('sheet') || file.type.includes('excel')) return '📊'
-    return '📎'
+    if (!file?.type) return <span className="text-xl">📎</span>
+    if (file.type.startsWith('image/'))
+      return <span className="text-xl">🖼️</span>
+    if (file.type.startsWith('video/'))
+      return <span className="text-xl">🎥</span>
+    if (file.type.startsWith('audio/'))
+      return <span className="text-xl">🎵</span>
+    if (file.type.includes('pdf')) return <PdfIcon />
+    return <span className="text-xl">📎</span>
   }
 
   const formatFileSize = (bytes: number) => {
@@ -593,7 +666,7 @@ export default function ContentPage() {
                             </div>
                             <button
                               onClick={() => deleteAudio(index)}
-                              className="size-8 rounded-full flex items-center justify-center hover:bg-destructive/10 transition-colors"
+                              className="size-8 rounded-full flex items-center justify-center hover:bg-destructive/10 transition-colors cursor-pointer"
                             >
                               <RiCloseLine className="size-5 text-destructive" />
                             </button>
@@ -637,7 +710,7 @@ export default function ContentPage() {
                     ou arraste e solte aqui
                   </p>
                   <p className="text-xs text-muted-foreground">
-                    Formatos aceitos: PDF, DOCX, XLSX, PNG, JPG, JPEG, MP3, MP4
+                    Formatos aceitos: PNG, JPG, WEBP, MP3, WAV, MP4, WEBM, PDF
                   </p>
                 </div>
                 <input
@@ -656,40 +729,53 @@ export default function ContentPage() {
                     Arquivos selecionados ({files.length}/{maxFiles})
                   </p>
 
-                  {files.map((file, index) => (
-                    <div
-                      key={index}
-                      className="bg-card border card-border rounded-lg p-3 flex items-center gap-3"
-                    >
-                      {file.preview ? (
-                        <img
-                          src={file.preview}
-                          alt={file.name}
-                          className="w-12 h-12 object-cover rounded"
-                        />
-                      ) : (
-                        <div className="w-12 h-12 bg-accent rounded flex items-center justify-center text-2xl">
-                          {getFileIcon(file)}
-                        </div>
-                      )}
-
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-foreground truncate">
-                          {file.name}
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          {formatFileSize(file.size)}
-                        </p>
-                      </div>
-
-                      <button
-                        onClick={() => removeFile(index)}
-                        className="size-8 rounded-full flex items-center justify-center hover:bg-destructive/10 transition-colors flex-shrink-0"
+                  {files.map((file, index) => {
+                    const fileType = getFileType(file)
+                    return (
+                      <div
+                        key={index}
+                        className="bg-card border card-border rounded-lg p-3 flex items-center gap-3"
                       >
-                        <RiCloseLine className="size-5 text-destructive" />
-                      </button>
-                    </div>
-                  ))}
+                        {file.preview ? (
+                          <img
+                            src={file.preview}
+                            alt={file.name}
+                            className="w-12 h-12 object-cover rounded"
+                          />
+                        ) : (
+                          <div className="w-12 h-12 bg-accent rounded flex items-center justify-center">
+                            {fileType === 'audio' && (
+                              <RiMicLine className="size-6 text-muted-foreground" />
+                            )}
+                            {fileType === 'video' && (
+                              <span className="text-2xl">🎥</span>
+                            )}
+                            {fileType === 'document' && (
+                              <span className="text-xl">
+                                {getFileIcon(file)}
+                              </span>
+                            )}
+                          </div>
+                        )}
+
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-semibold text-foreground truncate">
+                            {file.name}
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            {formatFileSize(file.size)}
+                          </p>
+                        </div>
+
+                        <button
+                          onClick={() => removeFile(index)}
+                          className="size-8 rounded-full flex items-center justify-center hover:bg-destructive/10 transition-colors flex-shrink-0 cursor-pointer"
+                        >
+                          <RiCloseLine className="size-5 text-destructive" />
+                        </button>
+                      </div>
+                    )
+                  })}
                 </div>
               )}
             </div>
@@ -807,7 +893,7 @@ export default function ContentPage() {
             {/* Audio Section */}
             <div className="space-y-2">
               <label className="block text-sm font-medium text-foreground">
-                Gravar áudio opcionalmente
+                Gravar áudio (opcional)
               </label>
 
               {/* Recording controls */}
@@ -854,7 +940,7 @@ export default function ContentPage() {
                         </span>
                         <button
                           onClick={() => deleteAudio(index)}
-                          className="text-xs text-destructive hover:underline"
+                          className="text-xs text-destructive hover:underline cursor-pointer"
                         >
                           Remover
                         </button>
@@ -873,7 +959,7 @@ export default function ContentPage() {
             {/* Files Section */}
             <div className="space-y-2">
               <label className="block text-sm font-medium text-foreground">
-                Anexar arquivos
+                Anexar arquivos (opcional)
               </label>
 
               <div className="border-2 border-border rounded-lg p-3">
@@ -892,7 +978,7 @@ export default function ContentPage() {
                   >
                     {files.length === 0
                       ? 'Nenhum arquivo selecionado'
-                      : `${files.length} arquivo(s)`}
+                      : `${files.length} arquivo(s) anexado(s)`}
                   </label>
                   <label
                     htmlFor="file-upload"
@@ -904,12 +990,12 @@ export default function ContentPage() {
               </div>
 
               <p className="text-xs text-muted-foreground">
-                Formatos: PDF, DOCX, XLSX, PNG, JPG, JPEG, MP3, MP4 • Máx.{' '}
+                Formatos: PNG, JPG, WEBP, MP3, WAV, MP4, WEBM, PDF • Máx.{' '}
                 {maxFiles} arquivos
               </p>
 
               {files.length > 0 && (
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-3 gap-2">
                   {files.map((file, index) => {
                     const fileType = getFileType(file)
                     const isMedia =
@@ -921,48 +1007,49 @@ export default function ContentPage() {
                     return (
                       <div
                         key={index}
-                        className={`relative group border-2 border-border rounded-lg overflow-hidden ${isMedia ? 'cursor-pointer' : ''}`}
-                        onClick={() => isMedia && openPreview(file, index)}
+                        className="border-2 border-border rounded-lg overflow-hidden"
                       >
-                        {/* Thumbnail */}
-                        {thumbnail && isMedia ? (
-                          <div className="aspect-video bg-muted">
-                            {fileType === 'image' && (
-                              <img
-                                src={thumbnail}
-                                alt={file.name}
-                                className="w-full h-full object-cover"
-                              />
-                            )}
-                            {fileType === 'video' && (
-                              <video
-                                src={thumbnail}
-                                className="w-full h-full object-cover"
-                              />
-                            )}
-                            {fileType === 'audio' && (
-                              <div className="w-full h-full flex items-center justify-center bg-accent">
-                                <RiMicLine className="size-8 text-muted-foreground" />
+                        {/* Thumbnail - com group apenas aqui */}
+                        <div
+                          className={`relative group aspect-video bg-muted ${isMedia ? 'cursor-pointer' : ''}`}
+                          onClick={() => isMedia && openPreview(file, index)}
+                        >
+                          {thumbnail && isMedia ? (
+                            <>
+                              {fileType === 'image' && (
+                                <img
+                                  src={thumbnail}
+                                  alt={file.name}
+                                  className="w-full h-full object-cover"
+                                />
+                              )}
+                              {fileType === 'video' && (
+                                <video
+                                  src={thumbnail}
+                                  className="w-full h-full object-cover"
+                                />
+                              )}
+                              {fileType === 'audio' && (
+                                <div className="w-full h-full flex items-center justify-center bg-accent">
+                                  <RiMicLine className="size-6 text-muted-foreground" />
+                                </div>
+                              )}
+                              {/* Hover overlay - apenas dentro do thumbnail */}
+                              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                                <RiZoomInLine className="size-6 text-white" />
                               </div>
-                            )}
-                            {/* Hover overlay */}
-                            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                              <RiZoomInLine className="size-8 text-white" />
+                            </>
+                          ) : (
+                            <div className="w-full h-full flex flex-col items-center justify-center bg-accent p-2">
+                              <span className="text-3xl">
+                                {getFileIcon(file)}
+                              </span>
                             </div>
-                          </div>
-                        ) : (
-                          <div className="aspect-video flex flex-col items-center justify-center bg-accent p-4">
-                            <span className="text-2xl">
-                              {getFileIcon(file)}
-                            </span>
-                            <span className="text-xs text-muted-foreground text-center mt-2 truncate w-full">
-                              {file.name}
-                            </span>
-                          </div>
-                        )}
+                          )}
+                        </div>
 
-                        {/* Info bar */}
-                        <div className="p-2 bg-card flex items-center justify-between">
+                        {/* Info bar - fora do group, sem hover interference */}
+                        <div className="px-2 py-1.5 bg-card flex items-center justify-between gap-1">
                           <span
                             className="text-xs text-foreground truncate flex-1"
                             title={file.name}
@@ -974,7 +1061,7 @@ export default function ContentPage() {
                               e.stopPropagation()
                               removeFile(index)
                             }}
-                            className="text-destructive hover:text-destructive/80 ml-2"
+                            className="text-destructive hover:text-destructive/80 ml-2 cursor-pointer"
                           >
                             <RiCloseLine className="size-4" />
                           </button>
@@ -1058,8 +1145,7 @@ export default function ContentPage() {
                 Anterior
               </button>
               <span className="text-white text-sm">
-                {previewIndex + 1} /{' '}
-                {files.filter(f => getFileType(f) !== 'document').length}
+                {previewIndex + 1} / {files.length}
               </span>
               <button
                 onClick={nextPreview}

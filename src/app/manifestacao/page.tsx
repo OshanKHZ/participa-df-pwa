@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import {
   RiAlarmWarningLine,
@@ -82,13 +82,6 @@ export default function ManifestationTypePage() {
   const { navigateToStep } = useStepNavigation()
   const [selectedType, setSelectedType] = useState<string | null>(null)
   const [showExitModal, setShowExitModal] = useState(false)
-
-  useEffect(() => {
-    const saved = localStorage.getItem('manifestation_type')
-    if (saved) {
-      setSelectedType(saved)
-    }
-  }, [])
 
   const handleSelectType = (typeId: string) => {
     const typeData =

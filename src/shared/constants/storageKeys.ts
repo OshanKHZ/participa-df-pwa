@@ -12,6 +12,7 @@ export const STORAGE_KEYS = {
   drafts: 'manifestation_drafts',
   submitted: 'manifestation_submitted',
   lastProtocol: 'last_protocol',
+  currentDraftId: 'manifestation_current_draft_id',
 } as const
 
 export type StorageKey = (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS]
