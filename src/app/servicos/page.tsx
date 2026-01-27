@@ -69,7 +69,7 @@ export default function ServicosPage() {
         {/* Content */}
         <main className="px-4 py-4">
           <h1 className="text-xl font-semibold text-foreground mb-4">
-            Serviços da Ouvidoria
+            Serviços
           </h1>
           {/* Services List - Single Column */}
           <div className="border border-border rounded-lg divide-y divide-border bg-card">
