@@ -6,17 +6,23 @@
  */
 
 // ============================================================================
-// COLORS (Hex values not in Tailwind theme)
+// COLORS
 // ============================================================================
+// NOTE: Most colors are defined in globals.css @theme block and should be used
+// via Tailwind classes or CSS variables. Only use these hex values when absolutely
+// necessary for JavaScript logic (e.g., canvas, dynamic styles, third-party libs).
+//
+// Prefer: className="bg-manifestation-cta" or var(--color-manifestation-cta)
+// Over:   style={{ backgroundColor: COLORS.MANIFESTATION_BUTTON }}
 
 export const COLORS = {
-  /** Manifestation button - #3a5a8f */
+  /** Manifestation button - available as --color-manifestation-cta in CSS */
   MANIFESTATION_BUTTON: '#3a5a8f',
-  /** Anonymous/Success state - #10b981 (also available as --color-progress in CSS) */
+  /** Anonymous/Success state - available as --color-progress in CSS */
   SUCCESS_GREEN: '#10b981',
-  /** Identified user state - #3b82f6 (also available as --color-type-sugestao in CSS) */
+  /** Identified user state - available as --color-type-sugestao in CSS */
   IDENTIFIED_BLUE: '#3b82f6',
-  /** Mobile header bar - #28477D (also available as .bg-primary-light in CSS) */
+  /** Mobile header bar - available as --color-primary-mobile in CSS */
   MOBILE_HEADER: '#28477D',
 } as const
 

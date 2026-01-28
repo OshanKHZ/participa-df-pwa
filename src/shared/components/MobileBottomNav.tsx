@@ -59,6 +59,7 @@ export function MobileBottomNav({
           <Link
             href="/manifestacao"
             className="flex items-center justify-center w-14 h-14 fab-button-offset bg-secondary hover:bg-secondary-hover rounded-xl shadow-lg transition-colors"
+            aria-label="Nova manifestação"
           >
             <RiAddLine className="size-7 text-white" strokeWidth={0.5} />
           </Link>

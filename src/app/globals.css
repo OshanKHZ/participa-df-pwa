@@ -18,7 +18,7 @@
 
   /* Muted */
   --color-muted: #f3f4f6;
-  --color-muted-foreground: #6b7280;
+  --color-muted-foreground: #525252;
 
   /* Accent */
   --color-accent: #e8eef7;
@@ -48,6 +48,10 @@
   --color-border: #e5e7eb;
   --color-input: #e5e7eb;
   --color-ring: #6f70d3;
+
+  /* Mobile/Header variants */
+  --color-primary-mobile: #28477d;
+  --color-manifestation-cta: #3a5a8f;
 
   /* Radius */
   --radius-lg: 0.5rem;
@@ -117,7 +121,7 @@ body {
 
   /* Mobile header - lighter blue */
   .bg-primary-mobile {
-    background-color: #28477d;
+    background-color: var(--color-primary-mobile);
   }
 
   /* Manifestation type colors */
@@ -147,7 +151,7 @@ body {
 
   /* Manifestation CTA button */
   .bg-manifestation-cta {
-    background-color: #3a5a8f;
+    background-color: var(--color-manifestation-cta);
   }
 
   /* Success colors */
@@ -174,7 +178,7 @@ body {
 
   /* Header subheader lighter color */
   .bg-primary-light {
-    background-color: #28477d;
+    background-color: var(--color-primary-mobile);
   }
 
   /* Spacing utilities - custom sizes */

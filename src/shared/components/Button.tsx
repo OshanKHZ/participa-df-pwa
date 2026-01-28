@@ -30,9 +30,9 @@ const Button = forwardRef<ComponentRef<'button'>, ButtonProps>(
     }
 
     const sizes = {
-      sm: 'h-9 px-4 text-sm',
-      default: 'h-11 px-6',
-      lg: 'h-12 px-8',
+      sm: 'h-11 px-4 text-sm',
+      default: 'h-12 px-6',
+      lg: 'h-14 px-8',
     }
 
     return (

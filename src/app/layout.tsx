@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { Montserrat } from 'next/font/google'
 import './globals.css'
 import { FontSizeProvider } from '@/shared/contexts/FontSizeContext'
-import { PageTransition } from '@/shared/components/PageTransition'
 import { AccessibilityMenu } from '@/shared/components/AccessibilityMenu'
 import { ServiceWorkerRegister } from '@/shared/components/ServiceWorkerRegister'
 import { SessionProvider } from '@/shared/providers/SessionProvider'
@@ -59,7 +58,7 @@ export default function RootLayout({
         <ServiceWorkerRegister />
         <SessionProvider>
           <FontSizeProvider>
-            <PageTransition>{children}</PageTransition>
+            {children}
             <AccessibilityMenu />
             <Toaster position="top-center" richColors />
           </FontSizeProvider>
