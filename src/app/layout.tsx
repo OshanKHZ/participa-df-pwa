@@ -5,6 +5,7 @@ import { FontSizeProvider } from '@/shared/contexts/FontSizeContext'
 import { PageTransition } from '@/shared/components/PageTransition'
 import { AccessibilityMenu } from '@/shared/components/AccessibilityMenu'
 import { ServiceWorkerRegister } from '@/shared/components/ServiceWorkerRegister'
+import { SessionProvider } from '@/shared/providers/SessionProvider'
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -55,10 +56,12 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body className={`${montserrat.variable} antialiased font-sans`}>
         <ServiceWorkerRegister />
-        <FontSizeProvider>
-          <PageTransition>{children}</PageTransition>
-          <AccessibilityMenu />
-        </FontSizeProvider>
+        <SessionProvider>
+          <FontSizeProvider>
+            <PageTransition>{children}</PageTransition>
+            <AccessibilityMenu />
+          </FontSizeProvider>
+        </SessionProvider>
       </body>
     </html>
   )

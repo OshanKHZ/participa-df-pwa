@@ -353,6 +353,17 @@ export default function ContentPage() {
 
   const handleNext = () => {
     localStorage.setItem('manifestation_content', textContent)
+
+    // Save attachment info
+    const attachmentInfo = {
+      hasAudio: audioBlobs.length > 0,
+      audioCount: audioBlobs.length,
+      hasFiles: files.length > 0,
+      fileCount: files.length,
+      fileTypes: files.map(f => f.type),
+    }
+    localStorage.setItem('manifestation_attachments', JSON.stringify(attachmentInfo))
+
     router.push('/manifestacao/dados')
   }
 
