@@ -62,9 +62,7 @@ export function ConfirmDialog({
     >
       <div
         className={`bg-background rounded-sm shadow-lg max-w-md w-full overflow-hidden transition-all duration-200 ${
-          isOpen
-            ? 'opacity-100 scale-100'
-            : 'opacity-0 scale-98'
+          isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-98'
         }`}
         onClick={e => e.stopPropagation()}
       >

@@ -6,11 +6,11 @@ import {
   RiEye2Line,
   RiEyeCloseLine,
   RiPhoneLine,
-  RiLoginCircleLine,
-  RiUserAddLine,
   RiCheckLine,
 } from 'react-icons/ri'
 import { TOGGLE } from '@/shared/constants/designTokens'
+import { sendOtp } from '@/app/actions/otp'
+import { RiGoogleFill, RiMailLine, RiLockPasswordLine } from 'react-icons/ri'
 import { Button } from '@/shared/components/Button'
 
 interface IdentificationSectionProps {
@@ -30,13 +30,20 @@ export function IdentificationSection({
   onFormDataChange,
   onAnonymousConsentChange,
 }: IdentificationSectionProps) {
-  const { data: session, status } = useSession()
+  const { data: session } = useSession()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
   })
   const [anonymousConsent, setAnonymousConsent] = useState(false)
+
+  // OTP State
+  const [authEmail, setAuthEmail] = useState('')
+  const [otpCode, setOtpCode] = useState('')
+  const [showOtpInput, setShowOtpInput] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
 
   // Load saved data on mount
   useEffect(() => {
@@ -52,10 +59,10 @@ export function IdentificationSection({
     if (!isAnonymous) {
       const dataToUse = session?.user
         ? {
-            name: session.user.name || '',
-            email: session.user.email || '',
-            phone: formData.phone,
-          }
+          name: session.user.name || '',
+          email: session.user.email || '',
+          phone: formData.phone,
+        }
         : formData
       onFormDataChange(dataToUse)
     }
@@ -72,16 +79,65 @@ export function IdentificationSection({
     setFormData(prev => ({ ...prev, [field]: value }))
   }
 
-  const handleLogin = async () => {
+  const handleGoogleLogin = async () => {
     await signIn('google', { callbackUrl: window.location.href })
+  }
+
+  const handleSendOtp = async () => {
+    if (!authEmail) {
+      setError('Por favor, informe seu e-mail')
+      return
+    }
+
+    setIsLoading(true)
+    setError('')
+
+    try {
+      await sendOtp(authEmail)
+      setShowOtpInput(true)
+    } catch (err) {
+      setError('Erro ao enviar código. Tente novamente.')
+      console.error(err)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleVerifyOtp = async () => {
+    if (!otpCode || otpCode.length !== 6) {
+      setError('Código inválido')
+      return
+    }
+
+    setIsLoading(true)
+    setError('')
+
+    try {
+      const res = await signIn('credentials', {
+        email: authEmail,
+        code: otpCode,
+        redirect: false,
+      })
+
+      if (res?.error) {
+        setError('Código incorreto ou expirado')
+      } else {
+        // Refresh page to update session
+        window.location.reload()
+      }
+    } catch (err) {
+      setError('Erro ao validar código')
+      console.error(err)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleLogout = async () => {
     await signOut({ callbackUrl: window.location.href })
   }
 
-  const displayName = session?.user?.name || formData.name
-  const displayEmail = session?.user?.email || formData.email
+
 
   return (
     <>
@@ -113,14 +169,12 @@ export function IdentificationSection({
             aria-label={
               isAnonymous ? 'Desativar anonimato' : 'Ativar anonimato'
             }
-            className={`relative flex-shrink-0 inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 ${
-              isAnonymous ? 'bg-secondary' : 'bg-muted'
-            }`}
+            className={`relative flex-shrink-0 inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 ${isAnonymous ? 'bg-secondary' : 'bg-muted'
+              }`}
           >
             <span
-              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                isAnonymous ? TOGGLE.TRANSITION_ON : TOGGLE.TRANSITION_OFF
-              }`}
+              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${isAnonymous ? TOGGLE.TRANSITION_ON : TOGGLE.TRANSITION_OFF
+                }`}
             />
           </button>
         </div>
@@ -134,31 +188,36 @@ export function IdentificationSection({
             <button
               type="button"
               onClick={() => setAnonymousConsent(!anonymousConsent)}
-              className={`mt-0.5 w-5 h-5 flex-shrink-0 rounded border-2 flex items-center justify-center transition-colors ${
-                anonymousConsent
-                  ? 'bg-secondary border-secondary'
-                  : 'bg-white border-gray-400'
-              }`}
+              className={`mt-0.5 w-5 h-5 flex-shrink-0 rounded border-2 flex items-center justify-center transition-colors ${anonymousConsent
+                ? 'bg-secondary border-secondary'
+                : 'bg-white border-gray-400'
+                }`}
             >
-              {anonymousConsent && <RiCheckLine className="size-4 text-white" />}
+              {anonymousConsent && (
+                <RiCheckLine className="size-4 text-white" />
+              )}
             </button>
-            <div className="flex-1 cursor-pointer" onClick={() => setAnonymousConsent(!anonymousConsent)}>
+            <div
+              className="flex-1 cursor-pointer"
+              onClick={() => setAnonymousConsent(!anonymousConsent)}
+            >
               <p className="text-xs text-accent-foreground leading-relaxed">
-                <span className="text-destructive">*</span> Solicito que minha identidade seja preservada neste pedido, em
-                atendimento ao princípio constitucional da impessoalidade e, ainda,
-                conforme o disposto no art. 11, § 7º da Lei Distrital nº 6.519/2020.
+                <span className="text-destructive">*</span> Solicito que minha
+                identidade seja preservada neste pedido, em atendimento ao
+                princípio constitucional da impessoalidade e, ainda, conforme o
+                disposto no art. 11, § 7º da Lei Distrital nº 6.519/2020.
               </p>
               <p className="text-xs text-accent-foreground leading-relaxed mt-2">
                 Estou ciente de que, com a identidade preservada, somente a
-                Controladoria-Geral do Distrito Federal terá acesso aos meus dados
-                pessoais, ressalvadas as exceções previstas nos parágrafos 3º e 4º,
-                do art. 33 da Lei Distrital nº 4.990/2012.
+                Controladoria-Geral do Distrito Federal terá acesso aos meus
+                dados pessoais, ressalvadas as exceções previstas nos parágrafos
+                3º e 4º, do art. 33 da Lei Distrital nº 4.990/2012.
               </p>
               <p className="text-xs text-accent-foreground leading-relaxed mt-2 font-bold">
                 Estou ciente, também, de que o órgão destinatário não poderá
-                solicitar esclarecimentos adicionais, assim como não poderá atender
-                a pedidos de informação pessoal, uma vez que não terá como confirmar
-                minha identidade.
+                solicitar esclarecimentos adicionais, assim como não poderá
+                atender a pedidos de informação pessoal, uma vez que não terá
+                como confirmar minha identidade.
               </p>
             </div>
           </div>
@@ -225,27 +284,106 @@ export function IdentificationSection({
               </div>
             </div>
           ) : (
-            /* Not logged in - show login/register */
-            <div className="space-y-3">
-              <p className="text-sm text-muted-foreground">
-                Entre ou cadastre-se para acompanhar suas manifestações
-              </p>
-              <button
-                type="button"
-                onClick={handleLogin}
-                className="flex items-center justify-center gap-2 w-full bg-secondary hover:bg-secondary-hover text-secondary-foreground font-medium py-2.5 px-4 rounded-lg transition-colors"
-              >
-                <RiLoginCircleLine className="size-5" />
-                Entrar
-              </button>
-              <button
-                type="button"
-                onClick={handleLogin}
-                className="w-full text-secondary hover:text-secondary-hover font-medium py-2 text-sm flex items-center justify-center gap-2"
-              >
-                <RiUserAddLine className="size-4" />
-                Cadastrar-se
-              </button>
+            /* Not logged in - show login/register with OTP */
+            <div className="space-y-4 pt-1">
+              <div className="bg-muted/30 p-4 rounded-lg border border-border">
+                <h4 className="text-sm font-semibold text-foreground mb-4">
+                  {showOtpInput
+                    ? 'Digite o código enviado'
+                    : 'Identifique-se para continuar'}
+                </h4>
+
+                {error && (
+                  <div className="bg-destructive/10 text-destructive text-xs p-3 rounded-md mb-4">
+                    {error}
+                  </div>
+                )}
+
+                {showOtpInput ? (
+                  <div className="space-y-3">
+                    <div>
+                      <label className="text-xs text-muted-foreground mb-1 block">
+                        Código de Verificação
+                      </label>
+                      <div className="relative">
+                        <RiLockPasswordLine className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                        <input
+                          type="text"
+                          value={otpCode}
+                          onChange={e => setOtpCode(e.target.value)}
+                          className="w-full pl-10 pr-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
+                          placeholder="000000"
+                          maxLength={6}
+                        />
+                      </div>
+                      <p className="text-xs text-muted-foreground mt-1.5">
+                        Enviamos um código para {authEmail}.{' '}
+                        <button
+                          type="button"
+                          onClick={() => setShowOtpInput(false)}
+                          className="text-primary hover:underline"
+                        >
+                          Alterar e-mail
+                        </button>
+                      </p>
+                    </div>
+
+                    <Button
+                      onClick={handleVerifyOtp}
+                      disabled={isLoading}
+                      className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+                    >
+                      {isLoading ? 'Verificando...' : 'Verificar Código'}
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    <div>
+                      <label className="text-xs text-muted-foreground mb-1 block">
+                        E-mail
+                      </label>
+                      <div className="relative">
+                        <RiMailLine className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                        <input
+                          type="email"
+                          value={authEmail}
+                          onChange={e => setAuthEmail(e.target.value)}
+                          className="w-full pl-10 pr-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
+                          placeholder="seu@email.com"
+                        />
+                      </div>
+                    </div>
+
+                    <Button
+                      onClick={handleSendOtp}
+                      disabled={isLoading}
+                      className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+                    >
+                      {isLoading ? 'Enviando...' : 'Entrar com E-mail'}
+                    </Button>
+
+                    <div className="relative py-2">
+                      <div className="absolute inset-0 flex items-center">
+                        <span className="w-full border-t border-border" />
+                      </div>
+                      <div className="relative flex justify-center text-xs uppercase">
+                        <span className="bg-muted/30 px-2 text-muted-foreground">
+                          Ou continuar com
+                        </span>
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={handleGoogleLogin}
+                      className="w-full flex items-center justify-center gap-2 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium py-2 px-4 rounded-md transition-colors text-sm"
+                    >
+                      <RiGoogleFill className="size-5 text-[#DB4437]" />
+                      Google
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           )}
         </div>

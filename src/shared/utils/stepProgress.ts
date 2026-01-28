@@ -17,9 +17,9 @@ export const DEFAULT_STEPS: Step[] = [
 /**
  * Get step progress based on current manifestation data
  */
-export function getStepProgress(currentStep: number): Step[] {
+export function getStepProgress(currentStep: number, ignoreStorage = false): Step[] {
   // Check if we're in browser environment
-  if (typeof window === 'undefined') {
+  if (typeof window === 'undefined' || ignoreStorage) {
     // Return steps without checking localStorage during SSR
     return DEFAULT_STEPS.map(step => ({
       ...step,

@@ -3,13 +3,19 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { RiEditLine, RiVolumeUpLine, RiAttachmentLine, RiImageLine, RiVideoLine, RiMicLine } from 'react-icons/ri'
+import {
+  RiEditLine,
+  RiVolumeUpLine,
+  RiAttachmentLine,
+  RiImageLine,
+  RiVideoLine,
+  RiMicLine,
+} from 'react-icons/ri'
 import { AccessibleHeader } from '@/features/manifestation/components/AccessibleHeader'
 import { NavigationFooter } from '@/features/manifestation/components/NavigationFooter'
 import { getStepProgress } from '@/shared/utils/stepProgress'
 import { useStepNavigation } from '@/shared/hooks/useStepNavigation'
 import {
-  DURATION,
   STEPS,
   COMPLETED_STEPS,
 } from '@/shared/constants/designTokens'
@@ -26,6 +32,7 @@ interface ManifestationData {
   type: string
   channel: string
   content: string
+  subject?: string
   isAnonymous: boolean
   attachments?: AttachmentInfo
   personalData?: {
@@ -60,6 +67,7 @@ export default function ReviewPage() {
     const type = localStorage.getItem('manifestation_type') || ''
     const channel = localStorage.getItem('manifestation_channel') || ''
     const content = localStorage.getItem('manifestation_content') || ''
+    const subject = localStorage.getItem('manifestation_subject_name') || ''
     const isAnonymous =
       localStorage.getItem('manifestation_anonymous') === 'true'
     const personalDataStr = localStorage.getItem('manifestation_personal_data')
@@ -73,6 +81,7 @@ export default function ReviewPage() {
       type,
       channel,
       content,
+      subject,
       isAnonymous,
       attachments,
       personalData: personalDataStr ? JSON.parse(personalDataStr) : undefined,
@@ -80,30 +89,49 @@ export default function ReviewPage() {
   }, [])
 
   const handleSubmit = async () => {
+    if (!data) return
+
     setIsSubmitting(true)
 
-    // Simulate API call
-    await new Promise(resolve =>
-      setTimeout(resolve, DURATION.FONT_LEVEL_DISPLAY)
-    )
+    try {
+      const { createManifestation } = await import('../actions')
+      const result = await createManifestation({
+        type: data.type,
+        content: data.content,
+        subject: data.subject,
+        attachments: data.attachments,
+        isAnonymous: data.isAnonymous,
+      })
 
-    // Generate protocol
-    const protocol = `${new Date().toISOString().split('T')[0]?.replace(/-/g, '') ?? ''}-${Math.floor(1000 + Math.random() * 9000)}`
+      if (result.success && result.protocol) {
+        const protocol = result.protocol
 
-    // Store protocol
-    localStorage.setItem('last_protocol', protocol)
+        // Store protocol for reference if needed locally, though standard flow is redirection
+        localStorage.setItem('last_protocol', protocol)
 
-    // Clear form data
-    localStorage.removeItem('manifestation_type')
-    localStorage.removeItem('manifestation_channel')
-    localStorage.removeItem('manifestation_channels')
-    localStorage.removeItem('manifestation_content')
-    localStorage.removeItem('manifestation_attachments')
-    localStorage.removeItem('manifestation_anonymous')
-    localStorage.removeItem('manifestation_personal_data')
+        // Clear form data
+        localStorage.removeItem('manifestation_type')
+        localStorage.removeItem('manifestation_channel')
+        localStorage.removeItem('manifestation_channels')
+        localStorage.removeItem('manifestation_content')
+        localStorage.removeItem('manifestation_subject_id')
+        localStorage.removeItem('manifestation_subject_name')
+        localStorage.removeItem('manifestation_attachments')
+        localStorage.removeItem('manifestation_anonymous')
+        localStorage.removeItem('manifestation_personal_data')
 
-    // Navigate to confirmation
-    router.push(`/manifestacao/protocolo/${protocol}`)
+        // Navigate to confirmation
+        router.push(`/manifestacao/protocolo/${protocol}`)
+      } else {
+        console.error('Failed to submit:', result.error)
+        alert('Ocorreu um erro ao enviar sua manifestação. Tente novamente.')
+      }
+    } catch (error) {
+      console.error('Submission error:', error)
+      alert('Erro inesperado ao enviar. Verifique sua conexão.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleBack = () => {
@@ -193,6 +221,25 @@ export default function ReviewPage() {
           </p>
         </div>
 
+        {/* Subject */}
+        <div className="bg-card rounded-sm p-4 card-border">
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="text-sm font-medium text-muted-foreground">
+              Assunto
+            </h3>
+            <Link
+              href="/manifestacao/assunto"
+              className="text-secondary hover:text-secondary-hover transition-colors"
+              aria-label="Editar assunto"
+            >
+              <RiEditLine className="size-4" />
+            </Link>
+          </div>
+          <p className="text-foreground font-medium">
+            {data.subject || 'Não selecionado'}
+          </p>
+        </div>
+
         {/* Content */}
         <div className="bg-card rounded-sm p-4 card-border">
           <div className="flex items-center justify-between mb-2">
@@ -212,33 +259,46 @@ export default function ReviewPage() {
               {data.content}
             </p>
           )}
-          {data.attachments && (data.attachments.hasAudio || data.attachments.hasFiles) && (
-            <div className={`space-y-2 ${data.content ? 'mt-3 pt-3 border-t border-border' : ''}`}>
-              {data.attachments.hasAudio && (
-                <div className="flex items-center gap-2 bg-secondary/5 rounded px-3 py-2">
-                  <RiMicLine className="size-4 text-secondary flex-shrink-0" />
-                  <span className="text-sm text-foreground">
-                    {data.attachments.audioCount} áudio{data.attachments.audioCount > 1 ? 's' : ''} gravado{data.attachments.audioCount > 1 ? 's' : ''}
-                  </span>
-                </div>
-              )}
-              {data.attachments.hasFiles && (
-                <div className="flex items-center gap-2 bg-secondary/5 rounded px-3 py-2">
-                  {data.attachments.fileTypes.some(t => t.startsWith('image/')) ? (
-                    <RiImageLine className="size-4 text-secondary flex-shrink-0" />
-                  ) : (
-                    <RiVideoLine className="size-4 text-secondary flex-shrink-0" />
-                  )}
-                  <span className="text-sm text-foreground">
-                    {data.attachments.fileCount} arquivo{data.attachments.fileCount > 1 ? 's' : ''} anexado{data.attachments.fileCount > 1 ? 's' : ''}
-                  </span>
-                </div>
-              )}
-            </div>
-          )}
-          {!data.content && !data.attachments?.hasAudio && !data.attachments?.hasFiles && (
-            <p className="text-muted-foreground text-sm italic">Sem conteúdo</p>
-          )}
+          {data.attachments &&
+            (data.attachments.hasAudio || data.attachments.hasFiles) && (
+              <div
+                className={`space-y-2 ${data.content ? 'mt-3 pt-3 border-t border-border' : ''}`}
+              >
+                {data.attachments.hasAudio && (
+                  <div className="flex items-center gap-2 bg-secondary/5 rounded px-3 py-2">
+                    <RiMicLine className="size-4 text-secondary flex-shrink-0" />
+                    <span className="text-sm text-foreground">
+                      {data.attachments.audioCount} áudio
+                      {data.attachments.audioCount > 1 ? 's' : ''} gravado
+                      {data.attachments.audioCount > 1 ? 's' : ''}
+                    </span>
+                  </div>
+                )}
+                {data.attachments.hasFiles && (
+                  <div className="flex items-center gap-2 bg-secondary/5 rounded px-3 py-2">
+                    {data.attachments.fileTypes.some(t =>
+                      t.startsWith('image/')
+                    ) ? (
+                      <RiImageLine className="size-4 text-secondary flex-shrink-0" />
+                    ) : (
+                      <RiVideoLine className="size-4 text-secondary flex-shrink-0" />
+                    )}
+                    <span className="text-sm text-foreground">
+                      {data.attachments.fileCount} arquivo
+                      {data.attachments.fileCount > 1 ? 's' : ''} anexado
+                      {data.attachments.fileCount > 1 ? 's' : ''}
+                    </span>
+                  </div>
+                )}
+              </div>
+            )}
+          {!data.content &&
+            !data.attachments?.hasAudio &&
+            !data.attachments?.hasFiles && (
+              <p className="text-muted-foreground text-sm italic">
+                Sem conteúdo
+              </p>
+            )}
         </div>
 
         {/* Personal Data */}

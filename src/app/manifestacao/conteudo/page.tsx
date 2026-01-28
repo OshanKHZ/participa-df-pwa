@@ -363,7 +363,10 @@ export default function ContentPage() {
       fileCount: files.length,
       fileTypes: files.map(f => f.type),
     }
-    localStorage.setItem('manifestation_attachments', JSON.stringify(attachmentInfo))
+    localStorage.setItem(
+      'manifestation_attachments',
+      JSON.stringify(attachmentInfo)
+    )
 
     router.push('/manifestacao/dados')
   }

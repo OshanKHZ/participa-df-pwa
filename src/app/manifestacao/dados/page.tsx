@@ -23,6 +23,12 @@ export default function PersonalDataPage() {
     phone: '',
   })
 
+  const [steps, setSteps] = useState(getStepProgress(STEPS.CONTENT, true))
+
+  useEffect(() => {
+    setSteps(getStepProgress(STEPS.CONTENT))
+  }, []) // Update on mount to check localStorage
+
   useEffect(() => {
     const savedAnonymous = localStorage.getItem('manifestation_anonymous')
     const savedData = localStorage.getItem('manifestation_personal_data')
@@ -145,7 +151,7 @@ export default function PersonalDataPage() {
         onNext={handleNext}
         onNavigateToStep={navigateToStep}
         nextDisabled={!canProceed}
-        steps={getStepProgress(STEPS.CONTENT)}
+        steps={steps}
       />
 
       {/* Anonymous Confirmation Dialog */}
@@ -157,13 +163,18 @@ export default function PersonalDataPage() {
         message={
           <>
             <p>
-              Recomendamos que se identifique fazendo login ou cadastro. Seus dados estarão seguros e você poderá acompanhar o andamento.
+              Recomendamos que se identifique fazendo login ou cadastro. Seus
+              dados estarão seguros e você poderá acompanhar o andamento.
             </p>
             <p className="mt-3">
-              <strong>Caso opte pelo anonimato, acompanhe apenas através do protocolo gerado no envio.</strong>
+              <strong>
+                Caso opte pelo anonimato, acompanhe apenas através do protocolo
+                gerado no envio.
+              </strong>
             </p>
             <p className="mt-3 text-xs">
-              ⚠️ Lembre-se de copiar o protocolo após o envio, pois ele será sua única forma de consulta.
+              ⚠️ Lembre-se de copiar o protocolo após o envio, pois ele será sua
+              única forma de consulta.
             </p>
           </>
         }

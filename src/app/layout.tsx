@@ -6,6 +6,7 @@ import { PageTransition } from '@/shared/components/PageTransition'
 import { AccessibilityMenu } from '@/shared/components/AccessibilityMenu'
 import { ServiceWorkerRegister } from '@/shared/components/ServiceWorkerRegister'
 import { SessionProvider } from '@/shared/providers/SessionProvider'
+import { Toaster } from 'sonner'
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -53,13 +54,14 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" suppressHydrationWarning>
       <body className={`${montserrat.variable} antialiased font-sans`}>
         <ServiceWorkerRegister />
         <SessionProvider>
           <FontSizeProvider>
             <PageTransition>{children}</PageTransition>
             <AccessibilityMenu />
+            <Toaster position="top-center" richColors />
           </FontSizeProvider>
         </SessionProvider>
       </body>
