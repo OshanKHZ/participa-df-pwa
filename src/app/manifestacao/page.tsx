@@ -152,7 +152,7 @@ export default function ManifestationTypePage() {
                     `Qual tipo de manifestação? ${AUDIO_TEXTS.instructions.typeSelection}`
                   )
                 }
-                className="size-5 rounded-full bg-secondary hover:bg-secondary-hover flex items-center justify-center transition-colors flex-shrink-0"
+                className="size-5 rounded-full bg-secondary hover:bg-secondary-hover flex items-center justify-center transition-colors flex-shrink-0 btn-focus"
                 aria-label="Ouvir instruções"
               >
                 <RiVolumeUpLine className="size-3 text-white" />
@@ -172,7 +172,7 @@ export default function ManifestationTypePage() {
                 <button
                   key={type.id}
                   onClick={() => handleSelectType(type.id)}
-                  className={`w-full bg-card rounded-lg p-3 text-left flex items-center gap-3 hover:bg-accent transition-all ${
+                  className={`w-full bg-card rounded-lg p-3 text-left flex items-center gap-3 hover:bg-accent transition-all btn-focus ${
                     isSelected ? 'border-2 border-success' : 'card-border'
                   }`}
                 >

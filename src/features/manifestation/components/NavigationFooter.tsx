@@ -69,9 +69,10 @@ export function NavigationFooter({
             </h3>
             <button
               onClick={() => setDrawerOpen(false)}
-              className="size-8 rounded-full flex items-center justify-center hover:bg-muted transition-colors"
+              className="size-8 rounded-full flex items-center justify-center hover:bg-muted transition-colors btn-focus"
+              aria-label="Fechar navegação de passos"
             >
-              <RiCloseLine className="size-6 text-foreground" />
+              <RiCloseLine className="size-6 text-foreground" aria-hidden="true" />
             </button>
           </div>
 

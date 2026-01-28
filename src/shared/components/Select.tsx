@@ -20,7 +20,7 @@ const SelectTrigger = forwardRef<
 >(({ className, error, children, ...props }, ref) => (
   <SelectPrimitive.Trigger
     ref={ref}
-    className={`flex items-center justify-between gap-2 w-full px-4 py-3 text-base bg-card border-2 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent ${
+    className={`flex items-center justify-between gap-2 w-full px-4 py-3 text-base bg-card border-2 rounded-lg font-medium transition-colors btn-focus focus:border-transparent ${
       error
         ? 'border-destructive text-destructive'
         : 'border-input text-foreground hover:border-secondary/50'

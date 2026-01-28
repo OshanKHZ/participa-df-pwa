@@ -37,11 +37,14 @@ const formatTimeAgo = (date: Date): string => {
 const CARD_WIDTH = 180 // px
 const GAP = 8 // px
 
+const SWIPE_THRESHOLD = 50 // px - minimum distance to trigger swipe
+
 export function BlogCarousel({ posts }: BlogCarouselProps) {
   const trackRef = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const [currentIndex, setCurrentIndex] = useState(1)
   const [isAnimating, setIsAnimating] = useState(false)
+  const touchStartRef = useRef<number | null>(null)
 
   // Create infinite loop: [last, ...posts, first]
   const infinitePosts =
@@ -111,16 +114,60 @@ export function BlogCarousel({ posts }: BlogCarouselProps) {
 
   const activeDotIndex = getRealIndex()
 
+  // Touch handlers for swipe navigation
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    const touch = e.touches[0]
+    if (touch) {
+      touchStartRef.current = touch.clientX
+    }
+  }, [])
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    // Prevent scrolling while swiping horizontally
+    if (touchStartRef.current !== null) {
+      const touch = e.touches[0]
+      if (!touch) return
+      const touchX = touch.clientX
+      const diff = touchStartRef.current - touchX
+      if (Math.abs(diff) > 10) {
+        e.preventDefault()
+      }
+    }
+  }, [])
+
+  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+    if (touchStartRef.current === null || isAnimating) return
+
+    const touch = e.changedTouches[0]
+    if (!touch) return
+    const touchEndX = touch.clientX
+    const diff = touchStartRef.current - touchEndX
+
+    // Reset touch start
+    touchStartRef.current = null
+
+    // Check if swipe threshold met
+    if (Math.abs(diff) > SWIPE_THRESHOLD) {
+      if (diff > 0) {
+        // Swiped left - next
+        nextPage()
+      } else {
+        // Swiped right - previous
+        prevPage()
+      }
+    }
+  }, [isAnimating, nextPage, prevPage])
+
   if (posts.length === 0) return null
 
   return (
-    <div className="lg:hidden bg-card px-3 py-3">
+    <section className="lg:hidden bg-card px-3 py-3" aria-label="Blog posts">
       <div className="flex items-center justify-between mb-2">
-        <h3 className="text-base font-semibold text-foreground">Blog</h3>
+        <h2 className="text-base font-semibold text-foreground">Blog</h2>
         <div className="flex items-center gap-2">
           <button
             onClick={prevPage}
-            className="w-6 h-6 bg-white hover:bg-gray-50 rounded-full flex items-center justify-center shadow-sm border border-border transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
+            className="w-6 h-6 bg-white hover:bg-gray-50 rounded-full flex items-center justify-center shadow-sm border border-border transition-colors btn-focus"
             aria-label="Anterior"
           >
             <RiArrowLeftSLine className="size-3 text-foreground" />
@@ -128,7 +175,7 @@ export function BlogCarousel({ posts }: BlogCarouselProps) {
 
           <button
             onClick={nextPage}
-            className="w-6 h-6 bg-white hover:bg-gray-50 rounded-full flex items-center justify-center shadow-sm border border-border transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
+            className="w-6 h-6 bg-white hover:bg-gray-50 rounded-full flex items-center justify-center shadow-sm border border-border transition-colors btn-focus"
             aria-label="Próximo"
           >
             <RiArrowRightSLine className="size-3 text-foreground" />
@@ -137,7 +184,13 @@ export function BlogCarousel({ posts }: BlogCarouselProps) {
       </div>
 
       <div ref={containerRef} className="relative overflow-hidden">
-        <div ref={trackRef} className="flex gap-2">
+        <div
+          ref={trackRef}
+          className="flex gap-2"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
           {infinitePosts.map((post, index) => {
             if (!post) return null
             return (
@@ -148,7 +201,7 @@ export function BlogCarousel({ posts }: BlogCarouselProps) {
               >
                 <Link
                   href={`/blog/${post.slug}`}
-                  className="block group focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 rounded"
+                  className="block group btn-focus rounded"
                 >
                   <div className="relative aspect-[16/9] rounded-md overflow-hidden bg-muted mb-1.5">
                     <Image
@@ -162,9 +215,9 @@ export function BlogCarousel({ posts }: BlogCarouselProps) {
                   <p className="text-[10px] text-muted-foreground mb-0.5">
                     {formatTimeAgo(post.publishedAt)}
                   </p>
-                  <h4 className="text-xs font-medium text-foreground line-clamp-2 leading-tight">
+                  <h3 className="text-xs font-medium text-foreground line-clamp-2 leading-tight">
                     {post.title}
-                  </h4>
+                  </h3>
                 </Link>
               </div>
             )
@@ -172,20 +225,18 @@ export function BlogCarousel({ posts }: BlogCarouselProps) {
         </div>
       </div>
 
-      {/* Page Counter - Oval Dots */}
+      {/* Page Counter - Oval Dots (read-only on mobile) */}
       <div className="flex justify-center gap-1.5 mt-2">
         {Array.from({ length: totalItems }).map((_, index) => (
-          <button
+          <span
             key={index}
-            onClick={() => !isAnimating && updatePosition(index + 1, true)}
-            className={`h-1.5 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 ${
+            className={`h-1.5 rounded-full transition-all duration-200 ${
               index === activeDotIndex ? 'w-6 bg-secondary' : 'w-1.5 bg-muted'
             }`}
-            aria-label={`Ir para página ${index + 1}`}
             aria-current={index === activeDotIndex ? 'true' : undefined}
           />
         ))}
       </div>
-    </div>
+    </section>
   )
 }

@@ -432,7 +432,7 @@ export default function AssuntoPage() {
                 value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
                 placeholder="Busca inteligente de assuntos..."
-                className="w-full pl-10 pr-10 py-3 border-2 border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary focus:border-secondary"
+                className="w-full pl-10 pr-10 py-3 border-2 border-border rounded-lg btn-focus focus:border-secondary"
                 aria-label="Buscar assunto"
               />
               {isSearching ? (
@@ -557,7 +557,7 @@ export default function AssuntoPage() {
                 }}
                 onFocus={() => setDropdownOpen(true)}
                 placeholder="Digite para buscar assuntos..."
-                className="w-full pl-10 pr-10 py-3 border-2 border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary focus:border-secondary"
+                className="w-full pl-10 pr-10 py-3 border-2 border-border rounded-lg btn-focus focus:border-secondary"
                 aria-label="Buscar assunto"
               />
               {desktopSearchTerm && (

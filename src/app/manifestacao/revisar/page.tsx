@@ -152,7 +152,7 @@ export default function ReviewPage() {
       />
 
       {/* Main Content */}
-      <main className="px-4 py-6 space-y-3">
+      <main id="main-content" className="px-4 py-6 space-y-3">
         <div className="mb-4">
           <div className="flex items-center gap-2 mb-2">
             <h2 className="text-xl font-bold text-foreground">
@@ -172,7 +172,7 @@ export default function ReviewPage() {
                   window.speechSynthesis.speak(utterance)
                 }
               }}
-              className="size-5 rounded-full bg-secondary hover:bg-secondary-hover flex items-center justify-center transition-colors flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
+              className="size-5 rounded-full bg-secondary hover:bg-secondary-hover flex items-center justify-center transition-colors flex-shrink-0 btn-focus"
               aria-label="Ouvir instruções"
             >
               <RiVolumeUpLine className="size-3 text-white" />
@@ -262,7 +262,7 @@ export default function ReviewPage() {
               >
                 {data.attachments.hasAudio && (
                   <div className="flex items-center gap-2 bg-secondary/5 rounded px-3 py-2">
-                    <RiMicLine className="size-4 text-secondary flex-shrink-0" />
+                    <RiMicLine className="size-4 text-secondary flex-shrink-0" aria-hidden="true" />
                     <span className="text-sm text-foreground">
                       {data.attachments.audioCount} áudio
                       {data.attachments.audioCount > 1 ? 's' : ''} gravado
@@ -275,9 +275,9 @@ export default function ReviewPage() {
                     {data.attachments.fileTypes.some(t =>
                       t.startsWith('image/')
                     ) ? (
-                      <RiImageLine className="size-4 text-secondary flex-shrink-0" />
+                      <RiImageLine className="size-4 text-secondary flex-shrink-0" aria-hidden="true" />
                     ) : (
-                      <RiVideoLine className="size-4 text-secondary flex-shrink-0" />
+                      <RiVideoLine className="size-4 text-secondary flex-shrink-0" aria-hidden="true" />
                     )}
                     <span className="text-sm text-foreground">
                       {data.attachments.fileCount} arquivo

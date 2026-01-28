@@ -20,7 +20,7 @@ const Button = forwardRef<ComponentRef<'button'>, ButtonProps>(
     ref
   ) => {
     const baseStyles =
-      'inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 cursor-pointer'
+      'inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors btn-focus disabled:pointer-events-none disabled:opacity-50 cursor-pointer'
 
     const variants = {
       primary: 'bg-success text-white hover:opacity-90',

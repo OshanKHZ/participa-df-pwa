@@ -21,9 +21,9 @@ const SPACING = {
 
 const BUTTON = {
   primary:
-    'w-full bg-secondary hover:bg-secondary-hover text-secondary-foreground font-medium py-3 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2',
+    'w-full bg-secondary hover:bg-secondary-hover text-secondary-foreground font-medium py-3 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed btn-focus',
   outline:
-    'w-full flex items-center justify-center gap-2 bg-card hover:bg-accent border border-border text-foreground font-medium py-3 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2',
+    'w-full flex items-center justify-center gap-2 bg-card hover:bg-accent border border-border text-foreground font-medium py-3 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed btn-focus',
   text: 'text-secondary hover:text-secondary-hover font-medium py-2 text-sm flex items-center justify-center gap-2 focus:outline-none focus:underline',
 }
 
@@ -153,7 +153,7 @@ export function AuthForm({ mode }: AuthFormProps) {
                 required
                 aria-required="true"
                 autoComplete="name"
-                className="w-full pl-10 pr-4 py-3 bg-card border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent transition-all"
+                className="w-full pl-10 pr-4 py-3 bg-card border border-border rounded-lg text-foreground placeholder:text-muted-foreground btn-focus focus:border-transparent transition-all"
                 disabled={isLoading}
               />
             </div>
@@ -178,7 +178,7 @@ export function AuthForm({ mode }: AuthFormProps) {
               required
               aria-required="true"
               autoComplete="email"
-              className="w-full pl-10 pr-4 py-3 bg-card border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent transition-all"
+              className="w-full pl-10 pr-4 py-3 bg-card border border-border rounded-lg text-foreground placeholder:text-muted-foreground btn-focus focus:border-transparent transition-all"
               disabled={isLoading}
             />
           </div>

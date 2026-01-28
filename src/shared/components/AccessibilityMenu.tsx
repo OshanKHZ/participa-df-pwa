@@ -70,7 +70,7 @@ export function AccessibilityMenu() {
         <button
           type="button"
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-8 right-8 z-fab w-14 h-14 bg-secondary hover:bg-secondary-hover text-white rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2"
+          className="fixed bottom-8 right-8 z-fab w-14 h-14 bg-secondary hover:bg-secondary-hover text-white rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-105 btn-focus focus:ring-white"
           aria-label="Acessibilidade"
           title="Acessibilidade"
         >
@@ -100,7 +100,7 @@ export function AccessibilityMenu() {
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="w-8 h-8 rounded-lg hover:bg-muted flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-secondary"
+                className="w-8 h-8 rounded-lg hover:bg-muted flex items-center justify-center transition-colors btn-focus"
                 aria-label="Fechar"
               >
                 <RiCloseLine className="w-5 h-5 text-muted-foreground" />
@@ -162,7 +162,7 @@ export function AccessibilityMenu() {
                   onClick={toggleAudio}
                   role="switch"
                   aria-checked={audioEnabled}
-                  className={`w-11 h-6 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 ${
+                  className={`w-11 h-6 rounded-full transition-colors btn-focus ${
                     audioEnabled ? 'bg-secondary' : 'bg-muted'
                   }`}
                   aria-label={audioEnabled ? 'Desativar áudio' : 'Ativar áudio'}
@@ -194,7 +194,7 @@ export function AccessibilityMenu() {
                   onClick={toggleHighContrast}
                   role="switch"
                   aria-checked={highContrast}
-                  className={`w-11 h-6 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 ${
+                  className={`w-11 h-6 rounded-full transition-colors btn-focus ${
                     highContrast ? 'bg-secondary' : 'bg-muted'
                   }`}
                   aria-label={

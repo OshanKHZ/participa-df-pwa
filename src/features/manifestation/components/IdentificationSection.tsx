@@ -167,7 +167,7 @@ export function IdentificationSection({
             aria-label={
               isAnonymous ? 'Desativar anonimato' : 'Ativar anonimato'
             }
-            className={`relative flex-shrink-0 inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 ${
+            className={`relative flex-shrink-0 inline-flex h-6 w-11 items-center rounded-full transition-colors btn-focus ${
               isAnonymous ? 'bg-secondary' : 'bg-muted'
             }`}
           >
@@ -187,20 +187,24 @@ export function IdentificationSection({
           <div className="flex items-start gap-3 bg-accent rounded-sm p-4">
             <button
               type="button"
+              role="checkbox"
+              aria-checked={anonymousConsent}
               onClick={() => setAnonymousConsent(!anonymousConsent)}
-              className={`mt-0.5 w-5 h-5 flex-shrink-0 rounded border-2 flex items-center justify-center transition-colors ${
+              className={`mt-0.5 w-5 h-5 flex-shrink-0 rounded border-2 flex items-center justify-center transition-colors btn-focus ${
                 anonymousConsent
                   ? 'bg-secondary border-secondary'
                   : 'bg-white border-gray-400'
               }`}
             >
               {anonymousConsent && (
-                <RiCheckLine className="size-4 text-white" />
+                <RiCheckLine className="size-4 text-white" aria-hidden="true" />
               )}
             </button>
-            <div
-              className="flex-1 cursor-pointer"
+            <button
+              type="button"
+              className="flex-1 text-left p-0 btn-focus"
               onClick={() => setAnonymousConsent(!anonymousConsent)}
+              aria-label="Aceitar termos de anonimato"
             >
               <p className="text-xs text-accent-foreground leading-relaxed">
                 <span className="text-destructive">*</span> Solicito que minha
@@ -220,7 +224,7 @@ export function IdentificationSection({
                 atender a pedidos de informação pessoal, uma vez que não terá
                 como confirmar minha identidade.
               </p>
-            </div>
+            </button>
           </div>
         </div>
       )}
@@ -252,7 +256,7 @@ export function IdentificationSection({
                 <button
                   type="button"
                   onClick={handleLogout}
-                  className="text-xs text-destructive hover:underline"
+                  className="text-xs text-destructive hover:underline btn-focus"
                 >
                   Sair
                 </button>
@@ -279,7 +283,7 @@ export function IdentificationSection({
                     onChange={e => handleInputChange('phone', e.target.value)}
                     placeholder="(00) 00000-0000"
                     autoComplete="tel"
-                    className="w-full pl-10 pr-4 py-3 border card-border rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary"
+                    className="w-full pl-10 pr-4 py-3 border card-border rounded-lg btn-focus"
                   />
                 </div>
               </div>
@@ -303,26 +307,28 @@ export function IdentificationSection({
                 {showOtpInput ? (
                   <div className="space-y-3">
                     <div>
-                      <label className="text-xs text-muted-foreground mb-1 block">
+                      <label htmlFor="otp-code" className="text-xs text-muted-foreground mb-1 block">
                         Código de Verificação
                       </label>
                       <div className="relative">
-                        <RiLockPasswordLine className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                        <RiLockPasswordLine className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
                         <input
+                          id="otp-code"
                           type="text"
                           value={otpCode}
                           onChange={e => setOtpCode(e.target.value)}
                           className="w-full pl-10 pr-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
                           placeholder="000000"
                           maxLength={6}
+                          aria-describedby="otp-help"
                         />
                       </div>
-                      <p className="text-xs text-muted-foreground mt-1.5">
+                      <p className="text-xs text-muted-foreground mt-1.5" id="otp-help">
                         Enviamos um código para {authEmail}.{' '}
                         <button
                           type="button"
                           onClick={() => setShowOtpInput(false)}
-                          className="text-primary hover:underline"
+                          className="text-primary hover:underline btn-focus"
                         >
                           Alterar e-mail
                         </button>
@@ -340,17 +346,19 @@ export function IdentificationSection({
                 ) : (
                   <div className="space-y-3">
                     <div>
-                      <label className="text-xs text-muted-foreground mb-1 block">
+                      <label htmlFor="auth-email" className="text-xs text-muted-foreground mb-1 block">
                         E-mail
                       </label>
                       <div className="relative">
-                        <RiMailLine className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                        <RiMailLine className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
                         <input
+                          id="auth-email"
                           type="email"
                           value={authEmail}
                           onChange={e => setAuthEmail(e.target.value)}
                           className="w-full pl-10 pr-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
                           placeholder="seu@email.com"
+                          autoComplete="email"
                         />
                       </div>
                     </div>
@@ -377,7 +385,7 @@ export function IdentificationSection({
                     <button
                       type="button"
                       onClick={handleGoogleLogin}
-                      className="w-full flex items-center justify-center gap-2 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium py-2 px-4 rounded-md transition-colors text-sm"
+                      className="w-full flex items-center justify-center gap-2 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium py-2 px-4 rounded-md transition-colors text-sm btn-focus"
                     >
                       <RiGoogleFill className="size-5 text-[#DB4437]" />
                       Google

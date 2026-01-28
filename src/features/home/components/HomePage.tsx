@@ -110,7 +110,10 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
       />
 
       {/* Main Content */}
-      <main className="pb-28 lg:pb-8 min-h-screen bg-muted lg:max-w-6xl lg:mx-auto">
+      <main
+        id="main-content"
+        className="pb-28 lg:pb-8 min-h-screen bg-muted lg:max-w-6xl lg:mx-auto"
+      >
         {/* Main Action Card Section - White background */}
         <div className="bg-card px-4 py-6 lg:px-8 lg:py-10">
           {/* Mobile: centered, Desktop: two columns */}
@@ -123,6 +126,8 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
                 width={120}
                 height={120}
                 className="mb-4"
+                priority
+                fetchPriority="high"
               />
 
               {/* Title - mobile only */}
@@ -161,7 +166,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
               <div className="flex flex-wrap gap-3">
                 <Link
                   href="/manifestacao"
-                  className="inline-flex items-center gap-2 bg-secondary hover:bg-secondary-hover text-secondary-foreground font-medium py-3 px-6 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
+                  className="inline-flex items-center gap-2 bg-secondary hover:bg-secondary-hover text-secondary-foreground font-medium py-3 px-6 rounded-lg transition-colors btn-focus"
                 >
                   <RiAddLine className="size-5" />
                   Nova Manifestação
@@ -169,7 +174,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
 
                 <Link
                   href="/historico"
-                  className="inline-flex items-center gap-2 text-secondary hover:text-secondary-hover font-medium py-3 px-4 transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 rounded"
+                  className="inline-flex items-center gap-2 text-secondary hover:text-secondary-hover font-medium py-3 px-4 transition-colors btn-focus rounded"
                 >
                   <RiSearchLine className="size-5" />
                   Consultar protocolo
@@ -210,9 +215,9 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
         <div className="h-3 bg-muted lg:hidden" />
 
         {/* Services List Section - Mobile only, Desktop has sidebar */}
-        <div className="lg:hidden bg-card px-4 py-4">
+        <section className="lg:hidden bg-card px-4 py-4" aria-label="Serviços">
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-lg font-semibold text-foreground">Serviços</h3>
+            <h2 className="text-lg font-semibold text-foreground">Serviços</h2>
             <Link
               href="/servicos"
               className="text-xs text-secondary font-medium"
@@ -225,7 +230,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
             {/* O que é a Ouvidoria */}
             <Link
               href="/o-que-e-ouvidoria"
-              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-inset"
+              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors btn-focus focus:ring-inset"
             >
               <RiMegaphoneLine className="size-5 text-secondary flex-shrink-0" />
               <span className="flex-1 text-sm font-medium text-foreground">
@@ -237,7 +242,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
             {/* Orientações */}
             <Link
               href="/orientacoes"
-              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-inset"
+              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors btn-focus focus:ring-inset"
             >
               <RiLightbulbLine className="size-5 text-secondary flex-shrink-0" />
               <span className="flex-1 text-sm font-medium text-foreground">
@@ -249,7 +254,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
             {/* Perguntas frequentes */}
             <Link
               href="/ajuda"
-              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-inset"
+              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors btn-focus focus:ring-inset"
             >
               <RiQuestionLine className="size-5 text-secondary flex-shrink-0" />
               <span className="flex-1 text-sm font-medium text-foreground">
@@ -261,7 +266,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
             {/* Canais de atendimento */}
             <Link
               href="/canais"
-              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-inset"
+              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors btn-focus focus:ring-inset"
             >
               <RiCustomerService2Line className="size-5 text-secondary flex-shrink-0" />
               <span className="flex-1 text-sm font-medium text-foreground">
@@ -270,7 +275,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
               <RiArrowRightSLine className="size-5 text-muted-foreground flex-shrink-0" />
             </Link>
           </div>
-        </div>
+        </section>
       </main>
 
       {/* Bottom Navigation - Mobile only */}

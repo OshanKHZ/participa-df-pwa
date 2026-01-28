@@ -87,7 +87,7 @@ export default function PersonalDataPage() {
       />
 
       {/* Main Content */}
-      <main className="px-4 py-6">
+      <main id="main-content" className="px-4 py-6">
         <div className="mb-6">
           <div className="flex items-center gap-2 mb-2">
             <h2 className="text-xl font-bold text-foreground">
@@ -108,7 +108,7 @@ export default function PersonalDataPage() {
                   window.speechSynthesis.speak(utterance)
                 }
               }}
-              className="size-5 rounded-full bg-secondary hover:bg-secondary-hover flex items-center justify-center transition-colors flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
+              className="size-5 rounded-full bg-secondary hover:bg-secondary-hover flex items-center justify-center transition-colors flex-shrink-0 btn-focus"
               aria-label="Ouvir instruções"
             >
               <RiVolumeUpLine className="size-3 text-white" />

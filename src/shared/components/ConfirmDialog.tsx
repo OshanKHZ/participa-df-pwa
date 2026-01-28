@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { RiCloseLine } from 'react-icons/ri'
+import { useFocusTrap } from '@/shared/hooks/useFocusTrap'
 
 interface ConfirmDialogProps {
   isOpen: boolean
@@ -23,6 +24,7 @@ export function ConfirmDialog({
   cancelText = 'Voltar',
 }: ConfirmDialogProps) {
   const [isAnimating, setIsAnimating] = useState(false)
+  const containerRef = useFocusTrap(isOpen)
 
   useEffect(() => {
     if (isOpen) {
@@ -61,6 +63,7 @@ export function ConfirmDialog({
       aria-describedby="dialog-description"
     >
       <div
+        ref={containerRef}
         className={`bg-background rounded-sm shadow-lg max-w-md w-full overflow-hidden transition-all duration-200 ${
           isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-98'
         }`}
@@ -79,7 +82,7 @@ export function ConfirmDialog({
             {/* Close Button */}
             <button
               onClick={onClose}
-              className="text-muted-foreground hover:text-foreground transition-colors rounded-sm p-1 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-1"
+              className="text-muted-foreground hover:text-foreground transition-colors rounded-sm p-1 btn-focus"
               aria-label="Fechar"
             >
               <RiCloseLine className="size-5" />
@@ -101,13 +104,13 @@ export function ConfirmDialog({
         <div className="px-6 py-4 bg-muted/10 flex flex-col-reverse sm:flex-row gap-2 sm:justify-end">
           <button
             onClick={onClose}
-            className="w-full sm:w-auto px-4 py-2 text-sm font-medium text-foreground rounded-sm hover:bg-muted/50 transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-1"
+            className="w-full sm:w-auto px-4 py-2 text-sm font-medium text-foreground rounded-sm hover:bg-muted/50 transition-colors btn-focus"
           >
             {cancelText}
           </button>
           <button
             onClick={onConfirm}
-            className="w-full sm:w-auto px-4 py-2 text-sm font-medium text-white bg-secondary hover:bg-secondary/90 rounded-sm transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-1"
+            className="w-full sm:w-auto px-4 py-2 text-sm font-medium text-white bg-secondary hover:bg-secondary/90 rounded-sm transition-colors btn-focus"
           >
             {confirmText}
           </button>
