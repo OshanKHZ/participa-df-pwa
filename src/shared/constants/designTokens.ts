@@ -91,9 +91,10 @@ export const STEPS = {
   TYPE: 1,
   SUBJECT: 2,
   CONTENT: 3,
-  REVIEW: 4,
+  DATA: 4,
+  REVIEW: 5,
   /** Total number of steps */
-  TOTAL: 4,
+  TOTAL: 5,
 } as const
 
 /** Completed steps count for each step */
@@ -101,7 +102,8 @@ export const COMPLETED_STEPS = {
   AT_TYPE: 0,
   AT_SUBJECT: 1,
   AT_CONTENT: 2,
-  AT_REVIEW: 3,
+  AT_DATA: 3,
+  AT_REVIEW: 4,
 } as const
 
 // ============================================================================

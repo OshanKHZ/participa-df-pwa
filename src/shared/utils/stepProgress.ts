@@ -11,6 +11,7 @@ export const DEFAULT_STEPS: Step[] = [
   { number: STEPS.TYPE, label: 'Tipo de manifestação', completed: false },
   { number: STEPS.SUBJECT, label: 'Assunto', completed: false },
   { number: STEPS.CONTENT, label: 'Sua manifestação', completed: false },
+  { number: STEPS.DATA, label: 'Seus dados', completed: false },
   { number: STEPS.REVIEW, label: 'Revisão final', completed: false },
 ]
 

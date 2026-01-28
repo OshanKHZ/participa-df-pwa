@@ -3,7 +3,7 @@
 import { forwardRef, type ComponentRef } from 'react'
 
 export interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
-  variant?: 'primary' | 'secondary' | 'ghost' | 'link'
+  variant?: 'primary' | 'secondary' | 'ghost' | 'link' | 'destructive'
   size?: 'sm' | 'default' | 'lg'
 }
 
@@ -27,6 +27,7 @@ const Button = forwardRef<ComponentRef<'button'>, ButtonProps>(
       secondary: 'bg-primary text-white hover:bg-primary/90',
       ghost: 'hover:bg-accent hover:text-foreground',
       link: 'text-secondary underline-offset-4 hover:underline',
+      destructive: 'text-destructive underline-offset-4 hover:underline',
     }
 
     const sizes = {

@@ -241,7 +241,7 @@ export function Step({ children }: StepProps) {
 // Helper para gerar steps para desktop baseado no step atual
 // Usa labels mais curtos para caber melhor no layout
 export function getDesktopSteps(currentStep: number): StepperStep[] {
-  const labels = ['Tipo', 'Assunto', 'Conteúdo', 'Confirmação']
+  const labels = ['Tipo', 'Assunto', 'Conteúdo', 'Dados', 'Confirmação']
 
   return labels.map((label, index) => {
     const stepNumber = index + 1

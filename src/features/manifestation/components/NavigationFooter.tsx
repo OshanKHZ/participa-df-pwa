@@ -20,6 +20,8 @@ interface NavigationFooterProps {
   nextDisabled?: boolean
   nextLoading?: boolean
   steps?: Step[]
+  backLabel?: string
+  backVariant?: 'default' | 'destructive'
 }
 
 export function NavigationFooter({
@@ -31,6 +33,8 @@ export function NavigationFooter({
   nextDisabled = false,
   nextLoading = false,
   steps = DEFAULT_STEPS,
+  backLabel = 'Voltar',
+  backVariant = 'default',
 }: NavigationFooterProps) {
   const [drawerOpen, setDrawerOpen] = useState(false)
 
@@ -148,16 +152,18 @@ export function NavigationFooter({
             <button
               onClick={onBack}
               disabled={!onBack}
-              className={`flex-1 py-3.5 px-4 rounded border-2 border-border font-medium transition-colors ${
+              className={`flex-1 py-3.5 px-4 rounded border-2 font-medium transition-colors btn-focus ${
                 !onBack
-                  ? 'text-muted-foreground cursor-not-allowed'
-                  : 'text-foreground hover:bg-accent'
+                  ? 'text-muted-foreground cursor-not-allowed border-border'
+                  : backVariant === 'destructive'
+                    ? 'text-destructive border-destructive hover:bg-destructive/10'
+                    : 'text-foreground border-border hover:bg-accent'
               }`}
-              aria-label="Voltar"
+              aria-label={backLabel}
             >
               <div className="flex items-center justify-center gap-2">
                 <RiArrowLeftLine className="size-5" />
-                <span className="text-sm font-semibold">Voltar</span>
+                <span className="text-sm font-semibold">{backLabel}</span>
               </div>
             </button>
 

@@ -8,6 +8,7 @@ export function getStepUrl(stepNumber: number): string {
     [STEPS.TYPE]: '/manifestacao',
     [STEPS.SUBJECT]: '/manifestacao/assunto',
     [STEPS.CONTENT]: '/manifestacao/conteudo',
+    [STEPS.DATA]: '/manifestacao/dados',
     [STEPS.REVIEW]: '/manifestacao/revisar',
   }
 
