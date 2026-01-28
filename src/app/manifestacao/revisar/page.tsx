@@ -51,13 +51,6 @@ const typeLabels: Record<string, string> = {
   solicitacao: 'Solicitação',
 }
 
-const channelLabels: Record<string, string> = {
-  texto: 'Texto',
-  audio: 'Áudio',
-  imagem: 'Imagem',
-  video: 'Vídeo',
-}
-
 export default function ReviewPage() {
   const router = useRouter()
   const { navigateToStep } = useStepNavigation()
