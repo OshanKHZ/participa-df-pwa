@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation'
 import {
   RiEditLine,
   RiVolumeUpLine,
-  RiAttachmentLine,
   RiImageLine,
   RiVideoLine,
   RiMicLine,
@@ -15,10 +14,7 @@ import { AccessibleHeader } from '@/features/manifestation/components/Accessible
 import { NavigationFooter } from '@/features/manifestation/components/NavigationFooter'
 import { getStepProgress } from '@/shared/utils/stepProgress'
 import { useStepNavigation } from '@/shared/hooks/useStepNavigation'
-import {
-  STEPS,
-  COMPLETED_STEPS,
-} from '@/shared/constants/designTokens'
+import { STEPS, COMPLETED_STEPS } from '@/shared/constants/designTokens'
 
 interface AttachmentInfo {
   hasAudio: boolean

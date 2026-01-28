@@ -59,10 +59,10 @@ export function IdentificationSection({
     if (!isAnonymous) {
       const dataToUse = session?.user
         ? {
-          name: session.user.name || '',
-          email: session.user.email || '',
-          phone: formData.phone,
-        }
+            name: session.user.name || '',
+            email: session.user.email || '',
+            phone: formData.phone,
+          }
         : formData
       onFormDataChange(dataToUse)
     }
@@ -137,8 +137,6 @@ export function IdentificationSection({
     await signOut({ callbackUrl: window.location.href })
   }
 
-
-
   return (
     <>
       {/* Anonymous Toggle */}
@@ -169,12 +167,14 @@ export function IdentificationSection({
             aria-label={
               isAnonymous ? 'Desativar anonimato' : 'Ativar anonimato'
             }
-            className={`relative flex-shrink-0 inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 ${isAnonymous ? 'bg-secondary' : 'bg-muted'
-              }`}
+            className={`relative flex-shrink-0 inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 ${
+              isAnonymous ? 'bg-secondary' : 'bg-muted'
+            }`}
           >
             <span
-              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${isAnonymous ? TOGGLE.TRANSITION_ON : TOGGLE.TRANSITION_OFF
-                }`}
+              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                isAnonymous ? TOGGLE.TRANSITION_ON : TOGGLE.TRANSITION_OFF
+              }`}
             />
           </button>
         </div>
@@ -188,10 +188,11 @@ export function IdentificationSection({
             <button
               type="button"
               onClick={() => setAnonymousConsent(!anonymousConsent)}
-              className={`mt-0.5 w-5 h-5 flex-shrink-0 rounded border-2 flex items-center justify-center transition-colors ${anonymousConsent
-                ? 'bg-secondary border-secondary'
-                : 'bg-white border-gray-400'
-                }`}
+              className={`mt-0.5 w-5 h-5 flex-shrink-0 rounded border-2 flex items-center justify-center transition-colors ${
+                anonymousConsent
+                  ? 'bg-secondary border-secondary'
+                  : 'bg-white border-gray-400'
+              }`}
             >
               {anonymousConsent && (
                 <RiCheckLine className="size-4 text-white" />

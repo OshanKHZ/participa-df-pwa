@@ -3,6 +3,7 @@ config({ path: '.env.local' })
 
 import { db } from '../src/server/db'
 
+/* eslint-disable no-console */
 import { sql } from 'drizzle-orm'
 
 console.log('Running manual migration...')

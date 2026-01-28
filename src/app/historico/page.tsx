@@ -8,11 +8,7 @@ import {
   RiDeleteBinLine,
   RiEditLine,
 } from 'react-icons/ri'
-import {
-  getDrafts,
-  deleteDraft,
-  loadDraft,
-} from '@/shared/utils/draftManager'
+import { getDrafts, deleteDraft, loadDraft } from '@/shared/utils/draftManager'
 import {
   getUserManifestations,
   getManifestationByProtocol,
@@ -27,7 +23,9 @@ export default function HistoryPage() {
   const [drafts, setDrafts] = useState<ManifestationDraft[]>([])
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [submitted, setSubmitted] = useState<any[]>([])
-  const [activeTab, setActiveTab] = useState<'submitted' | 'drafts'>('submitted')
+  const [activeTab, setActiveTab] = useState<'submitted' | 'drafts'>(
+    'submitted'
+  )
   const [isLoading, setIsLoading] = useState(true)
   const [protocolSearch, setProtocolSearch] = useState('')
   const [isSearching, setIsSearching] = useState(false)
@@ -156,10 +154,11 @@ export default function HistoryPage() {
           <div className="flex">
             <button
               onClick={() => setActiveTab('submitted')}
-              className={`flex-1 py-3 px-4 font-medium transition-colors ${activeTab === 'submitted'
-                ? 'text-secondary border-b-2 border-secondary'
-                : 'text-muted-foreground hover:text-foreground'
-                }`}
+              className={`flex-1 py-3 px-4 font-medium transition-colors ${
+                activeTab === 'submitted'
+                  ? 'text-secondary border-b-2 border-secondary'
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
             >
               <div className="flex items-center justify-center gap-2">
                 <RiCheckLine className="size-5" />
@@ -168,10 +167,11 @@ export default function HistoryPage() {
             </button>
             <button
               onClick={() => setActiveTab('drafts')}
-              className={`flex-1 py-3 px-4 font-medium transition-colors ${activeTab === 'drafts'
-                ? 'text-secondary border-b-2 border-secondary'
-                : 'text-muted-foreground hover:text-foreground'
-                }`}
+              className={`flex-1 py-3 px-4 font-medium transition-colors ${
+                activeTab === 'drafts'
+                  ? 'text-secondary border-b-2 border-secondary'
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
             >
               <div className="flex items-center justify-center gap-2">
                 <RiDraftLine className="size-5" />
@@ -193,7 +193,7 @@ export default function HistoryPage() {
                     placeholder="Buscar por protocolo..."
                     className="w-full pl-4 pr-4 py-2 rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-ring"
                     value={protocolSearch}
-                    onChange={(e) => setProtocolSearch(e.target.value)}
+                    onChange={e => setProtocolSearch(e.target.value)}
                   />
                 </div>
                 <button
@@ -216,7 +216,8 @@ export default function HistoryPage() {
                     Nenhuma manifestação encontrada.
                   </p>
                   <p className="text-sm text-muted-foreground mt-2">
-                    Faça login para ver seu histórico ou busque por um protocolo.
+                    Faça login para ver seu histórico ou busque por um
+                    protocolo.
                   </p>
                 </div>
               ) : (
@@ -230,13 +231,21 @@ export default function HistoryPage() {
                         <div className="flex-1">
                           <div className="flex items-center justify-between gap-2 mb-2">
                             <div className="flex items-center gap-2">
-                              <div className={`size-6 rounded-full flex items-center justify-center ${item.status === 'done' ? 'bg-success' : 'bg-secondary'}`}>
+                              <div
+                                className={`size-6 rounded-full flex items-center justify-center ${item.status === 'done' ? 'bg-success' : 'bg-secondary'}`}
+                              >
                                 <RiCheckLine className="size-4 text-white" />
                               </div>
-                              <span className={`text-sm font-semibold ${item.status === 'done' ? 'text-success' : 'text-secondary'}`}>
-                                {item.status === 'received' ? 'Recebida' :
-                                  item.status === 'analyzing' ? 'Em Análise' :
-                                    item.status === 'done' ? 'Concluída' : 'Enviada'}
+                              <span
+                                className={`text-sm font-semibold ${item.status === 'done' ? 'text-success' : 'text-secondary'}`}
+                              >
+                                {item.status === 'received'
+                                  ? 'Recebida'
+                                  : item.status === 'analyzing'
+                                    ? 'Em Análise'
+                                    : item.status === 'done'
+                                      ? 'Concluída'
+                                      : 'Enviada'}
                               </span>
                             </div>
                             <span className="text-xs text-muted-foreground bg-muted px-2 py-1 rounded">
@@ -307,11 +316,12 @@ export default function HistoryPage() {
                               🎙️ Áudio gravado
                             </span>
                           )}
-                          {draft.content?.files && draft.content.files.length > 0 && (
-                            <span className="inline-flex items-center gap-1 text-xs bg-muted px-2 py-1 rounded text-muted-foreground">
-                              📎 {draft.content.files.length} anexo(s)
-                            </span>
-                          )}
+                          {draft.content?.files &&
+                            draft.content.files.length > 0 && (
+                              <span className="inline-flex items-center gap-1 text-xs bg-muted px-2 py-1 rounded text-muted-foreground">
+                                📎 {draft.content.files.length} anexo(s)
+                              </span>
+                            )}
                         </div>
 
                         <p className="text-xs text-muted-foreground mt-1">
