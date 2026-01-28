@@ -8,6 +8,7 @@ import {
   RiUserLine,
   RiGoogleFill,
   RiErrorWarningLine,
+  RiAccountCircleFill,
 } from 'react-icons/ri'
 import { signIn } from 'next-auth/react'
 
@@ -114,7 +115,12 @@ export function AuthForm({ mode }: AuthFormProps) {
 
   return (
     <>
-      <p className="text-sm text-muted-foreground mb-5">{description}</p>
+      <div className="flex justify-center mb-6">
+        <RiAccountCircleFill className="size-20 text-secondary" />
+      </div>
+      <p className="text-sm text-muted-foreground text-center mb-5">
+        {description}
+      </p>
 
       {error && (
         <div

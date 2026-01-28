@@ -7,13 +7,13 @@ import {
   RiQuestionLine,
   RiBarChartBoxLine,
   RiPhoneLine,
-  RiArrowRightSLine,
   RiMegaphoneLine,
   RiLightbulbLine,
 } from 'react-icons/ri'
-import { MobileBottomNav } from '@/shared/components/MobileBottomNav'
 import { HomeMobileHeader } from '@/shared/components/HomeMobileHeader'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
+import { MobileBottomNav } from '@/shared/components/MobileBottomNav'
+import { ServiceCard } from './components/ServiceCard'
 
 export default function ServicosPage() {
   const router = useRouter()
@@ -67,62 +67,59 @@ export default function ServicosPage() {
 
       <div className="min-h-screen bg-background pb-20 md:pb-6 lg:max-w-6xl lg:mx-auto">
         {/* Content */}
-        <main className="px-4 py-4">
-          <h1 className="text-xl font-semibold text-foreground mb-4">
-            Serviços da Ouvidoria
+        <main className="px-4 py-4 lg:py-8">
+          <h1 className="text-xl lg:text-2xl font-semibold text-foreground mb-4 lg:mb-6">
+            Serviços
           </h1>
-          {/* Services List - Single Column */}
-          <div className="border border-border rounded-lg divide-y divide-border bg-card">
-            {services.map(service => {
-              const Icon = service.icon
-              return (
-                <button
-                  key={service.id}
-                  onClick={() =>
-                    service.href !== '#' && router.push(service.href)
-                  }
-                  className={`w-full flex items-center gap-3 p-3.5 text-left transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-inset ${
-                    service.href !== '#'
-                      ? 'hover:bg-accent'
-                      : 'opacity-50 cursor-not-allowed'
-                  }`}
-                  disabled={service.href === '#'}
-                >
-                  <Icon className="size-5 text-secondary flex-shrink-0" />
-                  <div className="flex-1 min-w-0">
-                    <span className="text-sm font-medium text-foreground">
-                      {service.title}
-                    </span>
-                  </div>
-                  {service.href !== '#' && (
-                    <RiArrowRightSLine className="size-5 text-muted-foreground flex-shrink-0" />
-                  )}
-                </button>
-              )
-            })}
+
+          {/* Services Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+            {services.map(service => (
+              <ServiceCard
+                key={service.id}
+                icon={service.icon}
+                title={service.title}
+                onClick={() =>
+                  service.href !== '#' && router.push(service.href)
+                }
+                disabled={service.href === '#'}
+              />
+            ))}
           </div>
 
           {/* Quick Contact */}
-          <div className="mt-4 bg-muted rounded-lg p-4">
-            <div className="flex items-center gap-3">
-              <RiPhoneLine className="size-5 text-secondary flex-shrink-0" />
+          <div className="mt-4 lg:mt-6 bg-muted rounded-lg p-4 lg:p-5">
+            <div className="flex flex-col lg:flex-row lg:items-center gap-2 lg:gap-3">
+              <RiPhoneLine className="size-5 lg:size-6 text-secondary flex-shrink-0" />
               <div className="flex-1">
-                <p className="text-xs text-muted-foreground mb-0.5">
-                  Precisa de ajuda?
-                </p>
-                <a
-                  href="tel:162"
-                  className="text-sm font-semibold text-secondary hover:underline"
-                >
-                  162
-                </a>
+                <div className="flex items-center gap-0.5 lg:gap-2">
+                  <p className="text-xs lg:text-sm text-muted-foreground">
+                    Precisa de ajuda?
+                  </p>
+                  <a
+                    href="tel:162"
+                    className="text-sm lg:text-base font-semibold text-secondary hover:underline"
+                  >
+                    162
+                  </a>
+                </div>
+                <div className="flex flex-col gap-0.5 mt-1 lg:mt-0.5">
+                  <p className="text-xs text-muted-foreground">
+                    Seg a Sex das 8h às 20h
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    Fins de semana e feriados das 9h às 14h
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </main>
 
-        {/* Bottom Navigation */}
-        <MobileBottomNav activeTab="services" isAuthenticated={false} />
+        {/* Bottom Navigation - Mobile only */}
+        <div className="md:hidden">
+          <MobileBottomNav activeTab="services" isAuthenticated={false} />
+        </div>
       </div>
     </>
   )

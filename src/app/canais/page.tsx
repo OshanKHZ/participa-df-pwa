@@ -33,14 +33,14 @@ export default function CanaisPage() {
           </div>
 
           {/* Info Box */}
-          <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <div className="mt-6 bg-primary rounded-md p-4">
             <div className="flex gap-3">
-              <RiTimeLine className="size-5 text-blue-600 flex-shrink-0 mt-0.5" />
+              <RiTimeLine className="size-5 text-white flex-shrink-0 mt-0.5" />
               <div>
-                <h3 className="font-semibold text-blue-900 mb-1">
+                <h3 className="font-semibold text-white mb-1">
                   Prazo de Resposta
                 </h3>
-                <p className="text-sm text-blue-800 leading-relaxed">
+                <p className="text-sm text-white/90 leading-relaxed">
                   Todas as manifestações são respondidas em até 30 dias úteis,
                   conforme a legislação vigente. Você pode acompanhar o
                   andamento pelo número de protocolo.

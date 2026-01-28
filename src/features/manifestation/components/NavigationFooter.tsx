@@ -5,7 +5,6 @@ import {
   RiArrowLeftLine,
   RiArrowRightLine,
   RiGridLine,
-  RiShieldCheckLine,
   RiCheckLine,
   RiCloseLine,
 } from 'react-icons/ri'
@@ -20,7 +19,6 @@ interface NavigationFooterProps {
   onNavigateToStep?: (step: number) => void
   nextDisabled?: boolean
   nextLoading?: boolean
-  showAnonymousInfo?: boolean
   steps?: Step[]
 }
 
@@ -32,7 +30,6 @@ export function NavigationFooter({
   onNavigateToStep,
   nextDisabled = false,
   nextLoading = false,
-  showAnonymousInfo = true,
   steps = DEFAULT_STEPS,
 }: NavigationFooterProps) {
   const [drawerOpen, setDrawerOpen] = useState(false)
@@ -203,21 +200,6 @@ export function NavigationFooter({
               </div>
             </button>
           </div>
-
-          {/* Anonymous info */}
-          {showAnonymousInfo && (
-            <div className="bg-accent rounded-lg p-3 flex items-start gap-2">
-              <RiShieldCheckLine className="size-5 text-secondary flex-shrink-0 mt-0.5" />
-              <div className="flex-1">
-                <p className="text-xs font-semibold text-accent-foreground mb-0.5">
-                  Manifestação Confidencial
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  Você pode escolher se identificar ou manter o anonimato
-                </p>
-              </div>
-            </div>
-          )}
         </div>
       </footer>
     </>

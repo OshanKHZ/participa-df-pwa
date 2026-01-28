@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Simple sync script to fetch subjects from Participa-DF API
  */

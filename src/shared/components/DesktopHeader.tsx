@@ -4,14 +4,17 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useState, useRef } from 'react'
-import { RiAddLine, RiUserLine, RiArrowDownSLine } from 'react-icons/ri'
+import { RiUserLine, RiArrowDownSLine } from 'react-icons/ri'
 import { TransparenciaPopover } from '@/shared/components/TransparenciaPopover'
+import { ManifestacaoPopover } from '@/shared/components/ManifestacaoPopover'
 
 export function DesktopHeader() {
   const pathname = usePathname()
   const [isTransparenciaOpen, setIsTransparenciaOpen] = useState(false)
+  const [isManifestacaoOpen, setIsManifestacaoOpen] = useState(false)
   const [isAuthOpen, setIsAuthOpen] = useState(false)
   const transparenciaTriggerRef = useRef<HTMLButtonElement>(null)
+  const manifestacaoTriggerRef = useRef<HTMLButtonElement>(null)
 
   const isActive = (path: string) => pathname === path
 
@@ -77,17 +80,36 @@ export function DesktopHeader() {
         <div className="bg-primary-light">
           <div className="px-8">
             <nav className="flex items-center justify-center gap-1">
-              <Link
-                href="/manifestacao"
-                className="flex items-center gap-2 px-6 py-3 text-sm font-semibold bg-manifestation-cta text-white -my-3 hover:bg-gray-200 hover:text-secondary transition-all duration-200 cursor-pointer"
-              >
-                <RiAddLine className="size-4" />
-                <span>Nova Manifestação</span>
-              </Link>
-
               <Link href="/" className={navLinkClass('/')}>
                 Início
               </Link>
+
+              <div
+                className="relative"
+                onMouseEnter={() => setIsManifestacaoOpen(true)}
+                onMouseLeave={() => setIsManifestacaoOpen(false)}
+              >
+                <button
+                  ref={manifestacaoTriggerRef}
+                  onClick={() => setIsManifestacaoOpen(!isManifestacaoOpen)}
+                  className={`flex items-center gap-1 px-5 py-2 text-sm font-normal transition-all border-b-2 focus:outline-none focus:ring-2 focus:ring-white/50 rounded ${
+                    pathname?.startsWith('/manifestacao')
+                      ? 'text-white border-white'
+                      : 'text-white/70 border-transparent hover:text-white hover:border-white/30'
+                  }`}
+                  aria-expanded={isManifestacaoOpen}
+                  aria-haspopup="true"
+                >
+                  <span>Manifestações</span>
+                  <RiArrowDownSLine className="size-3" />
+                </button>
+
+                <ManifestacaoPopover
+                  isOpen={isManifestacaoOpen}
+                  onClose={() => setIsManifestacaoOpen(false)}
+                  triggerRef={manifestacaoTriggerRef}
+                />
+              </div>
 
               <Link
                 href="/servicos"

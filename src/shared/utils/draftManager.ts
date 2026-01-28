@@ -1,8 +1,57 @@
 import type { ManifestationDraft } from '@/shared/types/manifestation'
 import { STORAGE_KEYS } from '@/shared/constants/storageKeys'
+import { manifestationRepo } from '@/shared/repositories/manifestationRepository'
 
-export function saveDraft(draft: Partial<ManifestationDraft>): string {
-  const drafts = getDrafts()
+/**
+ * Draft Manager - Legacy compatibility layer
+ *
+ * These functions now use IndexedDB instead of localStorage.
+ * Maintains the same API for backward compatibility.
+ */
+
+// Migration flag
+const MIGRATION_KEY = 'participa_df_indexeddb_migrated'
+
+async function migrateFromLocalStorage(): Promise<void> {
+  // Check if already migrated
+  if (localStorage.getItem(MIGRATION_KEY)) return
+
+  try {
+    // Migrate drafts
+    const draftsStr = localStorage.getItem(STORAGE_KEYS.drafts)
+    if (draftsStr) {
+      const drafts = JSON.parse(draftsStr) as ManifestationDraft[]
+      for (const draft of drafts) {
+        await manifestationRepo.saveDraft(draft)
+      }
+    }
+
+    // Migrate submitted
+    const submittedStr = localStorage.getItem(STORAGE_KEYS.submitted)
+    if (submittedStr) {
+      const submitted = JSON.parse(submittedStr) as ManifestationDraft[]
+      for (const item of submitted) {
+        await manifestationRepo.saveSubmitted(item, item.protocol || '')
+      }
+    }
+
+    // Mark as migrated
+    localStorage.setItem(MIGRATION_KEY, 'true')
+
+    // Clear old localStorage data (optional, keeps it clean)
+    // localStorage.removeItem(STORAGE_KEYS.drafts)
+    // localStorage.removeItem(STORAGE_KEYS.submitted)
+  } catch (e) {
+    console.error('Migration error:', e)
+  }
+}
+
+export async function saveDraft(
+  draft: Partial<ManifestationDraft>
+): Promise<string> {
+  // Ensure migration happens first
+  await migrateFromLocalStorage()
+
   const now = new Date().toISOString()
 
   const draftData: ManifestationDraft = {
@@ -16,64 +65,39 @@ export function saveDraft(draft: Partial<ManifestationDraft>): string {
     status: 'draft',
   }
 
-  const existingIndex = drafts.findIndex(d => d.id === draftData.id)
-  if (existingIndex >= 0) {
-    drafts[existingIndex] = draftData
-  } else {
-    drafts.push(draftData)
-  }
-
-  localStorage.setItem(STORAGE_KEYS.drafts, JSON.stringify(drafts))
-  return draftData.id
+  return manifestationRepo.saveDraft(draftData)
 }
 
-export function getDrafts(): ManifestationDraft[] {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEYS.drafts)
-    return stored ? JSON.parse(stored) : []
-  } catch {
-    return []
-  }
+export async function getDrafts(): Promise<ManifestationDraft[]> {
+  // Ensure migration happens first
+  await migrateFromLocalStorage()
+
+  return manifestationRepo.getDrafts()
 }
 
-export function getDraft(id: string): ManifestationDraft | null {
-  const drafts = getDrafts()
-  return drafts.find(d => d.id === id) || null
+export async function getDraft(id: string): Promise<ManifestationDraft | null> {
+  // Ensure migration happens first
+  await migrateFromLocalStorage()
+
+  return manifestationRepo.getDraft(id)
 }
 
-export function deleteDraft(id: string): void {
-  const drafts = getDrafts()
-  const filtered = drafts.filter(d => d.id !== id)
-  localStorage.setItem(STORAGE_KEYS.drafts, JSON.stringify(filtered))
+export async function deleteDraft(id: string): Promise<void> {
+  return manifestationRepo.deleteDraft(id)
 }
 
-export function saveSubmitted(
+export async function saveSubmitted(
   draft: ManifestationDraft,
   protocol: string
-): void {
-  const submitted = getSubmitted()
-
-  const submittedData: ManifestationDraft = {
-    ...draft,
-    status: 'submitted',
-    protocol,
-    updatedAt: new Date().toISOString(),
-  }
-
-  submitted.push(submittedData)
-  localStorage.setItem(STORAGE_KEYS.submitted, JSON.stringify(submitted))
-
-  // Remove from drafts if exists
-  deleteDraft(draft.id)
+): Promise<void> {
+  return manifestationRepo.saveSubmitted(draft, protocol)
 }
 
-export function getSubmitted(): ManifestationDraft[] {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEYS.submitted)
-    return stored ? JSON.parse(stored) : []
-  } catch {
-    return []
-  }
+export async function getSubmitted(): Promise<ManifestationDraft[]> {
+  // Ensure migration happens first
+  await migrateFromLocalStorage()
+
+  return manifestationRepo.getSubmitted()
 }
 
 export function getCurrentDraft(): Partial<ManifestationDraft> {
@@ -105,6 +129,9 @@ export function clearCurrentDraft(): void {
 }
 
 export function loadDraft(draft: ManifestationDraft): void {
+  // Save current draft ID so useDraftPersistence knows which draft to update
+  localStorage.setItem(STORAGE_KEYS.currentDraftId, draft.id)
+
   if (draft.type) {
     localStorage.setItem(STORAGE_KEYS.type, draft.type)
   }

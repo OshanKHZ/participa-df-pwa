@@ -27,7 +27,7 @@ export function MobileHeader({
         isAuthenticated={isAuthenticated}
         userName={userName}
       />
-      <header className="bg-primary text-white sticky top-0 z-header">
+      <header className="lg:hidden bg-primary text-white sticky top-0 z-header">
         <div className="px-4 py-3">
           <div className="flex items-center gap-3">
             <button

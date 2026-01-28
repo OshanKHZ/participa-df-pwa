@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import {
   RiAlarmWarningLine,
@@ -18,6 +18,7 @@ import { NavigationFooter } from '@/features/manifestation/components/Navigation
 import { ExitConfirmModal } from '@/shared/components/ExitConfirmModal'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
 import { Button } from '@/shared/components/Button'
+import { Stepper, getDesktopSteps } from '@/shared/components/Stepper'
 import {
   Select,
   SelectContent,
@@ -82,13 +83,6 @@ export default function ManifestationTypePage() {
   const { navigateToStep } = useStepNavigation()
   const [selectedType, setSelectedType] = useState<string | null>(null)
   const [showExitModal, setShowExitModal] = useState(false)
-
-  useEffect(() => {
-    const saved = localStorage.getItem('manifestation_type')
-    if (saved) {
-      setSelectedType(saved)
-    }
-  }, [])
 
   const handleSelectType = (typeId: string) => {
     const typeData =
@@ -214,7 +208,6 @@ export default function ManifestationTypePage() {
           onNext={handleNext}
           onNavigateToStep={navigateToStep}
           nextDisabled={!selectedType}
-          showAnonymousInfo={false}
           steps={getStepProgress(STEPS.TYPE)}
         />
       </div>
@@ -224,40 +217,7 @@ export default function ManifestationTypePage() {
         <main className="lg:max-w-2xl lg:mx-auto lg:px-8 lg:py-12">
           {/* Progress Steps */}
           <div className="mb-10">
-            <div className="flex items-center justify-between">
-              {[
-                { num: 1, label: 'Tipo', current: true },
-                { num: 2, label: 'Assunto', current: false },
-                { num: 3, label: 'Canal', current: false },
-                { num: 4, label: 'Anonimato', current: false },
-                { num: 5, label: 'Confirmação', current: false },
-              ].map((step, index) => (
-                <div
-                  key={step.num}
-                  className="flex flex-col items-center flex-1"
-                >
-                  <span
-                    className={`text-xs font-medium mb-2 ${
-                      step.current ? 'text-foreground' : 'text-muted-foreground'
-                    }`}
-                  >
-                    {step.label}
-                  </span>
-                  <div
-                    className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold border-2 ${
-                      step.current
-                        ? 'bg-secondary border-secondary text-white'
-                        : 'bg-card border-border text-muted-foreground'
-                    }`}
-                  >
-                    {step.num}
-                  </div>
-                  {index < 4 && (
-                    <div className="flex-1 h-0.5 bg-border -mt-5 mx-2 self-start translate-x-1/2" />
-                  )}
-                </div>
-              ))}
-            </div>
+            <Stepper steps={getDesktopSteps(STEPS.TYPE)} />
           </div>
 
           {/* Title */}

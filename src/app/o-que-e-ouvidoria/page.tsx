@@ -20,13 +20,16 @@ const channels = [
   {
     id: '162',
     title: 'Central 162',
-    description: 'Seg a sex: 7h às 21h. Fins de semana e feriados: 8h às 18h',
+    description:
+      'Seg a Sex das 8h às 20h\nFins de semana e feriados das 9h às 14h',
     icon: RiPhoneLine,
   },
   {
     id: 'presencial',
     title: 'Presencial',
-    description: 'Nos órgãos do GDF. Confira horários e agendamento.',
+    description: 'Nos órgãos do GDF.',
+    linkText: 'Confira horários e endereços',
+    href: 'https://ouvidoria.df.gov.br/texto-endereco-das-ouvidorias/',
     icon: RiCustomerService2Line,
   },
 ]
@@ -59,9 +62,19 @@ export default function OQueEOuvidoriaPage() {
             <div className="space-y-3">
               {channels.map(channel => {
                 const Icon = channel.icon
+                const Wrapper = channel.href ? 'a' : 'div'
+                const wrapperProps = channel.href
+                  ? {
+                      href: channel.href,
+                      target: '_blank',
+                      rel: 'noopener noreferrer',
+                    }
+                  : {}
+
                 return (
-                  <div
+                  <Wrapper
                     key={channel.id}
+                    {...wrapperProps}
                     className="flex items-center gap-3 p-3.5 bg-card border border-border rounded-lg"
                   >
                     <Icon className="size-5 text-secondary flex-shrink-0" />
@@ -69,11 +82,20 @@ export default function OQueEOuvidoriaPage() {
                       <h4 className="text-sm font-medium text-foreground mb-0.5">
                         {channel.title}
                       </h4>
-                      <p className="text-xs text-muted-foreground">
-                        {channel.description}
-                      </p>
+                      {channel.href ? (
+                        <p className="text-xs text-muted-foreground">
+                          {channel.description}{' '}
+                          <span className="text-secondary underline">
+                            {channel.linkText}
+                          </span>
+                        </p>
+                      ) : (
+                        <p className="text-xs text-muted-foreground whitespace-pre-line">
+                          {channel.description}
+                        </p>
+                      )}
                     </div>
-                  </div>
+                  </Wrapper>
                 )
               })}
             </div>
@@ -92,11 +114,11 @@ export default function OQueEOuvidoriaPage() {
           </section>
 
           {/* CTA Section */}
-          <section className="bg-secondary/10 border border-secondary/20 rounded-lg p-4">
-            <p className="text-sm text-foreground mb-2">Tem alguma dúvida?</p>
+          <section className="bg-primary rounded-md p-4">
+            <p className="text-sm text-white mb-2">Tem alguma dúvida?</p>
             <Link
               href="/ajuda"
-              className="inline-flex items-center gap-2 text-secondary font-medium text-sm hover:underline"
+              className="inline-flex items-center gap-2 text-white font-medium text-sm underline"
             >
               Acessar Perguntas Frequentes
               <RiArrowRightSLine className="size-4" />
