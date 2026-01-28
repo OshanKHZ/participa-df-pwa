@@ -98,9 +98,9 @@ export default function PersonalDataPage() {
         {/* Main Content */}
         <main id="main-content" className="px-4 py-6">
           <div className="mb-6">
-            <h2 className="text-xl font-bold text-foreground">
+            <h1 className="text-xl font-bold text-foreground">
               Identificação (opcional)
-            </h2>
+            </h1>
             <p className="text-sm text-muted-foreground">
               Você pode se identificar ou manter o anonimato
             </p>

@@ -144,9 +144,9 @@ export default function ManifestationTypePage() {
         <main className="px-4 py-6">
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-2">
-              <h2 className="text-xl font-bold text-foreground">
+              <h1 className="text-xl font-bold text-foreground">
                 Qual tipo de manifestação?
-              </h2>
+              </h1>
               <button
                 onClick={() =>
                   speak(

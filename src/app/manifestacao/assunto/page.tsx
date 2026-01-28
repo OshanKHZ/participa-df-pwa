@@ -405,7 +405,7 @@ export default function AssuntoPage() {
         {/* Main Content */}
         <main className="px-4 py-6">
           <div className="mb-6">
-            <h2 className="text-xl font-bold text-foreground mb-2">
+            <h1 className="text-xl font-bold text-foreground mb-2">
               Qual o assunto da sua manifestação?{' '}
               <button
                 onClick={() =>
@@ -418,7 +418,7 @@ export default function AssuntoPage() {
               >
                 <RiVolumeUpLine className="size-3 text-white" />
               </button>
-            </h2>
+            </h1>
             <p className="text-sm text-muted-foreground">
               Selecione o assunto que mais se aproxima da sua manifestação
             </p>
