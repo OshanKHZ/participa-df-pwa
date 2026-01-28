@@ -11,6 +11,7 @@ import {
 import { create, insertMultiple, search, type AnyOrama } from '@orama/orama'
 import { AccessibleHeader } from '@/features/manifestation/components/AccessibleHeader'
 import { NavigationFooter } from '@/features/manifestation/components/NavigationFooter'
+import { FormSidebar } from '@/features/manifestation/components/FormSidebar'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
 import { Button } from '@/shared/components/Button'
 import { Stepper, getDesktopSteps } from '@/shared/components/Stepper'
@@ -404,7 +405,7 @@ export default function AssuntoPage() {
         {/* Main Content */}
         <main className="px-4 py-6">
           <div className="mb-6">
-            <h2 className="text-xl font-bold text-foreground mb-2">
+            <h1 className="text-xl font-bold text-foreground mb-2">
               Qual o assunto da sua manifestação?{' '}
               <button
                 onClick={() =>
@@ -417,7 +418,7 @@ export default function AssuntoPage() {
               >
                 <RiVolumeUpLine className="size-3 text-white" />
               </button>
-            </h2>
+            </h1>
             <p className="text-sm text-muted-foreground">
               Selecione o assunto que mais se aproxima da sua manifestação
             </p>
@@ -432,7 +433,7 @@ export default function AssuntoPage() {
                 value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
                 placeholder="Busca inteligente de assuntos..."
-                className="w-full pl-10 pr-10 py-3 border-2 border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary focus:border-secondary"
+                className="w-full pl-10 pr-10 py-3 border-2 border-border rounded-lg btn-focus focus:border-secondary"
                 aria-label="Buscar assunto"
               />
               {isSearching ? (
@@ -521,7 +522,16 @@ export default function AssuntoPage() {
 
       {/* Desktop Container */}
       <div className="hidden lg:block min-h-screen bg-background">
-        <main className="lg:max-w-2xl lg:mx-auto lg:px-8 lg:py-12">
+        <div className="grid grid-cols-[1fr_600px_1fr] gap-12 py-12 px-8">
+          {/* Coluna Esquerda - Sidebar */}
+          <div className="flex justify-end">
+            <FormSidebar
+              helpText="Busque e selecione o assunto que melhor descreve sua manifestação. Isso ajuda a categorizar e direcionar corretamente sua solicitação."
+            />
+          </div>
+
+          {/* Coluna Central - Main Content (sempre centralizado) */}
+          <main className="w-full">
           {/* Progress Steps */}
           <div className="mb-10">
             <Stepper steps={getDesktopSteps(STEPS.SUBJECT)} />
@@ -557,7 +567,7 @@ export default function AssuntoPage() {
                 }}
                 onFocus={() => setDropdownOpen(true)}
                 placeholder="Digite para buscar assuntos..."
-                className="w-full pl-10 pr-10 py-3 border-2 border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary focus:border-secondary"
+                className="w-full pl-10 pr-10 py-3 border-2 border-border rounded-lg btn-focus focus:border-secondary"
                 aria-label="Buscar assunto"
               />
               {desktopSearchTerm && (
@@ -630,7 +640,11 @@ export default function AssuntoPage() {
               <RiArrowRightLine className="size-5" />
             </Button>
           </div>
-        </main>
+          </main>
+
+          {/* Coluna Direita - Vazia (para manter centralização) */}
+          <div />
+        </div>
       </div>
     </>
   )

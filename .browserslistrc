@@ -1,0 +1,17 @@
+# Modern browsers - reduces polyfill size
+# Supports ES2022+ features like Array.prototype.at, Array.prototype.flat, Object.hasOwn
+defaults and supports es6-module
+# Targets browsers with > 0.5% market share and not dead
+> 0.5%
+last 2 versions
+not dead
+# Firefox ESR
+Firefox ESR
+# Specific browser versions
+Chrome >= 114
+Edge >= 114
+Safari >= 17
+Firefox >= 114
+iOS >= 17
+# No IE11 support
+not IE 11

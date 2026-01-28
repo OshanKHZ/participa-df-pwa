@@ -18,18 +18,18 @@
 
   /* Muted */
   --color-muted: #f3f4f6;
-  --color-muted-foreground: #6b7280;
+  --color-muted-foreground: #404040;
 
   /* Accent */
   --color-accent: #e8eef7;
-  --color-accent-foreground: #374151;
+  --color-accent-foreground: #1e293b;
 
   /* Destructive */
-  --color-destructive: #ef4444;
+  --color-destructive: #dc2626;
   --color-destructive-foreground: #ffffff;
 
   /* Success */
-  --color-success: #549250;
+  --color-success: #3d6b39;
   --color-success-foreground: #ffffff;
 
   /* Progress */
@@ -45,9 +45,13 @@
   --color-type-informacao: #6366f1;
 
   /* Border/Input */
-  --color-border: #e5e7eb;
-  --color-input: #e5e7eb;
+  --color-border: #d1d5db;
+  --color-input: #d1d5db;
   --color-ring: #6f70d3;
+
+  /* Mobile/Header variants */
+  --color-primary-mobile: #28477d;
+  --color-manifestation-cta: #3a5a8f;
 
   /* Radius */
   --radius-lg: 0.5rem;
@@ -109,6 +113,11 @@ body {
     @apply translate-y-0 shadow-md;
   }
 
+  /* Focus indicator for accessibility */
+  .btn-focus {
+    @apply focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2;
+  }
+
   /* Card borders - Apple style */
   .card-border {
     border-width: 1.5px;
@@ -117,7 +126,7 @@ body {
 
   /* Mobile header - lighter blue */
   .bg-primary-mobile {
-    background-color: #28477d;
+    background-color: var(--color-primary-mobile);
   }
 
   /* Manifestation type colors */
@@ -147,7 +156,7 @@ body {
 
   /* Manifestation CTA button */
   .bg-manifestation-cta {
-    background-color: #3a5a8f;
+    background-color: var(--color-manifestation-cta);
   }
 
   /* Success colors */
@@ -174,7 +183,7 @@ body {
 
   /* Header subheader lighter color */
   .bg-primary-light {
-    background-color: #28477d;
+    background-color: var(--color-primary-mobile);
   }
 
   /* Spacing utilities - custom sizes */
@@ -295,5 +304,20 @@ body {
       outline: 3px solid #ffffff;
       outline-offset: 2px;
     }
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .btn-hover:hover,
+  .hover\:scale-105:hover,
+  .hover\:-translate-y-0\.5:hover {
+    transform: none !important;
+  }
+
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

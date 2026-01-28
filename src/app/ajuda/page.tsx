@@ -156,7 +156,7 @@ export default function AjudaPage() {
                     placeholder="Buscar perguntas..."
                     value={searchQuery}
                     onChange={e => setSearchQuery(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2.5 bg-card border-2 border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-secondary focus:border-secondary"
+                    className="w-full pl-10 pr-4 py-2.5 bg-card border-2 border-border rounded-lg text-sm btn-focus focus:border-secondary"
                   />
                 </div>
               </div>

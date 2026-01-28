@@ -15,6 +15,7 @@ import {
 } from 'react-icons/ri'
 import { AccessibleHeader } from '@/features/manifestation/components/AccessibleHeader'
 import { NavigationFooter } from '@/features/manifestation/components/NavigationFooter'
+import { FormSidebar } from '@/features/manifestation/components/FormSidebar'
 import { ExitConfirmModal } from '@/shared/components/ExitConfirmModal'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
 import { Button } from '@/shared/components/Button'
@@ -143,16 +144,16 @@ export default function ManifestationTypePage() {
         <main className="px-4 py-6">
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-2">
-              <h2 className="text-xl font-bold text-foreground">
+              <h1 className="text-xl font-bold text-foreground">
                 Qual tipo de manifestação?
-              </h2>
+              </h1>
               <button
                 onClick={() =>
                   speak(
                     `Qual tipo de manifestação? ${AUDIO_TEXTS.instructions.typeSelection}`
                   )
                 }
-                className="size-5 rounded-full bg-secondary hover:bg-secondary-hover flex items-center justify-center transition-colors flex-shrink-0"
+                className="size-5 rounded-full bg-secondary hover:bg-secondary-hover flex items-center justify-center transition-colors flex-shrink-0 btn-focus"
                 aria-label="Ouvir instruções"
               >
                 <RiVolumeUpLine className="size-3 text-white" />
@@ -172,7 +173,7 @@ export default function ManifestationTypePage() {
                 <button
                   key={type.id}
                   onClick={() => handleSelectType(type.id)}
-                  className={`w-full bg-card rounded-lg p-3 text-left flex items-center gap-3 hover:bg-accent transition-all ${
+                  className={`w-full bg-card rounded-lg p-3 text-left flex items-center gap-3 hover:bg-accent transition-all btn-focus ${
                     isSelected ? 'border-2 border-success' : 'card-border'
                   }`}
                 >
@@ -209,12 +210,23 @@ export default function ManifestationTypePage() {
           onNavigateToStep={navigateToStep}
           nextDisabled={!selectedType}
           steps={getStepProgress(STEPS.TYPE)}
+          backLabel="Cancelar"
+          backVariant="destructive"
         />
       </div>
 
       {/* Desktop Container */}
       <div className="hidden lg:block min-h-screen bg-background">
-        <main className="lg:max-w-2xl lg:mx-auto lg:px-8 lg:py-12">
+        <div className="grid grid-cols-[1fr_600px_1fr] gap-12 py-12 px-8">
+          {/* Coluna Esquerda - Sidebar */}
+          <div className="flex justify-end">
+            <FormSidebar
+              helpText="Selecione o tipo de manifestação que melhor descreve sua solicitação. Esta informação ajuda a direcionar seu caso para o setor responsável."
+            />
+          </div>
+
+          {/* Coluna Central - Main Content (sempre centralizado) */}
+          <main className="w-full">
           {/* Progress Steps */}
           <div className="mb-10">
             <Stepper steps={getDesktopSteps(STEPS.TYPE)} />
@@ -259,7 +271,7 @@ export default function ManifestationTypePage() {
 
           {/* Desktop Navigation */}
           <div className="flex items-center justify-between pt-6 border-t border-border">
-            <Button variant="link" onClick={handleBack}>
+            <Button variant="destructive" onClick={handleBack}>
               Cancelar
             </Button>
             <Button onClick={handleNext} disabled={!selectedType}>
@@ -267,7 +279,11 @@ export default function ManifestationTypePage() {
               <RiArrowRightLine className="size-5" />
             </Button>
           </div>
-        </main>
+          </main>
+
+          {/* Coluna Direita - Vazia (para manter centralização) */}
+          <div />
+        </div>
       </div>
 
       {/* Exit Confirmation Modal */}

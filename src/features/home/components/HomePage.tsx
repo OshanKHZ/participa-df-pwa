@@ -24,6 +24,23 @@ interface HomePageProps {
   userName?: string
 }
 
+const formatTimeAgo = (date: Date): string => {
+  const now = new Date()
+  const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000)
+
+  if (diffInSeconds < 60) return 'agora'
+  if (diffInSeconds < 3600) {
+    const minutes = Math.floor(diffInSeconds / 60)
+    return `${minutes}m`
+  }
+  if (diffInSeconds < 86400) {
+    const hours = Math.floor(diffInSeconds / 3600)
+    return `${hours}h`
+  }
+  const days = Math.floor(diffInSeconds / 86400)
+  return `${days}d`
+}
+
 export function HomePage({ isAuthenticated, userName }: HomePageProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
@@ -110,27 +127,148 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
       />
 
       {/* Main Content */}
-      <main className="pb-28 lg:pb-8 min-h-screen bg-muted lg:max-w-6xl lg:mx-auto">
-        {/* Main Action Card Section - White background */}
-        <div className="bg-card px-4 py-6 lg:px-8 lg:py-10">
-          {/* Mobile: centered, Desktop: two columns */}
-          <div className="flex flex-col lg:flex-row lg:items-center lg:gap-12 max-w-5xl mx-auto">
-            {/* Image - hidden on desktop */}
-            <div className="lg:hidden flex flex-col items-center text-center mb-6">
+      <main
+        id="main-content"
+        className="pb-28 lg:pb-8 min-h-screen bg-muted"
+      >
+        {/* Desktop Layout: Sidebar + Blog Banner */}
+        <div className="hidden lg:block">
+          <div className="max-w-7xl mx-auto px-8 py-12">
+            <div className="grid grid-cols-[400px_1fr] gap-8">
+              {/* Left Sidebar - Menu */}
+              <aside className="bg-primary-light shadow-lg overflow-hidden h-fit sticky top-6">
+                {/* Search Bar */}
+                <div className="px-4 pt-4 pb-3">
+                  <div className="relative">
+                    <RiSearchLine className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-white/50 pointer-events-none" />
+                    <input
+                      type="text"
+                      placeholder="Buscar serviços..."
+                      className="w-full pl-9 pr-3 py-2 bg-white/10 border-0 focus:bg-white/20 rounded text-white placeholder:text-white/50 text-sm transition-colors"
+                      aria-label="Buscar serviços"
+                    />
+                  </div>
+                </div>
+
+                {/* Menu Items */}
+                <div className="divide-y divide-white/10">
+                  {/* Nova Manifestação */}
+                  <Link
+                    href="/manifestacao"
+                    className="block px-5 py-3 hover:bg-white/10 transition-colors"
+                  >
+                    <h4 className="text-sm font-medium text-white">Nova Manifestação</h4>
+                  </Link>
+
+                  {/* Consultar Protocolo */}
+                  <Link
+                    href="/historico"
+                    className="block px-5 py-3 hover:bg-white/10 transition-colors"
+                  >
+                    <h4 className="text-sm font-medium text-white">Consultar protocolo</h4>
+                  </Link>
+
+                  {/* Sobre a Ouvidoria */}
+                  <Link
+                    href="/o-que-e-ouvidoria"
+                    className="block px-5 py-3 hover:bg-white/10 transition-colors"
+                  >
+                    <h4 className="text-sm font-medium text-white">Sobre a Ouvidoria</h4>
+                  </Link>
+
+                  {/* Orientações */}
+                  <Link
+                    href="/orientacoes"
+                    className="block px-5 py-3 hover:bg-white/10 transition-colors"
+                  >
+                    <h4 className="text-sm font-medium text-white">Orientações para o registro</h4>
+                  </Link>
+
+                  {/* Perguntas Frequentes */}
+                  <Link
+                    href="/ajuda"
+                    className="block px-5 py-3 hover:bg-white/10 transition-colors"
+                  >
+                    <h4 className="text-sm font-medium text-white">Perguntas frequentes</h4>
+                  </Link>
+
+                  {/* Canais de Atendimento */}
+                  <Link
+                    href="/canais"
+                    className="block px-5 py-3 hover:bg-white/10 transition-colors"
+                  >
+                    <h4 className="text-sm font-medium text-white">Canais de atendimento</h4>
+                  </Link>
+                </div>
+              </aside>
+
+              {/* Right Content - Blog Banner */}
+              <div className="bg-card rounded-lg p-8">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-2xl font-semibold text-foreground">Blog</h2>
+                  <Link
+                    href="/blog"
+                    className="text-sm text-secondary hover:text-secondary-hover font-medium"
+                  >
+                    Ver todos
+                  </Link>
+                </div>
+
+                {/* Blog Grid */}
+                <div className="grid grid-cols-2 gap-6">
+                  {blogPosts.slice(0, 4).map((post) => (
+                    <Link
+                      key={post.id}
+                      href={`/blog/${post.slug}`}
+                      className="group btn-focus rounded-lg"
+                    >
+                      <div className="relative aspect-[16/9] rounded-lg overflow-hidden bg-muted mb-3">
+                        <Image
+                          src={post.image}
+                          alt={post.title}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
+                          sizes="(max-width: 1280px) 300px, 400px"
+                        />
+                      </div>
+                      <p className="text-xs text-muted-foreground mb-1">
+                        {formatTimeAgo(post.publishedAt)}
+                      </p>
+                      <h3 className="text-base font-medium text-foreground line-clamp-2 leading-snug group-hover:text-secondary transition-colors">
+                        {post.title}
+                      </h3>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Layout */}
+        <div className="lg:hidden">
+          {/* Main Action Card Section - White background */}
+          <div className="bg-card px-4 py-6">
+            {/* Mobile: centered */}
+            <div className="flex flex-col">
+            {/* Image */}
+            <div className="flex flex-col items-center text-center mb-6">
               <Image
                 src="/megaphone-woman.png"
                 alt="Registre sua manifestação"
                 width={120}
                 height={120}
                 className="mb-4"
+                priority
+                fetchPriority="high"
               />
 
-              {/* Title - mobile only */}
+              {/* Title */}
               <h1 className="text-lg font-semibold text-foreground mb-2">
                 Registre sua manifestação
               </h1>
 
-              {/* Description - mobile only */}
+              {/* Description */}
               <p className="text-sm text-muted-foreground mb-6">
                 Faça denúncias, elogios, sugestões
                 <br />
@@ -139,46 +277,8 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
               </p>
             </div>
 
-            {/* Desktop: Title and description */}
-            <div className="hidden lg:block flex-1">
-              <div className="flex items-start gap-4 mb-6">
-                <div className="w-12 h-12 bg-secondary/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <RiMegaphoneLine className="size-6 text-secondary" />
-                </div>
-                <div>
-                  <h1 className="text-2xl font-semibold text-foreground mb-2">
-                    Registre sua manifestação
-                  </h1>
-                  <p className="text-muted-foreground">
-                    Faça denúncias, elogios, sugestões ou reclamações de forma
-                    simples e rápida. Sua voz é importante para transformar o
-                    DF.
-                  </p>
-                </div>
-              </div>
-
-              {/* Action Buttons - Desktop */}
-              <div className="flex flex-wrap gap-3">
-                <Link
-                  href="/manifestacao"
-                  className="inline-flex items-center gap-2 bg-secondary hover:bg-secondary-hover text-secondary-foreground font-medium py-3 px-6 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
-                >
-                  <RiAddLine className="size-5" />
-                  Nova Manifestação
-                </Link>
-
-                <Link
-                  href="/historico"
-                  className="inline-flex items-center gap-2 text-secondary hover:text-secondary-hover font-medium py-3 px-4 transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 rounded"
-                >
-                  <RiSearchLine className="size-5" />
-                  Consultar protocolo
-                </Link>
-              </div>
-            </div>
-
             {/* Mobile Buttons */}
-            <div className="lg:hidden w-full space-y-3">
+            <div className="w-full space-y-3">
               <Link
                 href="/manifestacao"
                 className="block w-full bg-secondary hover:bg-secondary-hover text-secondary-foreground font-medium py-3 px-6 rounded-md transition-colors"
@@ -198,21 +298,21 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
               </Link>
             </div>
           </div>
-        </div>
+          </div>
 
-        {/* Gray spacer */}
-        <div className="h-3 bg-muted lg:hidden" />
+          {/* Gray spacer */}
+          <div className="h-3 bg-muted" />
 
-        {/* Blog Carousel - Mobile only */}
-        <BlogCarousel posts={blogPosts} />
+          {/* Blog Carousel - Mobile only */}
+          <BlogCarousel posts={blogPosts} />
 
-        {/* Gray spacer */}
-        <div className="h-3 bg-muted lg:hidden" />
+          {/* Gray spacer */}
+          <div className="h-3 bg-muted" />
 
-        {/* Services List Section - Mobile only, Desktop has sidebar */}
-        <div className="lg:hidden bg-card px-4 py-4">
+          {/* Services List Section - Mobile only */}
+          <section className="bg-card px-4 py-4" aria-label="Serviços">
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-lg font-semibold text-foreground">Serviços</h3>
+            <h2 className="text-lg font-semibold text-foreground">Serviços</h2>
             <Link
               href="/servicos"
               className="text-xs text-secondary font-medium"
@@ -225,7 +325,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
             {/* O que é a Ouvidoria */}
             <Link
               href="/o-que-e-ouvidoria"
-              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-inset"
+              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors btn-focus focus:ring-inset"
             >
               <RiMegaphoneLine className="size-5 text-secondary flex-shrink-0" />
               <span className="flex-1 text-sm font-medium text-foreground">
@@ -237,7 +337,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
             {/* Orientações */}
             <Link
               href="/orientacoes"
-              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-inset"
+              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors btn-focus focus:ring-inset"
             >
               <RiLightbulbLine className="size-5 text-secondary flex-shrink-0" />
               <span className="flex-1 text-sm font-medium text-foreground">
@@ -249,7 +349,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
             {/* Perguntas frequentes */}
             <Link
               href="/ajuda"
-              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-inset"
+              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors btn-focus focus:ring-inset"
             >
               <RiQuestionLine className="size-5 text-secondary flex-shrink-0" />
               <span className="flex-1 text-sm font-medium text-foreground">
@@ -261,7 +361,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
             {/* Canais de atendimento */}
             <Link
               href="/canais"
-              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-inset"
+              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors btn-focus focus:ring-inset"
             >
               <RiCustomerService2Line className="size-5 text-secondary flex-shrink-0" />
               <span className="flex-1 text-sm font-medium text-foreground">
@@ -270,6 +370,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
               <RiArrowRightSLine className="size-5 text-muted-foreground flex-shrink-0" />
             </Link>
           </div>
+          </section>
         </div>
       </main>
 

@@ -2,11 +2,15 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { RiVolumeUpLine } from 'react-icons/ri'
+import { RiArrowRightLine } from 'react-icons/ri'
 import { AccessibleHeader } from '@/features/manifestation/components/AccessibleHeader'
 import { NavigationFooter } from '@/features/manifestation/components/NavigationFooter'
 import { IdentificationSection } from '@/features/manifestation/components/IdentificationSection'
+import { FormSidebar } from '@/features/manifestation/components/FormSidebar'
 import { ConfirmDialog } from '@/shared/components/ConfirmDialog'
+import { DesktopHeader } from '@/shared/components/DesktopHeader'
+import { Button } from '@/shared/components/Button'
+import { Stepper, getDesktopSteps } from '@/shared/components/Stepper'
 import { getStepProgress } from '@/shared/utils/stepProgress'
 import { useStepNavigation } from '@/shared/hooks/useStepNavigation'
 import { STEPS, COMPLETED_STEPS } from '@/shared/constants/designTokens'
@@ -23,10 +27,10 @@ export default function PersonalDataPage() {
     phone: '',
   })
 
-  const [steps, setSteps] = useState(getStepProgress(STEPS.CONTENT, true))
+  const [steps, setSteps] = useState(getStepProgress(STEPS.DATA, true))
 
   useEffect(() => {
-    setSteps(getStepProgress(STEPS.CONTENT))
+    setSteps(getStepProgress(STEPS.DATA))
   }, []) // Update on mount to check localStorage
 
   useEffect(() => {
@@ -78,81 +82,133 @@ export default function PersonalDataPage() {
     : formData.name.trim() !== '' // Se identificado, precisa do nome
 
   return (
-    <div className="min-h-screen bg-background pb-40">
-      {/* Header */}
-      <AccessibleHeader
-        currentStep={STEPS.CONTENT}
-        totalSteps={STEPS.TOTAL}
-        completedSteps={COMPLETED_STEPS.AT_CONTENT}
-      />
+    <>
+      {/* Desktop Header */}
+      <DesktopHeader />
 
-      {/* Main Content */}
-      <main className="px-4 py-6">
-        <div className="mb-6">
-          <div className="flex items-center gap-2 mb-2">
-            <h2 className="text-xl font-bold text-foreground">
-              Identificação (opcional)
-            </h2>
-            <button
-              type="button"
-              onClick={() => {
-                if (
-                  typeof window !== 'undefined' &&
-                  'speechSynthesis' in window
-                ) {
-                  window.speechSynthesis.cancel()
-                  const utterance = new SpeechSynthesisUtterance(
-                    'Identificação opcional. Você pode se identificar ou manter o anonimato'
-                  )
-                  utterance.lang = 'pt-BR'
-                  window.speechSynthesis.speak(utterance)
-                }
-              }}
-              className="size-5 rounded-full bg-secondary hover:bg-secondary-hover flex items-center justify-center transition-colors flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
-              aria-label="Ouvir instruções"
-            >
-              <RiVolumeUpLine className="size-3 text-white" />
-            </button>
-          </div>
-          <p className="text-sm text-muted-foreground">
-            Você pode se identificar ou manter o anonimato
-          </p>
-        </div>
-
-        {/* Identification Section */}
-        <IdentificationSection
-          isAnonymous={isAnonymous}
-          onAnonymousChange={setIsAnonymous}
-          onFormDataChange={setFormData}
-          onAnonymousConsentChange={setAnonymousConsent}
+      {/* Mobile Container */}
+      <div className="lg:hidden min-h-screen bg-background pb-40">
+        {/* Header */}
+        <AccessibleHeader
+          currentStep={STEPS.DATA}
+          totalSteps={STEPS.TOTAL}
+          completedSteps={COMPLETED_STEPS.AT_DATA}
         />
 
-        {/* Info Box */}
-        <div className="mt-6">
-          <p className="text-xs text-muted-foreground">
-            *Base legal Art.14 da{' '}
-            <a
-              href="http://www.sinj.df.gov.br/sinj/Norma/c87d4625386745569ef03028e6c79397/Instru_o_Normativa_1_05_05_2017.html"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline hover:text-foreground"
-            >
-              Instrução Normativa CGDF Nº 01 de 05/05/2017
-            </a>
-          </p>
-        </div>
-      </main>
+        {/* Main Content */}
+        <main id="main-content" className="px-4 py-6">
+          <div className="mb-6">
+            <h1 className="text-xl font-bold text-foreground">
+              Identificação (opcional)
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              Você pode se identificar ou manter o anonimato
+            </p>
+          </div>
 
-      {/* Footer */}
-      <NavigationFooter
-        currentStep={STEPS.CONTENT}
-        totalSteps={STEPS.TOTAL}
-        onBack={handleBack}
-        onNext={handleNext}
-        onNavigateToStep={navigateToStep}
-        nextDisabled={!canProceed}
-        steps={steps}
-      />
+          {/* Identification Section */}
+          <IdentificationSection
+            isAnonymous={isAnonymous}
+            onAnonymousChange={setIsAnonymous}
+            onFormDataChange={setFormData}
+            onAnonymousConsentChange={setAnonymousConsent}
+          />
+
+          {/* Info Box */}
+          <div className="mt-6">
+            <p className="text-xs text-muted-foreground">
+              *Base legal Art.14 da{' '}
+              <a
+                href="http://www.sinj.df.gov.br/sinj/Norma/c87d4625386745569ef03028e6c79397/Instru_o_Normativa_1_05_05_2017.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-foreground"
+              >
+                Instrução Normativa CGDF Nº 01 de 05/05/2017
+              </a>
+            </p>
+          </div>
+        </main>
+
+        {/* Footer */}
+        <NavigationFooter
+          currentStep={STEPS.DATA}
+          totalSteps={STEPS.TOTAL}
+          onBack={handleBack}
+          onNext={handleNext}
+          onNavigateToStep={navigateToStep}
+          nextDisabled={!canProceed}
+          steps={steps}
+        />
+      </div>
+
+      {/* Desktop Container */}
+      <div className="hidden lg:block min-h-screen bg-background">
+        <div className="grid grid-cols-[1fr_600px_1fr] gap-12 py-12 px-8">
+          {/* Coluna Esquerda - Sidebar */}
+          <div className="flex justify-end">
+            <FormSidebar
+              helpText="Você pode se identificar ou manter sua manifestação anônima. A identificação ajuda no contato para informações adicionais sobre sua solicitação."
+            />
+          </div>
+
+          {/* Coluna Central - Main Content (sempre centralizado) */}
+          <main id="main-content" className="w-full">
+          {/* Progress Steps */}
+          <div className="mb-10">
+            <Stepper steps={getDesktopSteps(STEPS.DATA)} />
+          </div>
+
+          {/* Title */}
+          <div className="mb-8">
+            <h1 className="text-xl font-semibold text-foreground mb-2">
+              Nova Manifestação
+            </h1>
+            <p className="text-muted-foreground">
+              Identificação opcional - você pode se identificar ou manter o
+              anonimato.
+            </p>
+          </div>
+
+          {/* Identification Section */}
+          <IdentificationSection
+            isAnonymous={isAnonymous}
+            onAnonymousChange={setIsAnonymous}
+            onFormDataChange={setFormData}
+            onAnonymousConsentChange={setAnonymousConsent}
+          />
+
+          {/* Info Box */}
+          <div className="mt-6">
+            <p className="text-xs text-muted-foreground">
+              *Base legal Art.14 da{' '}
+              <a
+                href="http://www.sinj.df.gov.br/sinj/Norma/c87d4625386745569ef03028e6c79397/Instru_o_Normativa_1_05_05_2017.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-foreground"
+              >
+                Instrução Normativa CGDF Nº 01 de 05/05/2017
+              </a>
+            </p>
+          </div>
+
+          {/* Desktop Navigation */}
+          <div className="flex items-center justify-between pt-6 border-t border-border mt-8">
+            <Button variant="link" onClick={handleBack}>
+              Voltar
+            </Button>
+            <Button onClick={handleNext} disabled={!canProceed}>
+              {isAnonymous ? 'Continuar' : 'Avançar'}
+              <RiArrowRightLine className="size-5" />
+            </Button>
+          </div>
+          </main>
+
+          {/* Coluna Direita - Vazia (para manter centralização) */}
+          <div />
+        </div>
+      </div>
 
       {/* Anonymous Confirmation Dialog */}
       <ConfirmDialog
@@ -181,6 +237,6 @@ export default function PersonalDataPage() {
         confirmText="Continuar Anônimo"
         cancelText="Voltar"
       />
-    </div>
+    </>
   )
 }

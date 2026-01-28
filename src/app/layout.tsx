@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { Montserrat } from 'next/font/google'
 import './globals.css'
 import { FontSizeProvider } from '@/shared/contexts/FontSizeContext'
-import { PageTransition } from '@/shared/components/PageTransition'
 import { AccessibilityMenu } from '@/shared/components/AccessibilityMenu'
 import { ServiceWorkerRegister } from '@/shared/components/ServiceWorkerRegister'
 import { SessionProvider } from '@/shared/providers/SessionProvider'
@@ -22,8 +21,6 @@ export const metadata: Metadata = {
   viewport: {
     width: 'device-width',
     initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
   },
   appleWebApp: {
     capable: true,
@@ -56,10 +53,16 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <body className={`${montserrat.variable} antialiased font-sans`}>
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md"
+        >
+          Pular para conteúdo principal
+        </a>
         <ServiceWorkerRegister />
         <SessionProvider>
           <FontSizeProvider>
-            <PageTransition>{children}</PageTransition>
+            {children}
             <AccessibilityMenu />
             <Toaster position="top-center" richColors />
           </FontSizeProvider>
