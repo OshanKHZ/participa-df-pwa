@@ -140,13 +140,22 @@ export default function PersonalDataPage() {
         {isAnonymous && (
           <div className="bg-accent rounded-lg p-4 mb-6">
             <p className="text-xs text-accent-foreground leading-relaxed">
-              Solicito que minha identidade seja preservada neste pedido, em atendimento ao princípio constitucional da impessoalidade e, ainda, conforme o disposto no art. 11, § 7º da Lei Distrital nº 6.519/2020.
+              Solicito que minha identidade seja preservada neste pedido, em
+              atendimento ao princípio constitucional da impessoalidade e,
+              ainda, conforme o disposto no art. 11, § 7º da Lei Distrital nº
+              6.519/2020.
             </p>
             <p className="text-xs text-accent-foreground leading-relaxed mt-2">
-              Estou ciente de que, com a identidade preservada, somente a Controladoria-Geral do Distrito Federal terá acesso aos meus dados pessoais, ressalvadas as exceções previstas nos parágrafos 3º e 4º, do art. 33 da Lei Distrital nº 4.990/2012.
+              Estou ciente de que, com a identidade preservada, somente a
+              Controladoria-Geral do Distrito Federal terá acesso aos meus dados
+              pessoais, ressalvadas as exceções previstas nos parágrafos 3º e
+              4º, do art. 33 da Lei Distrital nº 4.990/2012.
             </p>
             <p className="text-xs text-accent-foreground leading-relaxed mt-2">
-              Estou ciente, também, de que o órgão destinatário não poderá solicitar esclarecimentos adicionais, assim como não poderá atender a pedidos de informação pessoal, uma vez que não terá como confirmar minha identidade.
+              Estou ciente, também, de que o órgão destinatário não poderá
+              solicitar esclarecimentos adicionais, assim como não poderá
+              atender a pedidos de informação pessoal, uma vez que não terá como
+              confirmar minha identidade.
             </p>
           </div>
         )}

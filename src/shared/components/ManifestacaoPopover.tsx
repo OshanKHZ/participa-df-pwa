@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from 'react'
 import Link from 'next/link'
-import { RiAddLine } from 'react-icons/ri'
 
 interface ManifestacaoPopoverProps {
   isOpen: boolean

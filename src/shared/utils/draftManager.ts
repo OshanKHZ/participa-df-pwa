@@ -46,7 +46,9 @@ async function migrateFromLocalStorage(): Promise<void> {
   }
 }
 
-export async function saveDraft(draft: Partial<ManifestationDraft>): Promise<string> {
+export async function saveDraft(
+  draft: Partial<ManifestationDraft>
+): Promise<string> {
   // Ensure migration happens first
   await migrateFromLocalStorage()
 

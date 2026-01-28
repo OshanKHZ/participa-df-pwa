@@ -20,7 +20,8 @@ const channels = [
   {
     id: '162',
     title: 'Central 162',
-    description: 'Seg a Sex das 8h às 20h\nFins de semana e feriados das 9h às 14h',
+    description:
+      'Seg a Sex das 8h às 20h\nFins de semana e feriados das 9h às 14h',
     icon: RiPhoneLine,
   },
   {
@@ -63,7 +64,11 @@ export default function OQueEOuvidoriaPage() {
                 const Icon = channel.icon
                 const Wrapper = channel.href ? 'a' : 'div'
                 const wrapperProps = channel.href
-                  ? { href: channel.href, target: '_blank', rel: 'noopener noreferrer' }
+                  ? {
+                      href: channel.href,
+                      target: '_blank',
+                      rel: 'noopener noreferrer',
+                    }
                   : {}
 
                 return (

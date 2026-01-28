@@ -1,6 +1,7 @@
 'use client'
 
-import React, { Children, ReactNode } from 'react'
+import type { ReactNode } from 'react'
+import React, { Children } from 'react'
 
 export interface StepperStep {
   number: number
@@ -153,7 +154,9 @@ export function StepperWrapper({
   return (
     <div className={className}>
       {/* Step Indicators */}
-      <div className={`${stepContainerClassName} flex w-full items-center justify-center p-8`}>
+      <div
+        className={`${stepContainerClassName} flex w-full items-center justify-center p-8`}
+      >
         {stepsArray.map((_, index) => {
           const stepNumber = index + 1
           const isNotLastStep = index < totalSteps - 1
@@ -204,7 +207,9 @@ export function StepperWrapper({
 
       {/* Footer Navigation */}
       <div className={`${footerClassName} px-8 pb-8`}>
-        <div className={`mt-10 flex ${currentStep !== 1 ? 'justify-between' : 'justify-end'}`}>
+        <div
+          className={`mt-10 flex ${currentStep !== 1 ? 'justify-between' : 'justify-end'}`}
+        >
           {currentStep !== 1 && (
             <button
               onClick={handleBack}

@@ -17,12 +17,18 @@ export const ServiceCard = forwardRef<HTMLButtonElement, ServiceCardProps>(
         disabled={disabled}
         className="group flex items-center gap-3 p-4 text-left transition-all duration-200 rounded-lg border border-border bg-card hover:bg-accent hover:border-secondary/50 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-inset disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        <Icon className="text-secondary flex-shrink-0 size-6" aria-hidden="true" />
+        <Icon
+          className="text-secondary flex-shrink-0 size-6"
+          aria-hidden="true"
+        />
         <span className="flex-1 font-medium text-foreground text-sm">
           {title}
         </span>
         {!disabled && (
-          <RiArrowRightSLine className="text-muted-foreground flex-shrink-0 size-5" aria-hidden="true" />
+          <RiArrowRightSLine
+            className="text-muted-foreground flex-shrink-0 size-5"
+            aria-hidden="true"
+          />
         )}
       </button>
     )
