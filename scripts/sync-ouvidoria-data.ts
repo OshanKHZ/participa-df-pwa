@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Script to sync Ouvidoria data from Participa-DF APIs
  * Run daily via cron to keep local data updated

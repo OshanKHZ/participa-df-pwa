@@ -184,9 +184,7 @@ export class ManifestationRepository {
    */
   async getDrafts(): Promise<ManifestationDraft[]> {
     const serializable = await indexedDB.getAll<SerializableDraft>('drafts')
-    return Promise.all(
-      serializable.map(s => fromSerializable(s))
-    )
+    return Promise.all(serializable.map(s => fromSerializable(s)))
   }
 
   /**
@@ -228,9 +226,7 @@ export class ManifestationRepository {
    */
   async getSubmitted(): Promise<ManifestationDraft[]> {
     const serializable = await indexedDB.getAll<SerializableDraft>('submitted')
-    return Promise.all(
-      serializable.map(s => fromSerializable(s))
-    )
+    return Promise.all(serializable.map(s => fromSerializable(s)))
   }
 
   /**

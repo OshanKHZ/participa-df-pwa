@@ -99,12 +99,12 @@ export function useDraftPersistence(options: UseDraftPersistenceOptions = {}) {
       const id = currentDraftId || generateId()
       const isNewDraft = !currentDraftId
 
-      console.log('[useDraftPersistence] saveDraft:', {
+      /* console.log('[useDraftPersistence] saveDraft:', {
         currentDraftId,
         id,
         isNewDraft,
         draftIdState: draftId,
-      })
+      }) */
 
       if (isNewDraft) {
         setDraftId(id)
@@ -126,7 +126,8 @@ export function useDraftPersistence(options: UseDraftPersistenceOptions = {}) {
       await manifestationRepo.saveDraft(draft)
       setError(null)
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Failed to save draft'
+      const message =
+        err instanceof Error ? err.message : 'Failed to save draft'
       setError(message)
       console.error('Draft save error:', err)
     }
@@ -200,7 +201,8 @@ export function useDraftPersistence(options: UseDraftPersistenceOptions = {}) {
         setIsLoading(false)
         return draft
       } catch (err) {
-        const message = err instanceof Error ? err.message : 'Failed to load draft'
+        const message =
+          err instanceof Error ? err.message : 'Failed to load draft'
         setError(message)
         setIsLoading(false)
         return null
@@ -219,22 +221,26 @@ export function useDraftPersistence(options: UseDraftPersistenceOptions = {}) {
   }, [])
 
   // Delete draft from IndexedDB
-  const deleteDraft = useCallback(async (id: string) => {
-    setIsLoading(true)
-    setError(null)
+  const deleteDraft = useCallback(
+    async (id: string) => {
+      setIsLoading(true)
+      setError(null)
 
-    try {
-      await manifestationRepo.deleteDraft(id)
-      if (draftId === id) {
-        clearCurrentDraft()
+      try {
+        await manifestationRepo.deleteDraft(id)
+        if (draftId === id) {
+          clearCurrentDraft()
+        }
+        setIsLoading(false)
+      } catch (err) {
+        const message =
+          err instanceof Error ? err.message : 'Failed to delete draft'
+        setError(message)
+        setIsLoading(false)
       }
-      setIsLoading(false)
-    } catch (err) {
-      const message = err instanceof Error ? err.message : 'Failed to delete draft'
-      setError(message)
-      setIsLoading(false)
-    }
-  }, [draftId, clearCurrentDraft])
+    },
+    [draftId, clearCurrentDraft]
+  )
 
   // Get all drafts
   const getAllDrafts = useCallback(async () => {

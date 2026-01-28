@@ -96,7 +96,9 @@ export default function ReviewPage() {
     // Clear form data
     localStorage.removeItem('manifestation_type')
     localStorage.removeItem('manifestation_channel')
+    localStorage.removeItem('manifestation_channels')
     localStorage.removeItem('manifestation_content')
+    localStorage.removeItem('manifestation_attachments')
     localStorage.removeItem('manifestation_anonymous')
     localStorage.removeItem('manifestation_personal_data')
 

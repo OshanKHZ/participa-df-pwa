@@ -89,9 +89,10 @@ export default function ContentPage() {
   const allAcceptedTypes = Object.values(acceptedFileTypes).join(',')
 
   // Get current draft ID from localStorage (for continuing existing drafts)
-  const currentDraftId = typeof window !== 'undefined'
-    ? localStorage.getItem(STORAGE_KEYS.currentDraftId) || undefined
-    : undefined
+  const currentDraftId =
+    typeof window !== 'undefined'
+      ? localStorage.getItem(STORAGE_KEYS.currentDraftId) || undefined
+      : undefined
 
   // Draft persistence hook
   const { saveField, loadDraft } = useDraftPersistence({
@@ -469,7 +470,10 @@ export default function ContentPage() {
           {/* Texto Section */}
           {selectedChannels.includes('texto') && (
             <div className="bg-card rounded-lg p-3 card-border">
-              <label htmlFor="manifestation-text" className="block text-sm font-medium text-foreground mb-2">
+              <label
+                htmlFor="manifestation-text"
+                className="block text-sm font-medium text-foreground mb-2"
+              >
                 Descrição *
               </label>
               <textarea
@@ -486,14 +490,10 @@ export default function ContentPage() {
               >
                 <span
                   className={
-                    charCount < minChars
-                      ? 'text-destructive'
-                      : 'text-success'
+                    charCount < minChars ? 'text-destructive' : 'text-success'
                   }
                 >
-                  {charCount < minChars
-                    ? `Mínimo ${minChars}`
-                    : '✓ Pronto'}
+                  {charCount < minChars ? `Mínimo ${minChars}` : '✓ Pronto'}
                 </span>
                 <span className="text-muted-foreground">
                   {charCount} / {maxChars}
@@ -520,8 +520,13 @@ export default function ContentPage() {
                     </button>
                   ) : (
                     <>
-                      <span className="text-sm font-mono">{formatTime(recordingTime)}</span>
-                      <button onClick={stopRecording} className="px-3 py-2 bg-destructive text-white rounded-lg text-xs">
+                      <span className="text-sm font-mono">
+                        {formatTime(recordingTime)}
+                      </span>
+                      <button
+                        onClick={stopRecording}
+                        className="px-3 py-2 bg-destructive text-white rounded-lg text-xs"
+                      >
                         Parar
                       </button>
                     </>
@@ -531,9 +536,19 @@ export default function ContentPage() {
               {audioBlobs.length > 0 && (
                 <div className="mt-2 space-y-2">
                   {audioBlobs.map((blob, index) => (
-                    <div key={index} className="flex items-center gap-2 bg-success/10 rounded p-2">
-                      <audio controls className="flex-1 h-8" src={URL.createObjectURL(blob)} />
-                      <button onClick={() => deleteAudio(index)} className="text-destructive p-1">
+                    <div
+                      key={index}
+                      className="flex items-center gap-2 bg-success/10 rounded p-2"
+                    >
+                      <audio
+                        controls
+                        className="flex-1 h-8"
+                        src={URL.createObjectURL(blob)}
+                      />
+                      <button
+                        onClick={() => deleteAudio(index)}
+                        className="text-destructive p-1"
+                      >
                         <RiCloseLine className="size-4" />
                       </button>
                     </div>
@@ -575,7 +590,10 @@ export default function ContentPage() {
                     const thumbnail = file.preview || undefined
 
                     return (
-                      <div key={index} className="border-2 border-border rounded-lg overflow-hidden">
+                      <div
+                        key={index}
+                        className="border-2 border-border rounded-lg overflow-hidden"
+                      >
                         {/* Thumbnail */}
                         <div
                           className={`relative group aspect-video bg-muted ${isMedia ? 'cursor-pointer' : ''}`}
@@ -608,14 +626,19 @@ export default function ContentPage() {
                             </>
                           ) : (
                             <div className="w-full h-full flex flex-col items-center justify-center bg-accent p-2">
-                              <span className="text-2xl">{getFileIcon(file)}</span>
+                              <span className="text-2xl">
+                                {getFileIcon(file)}
+                              </span>
                             </div>
                           )}
                         </div>
 
                         {/* Info bar */}
                         <div className="px-2 py-1.5 bg-card flex items-center justify-between gap-1">
-                          <span className="text-xs text-foreground truncate flex-1" title={file.name}>
+                          <span
+                            className="text-xs text-foreground truncate flex-1"
+                            title={file.name}
+                          >
                             {file.name}
                           </span>
                           <button

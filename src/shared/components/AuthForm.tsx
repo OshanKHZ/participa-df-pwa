@@ -118,7 +118,9 @@ export function AuthForm({ mode }: AuthFormProps) {
       <div className="flex justify-center mb-6">
         <RiAccountCircleFill className="size-20 text-secondary" />
       </div>
-      <p className="text-sm text-muted-foreground text-center mb-5">{description}</p>
+      <p className="text-sm text-muted-foreground text-center mb-5">
+        {description}
+      </p>
 
       {error && (
         <div

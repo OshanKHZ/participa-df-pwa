@@ -18,7 +18,7 @@ export function ServiceWorkerRegister() {
       navigator.serviceWorker
         .register(swUrl)
         .then(registration => {
-          console.log('[PWA] Service Worker registered:', registration.scope)
+          // console.log('[PWA] Service Worker registered:', registration.scope)
 
           // Check for updates
           registration.addEventListener('updatefound', () => {
@@ -29,7 +29,7 @@ export function ServiceWorkerRegister() {
                   newWorker.state === 'installed' &&
                   navigator.serviceWorker.controller
                 ) {
-                  console.log('[PWA] New content available, refresh to update')
+                  // console.log('[PWA] New content available, refresh to update')
                 }
               })
             }

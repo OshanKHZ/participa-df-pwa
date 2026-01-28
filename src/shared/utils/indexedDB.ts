@@ -41,7 +41,9 @@ const DEFAULT_STORES: StoreConfig[] = [
 
 // Check if IndexedDB is available (browser-only)
 const isIndexedDBAvailable = (): boolean => {
-  return typeof window !== 'undefined' && typeof window.indexedDB !== 'undefined'
+  return (
+    typeof window !== 'undefined' && typeof window.indexedDB !== 'undefined'
+  )
 }
 
 class IndexedDBHelper {
@@ -67,7 +69,7 @@ class IndexedDBHelper {
       request.onerror = () => reject(new Error('Failed to open IndexedDB'))
       request.onsuccess = () => {
         this.db = request.result
-        resolve(this.db!)
+        resolve(request.result)
       }
 
       request.onupgradeneeded = (event: Event) => {
@@ -123,7 +125,7 @@ class IndexedDBHelper {
       const store = transaction.objectStore(storeName)
       const request = store.put(value)
 
-      request.onsuccess = () => resolve((value as any).id)
+      request.onsuccess = () => resolve((value as { id: string }).id)
       request.onerror = () => reject(request.error)
     })
   }
