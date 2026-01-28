@@ -88,10 +88,16 @@ export default function ContentPage() {
 
   const allAcceptedTypes = Object.values(acceptedFileTypes).join(',')
 
+  // Get current draft ID from localStorage (for continuing existing drafts)
+  const currentDraftId = typeof window !== 'undefined'
+    ? localStorage.getItem(STORAGE_KEYS.currentDraftId) || undefined
+    : undefined
+
   // Draft persistence hook
   const { saveField, loadDraft } = useDraftPersistence({
     autoSave: true,
     debounceMs: 1000,
+    draftId: currentDraftId,
   })
 
   useEffect(() => {
@@ -461,7 +467,7 @@ export default function ContentPage() {
                 onChange={handleTextChange}
                 placeholder="Descreva o que aconteceu..."
                 aria-describedby="char-feedback"
-                className="w-full min-h-32 p-3 border card-border rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-secondary text-sm"
+                className="w-full min-h-32 p-3 border card-border rounded-lg resize-y focus:outline-none focus:ring-2 focus:ring-secondary text-sm"
               />
               <div
                 className="flex items-center justify-between mt-2 text-xs"
@@ -628,7 +634,6 @@ export default function ContentPage() {
           onNext={handleNext}
           onNavigateToStep={navigateToStep}
           nextDisabled={!hasContent}
-          showAnonymousInfo={false}
           steps={getStepProgress(STEPS.CONTENT)}
         />
       </div>
@@ -665,7 +670,7 @@ export default function ContentPage() {
                 value={textContent}
                 onChange={handleTextChange}
                 placeholder="Descreva sua manifestação aqui..."
-                className="w-full min-h-48 p-4 border-2 border-border rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-secondary focus:border-secondary"
+                className="w-full min-h-48 p-4 border-2 border-border rounded-lg resize-y focus:outline-none focus:ring-2 focus:ring-secondary focus:border-secondary"
               />
               <div className="flex items-center justify-between text-xs">
                 <span

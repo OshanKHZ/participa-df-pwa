@@ -60,11 +60,29 @@ export function useDraftPersistence(options: UseDraftPersistenceOptions = {}) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  // Update draftId when initialDraftId changes (e.g., loading from history)
+  useEffect(() => {
+    if (initialDraftId && initialDraftId !== draftId) {
+      setDraftId(initialDraftId)
+    }
+  }, [initialDraftId, draftId])
+
   // Debounced save timer
   const saveTimerRef = useRef<NodeJS.Timeout | null>(null)
 
   // Current draft data in memory
   const draftDataRef = useRef<DraftData>({})
+
+  // Store original createdAt to preserve it when updating existing drafts
+  const createdAtRef = useRef<string | undefined>(undefined)
+
+  // Store draftId in ref to always have current value (avoid stale closures)
+  const draftIdRef = useRef<string | undefined>(undefined)
+
+  // Sync draftId state to ref
+  useEffect(() => {
+    draftIdRef.current = draftId
+  }, [draftId])
 
   // Generate new draft ID
   const generateId = useCallback(() => {
@@ -76,9 +94,21 @@ export function useDraftPersistence(options: UseDraftPersistenceOptions = {}) {
     if (!autoSave) return
 
     try {
-      const id = draftId || generateId()
-      if (!draftId) {
+      // Use ref to always get current draftId (avoid stale closures)
+      const currentDraftId = draftIdRef.current
+      const id = currentDraftId || generateId()
+      const isNewDraft = !currentDraftId
+
+      console.log('[useDraftPersistence] saveDraft:', {
+        currentDraftId,
+        id,
+        isNewDraft,
+        draftIdState: draftId,
+      })
+
+      if (isNewDraft) {
         setDraftId(id)
+        draftIdRef.current = id
         localStorage.setItem(STORAGE_KEYS.currentDraftId, id)
       }
 
@@ -88,7 +118,7 @@ export function useDraftPersistence(options: UseDraftPersistenceOptions = {}) {
         subject: draftDataRef.current.subject,
         channels: draftDataRef.current.channels,
         content: draftDataRef.current.content,
-        createdAt: new Date().toISOString(),
+        createdAt: createdAtRef.current || new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         status: 'draft',
       }
@@ -100,7 +130,7 @@ export function useDraftPersistence(options: UseDraftPersistenceOptions = {}) {
       setError(message)
       console.error('Draft save error:', err)
     }
-  }, [draftId, autoSave, generateId])
+  }, [autoSave, generateId, draftId])
 
   // Debounced save
   const scheduleSave = useCallback(() => {
@@ -157,6 +187,9 @@ export function useDraftPersistence(options: UseDraftPersistenceOptions = {}) {
         const draft = await manifestationRepo.getDraft(id)
         if (draft) {
           setDraftId(id)
+          draftIdRef.current = id
+          // Preserve original createdAt
+          createdAtRef.current = draft.createdAt
           draftDataRef.current = {
             type: draft.type,
             subject: draft.subject,
@@ -180,6 +213,8 @@ export function useDraftPersistence(options: UseDraftPersistenceOptions = {}) {
   const clearCurrentDraft = useCallback(() => {
     draftDataRef.current = {}
     setDraftId(undefined)
+    draftIdRef.current = undefined
+    createdAtRef.current = undefined
     setError(null)
   }, [])
 

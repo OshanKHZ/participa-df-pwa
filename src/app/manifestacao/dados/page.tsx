@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { RiEyeOffLine, RiUserLine, RiVolumeUpLine } from 'react-icons/ri'
+import { RiEye2Line, RiEyeCloseLine, RiVolumeUpLine } from 'react-icons/ri'
 import { AccessibleHeader } from '@/features/manifestation/components/AccessibleHeader'
 import { NavigationFooter } from '@/features/manifestation/components/NavigationFooter'
 import { getStepProgress } from '@/shared/utils/stepProgress'
@@ -98,49 +98,58 @@ export default function PersonalDataPage() {
         </div>
 
         {/* Anonymous Toggle */}
-        <div className="bg-card rounded-lg p-4 card-border mb-6">
-          <div className="flex items-start gap-3">
-            <div
-              className={`w-12 h-12 ${isAnonymous ? 'bg-[var(--color-progress)]' : 'bg-[var(--color-type-sugestao)]'} rounded-lg flex items-center justify-center flex-shrink-0`}
-            >
-              {isAnonymous ? (
-                <RiEyeOffLine className="size-6 text-white" />
-              ) : (
-                <RiUserLine className="size-6 text-white" />
-              )}
-            </div>
-            <div className="flex-1">
-              <div className="flex items-center justify-between mb-1">
-                <h3 className="font-semibold text-foreground">
-                  Manifestação Anônima
-                </h3>
-                <button
-                  type="button"
-                  onClick={() => setIsAnonymous(!isAnonymous)}
-                  role="switch"
-                  aria-checked={isAnonymous}
-                  aria-label={
-                    isAnonymous ? 'Desativar anonimato' : 'Ativar anonimato'
-                  }
-                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 ${
-                    isAnonymous ? 'bg-secondary' : 'bg-muted'
-                  }`}
-                >
-                  <span
-                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                      isAnonymous ? TOGGLE.TRANSITION_ON : TOGGLE.TRANSITION_OFF
-                    }`}
-                  />
-                </button>
-              </div>
-              <p className="text-xs text-muted-foreground">
+        <div className="bg-card rounded-sm p-4 card-border mb-6">
+          <div className="grid grid-cols-[auto_1fr_auto] items-center gap-3">
+            {isAnonymous ? (
+              <RiEyeCloseLine className="size-6 text-secondary flex-shrink-0" />
+            ) : (
+              <RiEye2Line className="size-6 text-secondary flex-shrink-0" />
+            )}
+            <div>
+              <h3 className="font-semibold text-foreground">
+                Manifestação Anônima
+              </h3>
+              <p className="text-xs text-muted-foreground mt-0.5">
                 {isAnonymous
                   ? 'Sua identidade será mantida em sigilo'
                   : 'Seus dados pessoais serão incluídos'}
               </p>
             </div>
+            <button
+              type="button"
+              onClick={() => setIsAnonymous(!isAnonymous)}
+              role="switch"
+              aria-checked={isAnonymous}
+              aria-label={
+                isAnonymous ? 'Desativar anonimato' : 'Ativar anonimato'
+              }
+              className={`relative flex-shrink-0 inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 ${
+                isAnonymous ? 'bg-secondary' : 'bg-muted'
+              }`}
+            >
+              <span
+                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                  isAnonymous ? TOGGLE.TRANSITION_ON : TOGGLE.TRANSITION_OFF
+                }`}
+              />
+            </button>
           </div>
         </div>
+
+        {/* Anonymous Legal Info */}
+        {isAnonymous && (
+          <div className="bg-accent rounded-lg p-4 mb-6">
+            <p className="text-xs text-accent-foreground leading-relaxed">
+              Solicito que minha identidade seja preservada neste pedido, em atendimento ao princípio constitucional da impessoalidade e, ainda, conforme o disposto no art. 11, § 7º da Lei Distrital nº 6.519/2020.
+            </p>
+            <p className="text-xs text-accent-foreground leading-relaxed mt-2">
+              Estou ciente de que, com a identidade preservada, somente a Controladoria-Geral do Distrito Federal terá acesso aos meus dados pessoais, ressalvadas as exceções previstas nos parágrafos 3º e 4º, do art. 33 da Lei Distrital nº 4.990/2012.
+            </p>
+            <p className="text-xs text-accent-foreground leading-relaxed mt-2">
+              Estou ciente, também, de que o órgão destinatário não poderá solicitar esclarecimentos adicionais, assim como não poderá atender a pedidos de informação pessoal, uma vez que não terá como confirmar minha identidade.
+            </p>
+          </div>
+        )}
 
         {/* Personal Data Form */}
         {!isAnonymous && (
@@ -205,8 +214,8 @@ export default function PersonalDataPage() {
         )}
 
         {/* Info Box */}
-        <div className="mt-6 bg-accent rounded-lg p-4">
-          <p className="text-xs text-accent-foreground">
+        <div className="mt-6 bg-primary rounded-sm p-4">
+          <p className="text-xs text-white">
             <strong>🔒 Privacidade:</strong> Seus dados são protegidos conforme
             a LGPD e só serão usados para o atendimento da sua manifestação.
           </p>
@@ -221,7 +230,6 @@ export default function PersonalDataPage() {
         onNext={handleNext}
         onNavigateToStep={navigateToStep}
         nextDisabled={!canProceed}
-        showAnonymousInfo={true}
         steps={getStepProgress(STEPS.CONTENT)}
       />
     </div>

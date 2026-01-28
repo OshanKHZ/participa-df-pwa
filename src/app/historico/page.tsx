@@ -22,19 +22,26 @@ export default function HistoryPage() {
   const [drafts, setDrafts] = useState<ManifestationDraft[]>([])
   const [submitted, setSubmitted] = useState<ManifestationDraft[]>([])
   const [activeTab, setActiveTab] = useState<'drafts' | 'submitted'>('drafts')
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     loadHistory()
   }, [])
 
-  const loadHistory = () => {
-    setDrafts(getDrafts())
-    setSubmitted(getSubmitted())
+  const loadHistory = async () => {
+    setIsLoading(true)
+    const [draftsData, submittedData] = await Promise.all([
+      getDrafts(),
+      getSubmitted(),
+    ])
+    setDrafts(draftsData)
+    setSubmitted(submittedData)
+    setIsLoading(false)
   }
 
-  const handleDeleteDraft = (id: string) => {
+  const handleDeleteDraft = async (id: string) => {
     if (confirm('Deseja realmente excluir este rascunho?')) {
-      deleteDraft(id)
+      await deleteDraft(id)
       loadHistory()
     }
   }
@@ -115,7 +122,11 @@ export default function HistoryPage() {
 
         {/* Content */}
         <main className="px-4 py-6">
-          {activeTab === 'drafts' && (
+          {isLoading ? (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">Carregando...</p>
+            </div>
+          ) : activeTab === 'drafts' ? (
             <div className="space-y-3">
               {drafts.length === 0 ? (
                 <div className="text-center py-12">
@@ -164,9 +175,7 @@ export default function HistoryPage() {
                 ))
               )}
             </div>
-          )}
-
-          {activeTab === 'submitted' && (
+          ) : (
             <div className="space-y-3">
               {submitted.length === 0 ? (
                 <div className="text-center py-12">

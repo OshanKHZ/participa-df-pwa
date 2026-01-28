@@ -109,11 +109,11 @@ export default function OQueEOuvidoriaPage() {
           </section>
 
           {/* CTA Section */}
-          <section className="bg-secondary/10 border border-secondary/20 rounded-lg p-4">
-            <p className="text-sm text-foreground mb-2">Tem alguma dúvida?</p>
+          <section className="bg-primary rounded-md p-4">
+            <p className="text-sm text-white mb-2">Tem alguma dúvida?</p>
             <Link
               href="/ajuda"
-              className="inline-flex items-center gap-2 text-secondary font-medium text-sm hover:underline"
+              className="inline-flex items-center gap-2 text-white font-medium text-sm underline"
             >
               Acessar Perguntas Frequentes
               <RiArrowRightSLine className="size-4" />

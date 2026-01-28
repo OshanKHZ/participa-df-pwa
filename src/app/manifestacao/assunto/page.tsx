@@ -515,7 +515,6 @@ export default function AssuntoPage() {
           onNext={handleNext}
           onNavigateToStep={navigateToStep}
           nextDisabled={!selectedAssunto}
-          showAnonymousInfo={false}
           steps={getStepProgress(STEPS.SUBJECT)}
         />
       </div>

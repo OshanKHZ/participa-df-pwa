@@ -217,10 +217,10 @@ export default function OrientacoesPage() {
           </section>
 
           {/* CTA Section */}
-          <section className="bg-secondary/10 border border-secondary/20 rounded-lg p-4">
+          <section className="bg-green-600 rounded-md p-4">
             <Link
               href="/manifestacao"
-              className="inline-flex items-center gap-2 text-secondary font-medium text-sm hover:underline"
+              className="inline-flex items-center gap-2 text-white font-medium text-sm"
             >
               Fazer registro
               <RiArrowRightSLine className="size-4" />

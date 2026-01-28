@@ -241,7 +241,6 @@ export default function ReviewPage() {
         onNext={handleSubmit}
         onNavigateToStep={navigateToStep}
         nextDisabled={isSubmitting}
-        showAnonymousInfo={false}
         steps={getStepProgress(STEPS.REVIEW)}
       />
     </div>

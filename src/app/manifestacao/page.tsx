@@ -208,7 +208,6 @@ export default function ManifestationTypePage() {
           onNext={handleNext}
           onNavigateToStep={navigateToStep}
           nextDisabled={!selectedType}
-          showAnonymousInfo={false}
           steps={getStepProgress(STEPS.TYPE)}
         />
       </div>
