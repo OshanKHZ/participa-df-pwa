@@ -92,7 +92,7 @@ export function DesktopHeader() {
                 <button
                   ref={manifestacaoTriggerRef}
                   onClick={() => setIsManifestacaoOpen(!isManifestacaoOpen)}
-                  className={`flex items-center gap-1 px-5 py-2 text-sm font-normal transition-all border-b-2 focus:outline-none focus:ring-2 focus:ring-white/50 rounded ${
+                  className={`flex items-center gap-1 px-5 py-2 text-sm font-normal transition-all border-b-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-light ${
                     pathname?.startsWith('/manifestacao')
                       ? 'text-white border-white'
                       : 'text-white/70 border-transparent hover:text-white hover:border-white/30'
@@ -126,7 +126,7 @@ export function DesktopHeader() {
                 <button
                   ref={transparenciaTriggerRef}
                   onClick={() => setIsTransparenciaOpen(!isTransparenciaOpen)}
-                  className={`flex items-center gap-1 px-5 py-2 text-sm font-normal transition-all border-b-2 focus:outline-none focus:ring-2 focus:ring-white/50 rounded ${
+                  className={`flex items-center gap-1 px-5 py-2 text-sm font-normal transition-all border-b-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-light ${
                     pathname?.startsWith('/transparencia')
                       ? 'text-white border-white'
                       : 'text-white/70 border-transparent hover:text-white hover:border-white/30'

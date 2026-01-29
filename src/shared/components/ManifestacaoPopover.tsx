@@ -91,7 +91,7 @@ export function ManifestacaoPopover({
         </Link>
 
         <Link
-          href="/minhas-manifestacoes"
+          href="/historico"
           className="flex items-center gap-3 px-4 py-3 hover:bg-white/10 transition-colors"
           onClick={onClose}
         >
