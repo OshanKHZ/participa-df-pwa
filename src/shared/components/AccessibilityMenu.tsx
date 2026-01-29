@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { PiPersonArmsSpreadFill } from 'react-icons/pi'
+import Image from 'next/image'
 import {
   RiText,
   RiAddLine,
@@ -65,18 +65,65 @@ export function AccessibilityMenu() {
 
   return (
     <div className="hidden lg:block">
-      {/* Floating Toggle Button - Desktop only */}
-      {!isOpen && (
+      {/* Fixed Accessibility Buttons - Right side */}
+      <div className="fixed right-4 top-1/2 -translate-y-1/2 z-fab flex flex-col gap-3">
+        {/* High Contrast Button - Acessibilidades Adicionais */}
+        <button
+          type="button"
+          onClick={toggleHighContrast}
+          className="w-10 h-10 shadow-lg transition-all hover:scale-105 btn-focus rounded-lg flex items-center justify-center cursor-pointer"
+          style={{
+            background: 'linear-gradient(135deg, #3690FA 0%, #2266D2 100%)'
+          }}
+          aria-label="Acessibilidades Adicionais"
+          title="Acessibilidades Adicionais"
+        >
+          <Image
+            src="/accessibility/eye.png"
+            alt=""
+            width={24}
+            height={24}
+            className="w-6 h-6"
+          />
+        </button>
+
+        {/* Audio Button - Voz */}
+        <button
+          type="button"
+          onClick={toggleAudio}
+          className="w-10 h-10 shadow-lg transition-all hover:scale-105 btn-focus rounded-lg flex items-center justify-center cursor-pointer"
+          style={{
+            background: 'linear-gradient(135deg, #3690FA 0%, #2266D2 100%)'
+          }}
+          aria-label={audioEnabled ? 'Desativar voz' : 'Ativar voz'}
+          title={audioEnabled ? 'Desativar voz' : 'Ativar voz'}
+        >
+          <Image
+            src="/accessibility/voice.png"
+            alt=""
+            width={24}
+            height={24}
+            className="w-6 h-6"
+          />
+        </button>
+
+        {/* Libras Button */}
         <button
           type="button"
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-8 right-8 z-fab w-14 h-14 bg-secondary hover:bg-secondary-hover text-white rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-105 btn-focus focus:ring-white"
-          aria-label="Acessibilidade"
-          title="Acessibilidade"
+          className="shadow-lg transition-all hover:scale-105 btn-focus rounded-lg cursor-pointer"
+          aria-label="Libras"
+          title="Libras"
         >
-          <PiPersonArmsSpreadFill className="w-6 h-6" />
+          <Image
+            src="/accessibility/access_icon.svg"
+            alt=""
+            width={40}
+            height={40}
+            className="w-10 h-10"
+          />
         </button>
-      )}
+      </div>
 
       {/* Panel - Desktop only */}
       {isOpen && (
@@ -88,11 +135,17 @@ export function AccessibilityMenu() {
           />
 
           {/* Accessibility Panel */}
-          <div className="fixed bottom-8 right-8 z-dropdown w-80 bg-white rounded-2xl shadow-2xl border border-border">
+          <div className="fixed right-20 top-1/2 -translate-y-1/2 z-dropdown w-80 bg-white rounded-2xl shadow-2xl border border-border">
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-border">
               <div className="flex items-center gap-2">
-                <PiPersonArmsSpreadFill className="w-5 h-5 text-secondary" />
+                <Image
+                  src="/accessibility/access_icon.svg"
+                  alt=""
+                  width={20}
+                  height={20}
+                  className="w-5 h-5"
+                />
                 <h3 className="font-semibold text-foreground">
                   Acessibilidade
                 </h3>
