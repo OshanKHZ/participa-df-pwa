@@ -14,7 +14,7 @@ import { NavigationFooter } from '@/features/manifestation/components/Navigation
 import { FormSidebar } from '@/features/manifestation/components/FormSidebar'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
 import { Button } from '@/shared/components/Button'
-import { Stepper, getDesktopSteps } from '@/shared/components/Stepper'
+import { ManifestationHeader } from '@/shared/components/Stepper'
 import { MultiSelectGrid } from '@/shared/components/MultiSelectGrid'
 import { TextInput } from '@/shared/components/TextInput'
 import { AudioRecorder } from '@/shared/components/AudioRecorder'
@@ -268,20 +268,11 @@ export default function ContentPage() {
 
           {/* Coluna Central - Main Content (sempre centralizado) */}
           <main id="main-content" className="w-full">
-          {/* Progress Steps */}
-          <div className="mb-10">
-            <Stepper steps={getDesktopSteps(STEPS.CONTENT)} />
-          </div>
-
-          {/* Title */}
-          <div className="mb-8">
-            <h1 className="text-xl font-semibold text-foreground mb-2">
-              Nova Manifestação
-            </h1>
-            <p className="text-muted-foreground">
-              Descreva sua manifestação com o máximo de detalhes possível.
-            </p>
-          </div>
+          <ManifestationHeader
+            currentStep={STEPS.CONTENT}
+            totalSteps={STEPS.TOTAL}
+            description="Descreva sua manifestação com o máximo de detalhes possível."
+          />
 
           <div className="space-y-8">
             {/* Text Section */}

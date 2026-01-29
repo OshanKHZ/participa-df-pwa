@@ -19,7 +19,7 @@ import { FormSidebar } from '@/features/manifestation/components/FormSidebar'
 import { ExitConfirmModal } from '@/shared/components/ExitConfirmModal'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
 import { Button } from '@/shared/components/Button'
-import { Stepper, getDesktopSteps } from '@/shared/components/Stepper'
+import { ManifestationHeader } from '@/shared/components/Stepper'
 import {
   Select,
   SelectContent,
@@ -227,20 +227,11 @@ export default function ManifestationTypePage() {
 
           {/* Coluna Central - Main Content (sempre centralizado) */}
           <main className="w-full">
-          {/* Progress Steps */}
-          <div className="mb-10">
-            <Stepper steps={getDesktopSteps(STEPS.TYPE)} />
-          </div>
-
-          {/* Title */}
-          <div className="mb-8">
-            <h1 className="text-xl font-semibold text-foreground mb-2">
-              Nova Manifestação
-            </h1>
-            <p className="text-muted-foreground">
-              Selecione o tipo de manifestação desejada.
-            </p>
-          </div>
+          <ManifestationHeader
+            currentStep={STEPS.TYPE}
+            totalSteps={STEPS.TOTAL}
+            description="Selecione o tipo de manifestação desejada."
+          />
 
           {/* Types Select */}
           <div className="mb-8">

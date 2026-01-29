@@ -10,7 +10,7 @@ import { FormSidebar } from '@/features/manifestation/components/FormSidebar'
 import { ConfirmDialog } from '@/shared/components/ConfirmDialog'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
 import { Button } from '@/shared/components/Button'
-import { Stepper, getDesktopSteps } from '@/shared/components/Stepper'
+import { ManifestationHeader } from '@/shared/components/Stepper'
 import { getStepProgress } from '@/shared/utils/stepProgress'
 import { useStepNavigation } from '@/shared/hooks/useStepNavigation'
 import { STEPS, COMPLETED_STEPS } from '@/shared/constants/designTokens'
@@ -154,21 +154,11 @@ export default function PersonalDataPage() {
 
           {/* Coluna Central - Main Content (sempre centralizado) */}
           <main id="main-content" className="w-full">
-          {/* Progress Steps */}
-          <div className="mb-10">
-            <Stepper steps={getDesktopSteps(STEPS.DATA)} />
-          </div>
-
-          {/* Title */}
-          <div className="mb-8">
-            <h1 className="text-xl font-semibold text-foreground mb-2">
-              Nova Manifestação
-            </h1>
-            <p className="text-muted-foreground">
-              Identificação opcional - você pode se identificar ou manter o
-              anonimato.
-            </p>
-          </div>
+          <ManifestationHeader
+            currentStep={STEPS.DATA}
+            totalSteps={STEPS.TOTAL}
+            description="Identificação opcional - você pode se identificar ou manter o anonimato."
+          />
 
           {/* Identification Section */}
           <IdentificationSection
