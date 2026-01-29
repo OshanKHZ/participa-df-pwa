@@ -12,7 +12,7 @@ import {
 } from 'react-icons/ri'
 
 interface MobileBottomNavProps {
-  activeTab?: 'home' | 'services' | 'help' | 'profile' | 'login'
+  activeTab?: 'home' | 'services' | 'help' | 'profile' | 'acessar'
   isAuthenticated?: boolean
 }
 
@@ -79,7 +79,7 @@ export function MobileBottomNav({
           <Link
             href={isAuthenticated ? '/perfil' : '/entrar'}
             className={`flex flex-col items-center justify-center gap-0.5 w-14 h-14 rounded-lg transition-colors ${
-              activeTab === 'profile' || activeTab === 'login'
+              activeTab === 'profile' || activeTab === 'acessar'
                 ? 'text-secondary bg-secondary/10'
                 : 'text-muted-foreground'
             }`}
@@ -92,7 +92,7 @@ export function MobileBottomNav({
             ) : (
               <>
                 <RiLoginBoxLine className="size-6" />
-                <span className="text-xs font-medium">Entrar</span>
+                <span className="text-xs font-medium">Acessar</span>
               </>
             )}
           </Link>

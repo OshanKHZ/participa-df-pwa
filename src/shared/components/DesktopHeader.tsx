@@ -12,7 +12,6 @@ export function DesktopHeader() {
   const pathname = usePathname()
   const [isTransparenciaOpen, setIsTransparenciaOpen] = useState(false)
   const [isManifestacaoOpen, setIsManifestacaoOpen] = useState(false)
-  const [isAuthOpen, setIsAuthOpen] = useState(false)
   const transparenciaTriggerRef = useRef<HTMLButtonElement>(null)
   const manifestacaoTriggerRef = useRef<HTMLButtonElement>(null)
 
@@ -45,34 +44,13 @@ export function DesktopHeader() {
               />
             </Link>
 
-            <div className="relative">
-              <button
-                onClick={() => setIsAuthOpen(!isAuthOpen)}
-                className="flex items-center gap-2 px-4 py-2 text-sm text-white/70 hover:text-white transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-white/50 rounded"
-                aria-expanded={isAuthOpen}
-                aria-haspopup="true"
-              >
-                <RiUserLine className="size-4" />
-                <span>Entrar / Cadastrar</span>
-              </button>
-
-              {isAuthOpen && (
-                <div className="absolute top-full right-0 mt-2 bg-white shadow-lg border border-border py-1 min-w-[180px]">
-                  <Link
-                    href="/entrar"
-                    className="block px-5 py-3 text-sm font-medium text-foreground hover:bg-accent hover:text-secondary transition-colors"
-                  >
-                    Entrar
-                  </Link>
-                  <Link
-                    href="/cadastrar"
-                    className="block px-5 py-3 text-sm font-medium text-foreground hover:bg-accent hover:text-secondary transition-colors"
-                  >
-                    Cadastrar
-                  </Link>
-                </div>
-              )}
-            </div>
+            <Link
+              href="/entrar"
+              className="flex items-center gap-2 px-4 py-2 text-sm text-white/70 hover:text-white transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-white/50 rounded"
+            >
+              <RiUserLine className="size-4" />
+              <span>Acessar</span>
+            </Link>
           </div>
         </div>
 

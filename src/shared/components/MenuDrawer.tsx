@@ -8,7 +8,6 @@ import {
   RiCloseLine,
   RiUserLine,
   RiLoginBoxLine,
-  RiUserAddLine,
   RiQuestionLine,
   RiBarChartBoxLine,
   RiSettings4Line,
@@ -99,7 +98,7 @@ export function MenuDrawer({
           ) : (
             <div className="space-y-3">
               <p className="text-sm text-muted-foreground">
-                Entre ou cadastre-se para acompanhar suas manifestações
+                Acesse sua conta para acompanhar suas manifestações
               </p>
               <LinkButton
                 href="/entrar"
@@ -108,17 +107,7 @@ export function MenuDrawer({
                 className="w-full py-2.5"
               >
                 <RiLoginBoxLine className="size-5" />
-                Entrar
-              </LinkButton>
-              <LinkButton
-                href="/cadastrar"
-                variant="accent"
-                size="sm"
-                onClick={onClose}
-                className="w-full"
-              >
-                <RiUserAddLine className="size-4" />
-                Cadastrar-se
+                Acessar
               </LinkButton>
             </div>
           )}
