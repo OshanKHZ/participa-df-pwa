@@ -13,8 +13,11 @@ export interface BlogPost {
   slug: string
 }
 
+const SWIPE_THRESHOLD = 50 // px - minimum distance to trigger swipe
+
 interface BlogCarouselProps {
   posts: BlogPost[]
+  className?: string
 }
 
 const formatTimeAgo = (date: Date): string => {
@@ -37,16 +40,14 @@ const formatTimeAgo = (date: Date): string => {
 const CARD_WIDTH = 180 // px
 const GAP = 8 // px
 
-const SWIPE_THRESHOLD = 50 // px - minimum distance to trigger swipe
-
-export function BlogCarousel({ posts }: BlogCarouselProps) {
+export function BlogCarousel({ posts, className }: BlogCarouselProps) {
   const trackRef = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const [currentIndex, setCurrentIndex] = useState(1)
   const [isAnimating, setIsAnimating] = useState(false)
   const touchStartRef = useRef<number | null>(null)
 
-  // Create infinite loop: [last, ...posts, first]
+  // Infinite loop: [last, ...posts, first]
   const infinitePosts =
     posts.length > 0 ? [posts[posts.length - 1], ...posts, posts[0]] : []
 
@@ -59,7 +60,11 @@ export function BlogCarousel({ posts }: BlogCarouselProps) {
     setIsAnimating(animate)
 
     const cardWidthWithGap = CARD_WIDTH + GAP
-    // Calculate scroll to center the card
+    // Calculate scroll to center the card. 
+    // Original logic was attempting to center or offset based on fixed width.
+    // Let's restore the exact original calculation: index * cardWidthWithGap - CARD_WIDTH / 2
+    // Wait, original logic in Step 19 was: index * cardWidthWithGap - CARD_WIDTH / 2
+    // Let's stick to that.
     const scrollPos = index * cardWidthWithGap - CARD_WIDTH / 2
 
     el.style.transition = animate ? 'transform 0.4s ease-out' : 'none'
@@ -161,24 +166,24 @@ export function BlogCarousel({ posts }: BlogCarouselProps) {
   if (posts.length === 0) return null
 
   return (
-    <section className="lg:hidden bg-card px-3 py-3" aria-label="Blog posts">
-      <div className="flex items-center justify-between mb-2">
-        <h2 className="text-base font-semibold text-foreground">Blog</h2>
+    <section className={`bg-card px-3 py-3 ${className || ''}`} aria-label="Blog posts">
+      <div className="flex items-center justify-between mb-4 px-1">
+        <h2 className="text-base font-semibold text-foreground">Novidades</h2>
         <div className="flex items-center gap-2">
           <button
             onClick={prevPage}
-            className="w-6 h-6 bg-white hover:bg-gray-50 rounded-full flex items-center justify-center shadow-sm border border-border transition-colors btn-focus"
+            className="w-8 h-8 bg-white hover:bg-gray-50 rounded-full flex items-center justify-center shadow-sm border border-border transition-colors btn-focus"
             aria-label="Anterior"
           >
-            <RiArrowLeftSLine className="size-3 text-foreground" />
+            <RiArrowLeftSLine className="size-5 text-foreground" />
           </button>
 
           <button
             onClick={nextPage}
-            className="w-6 h-6 bg-white hover:bg-gray-50 rounded-full flex items-center justify-center shadow-sm border border-border transition-colors btn-focus"
+            className="w-8 h-8 bg-white hover:bg-gray-50 rounded-full flex items-center justify-center shadow-sm border border-border transition-colors btn-focus"
             aria-label="Próximo"
           >
-            <RiArrowRightSLine className="size-3 text-foreground" />
+            <RiArrowRightSLine className="size-5 text-foreground" />
           </button>
         </div>
       </div>
@@ -225,13 +230,13 @@ export function BlogCarousel({ posts }: BlogCarouselProps) {
         </div>
       </div>
 
-      {/* Page Counter - Oval Dots (read-only on mobile) */}
-      <div className="flex justify-center gap-1.5 mt-2">
+      {/* Page Counter - Oval Dots */}
+      <div className="flex justify-center gap-1.5 mt-4">
         {Array.from({ length: totalItems }).map((_, index) => (
           <span
             key={index}
             className={`h-1.5 rounded-full transition-all duration-200 ${
-              index === activeDotIndex ? 'w-6 bg-secondary' : 'w-1.5 bg-muted'
+              index === activeDotIndex ? 'w-6 bg-secondary' : 'w-1.5 bg-foreground/20'
             }`}
             aria-current={index === activeDotIndex ? 'true' : undefined}
           />
