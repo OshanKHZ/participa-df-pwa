@@ -24,14 +24,14 @@ export function MobileBottomNav({
     <>
       {/* Floating accessibility button */}
       <button
-        className="fixed bottom-20 right-4 z-fab flex items-center justify-center w-14 h-14 bg-secondary text-secondary-foreground rounded-full shadow-lg transition-all hover:scale-105 active:scale-95"
+        className="fixed bottom-28 right-4 z-fab flex items-center justify-center w-14 h-14 bg-secondary text-secondary-foreground rounded-full shadow-lg transition-all hover:scale-105 active:scale-95"
         aria-label="Acessibilidade"
       >
         <PiPersonArmsSpreadFill className="size-7" />
       </button>
 
       <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-border z-fab">
-        <div className="flex items-center justify-around py-2">
+        <div className="flex items-center justify-around pt-2 pb-6">
           <Link
             href="/"
             className={`flex flex-col items-center justify-center gap-0.5 w-14 h-14 rounded-lg transition-colors ${

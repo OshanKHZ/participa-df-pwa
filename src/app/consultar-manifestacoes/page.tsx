@@ -20,6 +20,9 @@ import {
 import { toast } from 'sonner'
 import type { ManifestationDraft } from '@/shared/types/manifestation'
 import { MobileHeader } from '@/shared/components/MobileHeader'
+import { DesktopHeader } from '@/shared/components/DesktopHeader'
+import { MobileBottomNav } from '@/shared/components/MobileBottomNav'
+import { Pagination } from '@/shared/components/Pagination'
 import type { manifestations } from '@/server/db/schema'
 
 type Manifestation = typeof manifestations.$inferSelect
@@ -35,6 +38,10 @@ export default function HistoryPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [protocolSearch, setProtocolSearch] = useState('')
   const [isSearching, setIsSearching] = useState(false)
+  const [submittedPage, setSubmittedPage] = useState(1)
+  const [draftsPage, setDraftsPage] = useState(1)
+  const [submittedItemsPerPage, setSubmittedItemsPerPage] = useState(10)
+  const [draftsItemsPerPage, setDraftsItemsPerPage] = useState(10)
 
   useEffect(() => {
     loadHistory()
@@ -119,6 +126,37 @@ export default function HistoryPage() {
     }
   }
 
+  // Pagination helpers
+  const submittedTotalPages = Math.ceil(submitted.length / submittedItemsPerPage)
+  const paginatedSubmitted = submitted.slice(
+    (submittedPage - 1) * submittedItemsPerPage,
+    submittedPage * submittedItemsPerPage
+  )
+
+  const draftsTotalPages = Math.ceil(drafts.length / draftsItemsPerPage)
+  const paginatedDrafts = drafts.slice(
+    (draftsPage - 1) * draftsItemsPerPage,
+    draftsPage * draftsItemsPerPage
+  )
+
+  // Reset pagination when changing tabs
+  const handleTabChange = (tab: 'submitted' | 'drafts') => {
+    setActiveTab(tab)
+    if (tab === 'submitted') setSubmittedPage(1)
+    else setDraftsPage(1)
+  }
+
+  // Handle items per page change
+  const handleSubmittedItemsPerPageChange = (itemsPerPage: number) => {
+    setSubmittedItemsPerPage(itemsPerPage)
+    setSubmittedPage(1) // Reset to first page when changing items per page
+  }
+
+  const handleDraftsItemsPerPageChange = (itemsPerPage: number) => {
+    setDraftsItemsPerPage(itemsPerPage)
+    setDraftsPage(1) // Reset to first page when changing items per page
+  }
+
   const handleDeleteDraft = async (id: string) => {
     // Optimistic update
     setDrafts(drafts.filter(d => d.id !== id))
@@ -176,14 +214,19 @@ export default function HistoryPage() {
 
   return (
     <>
+      {/* Desktop Header */}
+      <DesktopHeader />
+
+      {/* Mobile Header */}
       <MobileHeader title="Minhas Manifestações" />
 
-      <div className="min-h-screen bg-background pb-20">
+      {/* Mobile Container */}
+      <div className="lg:hidden min-h-screen bg-background pb-20">
         {/* Tabs */}
         <div className="bg-white border-b border-border sticky top-0 z-tabs">
           <div className="flex">
             <button
-              onClick={() => setActiveTab('submitted')}
+              onClick={() => handleTabChange('submitted')}
               className={`flex-1 py-3 px-4 font-medium transition-colors ${
                 activeTab === 'submitted'
                   ? 'text-secondary border-b-2 border-secondary'
@@ -196,7 +239,7 @@ export default function HistoryPage() {
               </div>
             </button>
             <button
-              onClick={() => setActiveTab('drafts')}
+              onClick={() => handleTabChange('drafts')}
               className={`flex-1 py-3 px-4 font-medium transition-colors ${
                 activeTab === 'drafts'
                   ? 'text-secondary border-b-2 border-secondary'
@@ -264,77 +307,91 @@ export default function HistoryPage() {
                   </LinkButton>
                 </div>
               ) : (
-                <div className="space-y-3">
-                  {submitted.map(item => (
-                    <div
-                      key={item.id}
-                      className="bg-card border card-border rounded-lg p-4 space-y-3"
-                    >
-                      {/* Header */}
-                      <div className="flex items-start justify-between gap-2">
-                        <div className="flex items-center gap-2">
-                          <div
-                            className={`size-6 rounded-full flex items-center justify-center flex-shrink-0 ${item.status === 'done' ? 'bg-success' : item.status === 'analyzing' ? 'bg-yellow-500' : 'bg-secondary'}`}
-                          >
-                            <RiCheckLine className="size-4 text-white" />
-                          </div>
-                          <div>
-                            <p
-                              className={`text-sm font-semibold ${item.status === 'done' ? 'text-success' : item.status === 'analyzing' ? 'text-yellow-600' : 'text-secondary'}`}
+                <div className="space-y-4">
+                  <div className="space-y-3">
+                    {paginatedSubmitted.map(item => (
+                      <div
+                        key={item.id}
+                        className="bg-card border card-border rounded-lg p-4 space-y-3"
+                      >
+                        {/* Header */}
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="flex items-center gap-2">
+                            <div
+                              className={`size-6 rounded-full flex items-center justify-center flex-shrink-0 ${item.status === 'done' ? 'bg-success' : item.status === 'analyzing' ? 'bg-yellow-500' : 'bg-secondary'}`}
                             >
-                              {item.status === 'received'
-                                ? 'Recebida'
-                                : item.status === 'analyzing'
-                                  ? 'Em Análise'
-                                  : item.status === 'done'
-                                    ? 'Concluída'
-                                    : 'Enviada'}
-                            </p>
-                            <p className="text-xs text-muted-foreground mt-0.5">
-                              {formatDate(item.createdAt)}
-                            </p>
+                              <RiCheckLine className="size-4 text-white" />
+                            </div>
+                            <div>
+                              <p
+                                className={`text-sm font-semibold ${item.status === 'done' ? 'text-success' : item.status === 'analyzing' ? 'text-yellow-600' : 'text-secondary'}`}
+                              >
+                                {item.status === 'received'
+                                  ? 'Recebida'
+                                  : item.status === 'analyzing'
+                                    ? 'Em Análise'
+                                    : item.status === 'done'
+                                      ? 'Concluída'
+                                      : 'Enviada'}
+                              </p>
+                              <p className="text-xs text-muted-foreground mt-0.5">
+                                {formatDate(item.createdAt)}
+                              </p>
+                            </div>
                           </div>
                         </div>
-                      </div>
 
-                      {/* Content */}
-                      <div className="space-y-2">
-                        <h3 className="font-semibold text-foreground">
-                          {getTypeLabel(item.type)}
-                        </h3>
-                        {item.subject && (
-                          <p className="text-sm text-secondary font-medium">
-                            {item.subject}
-                          </p>
-                        )}
-                        {item.description && (
-                          <p className="text-sm text-muted-foreground line-clamp-2">
-                            {item.description}
-                          </p>
-                        )}
-                      </div>
-
-                      {/* Protocol */}
-                      <div className="bg-muted rounded p-3 flex items-center justify-between gap-2">
-                        <div className="min-w-0">
-                          <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">
-                            Protocolo
-                          </p>
-                          <p className="font-mono text-sm font-bold text-foreground break-all">
-                            {item.protocol}
-                          </p>
+                        {/* Content */}
+                        <div className="space-y-2">
+                          <h3 className="font-semibold text-foreground">
+                            {getTypeLabel(item.type)}
+                          </h3>
+                          {item.subject && (
+                            <p className="text-sm text-secondary font-medium">
+                              {item.subject}
+                            </p>
+                          )}
+                          {item.description && (
+                            <p className="text-sm text-muted-foreground line-clamp-2">
+                              {item.description}
+                            </p>
+                          )}
                         </div>
-                        <button
-                          onClick={() => handleCopyProtocol(item.protocol)}
-                          className="flex-shrink-0 p-2 hover:bg-background rounded-lg transition-colors"
-                          aria-label="Copiar protocolo"
-                          title="Copiar protocolo"
-                        >
-                          <RiFileCopyLine className="size-5 text-secondary" />
-                        </button>
+
+                        {/* Protocol */}
+                        <div className="bg-muted rounded p-3 flex items-center justify-between gap-2">
+                          <div className="min-w-0">
+                            <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">
+                              Protocolo
+                            </p>
+                            <p className="font-mono text-sm font-bold text-foreground break-all">
+                              {item.protocol}
+                            </p>
+                          </div>
+                          <button
+                            onClick={() => handleCopyProtocol(item.protocol)}
+                            className="flex-shrink-0 p-2 hover:bg-background rounded-lg transition-colors"
+                            aria-label="Copiar protocolo"
+                            title="Copiar protocolo"
+                          >
+                            <RiFileCopyLine className="size-5 text-secondary" />
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
+
+                  {/* Pagination */}
+                  {submittedTotalPages > 1 && (
+                    <Pagination
+                      currentPage={submittedPage}
+                      totalPages={submittedTotalPages}
+                      onPageChange={setSubmittedPage}
+                      itemsCount={submitted.length}
+                      itemsPerPage={submittedItemsPerPage}
+                      onItemsPerPageChange={handleSubmittedItemsPerPageChange}
+                    />
+                  )}
                 </div>
               )}
             </div>
@@ -358,70 +415,389 @@ export default function HistoryPage() {
                   </p>
                 </div>
               ) : (
-                drafts.map(draft => (
-                  <div
-                    key={draft.id}
-                    className="bg-card border card-border rounded-lg p-4 space-y-3"
-                  >
-                    {/* Content */}
-                    <div className="space-y-2">
-                      <h3 className="font-semibold text-foreground">
-                        {getTypeLabel(draft.type)}
-                      </h3>
-                      {draft.subject && (
-                        <p className="text-sm text-secondary font-medium">
-                          {draft.subject.name}
-                        </p>
-                      )}
-                      {draft.content?.text && (
-                        <p className="text-sm text-muted-foreground line-clamp-3">
-                          {draft.content.text}
-                        </p>
-                      )}
-                    </div>
+                <div className="space-y-4">
+                  <div className="space-y-3">
+                    {paginatedDrafts.map(draft => (
+                      <div
+                        key={draft.id}
+                        className="bg-card border card-border rounded-lg p-4 space-y-3"
+                      >
+                        {/* Content */}
+                        <div className="space-y-2">
+                          <h3 className="font-semibold text-foreground">
+                            {getTypeLabel(draft.type)}
+                          </h3>
+                          {draft.subject && (
+                            <p className="text-sm text-secondary font-medium">
+                              {draft.subject.name}
+                            </p>
+                          )}
+                          {draft.content?.text && (
+                            <p className="text-sm text-muted-foreground line-clamp-3">
+                              {draft.content.text}
+                            </p>
+                          )}
+                        </div>
 
-                    {/* Attachments & Badges */}
-                    {(draft.content?.audio || (draft.content?.files && draft.content.files.length > 0)) && (
-                      <div className="flex flex-wrap gap-2">
-                        {draft.content?.audio && (
-                          <span className="inline-flex items-center gap-1 text-xs bg-muted px-2.5 py-1.5 rounded-full text-muted-foreground">
-                            🎙️ Áudio gravado
-                          </span>
+                        {/* Attachments & Badges */}
+                        {(draft.content?.audio || (draft.content?.files && draft.content.files.length > 0)) && (
+                          <div className="flex flex-wrap gap-2">
+                            {draft.content?.audio && (
+                              <span className="inline-flex items-center gap-1 text-xs bg-muted px-2.5 py-1.5 rounded-full text-muted-foreground">
+                                🎙️ Áudio gravado
+                              </span>
+                            )}
+                            {draft.content?.files && draft.content.files.length > 0 && (
+                              <span className="inline-flex items-center gap-1 text-xs bg-muted px-2.5 py-1.5 rounded-full text-muted-foreground">
+                                📎 {draft.content.files.length} anexo(s)
+                              </span>
+                            )}
+                          </div>
                         )}
-                        {draft.content?.files && draft.content.files.length > 0 && (
-                          <span className="inline-flex items-center gap-1 text-xs bg-muted px-2.5 py-1.5 rounded-full text-muted-foreground">
-                            📎 {draft.content.files.length} anexo(s)
-                          </span>
-                        )}
+
+                        {/* Metadata */}
+                        <p className="text-xs text-muted-foreground">
+                          Atualizado em {formatDate(draft.updatedAt)}
+                        </p>
+
+                        {/* Actions */}
+                        <div className="flex gap-2">
+                          <Button
+                            onClick={() => handleContinueDraft(draft)}
+                            variant="secondary"
+                            size="sm"
+                            className="flex-1"
+                          >
+                            <RiEditLine className="size-4" />
+                            Continuar
+                          </Button>
+                          <button
+                            onClick={() => handleDeleteDraft(draft.id)}
+                            className="py-2 px-3 border-2 border-border text-destructive rounded-lg hover:bg-destructive/10 transition-colors flex items-center justify-center"
+                            aria-label="Excluir rascunho"
+                          >
+                            <RiDeleteBinLine className="size-4" />
+                          </button>
+                        </div>
                       </div>
-                    )}
+                    ))}
+                  </div>
 
-                    {/* Metadata */}
-                    <p className="text-xs text-muted-foreground">
-                      Atualizado em {formatDate(draft.updatedAt)}
-                    </p>
+                  {/* Pagination */}
+                  {draftsTotalPages > 1 && (
+                    <Pagination
+                      currentPage={draftsPage}
+                      totalPages={draftsTotalPages}
+                      onPageChange={setDraftsPage}
+                      itemsCount={drafts.length}
+                      itemsPerPage={draftsItemsPerPage}
+                      onItemsPerPageChange={handleDraftsItemsPerPageChange}
+                    />
+                  )}
+                </div>
+              )}
+            </div>
+          )}
+        </main>
 
-                    {/* Actions */}
-                    <div className="flex gap-2">
-                      <Button
-                        onClick={() => handleContinueDraft(draft)}
-                        variant="secondary"
-                        size="sm"
-                        className="flex-1"
-                      >
-                        <RiEditLine className="size-4" />
-                        Continuar
-                      </Button>
-                      <button
-                        onClick={() => handleDeleteDraft(draft.id)}
-                        className="py-2 px-3 border-2 border-border text-destructive rounded-lg hover:bg-destructive/10 transition-colors flex items-center justify-center"
-                        aria-label="Excluir rascunho"
-                      >
-                        <RiDeleteBinLine className="size-4" />
-                      </button>
+        {/* Bottom Navigation */}
+        <MobileBottomNav activeTab="home" isAuthenticated={false} />
+      </div>
+
+      {/* Desktop Container */}
+      <div className="hidden lg:block min-h-screen bg-background">
+        <main className="max-w-6xl mx-auto px-8 py-12">
+          <div className="mb-10">
+            <h1 className="text-3xl font-bold text-foreground mb-2">Consultar Manifestações</h1>
+            <p className="text-muted-foreground">
+              Acompanhe suas manifestações enviadas ou consulte protocolos
+            </p>
+          </div>
+
+          {/* Tabs */}
+          <div className="flex border-b border-border mb-4">
+            <button
+              onClick={() => handleTabChange('submitted')}
+              className={`py-3 px-6 font-medium transition-colors border-b-2 ${
+                activeTab === 'submitted'
+                  ? 'text-secondary border-secondary'
+                  : 'text-muted-foreground hover:text-foreground border-transparent'
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                <RiCheckLine className="size-5" />
+                Enviadas
+              </div>
+            </button>
+            <button
+              onClick={() => handleTabChange('drafts')}
+              className={`py-3 px-6 font-medium transition-colors border-b-2 ${
+                activeTab === 'drafts'
+                  ? 'text-secondary border-secondary'
+                  : 'text-muted-foreground hover:text-foreground border-transparent'
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                <RiDraftLine className="size-5" />
+                Rascunhos ({drafts.length})
+              </div>
+            </button>
+          </div>
+
+          {/* Content */}
+          {activeTab === 'submitted' ? (
+            <div className="space-y-3">
+              {/* Search Box */}
+              <form onSubmit={handleSearchProtocol} className="flex gap-3 max-w-2xl">
+                <input
+                  type="text"
+                  placeholder="Buscar por protocolo..."
+                  className="flex-1 px-4 py-3 rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-ring text-base"
+                  value={protocolSearch}
+                  onChange={e => setProtocolSearch(e.target.value)}
+                />
+                <Button
+                  type="submit"
+                  disabled={isSearching}
+                  variant="secondary"
+                  className="flex-shrink-0"
+                  aria-label="Buscar protocolo"
+                >
+                  {isSearching ? (
+                    <div className="animate-spin">
+                      <RiSearchLine className="size-5" />
+                    </div>
+                  ) : (
+                    <RiSearchLine className="size-5" />
+                  )}
+                </Button>
+              </form>
+
+              {isLoading ? (
+                <div className="text-center py-16">
+                  <div className="inline-block">
+                    <div className="animate-spin">
+                      <div className="w-12 h-12 border-4 border-border border-t-secondary rounded-full" />
                     </div>
                   </div>
-                ))
+                  <p className="text-muted-foreground mt-4">Carregando...</p>
+                </div>
+              ) : submitted.length === 0 ? (
+                <div className="text-center py-16">
+                  <RiCheckLine className="w-20 h-20 text-muted-foreground mx-auto mb-4" />
+                  <p className="font-medium text-muted-foreground mb-2 text-lg">
+                    Nenhuma manifestação encontrada
+                  </p>
+                  <p className="text-muted-foreground mb-6">
+                    Faça login para ver seu histórico ou busque por um protocolo acima.
+                  </p>
+                  <LinkButton
+                    href="/entrar"
+                    variant="secondary"
+                  >
+                    <RiLoginBoxLine className="size-5" />
+                    Acessar
+                  </LinkButton>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {/* Pagination */}
+                  <Pagination
+                    currentPage={submittedPage}
+                    totalPages={submittedTotalPages}
+                    onPageChange={setSubmittedPage}
+                    itemsCount={submitted.length}
+                    itemsPerPage={submittedItemsPerPage}
+                    onItemsPerPageChange={handleSubmittedItemsPerPageChange}
+                  />
+
+                  {/* Table */}
+                  <div className="overflow-x-auto border border-border rounded-lg">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="bg-muted border-b border-border">
+                          <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">
+                            Protocolo
+                          </th>
+                          <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">
+                            Tipo
+                          </th>
+                          <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">
+                            Assunto
+                          </th>
+                          <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">
+                            Status
+                          </th>
+                          <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">
+                            Data
+                          </th>
+                          <th className="px-6 py-3 text-center text-sm font-semibold text-foreground">
+                            Ação
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {paginatedSubmitted.map(item => (
+                          <tr
+                            key={item.id}
+                            className="border-b border-border hover:bg-muted/50 transition-colors"
+                          >
+                            <td className="px-6 py-4 text-sm font-mono font-bold text-foreground">
+                              {item.protocol}
+                            </td>
+                            <td className="px-6 py-4 text-sm text-foreground">
+                              {getTypeLabel(item.type)}
+                            </td>
+                            <td className="px-6 py-4 text-sm text-muted-foreground max-w-xs truncate">
+                              {item.subject || '-'}
+                            </td>
+                            <td className="px-6 py-4 text-sm">
+                              <span
+                                className={`inline-flex items-center px-2.5 py-1.5 rounded-full text-xs font-medium ${
+                                  item.status === 'done'
+                                    ? 'bg-success/10 text-success'
+                                    : item.status === 'analyzing'
+                                      ? 'bg-yellow-100 text-yellow-700'
+                                      : 'bg-secondary/10 text-secondary'
+                                }`}
+                              >
+                                {item.status === 'received'
+                                  ? 'Recebida'
+                                  : item.status === 'analyzing'
+                                    ? 'Em Análise'
+                                    : item.status === 'done'
+                                      ? 'Concluída'
+                                      : 'Enviada'}
+                              </span>
+                            </td>
+                            <td className="px-6 py-4 text-sm text-muted-foreground">
+                              {formatDate(item.createdAt)}
+                            </td>
+                            <td className="px-6 py-4 text-center">
+                              <button
+                                onClick={() => handleCopyProtocol(item.protocol)}
+                                className="p-2 hover:bg-muted rounded-lg transition-colors inline-flex"
+                                aria-label="Copiar protocolo"
+                                title="Copiar protocolo"
+                              >
+                                <RiFileCopyLine className="size-4 text-secondary" />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {isLoading ? (
+                <div className="text-center py-16">
+                  <div className="inline-block">
+                    <div className="animate-spin">
+                      <div className="w-12 h-12 border-4 border-border border-t-secondary rounded-full" />
+                    </div>
+                  </div>
+                  <p className="text-muted-foreground mt-4">Carregando...</p>
+                </div>
+              ) : drafts.length === 0 ? (
+                <div className="text-center py-16">
+                  <RiDraftLine className="w-20 h-20 text-muted-foreground mx-auto mb-4" />
+                  <p className="font-medium text-muted-foreground mb-2 text-lg">Nenhum rascunho salvo</p>
+                  <p className="text-muted-foreground">
+                    Seus rascunhos aparecerão aqui quando você começar uma nova manifestação.
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {/* Pagination */}
+                  <Pagination
+                    currentPage={draftsPage}
+                    totalPages={draftsTotalPages}
+                    onPageChange={setDraftsPage}
+                    itemsCount={drafts.length}
+                    itemsPerPage={draftsItemsPerPage}
+                    onItemsPerPageChange={handleDraftsItemsPerPageChange}
+                  />
+
+                  {/* Table */}
+                  <div className="overflow-x-auto border border-border rounded-lg">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="bg-muted border-b border-border">
+                          <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">
+                            Tipo
+                          </th>
+                          <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">
+                            Assunto
+                          </th>
+                          <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">
+                            Conteúdo
+                          </th>
+                          <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">
+                            Anexos
+                          </th>
+                          <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">
+                            Atualizado
+                          </th>
+                          <th className="px-6 py-3 text-center text-sm font-semibold text-foreground">
+                            Ações
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {paginatedDrafts.map(draft => (
+                          <tr
+                            key={draft.id}
+                            className="border-b border-border hover:bg-muted/50 transition-colors"
+                          >
+                            <td className="px-6 py-4 text-sm font-medium text-foreground">
+                              {getTypeLabel(draft.type)}
+                            </td>
+                            <td className="px-6 py-4 text-sm text-secondary font-medium">
+                              {draft.subject?.name || '-'}
+                            </td>
+                            <td className="px-6 py-4 text-sm text-muted-foreground max-w-xs truncate">
+                              {draft.content?.text || '-'}
+                            </td>
+                            <td className="px-6 py-4 text-sm text-muted-foreground">
+                              {draft.content?.audio && <span className="mr-2">🎙️</span>}
+                              {draft.content?.files && draft.content.files.length > 0 && (
+                                <span>📎 {draft.content.files.length}</span>
+                              )}
+                              {!draft.content?.audio && (!draft.content?.files || draft.content.files.length === 0) && '-'}
+                            </td>
+                            <td className="px-6 py-4 text-sm text-muted-foreground">
+                              {formatDate(draft.updatedAt)}
+                            </td>
+                            <td className="px-6 py-4 text-center">
+                              <div className="flex items-center justify-center gap-2">
+                                <button
+                                  onClick={() => handleContinueDraft(draft)}
+                                  className="p-2 hover:bg-muted rounded-lg transition-colors"
+                                  aria-label="Continuar rascunho"
+                                  title="Continuar"
+                                >
+                                  <RiEditLine className="size-4 text-secondary" />
+                                </button>
+                                <button
+                                  onClick={() => handleDeleteDraft(draft.id)}
+                                  className="p-2 hover:bg-destructive/10 rounded-lg transition-colors"
+                                  aria-label="Excluir rascunho"
+                                  title="Excluir"
+                                >
+                                  <RiDeleteBinLine className="size-4 text-destructive" />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               )}
             </div>
           )}
