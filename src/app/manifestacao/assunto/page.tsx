@@ -379,7 +379,7 @@ export default function AssuntoPage() {
   }
 
   const handleBack = () => {
-    router.push('/manifestacao')
+    router.push('/manifestacao/identidade')
   }
 
   const handleNext = () => {

@@ -172,7 +172,7 @@ export default function ContentPage() {
       JSON.stringify(attachmentInfo)
     )
 
-    router.push('/manifestacao/dados')
+    router.push('/manifestacao/revisar')
   }
 
   const handleBack = () => {

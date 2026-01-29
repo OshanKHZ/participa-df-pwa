@@ -109,7 +109,7 @@ export default function ManifestationTypePage() {
 
   const handleNext = () => {
     if (selectedType) {
-      router.push('/manifestacao/assunto')
+      router.push('/manifestacao/identidade')
     }
   }
 

@@ -129,7 +129,7 @@ export default function ReviewPage() {
   }
 
   const handleBack = () => {
-    router.push('/manifestacao/dados')
+    router.push('/manifestacao/conteudo')
   }
 
   if (!data) {
@@ -280,7 +280,7 @@ export default function ReviewPage() {
                 Identificação
               </h3>
               <Link
-                href="/manifestacao/dados"
+                href="/manifestacao/identidade"
                 className="text-secondary hover:text-secondary-hover transition-colors"
                 aria-label="Editar identificação"
               >
@@ -502,7 +502,7 @@ export default function ReviewPage() {
                       </h3>
                     </div>
                     <Link
-                      href="/manifestacao/dados"
+                      href="/manifestacao/identidade"
                       className="p-2 rounded-lg hover:bg-accent transition-colors text-secondary hover:text-secondary-hover"
                       aria-label="Editar identificação"
                     >
