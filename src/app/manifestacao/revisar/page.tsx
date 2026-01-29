@@ -352,6 +352,7 @@ export default function ReviewPage() {
               totalSteps={STEPS.TOTAL}
               description="Confira todas as informações antes de enviar sua manifestação."
               title="Revisar manifestação"
+              onStepClick={navigateToStep}
             />
 
             {/* Two Column Layout */}

@@ -12,9 +12,10 @@ export interface StepperStep {
 
 export interface StepperProps {
   steps: StepperStep[]
+  onStepClick?: (stepNumber: number) => void
 }
 
-export function Stepper({ steps }: StepperProps) {
+export function Stepper({ steps, onStepClick }: StepperProps) {
   return (
     <div className="flex items-center justify-between w-full gap-2">
       {steps.map((step, index) => (
@@ -27,17 +28,34 @@ export function Stepper({ steps }: StepperProps) {
             >
               {step.label}
             </span>
-            <div
-              className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold border-2 ${
-                step.current
-                  ? 'bg-secondary border-secondary text-white'
-                  : step.completed
-                    ? 'bg-success border-success text-white'
-                    : 'bg-card border-border text-muted-foreground'
-              }`}
-            >
-              {step.completed && !step.current ? '✓' : step.number}
-            </div>
+            {step.completed || step.current ? (
+              <button
+                onClick={() => onStepClick?.(step.number)}
+                className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold border-2 transition-colors btn-focus ${
+                  step.current
+                    ? 'bg-secondary border-secondary text-white'
+                    : step.completed
+                      ? 'bg-success border-success text-white hover:bg-success/90'
+                      : 'bg-card border-border text-muted-foreground'
+                }`}
+                aria-label={`Ir para passo ${step.number}: ${step.label}`}
+                aria-current={step.current ? 'step' : undefined}
+              >
+                {step.completed && !step.current ? '✓' : step.number}
+              </button>
+            ) : (
+              <div
+                className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold border-2 ${
+                  step.current
+                    ? 'bg-secondary border-secondary text-white'
+                    : step.completed
+                      ? 'bg-success border-success text-white'
+                      : 'bg-card border-border text-muted-foreground'
+                }`}
+              >
+                {step.completed && !step.current ? '✓' : step.number}
+              </div>
+            )}
           </div>
           {index < steps.length - 1 && (
             <div
@@ -272,6 +290,7 @@ export interface ManifestationHeaderProps {
   totalSteps: number
   description: string
   title?: string
+  onStepClick?: (stepNumber: number) => void
 }
 
 export function ManifestationHeader({
@@ -279,6 +298,7 @@ export function ManifestationHeader({
   totalSteps,
   description,
   title = 'Nova Manifestação',
+  onStepClick,
 }: ManifestationHeaderProps) {
   return (
     <>
@@ -289,7 +309,7 @@ export function ManifestationHeader({
 
       {/* Progress Steps */}
       <div className="mb-6">
-        <Stepper steps={getDesktopSteps(currentStep)} />
+        <Stepper steps={getDesktopSteps(currentStep)} onStepClick={onStepClick} />
       </div>
 
       {/* Step Progress Info */}

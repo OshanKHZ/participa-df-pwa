@@ -272,6 +272,7 @@ export default function ContentPage() {
             currentStep={STEPS.CONTENT}
             totalSteps={STEPS.TOTAL}
             description="Descreva sua manifestação com o máximo de detalhes possível."
+            onStepClick={navigateToStep}
           />
 
           <div className="space-y-8">

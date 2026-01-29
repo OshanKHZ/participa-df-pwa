@@ -536,6 +536,7 @@ export default function AssuntoPage() {
             currentStep={STEPS.SUBJECT}
             totalSteps={STEPS.TOTAL}
             description="Selecione o assunto da sua manifestação."
+            onStepClick={navigateToStep}
           />
 
           {/* Subject Select */}

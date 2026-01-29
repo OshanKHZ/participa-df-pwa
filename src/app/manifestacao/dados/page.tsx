@@ -158,6 +158,7 @@ export default function PersonalDataPage() {
             currentStep={STEPS.DATA}
             totalSteps={STEPS.TOTAL}
             description="Identificação opcional - você pode se identificar ou manter o anonimato."
+            onStepClick={navigateToStep}
           />
 
           {/* Identification Section */}
