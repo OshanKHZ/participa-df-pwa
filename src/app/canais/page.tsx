@@ -36,20 +36,16 @@ export default function CanaisPage() {
           </div>
 
           {/* Info Box */}
-          <div className="mt-6 bg-primary rounded-lg p-4">
-            <div className="flex gap-3">
-              <RiTimeLine className="size-5 text-white flex-shrink-0 mt-0.5" />
-              <div>
-                <h3 className="font-semibold text-white mb-1">
-                  Prazo de Resposta
-                </h3>
-                <p className="text-sm text-white/90 leading-relaxed">
-                  Todas as manifestações são respondidas em até 30 dias úteis,
-                  conforme a legislação vigente. Você pode acompanhar o
-                  andamento pelo número de protocolo.
-                </p>
-              </div>
-            </div>
+          <div className="mt-8 mb-6">
+            <h3 className="text-sm font-semibold text-foreground uppercase tracking-wide mb-3 flex items-center gap-2">
+              <RiTimeLine className="size-5 text-primary" />
+              Prazo de Resposta
+            </h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Todas as manifestações são respondidas em até 30 dias úteis,
+              conforme a legislação vigente. Você pode acompanhar o
+              andamento pelo número de protocolo.
+            </p>
           </div>
 
           {/* Help Box */}
@@ -155,21 +151,15 @@ export default function CanaisPage() {
 
           {/* Info Box */}
           <section className="mb-8">
-            <div className="bg-primary rounded-lg p-5">
-              <div className="flex gap-4">
-                <RiTimeLine className="size-6 text-white flex-shrink-0 mt-0.5" />
-                <div>
-                  <h3 className="font-semibold text-white mb-2">
-                    Prazo de Resposta
-                  </h3>
-                  <p className="text-sm text-white/90 leading-relaxed">
-                    Todas as manifestações são respondidas em até 30 dias úteis,
-                    conforme a legislação vigente. Você pode acompanhar o
-                    andamento pelo número de protocolo.
-                  </p>
-                </div>
-              </div>
-            </div>
+            <h2 className="text-sm font-semibold text-foreground uppercase tracking-wide mb-4 flex items-center gap-2">
+              <RiTimeLine className="size-5 text-primary" />
+              Prazo de Resposta
+            </h2>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Todas as manifestações são respondidas em até 30 dias úteis,
+              conforme a legislação vigente. Você pode acompanhar o
+              andamento pelo número de protocolo.
+            </p>
           </section>
 
           {/* CTA */}
