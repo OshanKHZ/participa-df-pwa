@@ -39,17 +39,27 @@ const formatTimeAgo = (date: Date): string => {
 
 const CARD_WIDTH = 180 // px
 const GAP = 8 // px
+const BUFFER_SIZE = 6
 
 export function BlogCarousel({ posts, className }: BlogCarouselProps) {
   const trackRef = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const [currentIndex, setCurrentIndex] = useState(1)
+  const [currentIndex, setCurrentIndex] = useState(BUFFER_SIZE)
   const [isAnimating, setIsAnimating] = useState(false)
   const touchStartRef = useRef<number | null>(null)
 
-  // Infinite loop: [last, ...posts, first]
-  const infinitePosts =
-    posts.length > 0 ? [posts[posts.length - 1], ...posts, posts[0]] : []
+  // Generate buffers handling any posts length
+  const startBuffer = []
+  for (let i = 0; i < BUFFER_SIZE; i++) {
+    startBuffer.unshift(posts[posts.length - 1 - (i % posts.length)])
+  }
+  const endBuffer = []
+  for (let i = 0; i < BUFFER_SIZE; i++) {
+    endBuffer.push(posts[i % posts.length])
+  }
+
+  // Infinite loop: [buffer_end, ...posts, buffer_start]
+  const infinitePosts = [...startBuffer, ...posts, ...endBuffer]
 
   const totalItems = posts.length
 
@@ -60,11 +70,6 @@ export function BlogCarousel({ posts, className }: BlogCarouselProps) {
     setIsAnimating(animate)
 
     const cardWidthWithGap = CARD_WIDTH + GAP
-    // Calculate scroll to center the card. 
-    // Original logic was attempting to center or offset based on fixed width.
-    // Let's restore the exact original calculation: index * cardWidthWithGap - CARD_WIDTH / 2
-    // Wait, original logic in Step 19 was: index * cardWidthWithGap - CARD_WIDTH / 2
-    // Let's stick to that.
     const scrollPos = index * cardWidthWithGap - CARD_WIDTH / 2
 
     el.style.transition = animate ? 'transform 0.4s ease-out' : 'none'
@@ -76,19 +81,23 @@ export function BlogCarousel({ posts, className }: BlogCarouselProps) {
   // Initial position
   useEffect(() => {
     if (posts.length > 0 && containerRef.current) {
-      updatePosition(1, false)
+      // Start at the first real item (after the start buffer)
+      updatePosition(BUFFER_SIZE, false)
     }
   }, [posts.length, updatePosition])
 
   // Handle infinite loop reset after animation
   useEffect(() => {
     const handleTransitionEnd = () => {
-      if (currentIndex === infinitePosts.length - 1) {
-        // At end clone, jump to real first
-        updatePosition(1, false)
-      } else if (currentIndex === 0) {
-        // At start clone, jump to real last
-        updatePosition(totalItems, false)
+      // If we've scrolled into the end buffer (clones of start)
+      if (currentIndex >= totalItems + BUFFER_SIZE) {
+        // Jump back to real start
+        updatePosition(currentIndex - totalItems, false)
+      } 
+      // If we've scrolled into the start buffer (clones of end)
+      else if (currentIndex < BUFFER_SIZE) {
+        // Jump forward to real end
+        updatePosition(currentIndex + totalItems, false)
       }
       setIsAnimating(false)
     }
@@ -96,7 +105,7 @@ export function BlogCarousel({ posts, className }: BlogCarouselProps) {
     const el = trackRef.current
     el?.addEventListener('transitionend', handleTransitionEnd)
     return () => el?.removeEventListener('transitionend', handleTransitionEnd)
-  }, [currentIndex, infinitePosts.length, totalItems, updatePosition])
+  }, [currentIndex, totalItems, updatePosition])
 
   const nextPage = useCallback(() => {
     if (isAnimating) return
@@ -112,10 +121,9 @@ export function BlogCarousel({ posts, className }: BlogCarouselProps) {
 
   // Get real index for dots (0 to totalItems-1)
   const getRealIndex = useCallback(() => {
-    if (currentIndex === 0) return totalItems - 1
-    if (currentIndex === infinitePosts.length - 1) return 0
-    return currentIndex - 1
-  }, [currentIndex, infinitePosts.length, totalItems])
+    // Map current buffer-shifted index back to 0..totalItems-1
+    return ((currentIndex - BUFFER_SIZE) % totalItems + totalItems) % totalItems
+  }, [currentIndex, totalItems])
 
   const activeDotIndex = getRealIndex()
 
