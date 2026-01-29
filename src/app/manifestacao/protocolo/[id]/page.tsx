@@ -105,7 +105,7 @@ export default function ProtocolPage() {
                 className="w-full mt-3"
               >
                 <RiSearchLine className="size-4" aria-hidden="true" />
-                Consultar protocolo
+                Acompanhar manifestação
               </LinkButton>
             </div>
 
@@ -214,7 +214,7 @@ export default function ProtocolPage() {
                 className="mt-3"
               >
                 <RiSearchLine className="size-4" aria-hidden="true" />
-                Consultar protocolo
+                Acompanhar manifestação
               </LinkButton>
             </div>
 

@@ -33,7 +33,7 @@ export default function ServicosPage() {
     },
     {
       id: 'consultar',
-      title: 'Consultar protocolo',
+      title: 'Acompanhar manifestação',
       icon: RiSearchLine,
       href: '/consultar-manifestacoes',
     },
