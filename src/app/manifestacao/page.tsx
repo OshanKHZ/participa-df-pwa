@@ -274,7 +274,7 @@ export default function ManifestationTypePage() {
             <Button variant="destructive" onClick={handleBack}>
               Cancelar
             </Button>
-            <Button onClick={handleNext} disabled={!selectedType}>
+            <Button variant="success" onClick={handleNext} disabled={!selectedType}>
               Avançar
               <RiArrowRightLine className="size-5" />
             </Button>

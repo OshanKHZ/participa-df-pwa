@@ -16,6 +16,7 @@ import {
 import { MobileBottomNav } from '@/shared/components/MobileBottomNav'
 import { MenuDrawer } from '@/shared/components/MenuDrawer'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
+import { LinkButton } from '@/shared/components/Button'
 import { BlogCarousel } from './BlogCarousel'
 import type { BlogPost } from './BlogCarousel'
 
@@ -279,23 +280,24 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
 
             {/* Mobile Buttons */}
             <div className="w-full space-y-3">
-              <Link
+              <LinkButton
                 href="/manifestacao"
-                className="block w-full bg-secondary hover:bg-secondary-hover text-secondary-foreground font-medium py-3 px-6 rounded-md transition-colors"
+                variant="secondary"
+                className="w-full rounded-md py-3"
               >
-                <span className="flex items-center justify-center gap-2">
-                  <RiAddLine className="size-5" />
-                  Nova Manifestação
-                </span>
-              </Link>
+                <RiAddLine className="size-5" />
+                Nova Manifestação
+              </LinkButton>
 
-              <Link
+              <LinkButton
                 href="/historico"
-                className="w-full text-secondary hover:text-secondary-hover font-medium py-2 px-4 text-sm flex items-center justify-center gap-2"
+                variant="accent"
+                size="sm"
+                className="w-full"
               >
                 <RiSearchLine className="size-4" />
                 Consultar protocolo
-              </Link>
+              </LinkButton>
             </div>
           </div>
           </div>

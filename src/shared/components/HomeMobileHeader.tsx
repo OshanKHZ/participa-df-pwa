@@ -8,11 +8,13 @@ import { MenuDrawer } from './MenuDrawer'
 interface HomeMobileHeaderProps {
   isAuthenticated?: boolean
   userName?: string
+  slogan?: string
 }
 
 export function HomeMobileHeader({
   isAuthenticated = false,
   userName,
+  slogan = 'Você no controle!',
 }: HomeMobileHeaderProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
@@ -45,9 +47,7 @@ export function HomeMobileHeader({
 
         {/* Slogan Section */}
         <div className="bg-primary-light px-4 py-2.5">
-          <p className="text-center text-xs font-medium text-white">
-            Você no controle!
-          </p>
+          <p className="text-center text-sm font-medium text-white">{slogan}</p>
         </div>
       </header>
     </>

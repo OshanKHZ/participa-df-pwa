@@ -627,7 +627,7 @@ export default function AssuntoPage() {
             <Button variant="link" onClick={handleBack}>
               Voltar
             </Button>
-            <Button onClick={handleNext} disabled={!selectedAssunto}>
+            <Button variant="success" onClick={handleNext} disabled={!selectedAssunto}>
               Avançar
               <RiArrowRightLine className="size-5" />
             </Button>

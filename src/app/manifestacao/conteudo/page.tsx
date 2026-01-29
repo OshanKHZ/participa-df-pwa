@@ -414,7 +414,7 @@ export default function ContentPage() {
             <Button variant="link" onClick={handleBack}>
               Voltar
             </Button>
-            <Button onClick={handleNext} disabled={!hasContent}>
+            <Button variant="success" onClick={handleNext} disabled={!hasContent}>
               Avançar
               <RiArrowRightLine className="size-5" />
             </Button>

@@ -3,6 +3,7 @@
 import { useEffect } from 'react'
 import Link from 'next/link'
 import { useFocusTrap } from '@/shared/hooks/useFocusTrap'
+import { LinkButton } from '@/shared/components/Button'
 import {
   RiCloseLine,
   RiUserLine,
@@ -100,22 +101,25 @@ export function MenuDrawer({
               <p className="text-sm text-muted-foreground">
                 Entre ou cadastre-se para acompanhar suas manifestações
               </p>
-              <Link
+              <LinkButton
                 href="/entrar"
+                variant="secondary"
                 onClick={onClose}
-                className="flex items-center justify-center gap-2 w-full bg-secondary hover:bg-secondary-hover text-secondary-foreground font-medium py-2.5 px-4 rounded-lg transition-colors"
+                className="w-full py-2.5"
               >
                 <RiLoginBoxLine className="size-5" />
                 Entrar
-              </Link>
-              <Link
+              </LinkButton>
+              <LinkButton
                 href="/cadastrar"
+                variant="accent"
+                size="sm"
                 onClick={onClose}
-                className="w-full text-secondary hover:text-secondary-hover font-medium py-2 text-sm flex items-center justify-center gap-2"
+                className="w-full"
               >
                 <RiUserAddLine className="size-4" />
                 Cadastrar-se
-              </Link>
+              </LinkButton>
             </div>
           )}
         </div>

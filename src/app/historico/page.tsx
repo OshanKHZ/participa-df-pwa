@@ -8,6 +8,7 @@ import {
   RiDeleteBinLine,
   RiEditLine,
 } from 'react-icons/ri'
+import { Button } from '@/shared/components/Button'
 import { getDrafts, deleteDraft, loadDraft } from '@/shared/utils/draftManager'
 import {
   getUserManifestations,
@@ -331,13 +332,15 @@ export default function HistoryPage() {
                     </div>
 
                     <div className="flex gap-2">
-                      <button
+                      <Button
                         onClick={() => handleContinueDraft(draft)}
-                        className="flex-1 py-2 px-3 bg-secondary text-secondary-foreground rounded-lg hover:bg-secondary-hover transition-colors flex items-center justify-center gap-2 text-sm font-medium"
+                        variant="secondary"
+                        size="sm"
+                        className="flex-1"
                       >
                         <RiEditLine className="size-4" />
                         Continuar
-                      </button>
+                      </Button>
                       <button
                         onClick={() => handleDeleteDraft(draft.id)}
                         className="py-2 px-3 border-2 border-border text-destructive rounded-lg hover:bg-destructive/10 transition-colors flex items-center justify-center"

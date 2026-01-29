@@ -189,7 +189,7 @@ export default function PersonalDataPage() {
             <Button variant="link" onClick={handleBack}>
               Voltar
             </Button>
-            <Button onClick={handleNext} disabled={!canProceed}>
+            <Button variant="success" onClick={handleNext} disabled={!canProceed}>
               {isAnonymous ? 'Continuar' : 'Avançar'}
               <RiArrowRightLine className="size-5" />
             </Button>
