@@ -123,9 +123,7 @@ export function MenuDrawer({
                 className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-accent transition-colors text-foreground"
               >
                 <RiFileListLine className="size-5 text-muted-foreground" />
-                <span className="font-medium text-sm">
-                  Minhas Manifestações
-                </span>
+                <span className="font-medium text-sm">Acompanhar Registro</span>
               </Link>
             </li>
             <li>
