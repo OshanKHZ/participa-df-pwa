@@ -163,7 +163,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
 
             {/* Consultar Protocolo */}
             <Link 
-              href="/historico" 
+              href="/consultar-manifestacoes" 
               className="group flex flex-col p-5 bg-card border border-border/50 rounded-xl hover:border-secondary/50 hover:bg-accent/50 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 ring-offset-background h-full"
             >
               <div className="flex items-center gap-2.5 mb-2">
@@ -252,7 +252,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
               </LinkButton>
 
               <LinkButton
-                href="/historico"
+                href="/consultar-manifestacoes"
                 variant="accent"
                 size="sm"
                 className="w-full"

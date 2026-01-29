@@ -35,7 +35,7 @@ export default function ServicosPage() {
       id: 'consultar',
       title: 'Consultar protocolo',
       icon: RiSearchLine,
-      href: '/historico',
+      href: '/consultar-manifestacoes',
     },
     {
       id: 'canais',

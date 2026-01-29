@@ -118,7 +118,7 @@ export function MenuDrawer({
           <ul className="space-y-1">
             <li>
               <Link
-                href="/historico"
+                href="/consultar-manifestacoes"
                 onClick={onClose}
                 className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-accent transition-colors text-foreground"
               >

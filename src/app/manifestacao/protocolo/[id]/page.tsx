@@ -101,7 +101,7 @@ export default function ProtocolPage() {
               </div>
 
               <LinkButton
-                href="/historico"
+                href="/consultar-manifestacoes"
                 variant="secondary"
                 size="sm"
                 className="w-full mt-3"
@@ -210,7 +210,7 @@ export default function ProtocolPage() {
               </div>
 
               <LinkButton
-                href="/historico"
+                href="/consultar-manifestacoes"
                 variant="secondary"
                 size="sm"
                 className="mt-3"
