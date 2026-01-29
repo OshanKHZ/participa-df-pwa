@@ -93,12 +93,7 @@ export function DesktopHeader() {
                 />
               </div>
 
-              <Link
-                href="/servicos"
-                className={navLinkClass('/servicos', true)}
-              >
-                Serviços
-              </Link>
+
 
               <div
                 className="relative"
