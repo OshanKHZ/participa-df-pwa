@@ -13,6 +13,7 @@ import {
   RiSettings4Line,
   RiCustomerService2Line,
   RiFileListLine,
+  RiDownloadLine,
 } from 'react-icons/ri'
 
 interface MenuDrawerProps {
@@ -20,6 +21,8 @@ interface MenuDrawerProps {
   onClose: () => void
   isAuthenticated?: boolean
   userName?: string
+  showInstallButton?: boolean
+  onInstall?: () => void
 }
 
 export function MenuDrawer({
@@ -27,6 +30,8 @@ export function MenuDrawer({
   onClose,
   isAuthenticated = false,
   userName,
+  showInstallButton = false,
+  onInstall,
 }: MenuDrawerProps) {
   const containerRef = useFocusTrap(isOpen)
 
@@ -116,6 +121,22 @@ export function MenuDrawer({
         {/* Navigation Links */}
         <nav className="p-4">
           <ul className="space-y-1">
+            {/* Install App Button */}
+            {showInstallButton && onInstall && (
+              <li>
+                <button
+                  onClick={() => {
+                    onInstall()
+                    onClose()
+                  }}
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-accent transition-colors text-foreground"
+                >
+                  <RiDownloadLine className="size-5 text-muted-foreground" />
+                  <span className="font-medium text-sm">Instalar App</span>
+                </button>
+              </li>
+            )}
+
             <li>
               <Link
                 href="/consultar-manifestacoes"

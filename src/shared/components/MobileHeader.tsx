@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { RiArrowLeftLine, RiMenuLine } from 'react-icons/ri'
 import { MenuDrawer } from './MenuDrawer'
+import { usePWAInstall } from '@/shared/hooks/usePWAInstall'
+import { InstallModal } from './pwa/InstallModal'
 
 interface MobileHeaderProps {
   title: string
@@ -18,6 +20,17 @@ export function MobileHeader({
 }: MobileHeaderProps) {
   const router = useRouter()
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+  const [showInstallModal, setShowInstallModal] = useState(false)
+  const { isInstallable, promptInstall, isInstalled } = usePWAInstall()
+
+  const handleInstallClick = () => {
+    setShowInstallModal(true)
+  }
+
+  const handleInstallConfirm = () => {
+    promptInstall()
+    setShowInstallModal(false)
+  }
 
   return (
     <>
@@ -26,6 +39,13 @@ export function MobileHeader({
         onClose={() => setIsDrawerOpen(false)}
         isAuthenticated={isAuthenticated}
         userName={userName}
+        showInstallButton={isInstallable && !isInstalled}
+        onInstall={handleInstallClick}
+      />
+      <InstallModal
+        isOpen={showInstallModal}
+        onClose={() => setShowInstallModal(false)}
+        onConfirm={handleInstallConfirm}
       />
       <header className="lg:hidden bg-primary text-white sticky top-0 z-header">
         <div className="px-4 py-3">

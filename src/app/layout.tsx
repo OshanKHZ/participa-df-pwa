@@ -5,6 +5,7 @@ import { FontSizeProvider } from '@/shared/contexts/FontSizeContext'
 import { AccessibilityMenu } from '@/shared/components/AccessibilityMenu'
 import { ServiceWorkerRegister } from '@/shared/components/ServiceWorkerRegister'
 import { SessionProvider } from '@/shared/providers/SessionProvider'
+import { PWAInstallProvider } from '@/shared/components/pwa/PWAInstallProvider'
 import { Toaster } from 'sonner'
 
 const montserrat = Montserrat({
@@ -29,11 +30,13 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon.png', type: 'image/png' },
       { url: '/icons/icon-192x192.png', sizes: '192x192', type: 'image/png' },
       { url: '/icons/icon-512x512.png', sizes: '512x512', type: 'image/png' },
     ],
     apple: [
-      { url: '/icons/icon-152x152.png', sizes: '152x152', type: 'image/png' },
+      { url: '/icons/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
     ],
   },
   other: {
@@ -64,6 +67,7 @@ export default function RootLayout({
           <FontSizeProvider>
             {children}
             <AccessibilityMenu />
+            <PWAInstallProvider />
             <Toaster position="top-center" richColors />
           </FontSizeProvider>
         </SessionProvider>
