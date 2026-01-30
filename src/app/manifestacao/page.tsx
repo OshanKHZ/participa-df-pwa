@@ -220,65 +220,68 @@ export default function ManifestationTypePage() {
         <div className="grid grid-cols-[1fr_600px_1fr] gap-12 py-12 px-8">
           {/* Coluna Esquerda - Sidebar */}
           <div className="flex justify-end">
-            <FormSidebar
-              helpText="Selecione o tipo de manifestação que melhor descreve sua solicitação. Esta informação ajuda a direcionar seu caso para o setor responsável."
-            />
+            <FormSidebar helpText="Selecione o tipo de manifestação que melhor descreve sua solicitação. Esta informação ajuda a direcionar seu caso para o setor responsável." />
           </div>
 
           {/* Coluna Central - Main Content (sempre centralizado) */}
           <main className="w-full">
-          {/* Progress Steps */}
-          <div className="mb-10">
-            <Stepper steps={getDesktopSteps(STEPS.TYPE)} />
-          </div>
+            {/* Progress Steps */}
+            <div className="mb-10">
+              <Stepper steps={getDesktopSteps(STEPS.TYPE)} />
+            </div>
 
-          {/* Title */}
-          <div className="mb-8">
-            <h1 className="text-xl font-semibold text-foreground mb-2">
-              Nova Manifestação
-            </h1>
-            <p className="text-muted-foreground">
-              Selecione o tipo de manifestação desejada.
-            </p>
-          </div>
+            {/* Title */}
+            <div className="mb-8">
+              <h1 className="text-xl font-semibold text-foreground mb-2">
+                Nova Manifestação
+              </h1>
+              <p className="text-muted-foreground">
+                Selecione o tipo de manifestação desejada.
+              </p>
+            </div>
 
-          {/* Types Select */}
-          <div className="mb-8">
-            <label
-              htmlFor="manifestation-type"
-              className="block text-sm font-medium text-foreground mb-2"
-            >
-              Tipo de manifestação
-            </label>
-            <Select value={selectedType || ''} onValueChange={handleSelectType}>
-              <SelectTrigger id="manifestation-type">
-                <SelectValue placeholder="Selecione..." />
-              </SelectTrigger>
-              <SelectContent>
-                {manifestationTypes.map(type => (
-                  <SelectItem key={type.id} value={type.id}>
-                    <div className="flex items-center gap-3">
-                      <span className="font-medium text-sm">{type.label}</span>
-                      <span className="text-xs text-muted-foreground">
-                        {type.description}
-                      </span>
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+            {/* Types Select */}
+            <div className="mb-8">
+              <label
+                htmlFor="manifestation-type"
+                className="block text-sm font-medium text-foreground mb-2"
+              >
+                Tipo de manifestação
+              </label>
+              <Select
+                value={selectedType || ''}
+                onValueChange={handleSelectType}
+              >
+                <SelectTrigger id="manifestation-type">
+                  <SelectValue placeholder="Selecione..." />
+                </SelectTrigger>
+                <SelectContent>
+                  {manifestationTypes.map(type => (
+                    <SelectItem key={type.id} value={type.id}>
+                      <div className="flex items-center gap-3">
+                        <span className="font-medium text-sm">
+                          {type.label}
+                        </span>
+                        <span className="text-xs text-muted-foreground">
+                          {type.description}
+                        </span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
 
-          {/* Desktop Navigation */}
-          <div className="flex items-center justify-between pt-6 border-t border-border">
-            <Button variant="destructive" onClick={handleBack}>
-              Cancelar
-            </Button>
-            <Button onClick={handleNext} disabled={!selectedType}>
-              Avançar
-              <RiArrowRightLine className="size-5" />
-            </Button>
-          </div>
+            {/* Desktop Navigation */}
+            <div className="flex items-center justify-between pt-6 border-t border-border">
+              <Button variant="destructive" onClick={handleBack}>
+                Cancelar
+              </Button>
+              <Button onClick={handleNext} disabled={!selectedType}>
+                Avançar
+                <RiArrowRightLine className="size-5" />
+              </Button>
+            </div>
           </main>
 
           {/* Coluna Direita - Vazia (para manter centralização) */}

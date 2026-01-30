@@ -71,10 +71,7 @@ function FileThumbnail({
               />
             )}
             {fileType === 'video' && (
-              <video
-                src={thumbnail}
-                className="w-full h-full object-cover"
-              />
+              <video src={thumbnail} className="w-full h-full object-cover" />
             )}
             {fileType === 'audio' && (
               <div className="w-full h-full flex items-center justify-center bg-accent">
@@ -125,13 +122,8 @@ export function FileUploader({
   className = '',
 }: FileUploaderProps) {
   // Use external hook if provided, otherwise create internal one
-  const {
-    files,
-    handleFileUpload,
-    removeFile,
-    openPreview,
-    canAddMore,
-  } = externalFileUpload || useFileUpload({ maxFiles, acceptedTypes })
+  const { files, handleFileUpload, removeFile, openPreview, canAddMore } =
+    externalFileUpload || useFileUpload({ maxFiles, acceptedTypes })
 
   return (
     <div className={className}>

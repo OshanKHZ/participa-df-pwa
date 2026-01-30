@@ -2,7 +2,7 @@
 
 import { MobileHeader } from '@/shared/components/MobileHeader'
 import { MobileBottomNav } from '@/shared/components/MobileBottomNav'
-import { AuthForm } from '@/shared/components/AuthForm'
+import { AuthForm } from '../../shared/components/AuthForm'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
 
 export default function EntrarPage() {

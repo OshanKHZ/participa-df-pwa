@@ -26,11 +26,7 @@ import { useDraftPersistence } from '@/shared/hooks/useDraftPersistence'
 import { useFileUpload } from '@/shared/hooks/useFileUpload'
 import { useAudioRecorder } from '@/shared/hooks/useAudioRecorder'
 import { STORAGE_KEYS } from '@/shared/constants/storageKeys'
-import {
-  LIMITS,
-  STEPS,
-  COMPLETED_STEPS,
-} from '@/shared/constants/designTokens'
+import { LIMITS, STEPS, COMPLETED_STEPS } from '@/shared/constants/designTokens'
 
 const channels = [
   {
@@ -226,10 +222,7 @@ export default function ContentPage() {
           {/* Audio Section */}
           {selectedChannels.includes('audio') && (
             <div className="bg-card rounded-lg p-3 card-border">
-              <AudioRecorder
-                audioRecorder={audioRecorder}
-                compact
-              />
+              <AudioRecorder audioRecorder={audioRecorder} compact />
             </div>
           )}
 
@@ -261,172 +254,172 @@ export default function ContentPage() {
         <div className="grid grid-cols-[1fr_600px_1fr] gap-12 py-12 px-8">
           {/* Coluna Esquerda - Sidebar */}
           <div className="flex justify-end">
-            <FormSidebar
-              helpText="Descreva sua manifestação com detalhes. Você pode usar texto, áudio ou anexar arquivos para ilustrar melhor sua solicitação."
-            />
+            <FormSidebar helpText="Descreva sua manifestação com detalhes. Você pode usar texto, áudio ou anexar arquivos para ilustrar melhor sua solicitação." />
           </div>
 
           {/* Coluna Central - Main Content (sempre centralizado) */}
           <main id="main-content" className="w-full">
-          {/* Progress Steps */}
-          <div className="mb-10">
-            <Stepper steps={getDesktopSteps(STEPS.CONTENT)} />
-          </div>
-
-          {/* Title */}
-          <div className="mb-8">
-            <h1 className="text-xl font-semibold text-foreground mb-2">
-              Nova Manifestação
-            </h1>
-            <p className="text-muted-foreground">
-              Descreva sua manifestação com o máximo de detalhes possível.
-            </p>
-          </div>
-
-          <div className="space-y-8">
-            {/* Text Section */}
-            <TextInput
-              id="desktop-text"
-              label="Descrição da manifestação"
-              value={textContent}
-              onChange={handleTextChange}
-              placeholder="Descreva sua manifestação aqui..."
-              minLength={LIMITS.MIN_TEXT_CHARS}
-              maxLength={LIMITS.MAX_TEXT_CHARS}
-              textareaClassName="min-h-48 p-4 border-2 border-border rounded-lg resize-y btn-focus focus:border-secondary"
-            />
-
-            {/* Audio Section */}
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-foreground">
-                Gravar áudio (opcional)
-              </label>
-              <div className="border-2 border-border rounded-lg p-4">
-                <AudioRecorder audioRecorder={audioRecorder} />
-              </div>
+            {/* Progress Steps */}
+            <div className="mb-10">
+              <Stepper steps={getDesktopSteps(STEPS.CONTENT)} />
             </div>
 
-            {/* Files Section */}
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-foreground">
-                Anexar arquivos (opcional)
-              </label>
-              <div className="border-2 border-border rounded-lg p-3">
-                <div className="flex items-center justify-between">
-                  <input
-                    type="file"
-                    id="file-upload"
-                    multiple
-                    accept={acceptedFileTypes}
-                    onChange={handleFileUpload}
-                    className="hidden"
-                  />
-                  <label
-                    htmlFor="file-upload"
-                    className="flex-1 text-sm text-muted-foreground cursor-pointer hover:text-foreground"
-                  >
-                    {files.length === 0
-                      ? 'Nenhum arquivo selecionado'
-                      : `${files.length} arquivo(s) anexado(s)`}
-                  </label>
-                  <label
-                    htmlFor="file-upload"
-                    className="px-4 py-2 bg-secondary text-white rounded hover:bg-secondary-hover transition-colors text-sm font-medium cursor-pointer ml-3"
-                  >
-                    Anexar
-                  </label>
-                </div>
-              </div>
-              <p className="text-xs text-muted-foreground">
-                Formatos: PNG, JPG, WEBP, MP3, WAV, MP4, WEBM, PDF • Máx.{' '}
-                {LIMITS.MAX_FILE_COUNT} arquivos
+            {/* Title */}
+            <div className="mb-8">
+              <h1 className="text-xl font-semibold text-foreground mb-2">
+                Nova Manifestação
+              </h1>
+              <p className="text-muted-foreground">
+                Descreva sua manifestação com o máximo de detalhes possível.
               </p>
-
-              {files.length > 0 && (
-                <div className="grid grid-cols-3 gap-2">
-                  {files.map((file, index) => {
-                    const fileType = file.type.startsWith('image/')
-                      ? 'image'
-                      : file.type.startsWith('video/')
-                        ? 'video'
-                        : file.type.startsWith('audio/')
-                          ? 'audio'
-                          : 'document'
-                    const isMedia = ['image', 'video', 'audio'].includes(fileType)
-
-                    return (
-                      <div
-                        key={index}
-                        className="border-2 border-border rounded-lg overflow-hidden cursor-pointer"
-                        onClick={() => isMedia && openPreview(file, index)}
-                      >
-                        <div className="relative group aspect-video bg-muted">
-                          {file.preview && isMedia ? (
-                            <>
-                              {fileType === 'image' && (
-                                <img
-                                  src={file.preview}
-                                  alt={file.name}
-                                  className="w-full h-full object-cover"
-                                />
-                              )}
-                              {fileType === 'video' && (
-                                <video
-                                  src={file.preview}
-                                  className="w-full h-full object-cover"
-                                />
-                              )}
-                              {fileType === 'audio' && (
-                                <div className="w-full h-full flex items-center justify-center bg-accent">
-                                  <RiMicLine className="size-6 text-muted-foreground" />
-                                </div>
-                              )}
-                              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-                                <RiZoomInLine className="size-6 text-white" />
-                              </div>
-                            </>
-                          ) : (
-                            <div className="w-full h-full flex flex-col items-center justify-center bg-accent p-2">
-                              <span className="text-3xl">📎</span>
-                            </div>
-                          )}
-                        </div>
-                        <div className="px-2 py-1.5 bg-card flex items-center justify-between gap-1">
-                          <span
-                            className="text-xs text-foreground truncate flex-1"
-                            title={file.name}
-                          >
-                            {file.name}
-                          </span>
-                          <button
-                            onClick={e => {
-                              e.stopPropagation()
-                              removeFile(index)
-                            }}
-                            className="text-destructive hover:text-destructive/80 ml-2 cursor-pointer btn-focus p-1 text-lg leading-none"
-                            aria-label={`Remover arquivo ${file.name}`}
-                          >
-                            ×
-                          </button>
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-              )}
             </div>
-          </div>
 
-          {/* Desktop Navigation */}
-          <div className="flex items-center justify-between pt-6 border-t border-border mt-8">
-            <Button variant="link" onClick={handleBack}>
-              Voltar
-            </Button>
-            <Button onClick={handleNext} disabled={!hasContent}>
-              Avançar
-              <RiArrowRightLine className="size-5" />
-            </Button>
-          </div>
+            <div className="space-y-8">
+              {/* Text Section */}
+              <TextInput
+                id="desktop-text"
+                label="Descrição da manifestação"
+                value={textContent}
+                onChange={handleTextChange}
+                placeholder="Descreva sua manifestação aqui..."
+                minLength={LIMITS.MIN_TEXT_CHARS}
+                maxLength={LIMITS.MAX_TEXT_CHARS}
+                textareaClassName="min-h-48 p-4 border-2 border-border rounded-lg resize-y btn-focus focus:border-secondary"
+              />
+
+              {/* Audio Section */}
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-foreground">
+                  Gravar áudio (opcional)
+                </label>
+                <div className="border-2 border-border rounded-lg p-4">
+                  <AudioRecorder audioRecorder={audioRecorder} />
+                </div>
+              </div>
+
+              {/* Files Section */}
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-foreground">
+                  Anexar arquivos (opcional)
+                </label>
+                <div className="border-2 border-border rounded-lg p-3">
+                  <div className="flex items-center justify-between">
+                    <input
+                      type="file"
+                      id="file-upload"
+                      multiple
+                      accept={acceptedFileTypes}
+                      onChange={handleFileUpload}
+                      className="hidden"
+                    />
+                    <label
+                      htmlFor="file-upload"
+                      className="flex-1 text-sm text-muted-foreground cursor-pointer hover:text-foreground"
+                    >
+                      {files.length === 0
+                        ? 'Nenhum arquivo selecionado'
+                        : `${files.length} arquivo(s) anexado(s)`}
+                    </label>
+                    <label
+                      htmlFor="file-upload"
+                      className="px-4 py-2 bg-secondary text-white rounded hover:bg-secondary-hover transition-colors text-sm font-medium cursor-pointer ml-3"
+                    >
+                      Anexar
+                    </label>
+                  </div>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Formatos: PNG, JPG, WEBP, MP3, WAV, MP4, WEBM, PDF • Máx.{' '}
+                  {LIMITS.MAX_FILE_COUNT} arquivos
+                </p>
+
+                {files.length > 0 && (
+                  <div className="grid grid-cols-3 gap-2">
+                    {files.map((file, index) => {
+                      const fileType = file.type.startsWith('image/')
+                        ? 'image'
+                        : file.type.startsWith('video/')
+                          ? 'video'
+                          : file.type.startsWith('audio/')
+                            ? 'audio'
+                            : 'document'
+                      const isMedia = ['image', 'video', 'audio'].includes(
+                        fileType
+                      )
+
+                      return (
+                        <div
+                          key={index}
+                          className="border-2 border-border rounded-lg overflow-hidden cursor-pointer"
+                          onClick={() => isMedia && openPreview(file, index)}
+                        >
+                          <div className="relative group aspect-video bg-muted">
+                            {file.preview && isMedia ? (
+                              <>
+                                {fileType === 'image' && (
+                                  <img
+                                    src={file.preview}
+                                    alt={file.name}
+                                    className="w-full h-full object-cover"
+                                  />
+                                )}
+                                {fileType === 'video' && (
+                                  <video
+                                    src={file.preview}
+                                    className="w-full h-full object-cover"
+                                  />
+                                )}
+                                {fileType === 'audio' && (
+                                  <div className="w-full h-full flex items-center justify-center bg-accent">
+                                    <RiMicLine className="size-6 text-muted-foreground" />
+                                  </div>
+                                )}
+                                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                                  <RiZoomInLine className="size-6 text-white" />
+                                </div>
+                              </>
+                            ) : (
+                              <div className="w-full h-full flex flex-col items-center justify-center bg-accent p-2">
+                                <span className="text-3xl">📎</span>
+                              </div>
+                            )}
+                          </div>
+                          <div className="px-2 py-1.5 bg-card flex items-center justify-between gap-1">
+                            <span
+                              className="text-xs text-foreground truncate flex-1"
+                              title={file.name}
+                            >
+                              {file.name}
+                            </span>
+                            <button
+                              onClick={e => {
+                                e.stopPropagation()
+                                removeFile(index)
+                              }}
+                              className="text-destructive hover:text-destructive/80 ml-2 cursor-pointer btn-focus p-1 text-lg leading-none"
+                              aria-label={`Remover arquivo ${file.name}`}
+                            >
+                              ×
+                            </button>
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Desktop Navigation */}
+            <div className="flex items-center justify-between pt-6 border-t border-border mt-8">
+              <Button variant="link" onClick={handleBack}>
+                Voltar
+              </Button>
+              <Button onClick={handleNext} disabled={!hasContent}>
+                Avançar
+                <RiArrowRightLine className="size-5" />
+              </Button>
+            </div>
           </main>
 
           {/* Coluna Direita - Vazia (para manter centralização) */}

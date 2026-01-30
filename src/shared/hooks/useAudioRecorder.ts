@@ -20,7 +20,9 @@ export interface UseAudioRecorderReturn {
   clearAll: () => void
 }
 
-export function useAudioRecorder(options: UseAudioRecorderOptions = {}): UseAudioRecorderReturn {
+export function useAudioRecorder(
+  options: UseAudioRecorderOptions = {}
+): UseAudioRecorderReturn {
   const {
     maxAudios = LIMITS.MAX_AUDIO_COUNT,
     maxDuration = LIMITS.MAX_AUDIO_DURATION_SECONDS,

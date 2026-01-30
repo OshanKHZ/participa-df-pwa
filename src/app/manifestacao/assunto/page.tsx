@@ -525,121 +525,121 @@ export default function AssuntoPage() {
         <div className="grid grid-cols-[1fr_600px_1fr] gap-12 py-12 px-8">
           {/* Coluna Esquerda - Sidebar */}
           <div className="flex justify-end">
-            <FormSidebar
-              helpText="Busque e selecione o assunto que melhor descreve sua manifestação. Isso ajuda a categorizar e direcionar corretamente sua solicitação."
-            />
+            <FormSidebar helpText="Busque e selecione o assunto que melhor descreve sua manifestação. Isso ajuda a categorizar e direcionar corretamente sua solicitação." />
           </div>
 
           {/* Coluna Central - Main Content (sempre centralizado) */}
           <main className="w-full">
-          {/* Progress Steps */}
-          <div className="mb-10">
-            <Stepper steps={getDesktopSteps(STEPS.SUBJECT)} />
-          </div>
-
-          {/* Title */}
-          <div className="mb-8">
-            <h1 className="text-xl font-semibold text-foreground mb-2">
-              Nova Manifestação
-            </h1>
-            <p className="text-muted-foreground">
-              Selecione o assunto da sua manifestação.
-            </p>
-          </div>
-
-          {/* Subject Select */}
-          <div className="mb-8 relative">
-            <label
-              htmlFor="desktop-subject-search"
-              className="block text-sm font-medium text-foreground mb-2"
-            >
-              Assunto
-            </label>
-            <div className="relative">
-              <RiSearchLine className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-muted-foreground pointer-events-none" />
-              <input
-                id="desktop-subject-search"
-                type="text"
-                value={desktopSearchTerm}
-                onChange={e => {
-                  setDesktopSearchTerm(e.target.value)
-                  setDropdownOpen(true)
-                }}
-                onFocus={() => setDropdownOpen(true)}
-                placeholder="Digite para buscar assuntos..."
-                className="w-full pl-10 pr-10 py-3 border-2 border-border rounded-lg btn-focus focus:border-secondary"
-                aria-label="Buscar assunto"
-              />
-              {desktopSearchTerm && (
-                <button
-                  onClick={() => {
-                    setDesktopSearchTerm('')
-                    setDropdownOpen(false)
-                  }}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 size-6 flex items-center justify-center hover:bg-muted rounded-full transition-colors"
-                  aria-label="Limpar busca"
-                >
-                  <RiCloseLine className="size-5 text-muted-foreground" />
-                </button>
-              )}
+            {/* Progress Steps */}
+            <div className="mb-10">
+              <Stepper steps={getDesktopSteps(STEPS.SUBJECT)} />
             </div>
 
-            {/* Dropdown */}
-            {dropdownOpen && (
-              <>
-                <div
-                  className="fixed inset-0 z-40"
-                  onClick={() => setDropdownOpen(false)}
-                />
-                <div className="absolute z-50 w-full mt-1 bg-card border-2 border-border rounded-lg shadow-lg max-h-[60vh] overflow-y-auto">
-                  {filteredAssuntos.length > 0 ? (
-                    filteredAssuntos.slice(0, 50).map((assunto: Assunto) => {
-                      const isSelected = selectedAssunto?.id === assunto.id
-                      return (
-                        <button
-                          key={assunto.id}
-                          onClick={() => {
-                            handleSelectAssunto(assunto)
-                            setDesktopSearchTerm(assunto.name)
-                            setDropdownOpen(false)
-                          }}
-                          className={`w-full px-4 py-3 text-left border-b border-border last:border-b-0 transition-colors ${
-                            isSelected
-                              ? 'bg-success/10 text-success'
-                              : 'hover:bg-accent text-foreground'
-                          }`}
-                        >
-                          <p className="text-sm font-medium">{assunto.name}</p>
-                        </button>
-                      )
-                    })
-                  ) : (
-                    <div className="px-4 py-8 text-center">
-                      <p className="text-sm text-muted-foreground">
-                        Nenhum assunto encontrado
-                      </p>
-                    </div>
-                  )}
-                </div>
-              </>
-            )}
-            <p className="text-xs text-muted-foreground mt-2">
-              {selectedAssunto
-                ? `Selecionado: ${selectedAssunto.name}`
-                : 'Digite para buscar e selecione um assunto'}
-            </p>
-          </div>
+            {/* Title */}
+            <div className="mb-8">
+              <h1 className="text-xl font-semibold text-foreground mb-2">
+                Nova Manifestação
+              </h1>
+              <p className="text-muted-foreground">
+                Selecione o assunto da sua manifestação.
+              </p>
+            </div>
 
-          {/* Desktop Navigation */}
-          <div className="flex items-center justify-between pt-6 border-t border-border">
-            <Button variant="link" onClick={handleBack}>
-              Voltar
-            </Button>
-            <Button onClick={handleNext} disabled={!selectedAssunto}>
-              Avançar
-              <RiArrowRightLine className="size-5" />
-            </Button>
-          </div>
+            {/* Subject Select */}
+            <div className="mb-8 relative">
+              <label
+                htmlFor="desktop-subject-search"
+                className="block text-sm font-medium text-foreground mb-2"
+              >
+                Assunto
+              </label>
+              <div className="relative">
+                <RiSearchLine className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-muted-foreground pointer-events-none" />
+                <input
+                  id="desktop-subject-search"
+                  type="text"
+                  value={desktopSearchTerm}
+                  onChange={e => {
+                    setDesktopSearchTerm(e.target.value)
+                    setDropdownOpen(true)
+                  }}
+                  onFocus={() => setDropdownOpen(true)}
+                  placeholder="Digite para buscar assuntos..."
+                  className="w-full pl-10 pr-10 py-3 border-2 border-border rounded-lg btn-focus focus:border-secondary"
+                  aria-label="Buscar assunto"
+                />
+                {desktopSearchTerm && (
+                  <button
+                    onClick={() => {
+                      setDesktopSearchTerm('')
+                      setDropdownOpen(false)
+                    }}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 size-6 flex items-center justify-center hover:bg-muted rounded-full transition-colors"
+                    aria-label="Limpar busca"
+                  >
+                    <RiCloseLine className="size-5 text-muted-foreground" />
+                  </button>
+                )}
+              </div>
+
+              {/* Dropdown */}
+              {dropdownOpen && (
+                <>
+                  <div
+                    className="fixed inset-0 z-40"
+                    onClick={() => setDropdownOpen(false)}
+                  />
+                  <div className="absolute z-50 w-full mt-1 bg-card border-2 border-border rounded-lg shadow-lg max-h-[60vh] overflow-y-auto">
+                    {filteredAssuntos.length > 0 ? (
+                      filteredAssuntos.slice(0, 50).map((assunto: Assunto) => {
+                        const isSelected = selectedAssunto?.id === assunto.id
+                        return (
+                          <button
+                            key={assunto.id}
+                            onClick={() => {
+                              handleSelectAssunto(assunto)
+                              setDesktopSearchTerm(assunto.name)
+                              setDropdownOpen(false)
+                            }}
+                            className={`w-full px-4 py-3 text-left border-b border-border last:border-b-0 transition-colors ${
+                              isSelected
+                                ? 'bg-success/10 text-success'
+                                : 'hover:bg-accent text-foreground'
+                            }`}
+                          >
+                            <p className="text-sm font-medium">
+                              {assunto.name}
+                            </p>
+                          </button>
+                        )
+                      })
+                    ) : (
+                      <div className="px-4 py-8 text-center">
+                        <p className="text-sm text-muted-foreground">
+                          Nenhum assunto encontrado
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </>
+              )}
+              <p className="text-xs text-muted-foreground mt-2">
+                {selectedAssunto
+                  ? `Selecionado: ${selectedAssunto.name}`
+                  : 'Digite para buscar e selecione um assunto'}
+              </p>
+            </div>
+
+            {/* Desktop Navigation */}
+            <div className="flex items-center justify-between pt-6 border-t border-border">
+              <Button variant="link" onClick={handleBack}>
+                Voltar
+              </Button>
+              <Button onClick={handleNext} disabled={!selectedAssunto}>
+                Avançar
+                <RiArrowRightLine className="size-5" />
+              </Button>
+            </div>
           </main>
 
           {/* Coluna Direita - Vazia (para manter centralização) */}

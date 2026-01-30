@@ -1,7 +1,11 @@
 'use client'
 
 import { RiMicLine, RiCloseLine } from 'react-icons/ri'
-import { useAudioRecorder, formatTime, type UseAudioRecorderReturn } from '@/shared/hooks/useAudioRecorder'
+import {
+  useAudioRecorder,
+  formatTime,
+  type UseAudioRecorderReturn,
+} from '@/shared/hooks/useAudioRecorder'
 
 interface AudioRecorderProps {
   audioRecorder?: UseAudioRecorderReturn
@@ -32,9 +36,7 @@ export function AudioRecorder({
   return (
     <div className={className}>
       {!compact && (
-        <p className="text-sm font-medium text-foreground mb-2">
-          Gravar áudio
-        </p>
+        <p className="text-sm font-medium text-foreground mb-2">Gravar áudio</p>
       )}
 
       {canRecord && (

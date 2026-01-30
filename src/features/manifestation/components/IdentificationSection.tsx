@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { signIn, signOut, useSession } from 'next-auth/react'
+
 import {
   RiEye2Line,
   RiEyeCloseLine,
@@ -9,8 +9,8 @@ import {
   RiCheckLine,
 } from 'react-icons/ri'
 import { TOGGLE } from '@/shared/constants/designTokens'
-import { sendOtp } from '@/app/actions/otp'
-import { RiGoogleFill, RiMailLine, RiLockPasswordLine } from 'react-icons/ri'
+import { sendOtp, verifyOtp, logout, getSessionData } from '@/app/actions/auth'
+import { RiMailLine, RiLockPasswordLine } from 'react-icons/ri'
 import { Button } from '@/shared/components/Button'
 
 interface IdentificationSectionProps {
@@ -22,6 +22,11 @@ interface IdentificationSectionProps {
     phone: string
   }) => void
   onAnonymousConsentChange?: (hasConsent: boolean) => void
+  formData: {
+    name: string
+    email: string
+    phone: string
+  }
 }
 
 export function IdentificationSection({
@@ -29,13 +34,22 @@ export function IdentificationSection({
   onAnonymousChange,
   onFormDataChange,
   onAnonymousConsentChange,
+  formData,
 }: IdentificationSectionProps) {
-  const { data: session } = useSession()
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-  })
+  const [session, setSession] = useState<{
+    user?: {
+      name?: string | null
+      email?: string | null
+      image?: string | null
+    }
+  } | null>(null)
+
+  useEffect(() => {
+    getSessionData().then(user => {
+      if (user) setSession({ user })
+    })
+  }, [])
+
   const [anonymousConsent, setAnonymousConsent] = useState(false)
 
   // OTP State
@@ -46,27 +60,22 @@ export function IdentificationSection({
   const [error, setError] = useState('')
 
   // Load saved data on mount
-  useEffect(() => {
-    const savedData = localStorage.getItem('manifestation_personal_data')
-    if (savedData) {
-      const parsed = JSON.parse(savedData)
-      setFormData(parsed)
-    }
-  }, [])
 
   // Update parent when form data changes
+  // Update parent when session changes or visibility changes
   useEffect(() => {
-    if (!isAnonymous) {
-      const dataToUse = session?.user
-        ? {
-            name: session.user.name || '',
-            email: session.user.email || '',
-            phone: formData.phone,
-          }
-        : formData
-      onFormDataChange(dataToUse)
+    // We only update if session exists and user is not anonymous
+    // This populates the name/email fields from session
+    if (!isAnonymous && session?.user) {
+      onFormDataChange({
+        name: session.user.name || '',
+        email: session.user.email || '',
+        phone: formData.phone,
+      })
     }
-  }, [formData, session, isAnonymous, onFormDataChange])
+    // We only want to run this when session loads or anonymity mode changes,
+    // NOT when formData changes (to avoid loops)
+  }, [session, isAnonymous, onFormDataChange])
 
   // Update parent when consent changes
   useEffect(() => {
@@ -76,11 +85,7 @@ export function IdentificationSection({
   }, [anonymousConsent, onAnonymousConsentChange])
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }))
-  }
-
-  const handleGoogleLogin = async () => {
-    await signIn('google', { callbackUrl: window.location.href })
+    onFormDataChange({ ...formData, [field]: value })
   }
 
   const handleSendOtp = async () => {
@@ -93,8 +98,12 @@ export function IdentificationSection({
     setError('')
 
     try {
-      await sendOtp(authEmail)
-      setShowOtpInput(true)
+      const result = await sendOtp(authEmail)
+      if (result.success) {
+        setShowOtpInput(true)
+      } else {
+        setError(result.error || 'Erro ao enviar código.')
+      }
     } catch (err) {
       setError('Erro ao enviar código. Tente novamente.')
       console.error(err)
@@ -113,17 +122,12 @@ export function IdentificationSection({
     setError('')
 
     try {
-      const res = await signIn('credentials', {
-        email: authEmail,
-        code: otpCode,
-        redirect: false,
-      })
-
-      if (res?.error) {
-        setError('Código incorreto ou expirado')
-      } else {
+      const result = await verifyOtp(authEmail, otpCode)
+      if (result.success) {
         // Refresh page to update session
         window.location.reload()
+      } else {
+        setError(result.error || 'Código incorreto ou expirado')
       }
     } catch (err) {
       setError('Erro ao validar código')
@@ -134,7 +138,8 @@ export function IdentificationSection({
   }
 
   const handleLogout = async () => {
-    await signOut({ callbackUrl: window.location.href })
+    await logout()
+    window.location.reload()
   }
 
   return (
@@ -307,11 +312,17 @@ export function IdentificationSection({
                 {showOtpInput ? (
                   <div className="space-y-3">
                     <div>
-                      <label htmlFor="otp-code" className="text-xs text-muted-foreground mb-1 block">
+                      <label
+                        htmlFor="otp-code"
+                        className="text-xs text-muted-foreground mb-1 block"
+                      >
                         Código de Verificação
                       </label>
                       <div className="relative">
-                        <RiLockPasswordLine className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
+                        <RiLockPasswordLine
+                          className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                          aria-hidden="true"
+                        />
                         <input
                           id="otp-code"
                           type="text"
@@ -323,7 +334,10 @@ export function IdentificationSection({
                           aria-describedby="otp-help"
                         />
                       </div>
-                      <p className="text-xs text-muted-foreground mt-1.5" id="otp-help">
+                      <p
+                        className="text-xs text-muted-foreground mt-1.5"
+                        id="otp-help"
+                      >
                         Enviamos um código para {authEmail}.{' '}
                         <button
                           type="button"
@@ -346,11 +360,17 @@ export function IdentificationSection({
                 ) : (
                   <div className="space-y-3">
                     <div>
-                      <label htmlFor="auth-email" className="text-xs text-muted-foreground mb-1 block">
+                      <label
+                        htmlFor="auth-email"
+                        className="text-xs text-muted-foreground mb-1 block"
+                      >
                         E-mail
                       </label>
                       <div className="relative">
-                        <RiMailLine className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
+                        <RiMailLine
+                          className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                          aria-hidden="true"
+                        />
                         <input
                           id="auth-email"
                           type="email"
@@ -370,26 +390,6 @@ export function IdentificationSection({
                     >
                       {isLoading ? 'Enviando...' : 'Entrar com E-mail'}
                     </Button>
-
-                    <div className="relative py-2">
-                      <div className="absolute inset-0 flex items-center">
-                        <span className="w-full border-t border-border" />
-                      </div>
-                      <div className="relative flex justify-center text-xs uppercase">
-                        <span className="bg-muted/30 px-2 text-muted-foreground">
-                          Ou continuar com
-                        </span>
-                      </div>
-                    </div>
-
-                    <button
-                      type="button"
-                      onClick={handleGoogleLogin}
-                      className="w-full flex items-center justify-center gap-2 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium py-2 px-4 rounded-md transition-colors text-sm btn-focus"
-                    >
-                      <RiGoogleFill className="size-5 text-[#DB4437]" />
-                      Google
-                    </button>
                   </div>
                 )}
               </div>

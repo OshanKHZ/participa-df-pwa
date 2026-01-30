@@ -2,11 +2,8 @@
 
 import { useEffect } from 'react'
 import { RiCloseLine, RiArrowLeftLine, RiArrowRightSLine } from 'react-icons/ri'
-import {
-  FileWithPreview,
-  getFileType,
-  formatFileSize,
-} from '@/shared/hooks/useFileUpload'
+import type { FileWithPreview } from '@/shared/hooks/useFileUpload'
+import { getFileType, formatFileSize } from '@/shared/hooks/useFileUpload'
 
 interface FilePreviewModalProps {
   file: FileWithPreview | null
@@ -119,9 +116,7 @@ export function FilePreviewModal({
         {/* File info */}
         <div className="mt-2 text-center">
           <p className="text-white text-sm truncate">{file.name}</p>
-          <p className="text-gray-400 text-xs">
-            {formatFileSize(file.size)}
-          </p>
+          <p className="text-gray-400 text-xs">{formatFileSize(file.size)}</p>
         </div>
       </div>
     </div>

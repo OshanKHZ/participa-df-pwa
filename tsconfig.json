@@ -28,7 +28,7 @@
       "@/*": ["./src/*"],
       "@/features/*": ["./src/features/*"],
       "@/shared/*": ["./src/shared/*"],
-      "@/lib/*": ["./lib/*"],
+      "@/lib/*": ["./src/lib/*"],
       "@/data/*": ["./data/*"]
     }
   },

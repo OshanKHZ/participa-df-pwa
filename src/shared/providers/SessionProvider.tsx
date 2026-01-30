@@ -1,7 +1,13 @@
 'use client'
 
-import { SessionProvider as NextAuthSessionProvider } from 'next-auth/react'
+import { createContext, useContext } from 'react'
+
+const SessionContext = createContext<{ user: unknown } | null>(null)
 
 export function SessionProvider({ children }: { children: React.ReactNode }) {
-  return <NextAuthSessionProvider>{children}</NextAuthSessionProvider>
+  // For now, simpler implementation.
+  // In a full implementation, we might fetch session status here or pass it from server.
+  return <>{children}</>
 }
+
+export const useSession = () => useContext(SessionContext)

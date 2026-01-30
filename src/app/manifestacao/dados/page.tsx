@@ -112,6 +112,7 @@ export default function PersonalDataPage() {
             onAnonymousChange={setIsAnonymous}
             onFormDataChange={setFormData}
             onAnonymousConsentChange={setAnonymousConsent}
+            formData={formData}
           />
 
           {/* Info Box */}
@@ -147,62 +148,61 @@ export default function PersonalDataPage() {
         <div className="grid grid-cols-[1fr_600px_1fr] gap-12 py-12 px-8">
           {/* Coluna Esquerda - Sidebar */}
           <div className="flex justify-end">
-            <FormSidebar
-              helpText="Você pode se identificar ou manter sua manifestação anônima. A identificação ajuda no contato para informações adicionais sobre sua solicitação."
-            />
+            <FormSidebar helpText="Você pode se identificar ou manter sua manifestação anônima. A identificação ajuda no contato para informações adicionais sobre sua solicitação." />
           </div>
 
           {/* Coluna Central - Main Content (sempre centralizado) */}
           <main id="main-content" className="w-full">
-          {/* Progress Steps */}
-          <div className="mb-10">
-            <Stepper steps={getDesktopSteps(STEPS.DATA)} />
-          </div>
+            {/* Progress Steps */}
+            <div className="mb-10">
+              <Stepper steps={getDesktopSteps(STEPS.DATA)} />
+            </div>
 
-          {/* Title */}
-          <div className="mb-8">
-            <h1 className="text-xl font-semibold text-foreground mb-2">
-              Nova Manifestação
-            </h1>
-            <p className="text-muted-foreground">
-              Identificação opcional - você pode se identificar ou manter o
-              anonimato.
-            </p>
-          </div>
+            {/* Title */}
+            <div className="mb-8">
+              <h1 className="text-xl font-semibold text-foreground mb-2">
+                Nova Manifestação
+              </h1>
+              <p className="text-muted-foreground">
+                Identificação opcional - você pode se identificar ou manter o
+                anonimato.
+              </p>
+            </div>
 
-          {/* Identification Section */}
-          <IdentificationSection
-            isAnonymous={isAnonymous}
-            onAnonymousChange={setIsAnonymous}
-            onFormDataChange={setFormData}
-            onAnonymousConsentChange={setAnonymousConsent}
-          />
+            {/* Identification Section */}
+            <IdentificationSection
+              isAnonymous={isAnonymous}
+              onAnonymousChange={setIsAnonymous}
+              onFormDataChange={setFormData}
+              onAnonymousConsentChange={setAnonymousConsent}
+              formData={formData}
+            />
 
-          {/* Info Box */}
-          <div className="mt-6">
-            <p className="text-xs text-muted-foreground">
-              *Base legal Art.14 da{' '}
-              <a
-                href="http://www.sinj.df.gov.br/sinj/Norma/c87d4625386745569ef03028e6c79397/Instru_o_Normativa_1_05_05_2017.html"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline hover:text-foreground"
-              >
-                Instrução Normativa CGDF Nº 01 de 05/05/2017
-              </a>
-            </p>
-          </div>
+            {/* Info Box */}
+            <div className="mt-6">
+              <p className="text-xs text-muted-foreground">
+                *Base legal Art.14 da{' '}
+                <a
+                  href="http://www.sinj.df.gov.br/sinj/Norma/c87d4625386745569ef03028e6c79397/Instru_o_Normativa_1_05_05_2017.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-foreground"
+                >
+                  Instrução Normativa CGDF Nº 01 de 05/05/2017
+                </a>
+              </p>
+            </div>
 
-          {/* Desktop Navigation */}
-          <div className="flex items-center justify-between pt-6 border-t border-border mt-8">
-            <Button variant="link" onClick={handleBack}>
-              Voltar
-            </Button>
-            <Button onClick={handleNext} disabled={!canProceed}>
-              {isAnonymous ? 'Continuar' : 'Avançar'}
-              <RiArrowRightLine className="size-5" />
-            </Button>
-          </div>
+            {/* Desktop Navigation */}
+            <div className="flex items-center justify-between pt-6 border-t border-border mt-8">
+              <Button variant="link" onClick={handleBack}>
+                Voltar
+              </Button>
+              <Button onClick={handleNext} disabled={!canProceed}>
+                {isAnonymous ? 'Continuar' : 'Avançar'}
+                <RiArrowRightLine className="size-5" />
+              </Button>
+            </div>
           </main>
 
           {/* Coluna Direita - Vazia (para manter centralização) */}

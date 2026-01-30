@@ -26,7 +26,9 @@ export interface UseFileUploadReturn {
   clearAll: () => void
 }
 
-export function useFileUpload(options: UseFileUploadOptions = {}): UseFileUploadReturn {
+export function useFileUpload(
+  options: UseFileUploadOptions = {}
+): UseFileUploadReturn {
   const {
     maxFiles = LIMITS.MAX_FILE_COUNT,
     acceptedTypes = '.pdf,.png,.jpg,.jpeg,.webp,.mp3,.wav,.ogg,.mp4,.webm,.mov',
@@ -47,48 +49,54 @@ export function useFileUpload(options: UseFileUploadOptions = {}): UseFileUpload
     }
   }, [files])
 
-  const handleFileUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFiles = Array.from(e.target.files || [])
+  const handleFileUpload = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const selectedFiles = Array.from(e.target.files || [])
 
-    // Filter by accepted types
-    const validFiles = selectedFiles.filter(file => {
-      const extension = '.' + file.name.split('.').pop()?.toLowerCase()
-      return acceptedTypes.includes(extension)
-    })
+      // Filter by accepted types
+      const validFiles = selectedFiles.filter(file => {
+        const extension = '.' + file.name.split('.').pop()?.toLowerCase()
+        return acceptedTypes.includes(extension)
+      })
 
-    if (files.length + validFiles.length > maxFiles) {
-      alert(`Você pode enviar no máximo ${maxFiles} arquivos`)
-      return
-    }
-
-    const filesWithPreview = validFiles.map(file => {
-      const fileWithPreview = file as FileWithPreview
-      if (
-        file.type.startsWith('image/') ||
-        file.type.startsWith('video/') ||
-        file.type.startsWith('audio/')
-      ) {
-        fileWithPreview.preview = URL.createObjectURL(file)
+      if (files.length + validFiles.length > maxFiles) {
+        alert(`Você pode enviar no máximo ${maxFiles} arquivos`)
+        return
       }
-      return fileWithPreview
-    })
 
-    setFiles(prev => [...prev, ...filesWithPreview])
-  }, [files.length, maxFiles, acceptedTypes])
+      const filesWithPreview = validFiles.map(file => {
+        const fileWithPreview = file as FileWithPreview
+        if (
+          file.type.startsWith('image/') ||
+          file.type.startsWith('video/') ||
+          file.type.startsWith('audio/')
+        ) {
+          fileWithPreview.preview = URL.createObjectURL(file)
+        }
+        return fileWithPreview
+      })
 
-  const removeFile = useCallback((index: number) => {
-    setFiles(prev => {
-      const file = prev[index]
-      if (file?.preview) {
-        URL.revokeObjectURL(file.preview)
-      }
-      // Close preview if removing the currently viewed file
-      if (file === previewFile) {
-        setPreviewFile(null)
-      }
-      return prev.filter((_, i) => i !== index)
-    })
-  }, [previewFile])
+      setFiles(prev => [...prev, ...filesWithPreview])
+    },
+    [files.length, maxFiles, acceptedTypes]
+  )
+
+  const removeFile = useCallback(
+    (index: number) => {
+      setFiles(prev => {
+        const file = prev[index]
+        if (file?.preview) {
+          URL.revokeObjectURL(file.preview)
+        }
+        // Close preview if removing the currently viewed file
+        if (file === previewFile) {
+          setPreviewFile(null)
+        }
+        return prev.filter((_, i) => i !== index)
+      })
+    },
+    [previewFile]
+  )
 
   const openPreview = useCallback((file: FileWithPreview, index: number) => {
     setPreviewFile(file)

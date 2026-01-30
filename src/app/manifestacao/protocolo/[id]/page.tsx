@@ -64,9 +64,14 @@ export default function ProtocolPage() {
           {/* Success Icon */}
           <div className="flex flex-col items-center text-center mb-8">
             <div className="w-20 h-20 bg-[var(--color-progress)] rounded-full flex items-center justify-center mb-4">
-              <RiCheckboxCircleLine className="w-12 h-12 text-white" aria-hidden="true" />
+              <RiCheckboxCircleLine
+                className="w-12 h-12 text-white"
+                aria-hidden="true"
+              />
             </div>
-            <h2 className="text-2xl font-bold text-foreground mb-2">Sucesso!</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-2">
+              Sucesso!
+            </h2>
             <p className="text-sm text-muted-foreground">
               Sua manifestação foi registrada com sucesso
             </p>
@@ -125,7 +130,8 @@ export default function ProtocolPage() {
 
             <div className="border-t border-border pt-4">
               <p className="text-xs text-muted-foreground text-center">
-                Guarde este número para acompanhar o andamento da sua manifestação
+                Guarde este número para acompanhar o andamento da sua
+                manifestação
               </p>
             </div>
           </div>
@@ -175,9 +181,14 @@ export default function ProtocolPage() {
           {/* Success Icon */}
           <div className="flex flex-col items-center text-center mb-10">
             <div className="w-24 h-24 bg-[var(--color-progress)] rounded-full flex items-center justify-center mb-6">
-              <RiCheckboxCircleLine className="w-16 h-16 text-white" aria-hidden="true" />
+              <RiCheckboxCircleLine
+                className="w-16 h-16 text-white"
+                aria-hidden="true"
+              />
             </div>
-            <h1 className="text-3xl font-bold text-foreground mb-3">Manifestação Registrada!</h1>
+            <h1 className="text-3xl font-bold text-foreground mb-3">
+              Manifestação Registrada!
+            </h1>
             <p className="text-base text-muted-foreground">
               Sua manifestação foi registrada com sucesso
             </p>
@@ -237,7 +248,8 @@ export default function ProtocolPage() {
 
             <div className="border-t border-border pt-6">
               <p className="text-sm text-muted-foreground text-center">
-                Guarde este número para acompanhar o andamento da sua manifestação
+                Guarde este número para acompanhar o andamento da sua
+                manifestação
               </p>
             </div>
           </div>

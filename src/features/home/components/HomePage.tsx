@@ -127,10 +127,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
       />
 
       {/* Main Content */}
-      <main
-        id="main-content"
-        className="pb-28 lg:pb-8 min-h-screen bg-muted"
-      >
+      <main id="main-content" className="pb-28 lg:pb-8 min-h-screen bg-muted">
         {/* Desktop Layout: Sidebar + Blog Banner */}
         <div className="hidden lg:block">
           <div className="max-w-7xl mx-auto px-8 py-12">
@@ -157,7 +154,9 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
                     href="/manifestacao"
                     className="block px-5 py-3 hover:bg-white/10 transition-colors"
                   >
-                    <h4 className="text-sm font-medium text-white">Nova Manifestação</h4>
+                    <h4 className="text-sm font-medium text-white">
+                      Nova Manifestação
+                    </h4>
                   </Link>
 
                   {/* Consultar Protocolo */}
@@ -165,7 +164,9 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
                     href="/historico"
                     className="block px-5 py-3 hover:bg-white/10 transition-colors"
                   >
-                    <h4 className="text-sm font-medium text-white">Consultar protocolo</h4>
+                    <h4 className="text-sm font-medium text-white">
+                      Consultar protocolo
+                    </h4>
                   </Link>
 
                   {/* Sobre a Ouvidoria */}
@@ -173,7 +174,9 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
                     href="/o-que-e-ouvidoria"
                     className="block px-5 py-3 hover:bg-white/10 transition-colors"
                   >
-                    <h4 className="text-sm font-medium text-white">Sobre a Ouvidoria</h4>
+                    <h4 className="text-sm font-medium text-white">
+                      Sobre a Ouvidoria
+                    </h4>
                   </Link>
 
                   {/* Orientações */}
@@ -181,7 +184,9 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
                     href="/orientacoes"
                     className="block px-5 py-3 hover:bg-white/10 transition-colors"
                   >
-                    <h4 className="text-sm font-medium text-white">Orientações para o registro</h4>
+                    <h4 className="text-sm font-medium text-white">
+                      Orientações para o registro
+                    </h4>
                   </Link>
 
                   {/* Perguntas Frequentes */}
@@ -189,7 +194,9 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
                     href="/ajuda"
                     className="block px-5 py-3 hover:bg-white/10 transition-colors"
                   >
-                    <h4 className="text-sm font-medium text-white">Perguntas frequentes</h4>
+                    <h4 className="text-sm font-medium text-white">
+                      Perguntas frequentes
+                    </h4>
                   </Link>
 
                   {/* Canais de Atendimento */}
@@ -197,7 +204,9 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
                     href="/canais"
                     className="block px-5 py-3 hover:bg-white/10 transition-colors"
                   >
-                    <h4 className="text-sm font-medium text-white">Canais de atendimento</h4>
+                    <h4 className="text-sm font-medium text-white">
+                      Canais de atendimento
+                    </h4>
                   </Link>
                 </div>
               </aside>
@@ -205,7 +214,9 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
               {/* Right Content - Blog Banner */}
               <div className="bg-card rounded-lg p-8">
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-semibold text-foreground">Blog</h2>
+                  <h2 className="text-2xl font-semibold text-foreground">
+                    Blog
+                  </h2>
                   <Link
                     href="/blog"
                     className="text-sm text-secondary hover:text-secondary-hover font-medium"
@@ -216,7 +227,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
 
                 {/* Blog Grid */}
                 <div className="grid grid-cols-2 gap-6">
-                  {blogPosts.slice(0, 4).map((post) => (
+                  {blogPosts.slice(0, 4).map(post => (
                     <Link
                       key={post.id}
                       href={`/blog/${post.slug}`}
@@ -251,53 +262,53 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
           <div className="bg-card px-4 py-6">
             {/* Mobile: centered */}
             <div className="flex flex-col">
-            {/* Image */}
-            <div className="flex flex-col items-center text-center mb-6">
-              <Image
-                src="/megaphone-woman.png"
-                alt="Registre sua manifestação"
-                width={120}
-                height={120}
-                className="mb-4"
-                priority
-                fetchPriority="high"
-              />
+              {/* Image */}
+              <div className="flex flex-col items-center text-center mb-6">
+                <Image
+                  src="/megaphone-woman.png"
+                  alt="Registre sua manifestação"
+                  width={120}
+                  height={120}
+                  className="mb-4"
+                  priority
+                  fetchPriority="high"
+                />
 
-              {/* Title */}
-              <h1 className="text-lg font-semibold text-foreground mb-2">
-                Registre sua manifestação
-              </h1>
+                {/* Title */}
+                <h1 className="text-lg font-semibold text-foreground mb-2">
+                  Registre sua manifestação
+                </h1>
 
-              {/* Description */}
-              <p className="text-sm text-muted-foreground mb-6">
-                Faça denúncias, elogios, sugestões
-                <br />
-                ou reclamações de forma simples e<br />
-                rápida
-              </p>
+                {/* Description */}
+                <p className="text-sm text-muted-foreground mb-6">
+                  Faça denúncias, elogios, sugestões
+                  <br />
+                  ou reclamações de forma simples e<br />
+                  rápida
+                </p>
+              </div>
+
+              {/* Mobile Buttons */}
+              <div className="w-full space-y-3">
+                <Link
+                  href="/manifestacao"
+                  className="block w-full bg-secondary hover:bg-secondary-hover text-secondary-foreground font-medium py-3 px-6 rounded-md transition-colors"
+                >
+                  <span className="flex items-center justify-center gap-2">
+                    <RiAddLine className="size-5" />
+                    Nova Manifestação
+                  </span>
+                </Link>
+
+                <Link
+                  href="/historico"
+                  className="w-full text-secondary hover:text-secondary-hover font-medium py-2 px-4 text-sm flex items-center justify-center gap-2"
+                >
+                  <RiSearchLine className="size-4" />
+                  Consultar protocolo
+                </Link>
+              </div>
             </div>
-
-            {/* Mobile Buttons */}
-            <div className="w-full space-y-3">
-              <Link
-                href="/manifestacao"
-                className="block w-full bg-secondary hover:bg-secondary-hover text-secondary-foreground font-medium py-3 px-6 rounded-md transition-colors"
-              >
-                <span className="flex items-center justify-center gap-2">
-                  <RiAddLine className="size-5" />
-                  Nova Manifestação
-                </span>
-              </Link>
-
-              <Link
-                href="/historico"
-                className="w-full text-secondary hover:text-secondary-hover font-medium py-2 px-4 text-sm flex items-center justify-center gap-2"
-              >
-                <RiSearchLine className="size-4" />
-                Consultar protocolo
-              </Link>
-            </div>
-          </div>
           </div>
 
           {/* Gray spacer */}
@@ -311,65 +322,67 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
 
           {/* Services List Section - Mobile only */}
           <section className="bg-card px-4 py-4" aria-label="Serviços">
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-semibold text-foreground">Serviços</h2>
-            <Link
-              href="/servicos"
-              className="text-xs text-secondary font-medium"
-            >
-              Ver tudo
-            </Link>
-          </div>
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="text-lg font-semibold text-foreground">
+                Serviços
+              </h2>
+              <Link
+                href="/servicos"
+                className="text-xs text-secondary font-medium"
+              >
+                Ver tudo
+              </Link>
+            </div>
 
-          <div className="border border-border rounded-lg divide-y divide-border">
-            {/* O que é a Ouvidoria */}
-            <Link
-              href="/o-que-e-ouvidoria"
-              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors btn-focus focus:ring-inset"
-            >
-              <RiMegaphoneLine className="size-5 text-secondary flex-shrink-0" />
-              <span className="flex-1 text-sm font-medium text-foreground">
-                Sobre a Ouvidoria
-              </span>
-              <RiArrowRightSLine className="size-5 text-muted-foreground flex-shrink-0" />
-            </Link>
+            <div className="border border-border rounded-lg divide-y divide-border">
+              {/* O que é a Ouvidoria */}
+              <Link
+                href="/o-que-e-ouvidoria"
+                className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors btn-focus focus:ring-inset"
+              >
+                <RiMegaphoneLine className="size-5 text-secondary flex-shrink-0" />
+                <span className="flex-1 text-sm font-medium text-foreground">
+                  Sobre a Ouvidoria
+                </span>
+                <RiArrowRightSLine className="size-5 text-muted-foreground flex-shrink-0" />
+              </Link>
 
-            {/* Orientações */}
-            <Link
-              href="/orientacoes"
-              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors btn-focus focus:ring-inset"
-            >
-              <RiLightbulbLine className="size-5 text-secondary flex-shrink-0" />
-              <span className="flex-1 text-sm font-medium text-foreground">
-                Orientações para o registro
-              </span>
-              <RiArrowRightSLine className="size-5 text-muted-foreground flex-shrink-0" />
-            </Link>
+              {/* Orientações */}
+              <Link
+                href="/orientacoes"
+                className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors btn-focus focus:ring-inset"
+              >
+                <RiLightbulbLine className="size-5 text-secondary flex-shrink-0" />
+                <span className="flex-1 text-sm font-medium text-foreground">
+                  Orientações para o registro
+                </span>
+                <RiArrowRightSLine className="size-5 text-muted-foreground flex-shrink-0" />
+              </Link>
 
-            {/* Perguntas frequentes */}
-            <Link
-              href="/ajuda"
-              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors btn-focus focus:ring-inset"
-            >
-              <RiQuestionLine className="size-5 text-secondary flex-shrink-0" />
-              <span className="flex-1 text-sm font-medium text-foreground">
-                Perguntas frequentes
-              </span>
-              <RiArrowRightSLine className="size-5 text-muted-foreground flex-shrink-0" />
-            </Link>
+              {/* Perguntas frequentes */}
+              <Link
+                href="/ajuda"
+                className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors btn-focus focus:ring-inset"
+              >
+                <RiQuestionLine className="size-5 text-secondary flex-shrink-0" />
+                <span className="flex-1 text-sm font-medium text-foreground">
+                  Perguntas frequentes
+                </span>
+                <RiArrowRightSLine className="size-5 text-muted-foreground flex-shrink-0" />
+              </Link>
 
-            {/* Canais de atendimento */}
-            <Link
-              href="/canais"
-              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors btn-focus focus:ring-inset"
-            >
-              <RiCustomerService2Line className="size-5 text-secondary flex-shrink-0" />
-              <span className="flex-1 text-sm font-medium text-foreground">
-                Canais de atendimento
-              </span>
-              <RiArrowRightSLine className="size-5 text-muted-foreground flex-shrink-0" />
-            </Link>
-          </div>
+              {/* Canais de atendimento */}
+              <Link
+                href="/canais"
+                className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors btn-focus focus:ring-inset"
+              >
+                <RiCustomerService2Line className="size-5 text-secondary flex-shrink-0" />
+                <span className="flex-1 text-sm font-medium text-foreground">
+                  Canais de atendimento
+                </span>
+                <RiArrowRightSLine className="size-5 text-muted-foreground flex-shrink-0" />
+              </Link>
+            </div>
           </section>
         </div>
       </main>

@@ -135,28 +135,31 @@ export function BlogCarousel({ posts }: BlogCarouselProps) {
     }
   }, [])
 
-  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
-    if (touchStartRef.current === null || isAnimating) return
+  const handleTouchEnd = useCallback(
+    (e: React.TouchEvent) => {
+      if (touchStartRef.current === null || isAnimating) return
 
-    const touch = e.changedTouches[0]
-    if (!touch) return
-    const touchEndX = touch.clientX
-    const diff = touchStartRef.current - touchEndX
+      const touch = e.changedTouches[0]
+      if (!touch) return
+      const touchEndX = touch.clientX
+      const diff = touchStartRef.current - touchEndX
 
-    // Reset touch start
-    touchStartRef.current = null
+      // Reset touch start
+      touchStartRef.current = null
 
-    // Check if swipe threshold met
-    if (Math.abs(diff) > SWIPE_THRESHOLD) {
-      if (diff > 0) {
-        // Swiped left - next
-        nextPage()
-      } else {
-        // Swiped right - previous
-        prevPage()
+      // Check if swipe threshold met
+      if (Math.abs(diff) > SWIPE_THRESHOLD) {
+        if (diff > 0) {
+          // Swiped left - next
+          nextPage()
+        } else {
+          // Swiped right - previous
+          prevPage()
+        }
       }
-    }
-  }, [isAnimating, nextPage, prevPage])
+    },
+    [isAnimating, nextPage, prevPage]
+  )
 
   if (posts.length === 0) return null
 
