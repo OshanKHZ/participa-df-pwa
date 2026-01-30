@@ -12,11 +12,15 @@
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",
     "check": "pnpm run format:check && pnpm run lint && pnpm run type-check",
-    "sync-data": "node scripts/sync-simple.js"
+    "sync-data": "node scripts/sync-simple.js",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx scripts/migrate.ts"
   },
   "keywords": [
     "pwa",
-    "ombudsman",
+    "ouvidoria",
     "participa-df",
     "hackathon"
   ],

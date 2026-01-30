@@ -25,61 +25,56 @@ Progressive Web App (PWA) para registro de manifestações da Ouvidoria do Distr
 
 ## 🎯 Visão Geral
 
-O **Participa-DF** é uma plataforma digital que facilita o registro de manifestações (denúncias, reclamações, sugestões, elogios, solicitações e pedidos de informação) de forma acessível, inclusiva e multicanal.
+O Participa-DF é uma plataforma que:
 
-### Características Principais
-
-- 📱 **PWA Instalável** - Funciona offline e pode ser instalado como app nativo
-- ♿ **100% Acessível** - Conformidade total com WCAG 2.1 AA
-- 🎙️ **Multicanal** - Texto, áudio, imagem e vídeo
-- 🔒 **Anonimato Opcional** - Escolha entre identificação ou anonimato total
-- 🎨 **UX Simplificada** - Máximo de 4 passos para completar manifestação
-- 📄 **Protocolo Instantâneo** - Geração imediata de protocolo de acompanhamento
+1. Facilita o registro de manifestações (denúncias, reclamações, sugestões, elogios, solicitações e pedidos de informação) para a Ouvidoria
+2. Coleta relatos multicanais via texto, áudio, imagem e vídeo
+3. Garante acessibilidade universal (WCAG 2.1 AA) com interface inclusiva
+4. Funciona offline e permite instalação como aplicativo nativo (PWA)
+5. Protege a identidade com opções de envio anônimo ou identificado
+6. Processa feedback cidadão gerando protocolos instantâneos de acompanhamento
 
 ## ⚙️ Funcionalidades
 
-### 1. Registro de Manifestações Multicanal
+### 1. Registro Simplificado e Guiado
+- **Fluxo Passo-a-Passo** - Interface intuitiva que guia o cidadão
+- **Tipos Claros** - Denúncia, Reclamação, Sugestão, Elogio, Solicitação, Informação
+- **Busca de Assuntos** - Autocomplete para encontrar o setor correto
+- **Validação em Tempo Real** - Feedback imediato sobre o preenchimento
 
-**Canais suportados:**
-- ✍️ **Texto** - Editor de texto com validação de caracteres
-- 🎤 **Áudio** - Gravação direta via navegador
-- 📷 **Imagem** - Upload ou captura de fotos
-- 🎬 **Vídeo** - Upload de vídeos
+### 2. Captura Multicanal Integrada
+- **Texto** - Editor acessível com contagem de caracteres
+- **Áudio** - Gravador nativo integrado ao navegador
+- **Imagens** - Upload ou captura direta da câmera
+- **Vídeo** - Suporte para envio de evidências em vídeo
 
-**Combinações permitidas:** Texto + múltiplos anexos
+### 3. Acessibilidade Universal (WCAG 2.1 AA)
+- **Leitores de Tela** - Otimizado para NVDA, VoiceOver e TalkBack
+- **Navegação** - Suporte total a teclado e dispositivos apontadores
+- **Linguagem Simples** - Textos claros e diretos
 
-### 2. Sistema de Identificação Flexível
+### 4. Tecnologia PWA (Offline-First)
+- **Instalação** - Funciona como app nativo em Android/iOS/Desktop
+- **Modo Offline** - Permite iniciar manifestações sem internet
+- **Sincronização** - Envio automático quando a conexão retorna
+- **Performance** - Carregamento instantâneo via cache
 
-**Opção 1: Manifestação Anônima**
-- Identidade preservada em sigilo
-- Checkbox de consentimento obrigatório
-- Aviso claro sobre limitações de acompanhamento
+### 5. Identidade e Privacidade
+- **Anonimato** - Opção segura para denúncias sensíveis
+- **Autenticação OTP** - Login simplificado via código por email
+- **Proteção de Dados** - Conformidade com LGPD
+- **Gestão de Perfil** - Histórico de manifestações (quando identificado)
 
-**Opção 2: Manifestação Identificada**
-- Login via Email (Código OTP)
-- Dados preenchidos automaticamente
-- Acompanhamento completo via dashboard
-
-### 3. Acessibilidade Avançada
-
-- **Navegação por teclado** - 100% navegável via Tab/Enter/Space/Esc
-- **Screen readers** - Suporte completo NVDA/VoiceOver/JAWS
-- **Alto contraste** - Ratio ≥4.5:1 em todos os textos
-- **Text-to-Speech** - Botões de leitura em cabeçalhos
-- **Fontes ajustáveis** - Menu de acessibilidade integrado
-- **Foco visível** - Indicadores claros em todos os elementos interativos
-
-### 4. Progressive Web App (PWA)
-
-- **Instalável** - "Adicionar atalho" em mobile e desktop
-- **Offline-first** - Service Worker com cache inteligente
-- **Notificações push** - Atualizações sobre manifestações (futuro)
-- **App-like** - Fullscreen sem barras do navegador
+### 6. Feedback e Protocolos
+- **Geração Instantânea** - Protocolo único para acompanhamento
+- **Rastreabilidade** - Status claro do andamento
+- **Notificações** - Alertas sobre atualizações (Email)
+- **Transparência** - Visualização clara das interações
 
 ## 🛠️ Tecnologias
 
 ### Frontend
-- **Next.js 14** - Framework React com App Router
+- **Next.js 16** - Framework React com App Router
 - **TypeScript** - Tipagem estática
 - **Tailwind CSS** - Estilização utilitária
 - **React Hook Form** - Gerenciamento de formulários
@@ -104,67 +99,126 @@ O **Participa-DF** é uma plataforma digital que facilita o registro de manifest
 
 ## 🚀 Instalação Rápida
 
-**Tempo estimado:** 10-15 minutos
-
 ### Pré-requisitos
 
 - Node.js 18+
 - pnpm, npm ou yarn
 - Git
 
-### Comandos
+### Passo-a-passo
+
+1. **Clone o repositório:**
 
 ```bash
-# 1. Clone o repositório
 git clone https://github.com/OshanKHZ/participa-df-pwa.git
 cd participa-df-pwa
+```
 
-# 2. Instale dependências
+2. **Instale dependências:**
+```bash
 npm install
+# ou
+yarn install
+# ou
+pnpm install
+```
 
-# 3. Configure variáveis de ambiente
-cp .env.example .env.local
-# Edite .env.local com sua chave Resend
-
-# 4. Inicialize o banco de dados
+3. **Inicialize o banco de dados:**
+```bash
 npm run db:push
-# OU manualmente:
-npx drizzle-kit push:sqlite
+```
 
-# 5. Execute em desenvolvimento
+4. **Execute em desenvolvimento:**
+```bash
 npm run dev
 ```
 
 Acesse: **http://localhost:3000**
 
-**📖 Para instruções detalhadas, veja [QUICKSTART.md](./QUICKSTART.md)**
-
 ## ⚙️ Configuração
 
-### Variáveis de Ambiente
+### 1. Variáveis de Ambiente
 
-```env
-# Database
-DATABASE_URL="file:./database/dev.db"
-
-# Resend (Envio de Email/OTP)
-RESEND_API_KEY="re_..."
-EMAIL_FROM="nao-responda@participa.df.gov.br"
-```
-
-### Banco de Dados
-
-**Desenvolvimento:** SQLite local em `database/dev.db`
-**Produção:** PostgreSQL, MySQL ou SQLite via Drizzle
+Copie o arquivo de exemplo:
 
 ```bash
-# Migrar schema
+cp .env.example .env.local
+```
+
+Edite `.env.local` com suas credenciais:
+
+```env
+# Database (Supabase / PostgreSQL)
+# Use a porta 6543 (Transaction Pooler) para a aplicação
+DATABASE_URL="postgresql://postgres.[ref]:[pass]@aws-0-region.pooler.supabase.com:6543/postgres"
+
+# Use a porta 5432 (Session) para migrações (drizzle-kit)
+DATABASE_MIGRATION_URL="postgresql://postgres.[ref]:[pass]@aws-0-region.pooler.supabase.com:5432/postgres"
+
+# Resend (Emails e Autenticação OTP)
+RESEND_API_KEY="re_..."
+EMAIL_FROM="participa-df@sua-org.com"
+SESSION_SECRET="gere-com-openssl-rand-base64-32"
+```
+
+### 2. Banco de Dados
+
+O projeto utiliza **Drizzle ORM** com **PostgreSQL (Supabase)**.
+
+```bash
+# Atualizar o schema do banco (Push)
 npm run db:push
+
+# Gerar migrações (se necessário)
+npm run db:generate
 
 # Visualizar dados (Drizzle Studio)
 npm run db:studio
-# OU SQLite direto:
-sqlite3 database/dev.db
+```
+
+## 📚 APIs Necessárias
+
+### Resend (Envio de Emails & Auth)
+
+O Resend é utilizado para enviar os códigos de acesso (OTP) para login.
+
+1. Acesse [Resend.com](https://resend.com)
+2. Crie uma conta gratuita
+3. Navegue até **API Keys**
+4. Crie uma nova chave (Full Access)
+5. Copie a chave (começa com `re_`) para seu `.env.local`
+6. **Custo:** Grátis até 3.000 emails/mês
+
+## 🔎 SEO e Metadados
+
+O projeto implementa uma estratégia de SEO robusta e centralizada, garantindo consistência em todas as páginas.
+
+### Configuração Centralizada
+
+Toda a configuração de SEO, incluindo URLs canônicas, títulos e descrições, é gerenciada em um único arquivo de fonte de verdade:
+
+📄 **Arquivo:** `src/lib/seo/config.ts`
+
+Neste arquivo você define:
+- **`SITE_CONFIG`**: Nome da organização, descrição padrão, palavras-chave e dados de contato.
+- **`ROUTES`**: Mapeamento de rotas com títulos e descrições específicas para cada página.
+- **`SITE_URL`**: URL base dinâmico (env var `NEXT_PUBLIC_SITE_URL` ou fallback).
+
+### Implementação nas Páginas
+
+O projeto utiliza a API de Metadata do Next.js 14+ em `src/app/layout.tsx` e nas páginas individuais, consumindo as constantes do arquivo de configuração:
+
+```typescript
+// Exemplo de uso em page.tsx
+import { ROUTES, getCanonicalUrl } from '@/lib/seo/config';
+
+export const metadata: Metadata = {
+  title: ROUTES.manifestacao.title,
+  description: ROUTES.manifestacao.description,
+  alternates: {
+    canonical: getCanonicalUrl('manifestacao'),
+  },
+};
 ```
 
 ## 🎮 Como Usar
@@ -174,33 +228,32 @@ sqlite3 database/dev.db
 **Passo 1: Tipo de Manifestação** (5s)
 - Selecione: Denúncia, Reclamação, Sugestão, Elogio, Solicitação ou Informação
 
-**Passo 2: Assunto** (15s)
+**Passo 2: Identificação** (30s)
+- **Opção A:** Manifestação anônima (marque checkbox de consentimento)
+- **Opção B:** Faça login/cadastro via Email (OTP receberá um código de acesso)
+
+**Passo 3: Assunto** (15s)
 - Digite palavras-chave
 - Selecione assunto da lista autocomplete
 - Ou insira manualmente
 
-**Passo 3: Conteúdo** (2-5min)
+**Passo 4: Conteúdo** (2-5min)
 - Escolha canal(is): Texto, Áudio, Imagem e/ou Vídeo
-- Preencha/grave/anexe conteúdo
-- Mínimo 10 caracteres em texto
-
-**Passo 4: Identificação** (30s)
-- **Opção A:** Manifestação anônima (marque checkbox de consentimento)
-- **Opção B:** Faça login/cadastro via Email (OTP)
+- Preencha/grave áudio/anexe conteúdo
+- Mínimo 20 caracteres em texto
 
 **Passo 5: Revisão e Envio** (1min)
 - Revise todas as informações
 - Confirme envio
-- Receba protocolo instantaneamente
+- Receba o número do protocolo instantaneamente
 
 **Tempo total:** 4-7 minutos
 
 ### Recursos Avançados
 
-**Menu de Acessibilidade (Alt+A):**
+**Menu de Acessibilidade:**
 - Aumentar/diminuir fonte
 - Alto contraste
-- Ativar leitor de tela
 - Navegação simplificada
 
 **Atalhos de Teclado:**
@@ -255,58 +308,51 @@ participa-df/
 
 ```
 ┌─────────────────┐
-│   Usuário       │
+│     Cidadão     │  Acesso via PWA (Mobile/Desktop)
 └────────┬────────┘
          │
          ▼
 ┌─────────────────┐
-│  Next.js App    │  Client-side rendering
+│  Next.js (App)  │  Fronteira com o usuário (Offline-First)
 └────────┬────────┘
          │
-         ├──────────► [LocalStorage] - Draft persistence
-         │
-         ├──────────► [IndexedDB] - Arquivos temporários
+         ├───► [IndexedDB] Armazena rascunhos e mídias offline
          │
          ▼
 ┌─────────────────┐
-│  API Routes     │  Server-side processing
+│  Server Actions │  Processamento e Validação (Zod)
 └────────┬────────┘
          │
-         ├──────────► [Participa-DF API] - Busca assuntos
-         │
-         ├──────────► [Auth Service] - Autenticação (OTP)
+         ├───► [Resend] Envia OTP e Protocolo por Email
          │
          ▼
 ┌─────────────────┐
-│  Drizzle ORM    │  Database abstraction
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│  SQLite/Postgres│  Persistência final
+│  Banco de Dados │  PostgreSQL (Supabase)
 └─────────────────┘
 ```
 
-### Testes de Acessibilidade
+## 📊 Estatísticas (SQL)
 
-**Ferramentas:**
-```bash
-# Lighthouse CI
-npm run lighthouse
+Exemplos de queries para extração de métricas do banco de dados:
 
-# axe-core
-npm run test:a11y
+```sql
+-- Total de manifestações registradas no período
+SELECT COUNT(*) FROM manifestation 
+WHERE "createdAt" > NOW() - INTERVAL '30 days';
 
-# WAVE (manual)
-# Extensão: https://wave.webaim.org/extension/
-```
+-- Manifestações por Tipo (Denúncia, Elogio, etc)
+SELECT type, COUNT(*) 
+FROM manifestation 
+GROUP BY type 
+ORDER BY count DESC;
 
-### Variáveis de Ambiente (Produção)
+-- Status de atendimento
+SELECT status, COUNT(*) 
+FROM manifestation 
+GROUP BY status;
 
-```env
-DATABASE_URL=postgresql://user:pass@host:5432/db
-RESEND_API_KEY=re_123...
-# ... outras variáveis
+-- Usuários cadastrados (excluindo anônimos)
+SELECT COUNT(*) FROM "user";
 ```
 
 ## 🤝 Contribuindo
@@ -337,10 +383,6 @@ chore: Manutenção
 - ESLint + Prettier
 - Componentes funcionais
 - Hooks ao invés de classes
-
-## 🙏 Créditos
-
-Desenvolvido para o **1º Hackathon de Controle Social** da Controladoria-Geral do Distrito Federal (CGDF).
 
 **Tecnologias:**
 - [Next.js](https://nextjs.org/) - Framework React
