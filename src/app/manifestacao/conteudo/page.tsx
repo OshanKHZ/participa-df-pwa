@@ -63,9 +63,6 @@ export default function ContentPage() {
   // Flag to prevent auto-save while restoring data
   const [isRestoring, setIsRestoring] = useState(true)
 
-  // Flag to prevent auto-save while restoring data
-  const [isRestoring, setIsRestoring] = useState(true)
-
   // Audio recording - using custom hook (shared between mobile and desktop)
   const audioRecorder = useAudioRecorder({
     maxAudios: LIMITS.MAX_AUDIO_COUNT,
