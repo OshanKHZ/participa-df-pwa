@@ -73,7 +73,7 @@ export function DesktopHeader() {
                 className="hover:opacity-90 transition-opacity"
               >
                 <Image
-                  src="/logo-gdf-branca.png"
+                  src="/logos/logo-gdf-branca.png"
                   alt="Governo do Distrito Federal"
                   width={140}
                   height={46}
@@ -90,7 +90,7 @@ export function DesktopHeader() {
                 className="flex-shrink-0 hover:opacity-90 transition-opacity"
               >
                 <Image
-                  src="/logo.svg"
+                  src="/logos/logo.svg"
                   alt="Participa DF"
                   width={320}
                   height={72}

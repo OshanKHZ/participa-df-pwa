@@ -156,7 +156,7 @@ export default function AjudaPage() {
                 {/* Logo */}
                 <div className="mb-6">
                   <Image
-                    src="/Logo-OUV.svg"
+                    src="/logos/Logo-OUV.svg"
                     alt="Ouvidoria Governo do Distrito Federal"
                     width={280}
                     height={162}
