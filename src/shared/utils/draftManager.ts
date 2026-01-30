@@ -53,16 +53,45 @@ export async function saveDraft(
   await migrateFromLocalStorage()
 
   const now = new Date().toISOString()
+  let draftId = draft.id
+
+  // If no ID provided, check if we have one in localStorage (fallback)
+  if (!draftId) {
+    const storedId = localStorage.getItem(STORAGE_KEYS.currentDraftId)
+    if (storedId) draftId = storedId
+  }
+
+  // Try to fetch existing draft to preserve data (files, audio)
+  let existingDraft: ManifestationDraft | null = null
+  if (draftId) {
+    try {
+      existingDraft = await manifestationRepo.getDraft(draftId)
+    } catch (e) {
+      console.error('Error fetching existing draft for merge:', e)
+    }
+  }
+
+  const finalId = draftId || generateDraftId()
 
   const draftData: ManifestationDraft = {
-    id: draft.id || generateDraftId(),
-    type: draft.type || '',
-    subject: draft.subject,
-    channels: draft.channels,
-    content: draft.content,
-    createdAt: draft.createdAt || now,
+    id: finalId,
+    type: draft.type || existingDraft?.type || '',
+    subject: draft.subject || existingDraft?.subject,
+    channels: draft.channels || existingDraft?.channels,
+    content: {
+      // Merge content: existing (with files/audio) <- new (text from localstorage)
+      ...existingDraft?.content,
+      ...draft.content,
+    },
+    createdAt: existingDraft?.createdAt || draft.createdAt || now,
     updatedAt: now,
     status: 'draft',
+    protocol: draft.protocol || existingDraft?.protocol,
+  }
+
+  // If we generated a new ID, ensure it's saved to localStorage for consistency
+  if (!draftId) {
+    localStorage.setItem(STORAGE_KEYS.currentDraftId, finalId)
   }
 
   return manifestationRepo.saveDraft(draftData)
@@ -101,6 +130,7 @@ export async function getSubmitted(): Promise<ManifestationDraft[]> {
 }
 
 export function getCurrentDraft(): Partial<ManifestationDraft> {
+  const currentDraftId = localStorage.getItem(STORAGE_KEYS.currentDraftId)
   const type = localStorage.getItem(STORAGE_KEYS.type)
   const subjectId = localStorage.getItem(STORAGE_KEYS.subjectId)
   const subjectName = localStorage.getItem(STORAGE_KEYS.subjectName)
@@ -108,6 +138,7 @@ export function getCurrentDraft(): Partial<ManifestationDraft> {
   const content = localStorage.getItem(STORAGE_KEYS.content)
 
   return {
+    id: currentDraftId || undefined,
     type: type || undefined,
     subject:
       subjectId && subjectName
@@ -121,6 +152,7 @@ export function getCurrentDraft(): Partial<ManifestationDraft> {
 }
 
 export function clearCurrentDraft(): void {
+  localStorage.removeItem(STORAGE_KEYS.currentDraftId)
   localStorage.removeItem(STORAGE_KEYS.type)
   localStorage.removeItem(STORAGE_KEYS.subjectId)
   localStorage.removeItem(STORAGE_KEYS.subjectName)

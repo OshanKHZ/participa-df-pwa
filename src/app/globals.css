@@ -18,19 +18,23 @@
 
   /* Muted */
   --color-muted: #f3f4f6;
-  --color-muted-foreground: #6b7280;
+  --color-muted-foreground: #404040;
 
   /* Accent */
   --color-accent: #e8eef7;
-  --color-accent-foreground: #374151;
+  --color-accent-foreground: #1e293b;
 
   /* Destructive */
-  --color-destructive: #ef4444;
+  --color-destructive: #dc2626;
   --color-destructive-foreground: #ffffff;
 
   /* Success */
-  --color-success: #549250;
+  --color-success: #499744;
   --color-success-foreground: #ffffff;
+
+  /* Warning/Yellow */
+  --color-warning: #DAA520;
+  --color-warning-foreground: #ffffff;
 
   /* Progress */
   --color-progress: #10b981;
@@ -45,9 +49,13 @@
   --color-type-informacao: #6366f1;
 
   /* Border/Input */
-  --color-border: #e5e7eb;
-  --color-input: #e5e7eb;
+  --color-border: #d1d5db;
+  --color-input: #d1d5db;
   --color-ring: #6f70d3;
+
+  /* Mobile/Header variants */
+  --color-primary-mobile: #28477d;
+  --color-manifestation-cta: #3a5a8f;
 
   /* Radius */
   --radius-lg: 0.5rem;
@@ -109,6 +117,11 @@ body {
     @apply translate-y-0 shadow-md;
   }
 
+  /* Focus indicator for accessibility */
+  .btn-focus {
+    @apply focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2;
+  }
+
   /* Card borders - Apple style */
   .card-border {
     border-width: 1.5px;
@@ -117,7 +130,7 @@ body {
 
   /* Mobile header - lighter blue */
   .bg-primary-mobile {
-    background-color: #28477d;
+    background-color: var(--color-primary-mobile);
   }
 
   /* Manifestation type colors */
@@ -147,12 +160,16 @@ body {
 
   /* Manifestation CTA button */
   .bg-manifestation-cta {
-    background-color: #3a5a8f;
+    background-color: var(--color-manifestation-cta);
   }
 
   /* Success colors */
   .bg-success {
     background-color: var(--color-success);
+  }
+
+  .bg-warning {
+    background-color: var(--color-warning);
   }
 
   .border-success {
@@ -174,7 +191,7 @@ body {
 
   /* Header subheader lighter color */
   .bg-primary-light {
-    background-color: #28477d;
+    background-color: var(--color-primary-mobile);
   }
 
   /* Spacing utilities - custom sizes */
@@ -204,7 +221,7 @@ body {
 
   /* Z-index scale */
   .z-tabs {
-    z-index: 20;
+    z-index: 10;
   }
 
   .z-header {
@@ -215,20 +232,64 @@ body {
     z-index: 40;
   }
 
-  .z-modal {
-    z-index: 50;
-  }
-
-  .z-drawer {
-    z-index: 50;
-  }
-
   .z-fab {
     z-index: 50;
   }
 
+  .z-drawer {
+    z-index: 60;
+  }
+
+  .z-modal {
+    z-index: 70;
+  }
+
   .z-popover {
-    z-index: 50;
+    z-index: 80;
+  }
+
+  /* PWA Install Animations */
+  @keyframes slide-up {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slide-in-from-right {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.3s ease-out;
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.2s ease-out;
+  }
+
+  .animate-slide-in-from-right {
+    animation: slide-in-from-right 0.3s ease-out;
   }
 
   /* Desktop-specific enhancements */
@@ -248,13 +309,13 @@ body {
   --color-card-foreground: #ffffff;
   --color-primary: #000000;
   --color-primary-foreground: #ffffff;
-  --color-secondary: #ffffff;
-  --color-secondary-foreground: #000000;
-  --color-secondary-hover: #cccccc;
+  --color-secondary: #0066ff;
+  --color-secondary-foreground: #ffffff;
+  --color-secondary-hover: #0052cc;
   --color-muted: #1a1a1a;
   --color-muted-foreground: #ffffff;
-  --color-accent: #ffffff;
-  --color-accent-foreground: #000000;
+  --color-accent: #1a1a1a;
+  --color-accent-foreground: #ffffff;
   --color-border: #ffffff;
   --color-input: #ffffff;
 
@@ -264,7 +325,7 @@ body {
   }
 
   /* Buttons with strong borders */
-  button,
+  button:not(.accessibility-panel-exempt),
   .bg-secondary,
   .bg-type-denuncia,
   .bg-type-reclamacao,
@@ -277,15 +338,15 @@ body {
 
   /* Cards with borders */
   .card-border,
-  [class*='rounded'],
-  [class*='border'] {
+  [class*='rounded']:not(.accessibility-panel-exempt),
+  [class*='border']:not(.accessibility-panel-exempt) {
     border-color: #ffffff !important;
     border-width: 2px !important;
   }
 
   /* Links and interactive elements */
-  a,
-  button {
+  a:not(.accessibility-panel-exempt),
+  button:not(.accessibility-panel-exempt) {
     &:hover {
       outline: 3px solid #ffffff;
       outline-offset: 2px;
@@ -295,5 +356,95 @@ body {
       outline: 3px solid #ffffff;
       outline-offset: 2px;
     }
+  }
+
+  /* Accessibility panel should keep normal colors */
+  .accessibility-panel {
+    --color-background: #ffffff;
+    --color-foreground: #1e293b;
+    --color-card: #ffffff;
+    --color-card-foreground: #1e293b;
+    --color-muted: #f3f4f6;
+    --color-muted-foreground: #404040;
+    --color-border: #d1d5db;
+    --color-secondary: #0369a1;
+    --color-secondary-foreground: #ffffff;
+
+    background: #ffffff !important;
+    color: #1e293b !important;
+    border-color: #d1d5db !important;
+  }
+
+  /* Mobile header in high contrast - keep it visible with proper contrast */
+  .bg-primary {
+    background-color: #000000 !important;
+  }
+
+  .bg-primary-light {
+    background-color: #1a1a1a !important;
+  }
+
+  /* Ensure text on primary backgrounds is white */
+  .bg-primary *,
+  .bg-primary-light * {
+    color: #ffffff !important;
+  }
+
+  /* text-primary should be WHITE in high contrast for readability */
+  .text-primary {
+    color: #ffffff !important;
+  }
+
+  /* Override specific text opacity classes to be solid white */
+  .text-white\/80,
+  .text-white\/90 {
+    color: #ffffff !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Monochrome Mode */
+.monochrome {
+  filter: grayscale(100%);
+}
+
+/* Saturation Controls */
+.saturation-low {
+  filter: saturate(0.5);
+}
+
+.saturation-normal {
+  filter: saturate(1);
+}
+
+.saturation-high {
+  filter: saturate(1.5);
+}
+
+/* Combined filters for monochrome + saturation */
+.monochrome.saturation-low {
+  filter: grayscale(100%) saturate(0.5);
+}
+
+.monochrome.saturation-normal {
+  filter: grayscale(100%) saturate(1);
+}
+
+.monochrome.saturation-high {
+  filter: grayscale(100%) saturate(1.5);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .btn-hover:hover,
+  .hover\:scale-105:hover,
+  .hover\:-translate-y-0\.5:hover {
+    transform: none !important;
+  }
+
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

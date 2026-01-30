@@ -1,9 +1,15 @@
 'use client'
 
 import { forwardRef, type ComponentRef } from 'react'
+import Link from 'next/link'
 
 export interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
-  variant?: 'primary' | 'secondary' | 'ghost' | 'link'
+  variant?: 'primary' | 'secondary' | 'success' | 'ghost' | 'link' | 'destructive' | 'accent'
+  size?: 'sm' | 'default' | 'lg'
+}
+
+export interface LinkButtonProps extends React.ComponentPropsWithoutRef<typeof Link> {
+  variant?: 'primary' | 'secondary' | 'success' | 'ghost' | 'link' | 'destructive' | 'accent'
   size?: 'sm' | 'default' | 'lg'
 }
 
@@ -20,19 +26,22 @@ const Button = forwardRef<ComponentRef<'button'>, ButtonProps>(
     ref
   ) => {
     const baseStyles =
-      'inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 cursor-pointer'
+      'inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors btn-focus disabled:pointer-events-none disabled:opacity-50 cursor-pointer'
 
     const variants = {
-      primary: 'bg-success text-white hover:opacity-90',
-      secondary: 'bg-primary text-white hover:bg-primary/90',
+      primary: 'bg-primary text-primary-foreground hover:bg-primary/90',
+      secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary-hover',
+      success: 'bg-success text-white hover:opacity-90',
+      accent: 'bg-accent text-secondary hover:bg-accent/80',
       ghost: 'hover:bg-accent hover:text-foreground',
       link: 'text-secondary underline-offset-4 hover:underline',
+      destructive: 'border border-destructive text-destructive hover:bg-destructive/10',
     }
 
     const sizes = {
-      sm: 'h-9 px-4 text-sm',
-      default: 'h-11 px-6',
-      lg: 'h-12 px-8',
+      sm: 'h-11 px-4 text-sm',
+      default: 'h-12 px-6',
+      lg: 'h-14 px-8',
     }
 
     return (
@@ -49,5 +58,41 @@ const Button = forwardRef<ComponentRef<'button'>, ButtonProps>(
 )
 
 Button.displayName = 'Button'
+
+// LinkButton component for Next.js links with button styling
+export const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>(
+  ({ className, variant = 'primary', size = 'default', children, ...props }, ref) => {
+    const baseStyles =
+      'inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors btn-focus cursor-pointer'
+
+    const variants = {
+      primary: 'bg-primary text-primary-foreground hover:bg-primary/90',
+      secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary-hover',
+      success: 'bg-success text-white hover:opacity-90',
+      accent: 'bg-accent text-secondary hover:bg-accent/80',
+      ghost: 'hover:bg-accent hover:text-foreground',
+      link: 'text-secondary underline-offset-4 hover:underline',
+      destructive: 'border border-destructive text-destructive hover:bg-destructive/10',
+    }
+
+    const sizes = {
+      sm: 'h-11 px-4 text-sm',
+      default: 'h-12 px-6',
+      lg: 'h-14 px-8',
+    }
+
+    return (
+      <Link
+        ref={ref}
+        className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className || ''}`}
+        {...props}
+      >
+        {children}
+      </Link>
+    )
+  }
+)
+
+LinkButton.displayName = 'LinkButton'
 
 export { Button }

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import {
   RiArrowLeftLine,
   RiArrowRightLine,
@@ -20,6 +20,8 @@ interface NavigationFooterProps {
   nextDisabled?: boolean
   nextLoading?: boolean
   steps?: Step[]
+  backLabel?: string
+  backVariant?: 'default' | 'destructive'
 }
 
 export function NavigationFooter({
@@ -31,11 +33,25 @@ export function NavigationFooter({
   nextDisabled = false,
   nextLoading = false,
   steps = DEFAULT_STEPS,
+  backLabel = 'Voltar',
+  backVariant = 'default',
 }: NavigationFooterProps) {
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const displayedSteps = useMemo(() => {
+    return steps.map(s => ({
+      ...s,
+      completed: mounted ? s.number < currentStep : false,
+    }))
+  }, [steps, currentStep, mounted])
 
   const handleStepClick = (stepNumber: number) => {
-    const step = steps.find(s => s.number === stepNumber)
+    const step = displayedSteps.find(s => s.number === stepNumber)
     // Allow navigation to current step, completed steps, and previous steps
     const canNavigate = step && (step.completed || stepNumber <= currentStep)
     if (canNavigate && onNavigateToStep) {
@@ -69,15 +85,19 @@ export function NavigationFooter({
             </h3>
             <button
               onClick={() => setDrawerOpen(false)}
-              className="size-8 rounded-full flex items-center justify-center hover:bg-muted transition-colors"
+              className="size-8 rounded-full flex items-center justify-center hover:bg-muted transition-colors btn-focus"
+              aria-label="Fechar navegação de passos"
             >
-              <RiCloseLine className="size-6 text-foreground" />
+              <RiCloseLine
+                className="size-6 text-foreground"
+                aria-hidden="true"
+              />
             </button>
           </div>
 
           {/* Steps List */}
           <div className="space-y-2 mb-4">
-            {steps.map(step => {
+            {displayedSteps.map(step => {
               const isCurrent = step.number === currentStep
               // Can navigate to current, completed, or previous steps
               const canNavigate = step.completed || step.number <= currentStep
@@ -147,16 +167,18 @@ export function NavigationFooter({
             <button
               onClick={onBack}
               disabled={!onBack}
-              className={`flex-1 py-3.5 px-4 rounded border-2 border-border font-medium transition-colors ${
+              className={`flex-1 py-3.5 px-4 rounded border-2 font-medium transition-colors btn-focus ${
                 !onBack
-                  ? 'text-muted-foreground cursor-not-allowed'
-                  : 'text-foreground hover:bg-accent'
+                  ? 'text-muted-foreground cursor-not-allowed border-border'
+                  : backVariant === 'destructive'
+                    ? 'text-destructive border-destructive hover:bg-destructive/10'
+                    : 'text-foreground border-border hover:bg-accent'
               }`}
-              aria-label="Voltar"
+              aria-label={backLabel}
             >
               <div className="flex items-center justify-center gap-2">
                 <RiArrowLeftLine className="size-5" />
-                <span className="text-sm font-semibold">Voltar</span>
+                <span className="text-sm font-semibold">{backLabel}</span>
               </div>
             </button>
 

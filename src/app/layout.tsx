@@ -1,12 +1,13 @@
 import type { Metadata } from 'next'
 import { Montserrat } from 'next/font/google'
 import './globals.css'
-import { FontSizeProvider } from '@/shared/contexts/FontSizeContext'
-import { PageTransition } from '@/shared/components/PageTransition'
+import { AccessibilityProvider } from '@/shared/contexts/AccessibilityContext'
 import { AccessibilityMenu } from '@/shared/components/AccessibilityMenu'
 import { ServiceWorkerRegister } from '@/shared/components/ServiceWorkerRegister'
 import { SessionProvider } from '@/shared/providers/SessionProvider'
+import { PWAInstallProvider } from '@/shared/components/pwa/PWAInstallProvider'
 import { Toaster } from 'sonner'
+import { SITE_URL, SITE_CONFIG, getCanonicalUrl } from '@/lib/seo/config'
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -14,17 +15,22 @@ const montserrat = Montserrat({
 })
 
 export const metadata: Metadata = {
-  title: 'Participa-DF | Ouvidoria',
-  description:
-    'PWA para registro de manifestações da Ouvidoria do Distrito Federal',
-  manifest: '/manifest.json',
-  themeColor: '#28477d',
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: SITE_CONFIG.fullName,
+    template: `%s | ${SITE_CONFIG.name}`,
   },
+  description: SITE_CONFIG.description,
+  keywords: [...SITE_CONFIG.keywords],
+  authors: [{ name: 'Governo do Distrito Federal' }],
+  creator: SITE_CONFIG.organization.creator,
+  publisher: SITE_CONFIG.organization.publisher,
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
@@ -32,20 +38,50 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon.png', type: 'image/png' },
       { url: '/icons/icon-192x192.png', sizes: '192x192', type: 'image/png' },
       { url: '/icons/icon-512x512.png', sizes: '512x512', type: 'image/png' },
     ],
     apple: [
-      { url: '/icons/icon-152x152.png', sizes: '152x152', type: 'image/png' },
+      { url: '/icons/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
     ],
   },
-  other: {
-    'mobile-web-app-capable': 'true',
-    'apple-mobile-web-app-capable': 'true',
-    'apple-mobile-web-app-status-bar-style': 'default',
-    'apple-mobile-web-app-title': 'Participa-DF',
-    'application-name': 'Participa-DF',
+  openGraph: {
+    type: 'website',
+    locale: 'pt_BR',
+    url: SITE_URL,
+    siteName: SITE_CONFIG.name,
+    title: SITE_CONFIG.fullName,
+    description: SITE_CONFIG.shortDescription,
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: SITE_CONFIG.fullName,
+    description: SITE_CONFIG.shortDescription,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  alternates: {
+    canonical: getCanonicalUrl('home'),
+  },
+}
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  themeColor: SITE_CONFIG.themeColor,
 }
 
 export default function RootLayout({
@@ -56,13 +92,20 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <body className={`${montserrat.variable} antialiased font-sans`}>
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md"
+        >
+          Pular para conteúdo principal
+        </a>
         <ServiceWorkerRegister />
         <SessionProvider>
-          <FontSizeProvider>
-            <PageTransition>{children}</PageTransition>
+          <AccessibilityProvider>
+            {children}
             <AccessibilityMenu />
+            <PWAInstallProvider />
             <Toaster position="top-center" richColors />
-          </FontSizeProvider>
+          </AccessibilityProvider>
         </SessionProvider>
       </body>
     </html>

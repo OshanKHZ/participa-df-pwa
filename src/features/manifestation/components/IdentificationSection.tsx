@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { signIn, signOut, useSession } from 'next-auth/react'
+
 import {
   RiEye2Line,
   RiEyeCloseLine,
@@ -9,8 +9,8 @@ import {
   RiCheckLine,
 } from 'react-icons/ri'
 import { TOGGLE } from '@/shared/constants/designTokens'
-import { sendOtp } from '@/app/actions/otp'
-import { RiGoogleFill, RiMailLine, RiLockPasswordLine } from 'react-icons/ri'
+import { sendOtp, verifyOtp, logout, getSessionData } from '@/app/actions/auth'
+import { RiMailLine, RiLockPasswordLine } from 'react-icons/ri'
 import { Button } from '@/shared/components/Button'
 
 interface IdentificationSectionProps {
@@ -22,6 +22,13 @@ interface IdentificationSectionProps {
     phone: string
   }) => void
   onAnonymousConsentChange?: (hasConsent: boolean) => void
+  formData: {
+    name: string
+    email: string
+    phone: string
+  }
+  allowAnonymous?: boolean
+  requiresIdentification?: boolean
 }
 
 export function IdentificationSection({
@@ -29,13 +36,24 @@ export function IdentificationSection({
   onAnonymousChange,
   onFormDataChange,
   onAnonymousConsentChange,
+  formData,
+  allowAnonymous = true,
+  requiresIdentification = false,
 }: IdentificationSectionProps) {
-  const { data: session } = useSession()
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-  })
+  const [session, setSession] = useState<{
+    user?: {
+      name?: string | null
+      email?: string | null
+      image?: string | null
+    }
+  } | null>(null)
+
+  useEffect(() => {
+    getSessionData().then(user => {
+      if (user) setSession({ user })
+    })
+  }, [])
+
   const [anonymousConsent, setAnonymousConsent] = useState(false)
 
   // OTP State
@@ -46,27 +64,22 @@ export function IdentificationSection({
   const [error, setError] = useState('')
 
   // Load saved data on mount
-  useEffect(() => {
-    const savedData = localStorage.getItem('manifestation_personal_data')
-    if (savedData) {
-      const parsed = JSON.parse(savedData)
-      setFormData(parsed)
-    }
-  }, [])
 
   // Update parent when form data changes
+  // Update parent when session changes or visibility changes
   useEffect(() => {
-    if (!isAnonymous) {
-      const dataToUse = session?.user
-        ? {
-            name: session.user.name || '',
-            email: session.user.email || '',
-            phone: formData.phone,
-          }
-        : formData
-      onFormDataChange(dataToUse)
+    // We only update if session exists and user is not anonymous
+    // This populates the name/email fields from session
+    if (!isAnonymous && session?.user) {
+      onFormDataChange({
+        name: session.user.name || '',
+        email: session.user.email || '',
+        phone: formData.phone,
+      })
     }
-  }, [formData, session, isAnonymous, onFormDataChange])
+    // We only want to run this when session loads or anonymity mode changes,
+    // NOT when formData changes (to avoid loops)
+  }, [session, isAnonymous, onFormDataChange])
 
   // Update parent when consent changes
   useEffect(() => {
@@ -76,11 +89,7 @@ export function IdentificationSection({
   }, [anonymousConsent, onAnonymousConsentChange])
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }))
-  }
-
-  const handleGoogleLogin = async () => {
-    await signIn('google', { callbackUrl: window.location.href })
+    onFormDataChange({ ...formData, [field]: value })
   }
 
   const handleSendOtp = async () => {
@@ -93,8 +102,12 @@ export function IdentificationSection({
     setError('')
 
     try {
-      await sendOtp(authEmail)
-      setShowOtpInput(true)
+      const result = await sendOtp(authEmail)
+      if (result.success) {
+        setShowOtpInput(true)
+      } else {
+        setError(result.error || 'Erro ao enviar código.')
+      }
     } catch (err) {
       setError('Erro ao enviar código. Tente novamente.')
       console.error(err)
@@ -113,17 +126,12 @@ export function IdentificationSection({
     setError('')
 
     try {
-      const res = await signIn('credentials', {
-        email: authEmail,
-        code: otpCode,
-        redirect: false,
-      })
-
-      if (res?.error) {
-        setError('Código incorreto ou expirado')
-      } else {
+      const result = await verifyOtp(authEmail, otpCode)
+      if (result.success) {
         // Refresh page to update session
         window.location.reload()
+      } else {
+        setError(result.error || 'Código incorreto ou expirado')
       }
     } catch (err) {
       setError('Erro ao validar código')
@@ -134,14 +142,16 @@ export function IdentificationSection({
   }
 
   const handleLogout = async () => {
-    await signOut({ callbackUrl: window.location.href })
+    await logout()
+    window.location.reload()
   }
 
   return (
     <>
-      {/* Anonymous Toggle */}
-      <div className="bg-card rounded-sm p-4 card-border mb-6">
-        <div className="grid grid-cols-[auto_1fr_auto] items-center gap-3">
+      {/* Anonymous Toggle - Only show if anonymous is allowed and identification is not mandatory */}
+      {allowAnonymous && !requiresIdentification && (
+        <div className="bg-card rounded-sm p-4 card-border mb-6">
+          <div className="grid grid-cols-[auto_1fr_auto] items-center gap-3">
           {isAnonymous ? (
             <RiEyeCloseLine className="size-6 text-secondary flex-shrink-0" />
           ) : (
@@ -167,7 +177,7 @@ export function IdentificationSection({
             aria-label={
               isAnonymous ? 'Desativar anonimato' : 'Ativar anonimato'
             }
-            className={`relative flex-shrink-0 inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 ${
+            className={`relative flex-shrink-0 inline-flex h-6 w-11 items-center rounded-full transition-colors btn-focus ${
               isAnonymous ? 'bg-secondary' : 'bg-muted'
             }`}
           >
@@ -177,8 +187,9 @@ export function IdentificationSection({
               }`}
             />
           </button>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Anonymous Consent */}
       {isAnonymous && (
@@ -187,20 +198,24 @@ export function IdentificationSection({
           <div className="flex items-start gap-3 bg-accent rounded-sm p-4">
             <button
               type="button"
+              role="checkbox"
+              aria-checked={anonymousConsent}
               onClick={() => setAnonymousConsent(!anonymousConsent)}
-              className={`mt-0.5 w-5 h-5 flex-shrink-0 rounded border-2 flex items-center justify-center transition-colors ${
+              className={`mt-0.5 w-5 h-5 flex-shrink-0 rounded border-2 flex items-center justify-center transition-colors btn-focus ${
                 anonymousConsent
                   ? 'bg-secondary border-secondary'
                   : 'bg-white border-gray-400'
               }`}
             >
               {anonymousConsent && (
-                <RiCheckLine className="size-4 text-white" />
+                <RiCheckLine className="size-4 text-white" aria-hidden="true" />
               )}
             </button>
-            <div
-              className="flex-1 cursor-pointer"
+            <button
+              type="button"
+              className="flex-1 text-left p-0 btn-focus"
               onClick={() => setAnonymousConsent(!anonymousConsent)}
+              aria-label="Aceitar termos de anonimato"
             >
               <p className="text-xs text-accent-foreground leading-relaxed">
                 <span className="text-destructive">*</span> Solicito que minha
@@ -220,7 +235,7 @@ export function IdentificationSection({
                 atender a pedidos de informação pessoal, uma vez que não terá
                 como confirmar minha identidade.
               </p>
-            </div>
+            </button>
           </div>
         </div>
       )}
@@ -252,7 +267,7 @@ export function IdentificationSection({
                 <button
                   type="button"
                   onClick={handleLogout}
-                  className="text-xs text-destructive hover:underline"
+                  className="text-xs text-destructive hover:underline btn-focus"
                 >
                   Sair
                 </button>
@@ -279,7 +294,7 @@ export function IdentificationSection({
                     onChange={e => handleInputChange('phone', e.target.value)}
                     placeholder="(00) 00000-0000"
                     autoComplete="tel"
-                    className="w-full pl-10 pr-4 py-3 border card-border rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary"
+                    className="w-full pl-10 pr-4 py-3 border card-border rounded-lg btn-focus"
                   />
                 </div>
               </div>
@@ -303,26 +318,37 @@ export function IdentificationSection({
                 {showOtpInput ? (
                   <div className="space-y-3">
                     <div>
-                      <label className="text-xs text-muted-foreground mb-1 block">
+                      <label
+                        htmlFor="otp-code"
+                        className="text-xs text-muted-foreground mb-1 block"
+                      >
                         Código de Verificação
                       </label>
                       <div className="relative">
-                        <RiLockPasswordLine className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                        <RiLockPasswordLine
+                          className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                          aria-hidden="true"
+                        />
                         <input
+                          id="otp-code"
                           type="text"
                           value={otpCode}
                           onChange={e => setOtpCode(e.target.value)}
                           className="w-full pl-10 pr-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
                           placeholder="000000"
                           maxLength={6}
+                          aria-describedby="otp-help"
                         />
                       </div>
-                      <p className="text-xs text-muted-foreground mt-1.5">
+                      <p
+                        className="text-xs text-muted-foreground mt-1.5"
+                        id="otp-help"
+                      >
                         Enviamos um código para {authEmail}.{' '}
                         <button
                           type="button"
                           onClick={() => setShowOtpInput(false)}
-                          className="text-primary hover:underline"
+                          className="text-primary hover:underline btn-focus"
                         >
                           Alterar e-mail
                         </button>
@@ -332,7 +358,8 @@ export function IdentificationSection({
                     <Button
                       onClick={handleVerifyOtp}
                       disabled={isLoading}
-                      className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+                      variant="secondary"
+                      className="w-full"
                     >
                       {isLoading ? 'Verificando...' : 'Verificar Código'}
                     </Button>
@@ -340,17 +367,25 @@ export function IdentificationSection({
                 ) : (
                   <div className="space-y-3">
                     <div>
-                      <label className="text-xs text-muted-foreground mb-1 block">
+                      <label
+                        htmlFor="auth-email"
+                        className="text-xs text-muted-foreground mb-1 block"
+                      >
                         E-mail
                       </label>
                       <div className="relative">
-                        <RiMailLine className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                        <RiMailLine
+                          className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                          aria-hidden="true"
+                        />
                         <input
+                          id="auth-email"
                           type="email"
                           value={authEmail}
                           onChange={e => setAuthEmail(e.target.value)}
                           className="w-full pl-10 pr-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
                           placeholder="seu@email.com"
+                          autoComplete="email"
                         />
                       </div>
                     </div>
@@ -358,30 +393,11 @@ export function IdentificationSection({
                     <Button
                       onClick={handleSendOtp}
                       disabled={isLoading}
-                      className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+                      variant="secondary"
+                      className="w-full"
                     >
                       {isLoading ? 'Enviando...' : 'Entrar com E-mail'}
                     </Button>
-
-                    <div className="relative py-2">
-                      <div className="absolute inset-0 flex items-center">
-                        <span className="w-full border-t border-border" />
-                      </div>
-                      <div className="relative flex justify-center text-xs uppercase">
-                        <span className="bg-muted/30 px-2 text-muted-foreground">
-                          Ou continuar com
-                        </span>
-                      </div>
-                    </div>
-
-                    <button
-                      type="button"
-                      onClick={handleGoogleLogin}
-                      className="w-full flex items-center justify-center gap-2 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium py-2 px-4 rounded-md transition-colors text-sm"
-                    >
-                      <RiGoogleFill className="size-5 text-[#DB4437]" />
-                      Google
-                    </button>
                   </div>
                 )}
               </div>
