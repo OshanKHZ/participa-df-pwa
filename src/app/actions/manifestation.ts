@@ -4,8 +4,8 @@ import { auth } from '@/server/auth'
 import { db } from '@/database'
 import { manifestations } from '@/database/schema'
 import { z } from 'zod'
-import DOMPurify from 'isomorphic-dompurify'
-import { eq, and, gt, sql } from 'drizzle-orm'
+import sanitizeHtml from 'sanitize-html'
+import { eq, and, gt, sql, desc } from 'drizzle-orm'
 
 const manifestationSchema = z.object({
   type: z.string().min(1, 'Tipo é obrigatório'),
@@ -54,9 +54,9 @@ export async function createManifestation(data: CreateManifestationParams) {
   }
 
   // 3. Sanitize Content
-  const sanitizedContent = DOMPurify.sanitize(data.content)
+  const sanitizedContent = sanitizeHtml(data.content)
   const sanitizedSubject = data.subject
-    ? DOMPurify.sanitize(data.subject)
+    ? sanitizeHtml(data.subject)
     : undefined
 
   // Generate Protocol: OUV-YYYY-RANDOM (8 digits)
@@ -83,4 +83,27 @@ export async function createManifestation(data: CreateManifestationParams) {
     console.error('Error creating manifestation:', error)
     return { success: false, error: 'Failed to create manifestation' }
   }
+}
+
+export async function getUserManifestations() {
+  const session = await auth()
+
+  if (!session?.user?.id) {
+    return []
+  }
+
+  const userManifestations = await db.query.manifestations.findMany({
+    where: eq(manifestations.userId, session.user.id),
+    orderBy: [desc(manifestations.createdAt)],
+  })
+
+  return userManifestations
+}
+
+export async function getManifestationByProtocol(protocol: string) {
+  const manifestation = await db.query.manifestations.findFirst({
+    where: eq(manifestations.protocol, protocol),
+  })
+
+  return manifestation
 }

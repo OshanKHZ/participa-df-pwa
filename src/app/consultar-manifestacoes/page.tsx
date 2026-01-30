@@ -10,19 +10,25 @@ import {
   RiSearchLine,
   RiFileCopyLine,
   RiLoginBoxLine,
+  RiEyeLine,
+  RiFileTextLine,
+  RiCalendarLine,
+  RiHashtag,
+  RiChat1Line,
 } from 'react-icons/ri'
 import { Button, LinkButton } from '@/shared/components/Button'
 import { getDrafts, deleteDraft, loadDraft } from '@/shared/utils/draftManager'
 import {
   getUserManifestations,
   getManifestationByProtocol,
-} from '@/server/actions/manifestation'
+} from '@/app/actions/manifestation'
 import { toastHelper } from '@/shared/utils/toastHelper'
 import type { ManifestationDraft } from '@/shared/types/manifestation'
 import { MobileHeader } from '@/shared/components/MobileHeader'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
 import { MobileBottomNav } from '@/shared/components/MobileBottomNav'
 import { Pagination } from '@/shared/components/Pagination'
+import { Modal } from '@/shared/components/Modal'
 import type { manifestations } from '@/database/schema'
 
 type Manifestation = typeof manifestations.$inferSelect
@@ -37,6 +43,8 @@ export default function HistoryPage() {
   const [activeTab, setActiveTab] = useState<'submitted' | 'drafts'>(
     'submitted'
   )
+  const [selectedManifestation, setSelectedManifestation] =
+    useState<Manifestation | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [protocolSearch, setProtocolSearch] = useState('')
   const [isSearching, setIsSearching] = useState(false)
@@ -363,14 +371,16 @@ export default function HistoryPage() {
                               {item.protocol}
                             </p>
                           </div>
-                          <button
-                            onClick={() => handleCopyProtocol(item.protocol)}
-                            className="flex-shrink-0 p-2 hover:bg-background rounded-lg transition-colors"
-                            aria-label="Copiar protocolo"
-                            title="Copiar protocolo"
+                          <Button
+                            onClick={() => setSelectedManifestation(item)}
+                            variant="secondary"
+                            size="sm"
+                            className="flex-shrink-0"
+                            aria-label="Visualizar detalhes"
                           >
-                            <RiFileCopyLine className="size-5 text-secondary" />
-                          </button>
+                            <RiEyeLine className="size-4 mr-2" />
+                            Detalhes
+                          </Button>
                         </div>
                       </div>
                     ))}
@@ -679,14 +689,15 @@ export default function HistoryPage() {
                             </td>
                             <td className="px-6 py-4 text-center">
                               <button
-                                onClick={() =>
-                                  handleCopyProtocol(item.protocol)
-                                }
-                                className="cursor-pointer p-2 hover:bg-muted rounded-lg transition-colors inline-flex"
-                                aria-label="Copiar protocolo"
-                                title="Copiar protocolo"
+                                onClick={() => setSelectedManifestation(item)}
+                                className="inline-flex items-center gap-2 px-3 py-1.5 hover:bg-muted rounded-md transition-colors group"
+                                aria-label="Visualizar detalhes"
+                                title="Visualizar detalhes"
                               >
-                                <RiFileCopyLine className="size-4 text-secondary" />
+                                <RiEyeLine className="size-4 text-secondary group-hover:scale-110 transition-transform" />
+                                <span className="text-sm font-medium text-secondary">
+                                  Detalhes
+                                </span>
                               </button>
                             </td>
                           </tr>
@@ -820,6 +831,136 @@ export default function HistoryPage() {
           )}
         </main>
       </div>
+      {/* Details Modal */}
+      <Modal
+        isOpen={!!selectedManifestation}
+        onClose={() => setSelectedManifestation(null)}
+        title={
+          <div className="flex items-center gap-2">
+            <RiFileTextLine className="size-5 text-secondary" />
+            <span>Detalhes da Manifestação</span>
+          </div>
+        }
+        footer={
+          <div className="flex gap-2 w-full sm:w-auto">
+            <Button
+              variant="ghost"
+              onClick={() => setSelectedManifestation(null)}
+              className="flex-1 sm:flex-none"
+            >
+              Fechar
+            </Button>
+          </div>
+        }
+      >
+        {selectedManifestation && (
+          <div className="space-y-6">
+            {/* Header Info */}
+            <div>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1 font-semibold">
+                    Protocolo
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <p className="font-mono font-bold text-2xl text-foreground tracking-tight">
+                      {selectedManifestation.protocol}
+                    </p>
+                    <button
+                      onClick={() =>
+                        handleCopyProtocol(selectedManifestation.protocol)
+                      }
+                      className="p-2 hover:bg-muted rounded-md text-muted-foreground hover:text-secondary transition-colors"
+                      title="Copiar protocolo"
+                    >
+                      <RiFileCopyLine className="size-5" />
+                    </button>
+                  </div>
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1 font-semibold">
+                    Status Atual
+                  </p>
+                  <span
+                    className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
+                      selectedManifestation.status === 'done'
+                        ? 'bg-success/10 text-success'
+                        : selectedManifestation.status === 'analyzing'
+                          ? 'bg-yellow-100 text-yellow-700'
+                          : 'bg-secondary/10 text-secondary'
+                    }`}
+                  >
+                    <span className={`w-2 h-2 rounded-full mr-2 ${
+                      selectedManifestation.status === 'done'
+                        ? 'bg-success'
+                        : selectedManifestation.status === 'analyzing'
+                          ? 'bg-yellow-600'
+                          : 'bg-secondary'
+                    }`} />
+                    {selectedManifestation.status === 'received'
+                      ? 'Recebida'
+                      : selectedManifestation.status === 'analyzing'
+                        ? 'Em Análise'
+                        : selectedManifestation.status === 'done'
+                          ? 'Concluída'
+                          : 'Enviada'}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <hr className="border-border/50" />
+
+            {/* Content Info */}
+            <div className="grid sm:grid-cols-2 gap-x-6 gap-y-4">
+              <div>
+                <div className="flex items-center gap-2 mb-1 text-muted-foreground">
+                  <RiHashtag className="size-4" />
+                  <h3 className="text-sm font-medium">Tipo</h3>
+                </div>
+                <p className="text-foreground font-medium text-lg">
+                  {getTypeLabel(selectedManifestation.type)}
+                </p>
+              </div>
+
+              <div>
+                <div className="flex items-center gap-2 mb-1 text-muted-foreground">
+                  <RiCalendarLine className="size-4" />
+                  <h3 className="text-sm font-medium">Data de envio</h3>
+                </div>
+                <p className="text-foreground font-medium text-lg">
+                  {formatDate(selectedManifestation.createdAt)}
+                </p>
+              </div>
+            </div>
+
+            {selectedManifestation.subject && (
+              <div>
+                <div className="flex items-center gap-2 mb-1 text-muted-foreground">
+                  <RiChat1Line className="size-4" />
+                  <h3 className="text-sm font-medium">Assunto</h3>
+                </div>
+                <p className="text-foreground font-medium text-lg">
+                  {selectedManifestation.subject}
+                </p>
+              </div>
+            )}
+
+            {selectedManifestation.description && (
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <RiFileTextLine className="size-4" />
+                  <h3 className="text-sm font-medium">Descrição Detalhada</h3>
+                </div>
+                <div className="text-foreground text-base leading-relaxed">
+                  {selectedManifestation.description}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </Modal>
+
     </>
   )
 }

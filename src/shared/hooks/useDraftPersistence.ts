@@ -237,6 +237,7 @@ export function useDraftPersistence(options: UseDraftPersistenceOptions = {}) {
     setDraftId(undefined)
     draftIdRef.current = undefined
     createdAtRef.current = undefined
+    localStorage.removeItem(STORAGE_KEYS.currentDraftId)
     setError(null)
   }, [])
 

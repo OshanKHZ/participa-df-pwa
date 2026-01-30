@@ -32,6 +32,8 @@ import { AUDIO_TEXTS, getAudioText } from '@/shared/constants/audioTexts'
 import { getStepProgress } from '@/shared/utils/stepProgress'
 import { useStepNavigation } from '@/shared/hooks/useStepNavigation'
 import { STEPS, COMPLETED_STEPS } from '@/shared/constants/designTokens'
+import { saveDraft, getCurrentDraft } from '@/shared/utils/draftManager'
+import { toastHelper } from '@/shared/utils/toastHelper'
 
 const manifestationTypes = [
   {
@@ -128,10 +130,23 @@ export default function ManifestationTypePage() {
     router.push('/')
   }
 
-  const handleSaveAndExit = () => {
-    // TODO: Implement save draft logic
-    setShowExitModal(false)
-    router.push('/')
+  const handleSaveAndExit = async () => {
+    try {
+      const currentDraft = getCurrentDraft()
+
+      if (currentDraft.type) {
+        await saveDraft(currentDraft)
+        toastHelper.success('Rascunho salvo!', 'Você pode continuar depois')
+      }
+
+      setShowExitModal(false)
+      router.push('/')
+    } catch (error) {
+      console.error('Error saving draft:', error)
+      toastHelper.error('Erro ao salvar rascunho')
+      setShowExitModal(false)
+      router.push('/')
+    }
   }
 
   return (
