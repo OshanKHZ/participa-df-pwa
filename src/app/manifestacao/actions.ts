@@ -1,8 +1,8 @@
 'use server'
- 
+
 import { auth } from '@/server/auth'
-import { db } from '@/server/db'
-import { manifestations } from '@/server/db/schema'
+import { db } from '@/database'
+import { manifestations } from '@/database/schema'
 import { z } from 'zod'
 import DOMPurify from 'isomorphic-dompurify'
 import { eq, and, gt, sql } from 'drizzle-orm'

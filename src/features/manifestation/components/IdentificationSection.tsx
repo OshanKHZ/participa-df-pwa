@@ -12,7 +12,8 @@ import { TOGGLE } from '@/shared/constants/designTokens'
 import { sendOtp, logout, getSessionData } from '@/app/actions/auth'
 import { RiMailLine } from 'react-icons/ri'
 import { Button } from '@/shared/components/Button'
-import { OtpModal } from '@/components/auth/otp-login-modal'
+import { OtpModal } from '@/features/auth/components/otp-login-modal'
+import { toastHelper } from '@/shared/utils/toastHelper'
 
 interface IdentificationSectionProps {
   isAnonymous: boolean
@@ -118,6 +119,8 @@ export function IdentificationSection({
 
   const handleLogout = async () => {
     await logout()
+    toastHelper.success('Você saiu da conta', 'Até logo! 👋')
+    await new Promise(r => setTimeout(r, 1000))
     window.location.reload()
   }
 

@@ -17,7 +17,7 @@ import { NavigationFooter } from '@/features/manifestation/components/Navigation
 import { FormSidebar } from '@/features/manifestation/components/FormSidebar'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
 import { Button } from '@/shared/components/Button'
-import { ManifestationHeader } from '@/shared/components/Stepper'
+import { ManifestationHeader } from '@/features/manifestation/components/ManifestationStepper'
 import { FilePreviewModal } from '@/shared/components/FilePreviewModal'
 import { getStepProgress } from '@/shared/utils/stepProgress'
 import { useStepNavigation } from '@/shared/hooks/useStepNavigation'

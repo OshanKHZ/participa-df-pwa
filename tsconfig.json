@@ -29,7 +29,9 @@
       "@/features/*": ["./src/features/*"],
       "@/shared/*": ["./src/shared/*"],
       "@/lib/*": ["./src/lib/*"],
-      "@/data/*": ["./src/data/*"]
+      "@/data/*": ["./src/data/*"],
+      "@/database": ["./src/server/db/index.ts"],
+      "@/database/*": ["./src/server/db/*"]
     }
   },
   "include": [

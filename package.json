@@ -12,7 +12,9 @@
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",
     "check": "pnpm run format:check && pnpm run lint && pnpm run type-check",
-    "sync-data": "node scripts/sync-simple.js"
+    "sync-data": "node scripts/sync-simple.js",
+    "db:migrate": "tsx scripts/migrate.ts",
+    "generate-icons": "node scripts/generate-icons.js"
   },
   "keywords": [
     "pwa",

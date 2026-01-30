@@ -19,7 +19,7 @@ import { FormSidebar } from '@/features/manifestation/components/FormSidebar'
 import { ExitConfirmModal } from '@/shared/components/ExitConfirmModal'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
 import { Button } from '@/shared/components/Button'
-import { ManifestationHeader } from '@/shared/components/Stepper'
+import { ManifestationHeader } from '@/features/manifestation/components/ManifestationStepper'
 import {
   Select,
   SelectContent,

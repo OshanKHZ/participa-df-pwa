@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { RiLogoutBoxRLine } from 'react-icons/ri'
 import { logout } from '@/app/actions/auth'
-import { toast } from 'sonner'
+import { toastHelper } from '@/shared/utils/toastHelper'
 
 export function LogoutButton() {
   const router = useRouter()
@@ -14,12 +14,16 @@ export function LogoutButton() {
     try {
       setIsLoading(true)
       await logout()
-      toast.success('Você saiu da conta.')
+      toastHelper.success('Você saiu da conta', 'Até logo! 👋')
+
+      // Delay to let toast appear
+      await new Promise(resolve => setTimeout(resolve, 1000))
+
       router.push('/entrar')
       router.refresh()
     } catch (error) {
       console.error('Logout error:', error)
-      toast.error('Erro ao sair da conta.')
+      toastHelper.error('Erro ao sair da conta')
     } finally {
       setIsLoading(false)
     }

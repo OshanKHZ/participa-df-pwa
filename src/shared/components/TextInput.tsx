@@ -78,7 +78,7 @@ export function TextInput({
                 : 'text-success'
             }
           >
-            {error || (hasMinLength ? '✓ Pronto' : `Mínimo ${minLength}`)}
+            {error || (hasMinLength ? '✓ Pronto' : `Mínimo ${minLength} caracteres`)}
           </span>
           {maxLength && (
             <span

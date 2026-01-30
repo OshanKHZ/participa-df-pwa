@@ -1,4 +1,4 @@
-import { AnonymousRegisterForm } from '@/components/auth/anonymous-register-form'
+import { AnonymousRegisterForm } from '@/features/auth/components/anonymous-register-form'
 import { auth } from '@/server/auth'
 import { redirect } from 'next/navigation'
 
