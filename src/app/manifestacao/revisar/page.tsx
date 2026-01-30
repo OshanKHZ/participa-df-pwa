@@ -62,7 +62,7 @@ const typeLabels: Record<string, string> = {
 export default function ReviewPage() {
   const router = useRouter()
   const { navigateToStep } = useStepNavigation()
-  const { loadDraft } = useDraftPersistence()
+  const { loadDraft, deleteDraft, draftId } = useDraftPersistence()
   const [data, setData] = useState<ManifestationData | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [previewFile, setPreviewFile] = useState<{
@@ -182,6 +182,11 @@ export default function ReviewPage() {
 
       if (result.success && result.protocol) {
         const protocol = result.protocol
+
+        // Delete draft if exists
+        if (draftId) {
+          await deleteDraft(draftId)
+        }
 
         localStorage.setItem('last_protocol', protocol)
 
