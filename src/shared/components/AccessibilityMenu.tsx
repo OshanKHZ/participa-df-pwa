@@ -60,15 +60,15 @@ export function AccessibilityMenu() {
         {/* Accessibility Menu Button (Eye icon) */}
         <button
           type="button"
-          onClick={() => setIsOpen(true)}
+          onClick={() => setIsOpen(!isOpen)}
           className="w-10 h-10 shadow-lg transition-all hover:scale-105 btn-focus rounded-lg flex items-center justify-center cursor-pointer accessibility-panel-exempt"
           style={{
             background: isOpen
               ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)'
               : 'linear-gradient(135deg, #3690FA 0%, #2266D2 100%)'
           }}
-          aria-label="Abrir menu de acessibilidade"
-          title="Abrir menu de acessibilidade"
+          aria-label={isOpen ? 'Fechar menu de acessibilidade' : 'Abrir menu de acessibilidade'}
+          title={isOpen ? 'Fechar menu de acessibilidade' : 'Abrir menu de acessibilidade'}
         >
           <Image
             src="/accessibility/eye.png"
@@ -118,63 +118,64 @@ export function AccessibilityMenu() {
         </button>
       </div>
 
-      {/* Panel - Desktop only */}
+      {/* Drawer - Desktop only */}
       {isOpen && (
         <>
           {/* Backdrop */}
           <div
-            className="fixed inset-0 bg-black/20 z-dropdown"
+            className="fixed inset-0 bg-black/50 z-modal animate-fade-in"
             onClick={() => setIsOpen(false)}
+            aria-hidden="true"
           />
 
-          {/* Accessibility Panel */}
-          <div className="accessibility-panel accessibility-panel-exempt fixed right-20 top-1/2 -translate-y-1/2 z-dropdown w-80 bg-white rounded-2xl shadow-2xl border border-border max-h-[90vh] overflow-y-auto">
+          {/* Accessibility Drawer */}
+          <div className="accessibility-panel accessibility-panel-exempt fixed right-0 top-0 bottom-0 z-modal w-96 bg-white shadow-2xl animate-slide-in-from-right overflow-y-auto">
             {/* Header */}
-            <div className="accessibility-panel-exempt flex items-center justify-between p-4 border-b border-border sticky top-0 bg-white z-10">
-              <div className="flex items-center gap-2">
+            <div className="accessibility-panel-exempt flex items-center justify-between p-6 border-b border-border sticky top-0 bg-white z-10">
+              <div className="flex items-center gap-3">
                 <Image
                   src="/accessibility/access_icon.svg"
                   alt=""
-                  width={20}
-                  height={20}
-                  className="w-5 h-5"
+                  width={24}
+                  height={24}
+                  className="w-6 h-6"
                 />
-                <h3 className="font-semibold text-foreground">
+                <h2 className="text-xl font-bold text-foreground">
                   Acessibilidade
-                </h3>
+                </h2>
               </div>
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="w-8 h-8 rounded-lg hover:bg-muted flex items-center justify-center transition-colors btn-focus"
-                aria-label="Fechar"
+                className="w-10 h-10 rounded-lg hover:bg-muted flex items-center justify-center transition-colors btn-focus"
+                aria-label="Fechar menu"
               >
-                <RiCloseLine className="w-5 h-5 text-muted-foreground" />
+                <RiCloseLine className="w-6 h-6 text-muted-foreground" />
               </button>
             </div>
 
             {/* Content */}
-            <div className="accessibility-panel-exempt p-4 space-y-4">
+            <div className="accessibility-panel-exempt p-6 space-y-6">
               {/* Font Size */}
               <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <RiText className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-sm font-medium text-foreground">
+                <div className="flex items-center gap-2 mb-3">
+                  <RiText className="w-5 h-5 text-muted-foreground" />
+                  <span className="text-base font-semibold text-foreground">
                     Tamanho do texto
                   </span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3">
                   <button
                     type="button"
                     onClick={handleDecreaseFont}
                     disabled={preferences.fontSize <= FONT_LEVELS.MIN}
-                    className="accessibility-panel-exempt flex-1 py-2 px-3 bg-muted hover:bg-muted-foreground/20 disabled:opacity-40 disabled:cursor-not-allowed rounded-lg flex items-center justify-center transition-colors"
+                    className="accessibility-panel-exempt flex-1 py-3 px-4 bg-muted hover:bg-muted-foreground/20 disabled:opacity-40 disabled:cursor-not-allowed rounded-lg flex items-center justify-center transition-colors"
                     aria-label="Diminuir texto"
                   >
-                    <RiSubtractLine className="w-4 h-4" />
+                    <RiSubtractLine className="w-5 h-5" />
                   </button>
                   <span
-                    className="accessibility-panel-exempt text-sm font-medium text-muted-foreground min-w-[3rem] text-center"
+                    className="accessibility-panel-exempt text-lg font-bold text-muted-foreground min-w-[3rem] text-center"
                     aria-live="polite"
                   >
                     {preferences.fontSize + 1}
@@ -183,32 +184,39 @@ export function AccessibilityMenu() {
                     type="button"
                     onClick={handleIncreaseFont}
                     disabled={preferences.fontSize >= FONT_LEVELS.MAX}
-                    className="accessibility-panel-exempt flex-1 py-2 px-3 bg-muted hover:bg-muted-foreground/20 disabled:opacity-40 disabled:cursor-not-allowed rounded-lg flex items-center justify-center transition-colors"
+                    className="accessibility-panel-exempt flex-1 py-3 px-4 bg-muted hover:bg-muted-foreground/20 disabled:opacity-40 disabled:cursor-not-allowed rounded-lg flex items-center justify-center transition-colors"
                     aria-label="Aumentar texto"
                   >
-                    <RiAddLine className="w-4 h-4" />
+                    <RiAddLine className="w-5 h-5" />
                   </button>
                 </div>
               </div>
 
+              <div className="border-t border-border"></div>
+
               {/* Audio Toggle */}
               <div className="flex items-center justify-between py-2">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3">
                   {audioEnabled ? (
-                    <RiVolumeUpLine className="w-4 h-4 text-secondary" />
+                    <RiVolumeUpLine className="w-5 h-5 text-secondary" />
                   ) : (
-                    <RiVolumeMuteLine className="w-4 h-4 text-muted-foreground" />
+                    <RiVolumeMuteLine className="w-5 h-5 text-muted-foreground" />
                   )}
-                  <span className="text-sm font-medium text-foreground">
-                    Leitura em voz alta
-                  </span>
+                  <div>
+                    <span className="text-base font-semibold text-foreground block">
+                      Leitura em voz alta
+                    </span>
+                    <span className="text-xs text-muted-foreground">
+                      Narração automática de textos
+                    </span>
+                  </div>
                 </div>
                 <button
                   type="button"
                   onClick={toggleAudio}
                   role="switch"
                   aria-checked={audioEnabled}
-                  className={`accessibility-panel-exempt w-11 h-6 rounded-full transition-colors btn-focus ${
+                  className={`accessibility-panel-exempt w-12 h-6 rounded-full transition-colors btn-focus ${
                     audioEnabled ? 'bg-secondary' : 'bg-muted'
                   }`}
                   aria-label={audioEnabled ? 'Desativar áudio' : 'Ativar áudio'}
@@ -223,24 +231,31 @@ export function AccessibilityMenu() {
                 </button>
               </div>
 
+              <div className="border-t border-border"></div>
+
               {/* High Contrast Toggle */}
               <div className="flex items-center justify-between py-2">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3">
                   {preferences.highContrast ? (
-                    <RiContrastLine className="w-4 h-4 text-secondary" />
+                    <RiContrastLine className="w-5 h-5 text-secondary" />
                   ) : (
-                    <RiContrastDrop2Line className="w-4 h-4 text-muted-foreground" />
+                    <RiContrastDrop2Line className="w-5 h-5 text-muted-foreground" />
                   )}
-                  <span className="text-sm font-medium text-foreground">
-                    Alto contraste
-                  </span>
+                  <div>
+                    <span className="text-base font-semibold text-foreground block">
+                      Alto contraste
+                    </span>
+                    <span className="text-xs text-muted-foreground">
+                      Preto e branco para melhor legibilidade
+                    </span>
+                  </div>
                 </div>
                 <button
                   type="button"
                   onClick={toggleHighContrast}
                   role="switch"
                   aria-checked={preferences.highContrast}
-                  className={`accessibility-panel-exempt w-11 h-6 rounded-full transition-colors btn-focus ${
+                  className={`accessibility-panel-exempt w-12 h-6 rounded-full transition-colors btn-focus ${
                     preferences.highContrast ? 'bg-secondary' : 'bg-muted'
                   }`}
                   aria-label={
@@ -259,20 +274,27 @@ export function AccessibilityMenu() {
                 </button>
               </div>
 
+              <div className="border-t border-border"></div>
+
               {/* Monochrome Toggle */}
               <div className="flex items-center justify-between py-2">
-                <div className="flex items-center gap-2">
-                  <RiPaletteLine className={`w-4 h-4 ${preferences.monochrome ? 'text-secondary' : 'text-muted-foreground'}`} />
-                  <span className="text-sm font-medium text-foreground">
-                    Modo monocromático
-                  </span>
+                <div className="flex items-center gap-3">
+                  <RiPaletteLine className={`w-5 h-5 ${preferences.monochrome ? 'text-secondary' : 'text-muted-foreground'}`} />
+                  <div>
+                    <span className="text-base font-semibold text-foreground block">
+                      Modo monocromático
+                    </span>
+                    <span className="text-xs text-muted-foreground">
+                      Escala de cinza
+                    </span>
+                  </div>
                 </div>
                 <button
                   type="button"
                   onClick={toggleMonochrome}
                   role="switch"
                   aria-checked={preferences.monochrome}
-                  className={`accessibility-panel-exempt w-11 h-6 rounded-full transition-colors btn-focus ${
+                  className={`accessibility-panel-exempt w-12 h-6 rounded-full transition-colors btn-focus ${
                     preferences.monochrome ? 'bg-secondary' : 'bg-muted'
                   }`}
                   aria-label={
@@ -291,13 +313,20 @@ export function AccessibilityMenu() {
                 </button>
               </div>
 
+              <div className="border-t border-border"></div>
+
               {/* Saturation Control */}
               <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <RiDropLine className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-sm font-medium text-foreground">
-                    Saturação de cores
-                  </span>
+                <div className="flex items-center gap-3 mb-3">
+                  <RiDropLine className="w-5 h-5 text-muted-foreground" />
+                  <div>
+                    <span className="text-base font-semibold text-foreground block">
+                      Saturação de cores
+                    </span>
+                    <span className="text-xs text-muted-foreground">
+                      Intensidade das cores
+                    </span>
+                  </div>
                 </div>
                 <div className="flex gap-2">
                   {(['low', 'normal', 'high'] as SaturationLevel[]).map((level) => (
@@ -305,7 +334,7 @@ export function AccessibilityMenu() {
                       key={level}
                       type="button"
                       onClick={() => setSaturation(level)}
-                      className={`accessibility-panel-exempt flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-colors ${
+                      className={`accessibility-panel-exempt flex-1 py-3 px-4 rounded-lg text-sm font-semibold transition-colors ${
                         preferences.saturation === level
                           ? 'bg-secondary text-white'
                           : 'bg-muted hover:bg-muted-foreground/20 text-foreground'
@@ -319,11 +348,13 @@ export function AccessibilityMenu() {
                 </div>
               </div>
 
+              <div className="border-t border-border"></div>
+
               {/* Reset */}
               <button
                 type="button"
                 onClick={handleResetAll}
-                className="accessibility-panel-exempt w-full py-2 text-sm text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus:underline"
+                className="accessibility-panel-exempt w-full py-3 text-base font-medium text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus:underline"
               >
                 Restaurar padrões
               </button>

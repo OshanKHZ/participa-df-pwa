@@ -269,12 +269,27 @@ body {
     }
   }
 
+  @keyframes slide-in-from-right {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
   .animate-slide-up {
     animation: slide-up 0.3s ease-out;
   }
 
   .animate-fade-in {
     animation: fade-in 0.2s ease-out;
+  }
+
+  .animate-slide-in-from-right {
+    animation: slide-in-from-right 0.3s ease-out;
   }
 
   /* Desktop-specific enhancements */
@@ -292,8 +307,8 @@ body {
   --color-foreground: #ffffff;
   --color-card: #000000;
   --color-card-foreground: #ffffff;
-  --color-primary: #ffffff;
-  --color-primary-foreground: #000000;
+  --color-primary: #000000;
+  --color-primary-foreground: #ffffff;
   --color-secondary: #0066ff;
   --color-secondary-foreground: #ffffff;
   --color-secondary-hover: #0052cc;
@@ -358,6 +373,33 @@ body {
     background: #ffffff !important;
     color: #1e293b !important;
     border-color: #d1d5db !important;
+  }
+
+  /* Mobile header in high contrast - keep it visible with proper contrast */
+  .bg-primary {
+    background-color: #000000 !important;
+  }
+
+  .bg-primary-light {
+    background-color: #1a1a1a !important;
+  }
+
+  /* Ensure text on primary backgrounds is white */
+  .bg-primary *,
+  .bg-primary-light * {
+    color: #ffffff !important;
+  }
+
+  /* text-primary should be WHITE in high contrast for readability */
+  .text-primary {
+    color: #ffffff !important;
+  }
+
+  /* Override specific text opacity classes to be solid white */
+  .text-white\/80,
+  .text-white\/90 {
+    color: #ffffff !important;
+    opacity: 1 !important;
   }
 }
 
