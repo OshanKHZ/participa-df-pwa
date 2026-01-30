@@ -3,7 +3,7 @@
 Progressive Web App (PWA) para registro de manifestações da Ouvidoria do Distrito Federal.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Next.js](https://img.shields.io/badge/Next.js-14+-black)](https://nextjs.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-16+-black)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue)](https://www.typescriptlang.org/)
 [![WCAG 2.1 AA](https://img.shields.io/badge/WCAG-2.1%20AA-green)](https://www.w3.org/WAI/WCAG21/quickref/)
 
