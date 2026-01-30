@@ -20,6 +20,7 @@ export function ManifestacaoPopover({
         href="/manifestacao"
         className="flex items-center gap-3 px-4 py-3 hover:bg-white/10 transition-colors"
         onClick={onClose}
+        role="menuitem"
       >
         <div>
           <h4 className="text-base font-medium text-white">Nova Manifestação</h4>
@@ -31,6 +32,7 @@ export function ManifestacaoPopover({
         href="/consultar-manifestacoes"
         className="flex items-center gap-3 px-4 py-3 hover:bg-white/10 transition-colors"
         onClick={onClose}
+        role="menuitem"
       >
         <div>
           <h4 className="text-base font-medium text-white">Acompanhar Registro</h4>
@@ -42,6 +44,7 @@ export function ManifestacaoPopover({
         href="/orientacoes"
         className="flex items-center gap-3 px-4 py-3 hover:bg-white/10 transition-colors"
         onClick={onClose}
+        role="menuitem"
       >
         <div>
           <h4 className="text-base font-medium text-white">Orientações</h4>

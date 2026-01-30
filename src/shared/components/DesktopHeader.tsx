@@ -98,7 +98,18 @@ export function DesktopHeader() {
                       : 'text-white/70 border-transparent hover:text-white hover:border-white/30'
                   }`}
                   aria-expanded={isManifestacaoOpen}
-                  aria-haspopup="true"
+                  aria-haspopup="menu"
+                  onKeyDown={(e) => {
+                    if (e.key === 'ArrowDown') {
+                      e.preventDefault()
+                      if (isManifestacaoOpen) {
+                        const first = (e.currentTarget.nextElementSibling as HTMLElement)?.querySelector('a, button') as HTMLElement
+                        first?.focus()
+                      } else {
+                        setIsManifestacaoOpen(true)
+                      }
+                    }
+                  }}
                 >
                   <span>Manifestações</span>
                   <RiArrowDownSLine className="size-3" />
@@ -129,7 +140,18 @@ export function DesktopHeader() {
                       : 'text-white/70 border-transparent hover:text-white hover:border-white/30'
                   }`}
                   aria-expanded={isAjudaOpen}
-                  aria-haspopup="true"
+                  aria-haspopup="menu"
+                  onKeyDown={(e) => {
+                    if (e.key === 'ArrowDown') {
+                      e.preventDefault()
+                      if (isAjudaOpen) {
+                        const first = (e.currentTarget.nextElementSibling as HTMLElement)?.querySelector('a, button') as HTMLElement
+                        first?.focus()
+                      } else {
+                        setIsAjudaOpen(true)
+                      }
+                    }
+                  }}
                 >
                   <span>Ajuda</span>
                   <RiArrowDownSLine className="size-3" />
@@ -156,7 +178,18 @@ export function DesktopHeader() {
                       : 'text-white/70 border-transparent hover:text-white hover:border-white/30'
                   }`}
                   aria-expanded={isTransparenciaOpen}
-                  aria-haspopup="true"
+                  aria-haspopup="menu"
+                  onKeyDown={(e) => {
+                    if (e.key === 'ArrowDown') {
+                      e.preventDefault()
+                      if (isTransparenciaOpen) {
+                        const first = (e.currentTarget.nextElementSibling as HTMLElement)?.querySelector('a, button') as HTMLElement
+                        first?.focus()
+                      } else {
+                        setIsTransparenciaOpen(true)
+                      }
+                    }
+                  }}
                 >
                   <span>Transparência</span>
                   <RiArrowDownSLine className="size-3" />

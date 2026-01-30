@@ -20,6 +20,7 @@ export function AjudaPopover({
         href="/o-que-e-ouvidoria"
         className="flex items-center gap-3 px-4 py-3 hover:bg-white/10 transition-colors"
         onClick={onClose}
+        role="menuitem"
       >
         <div>
           <h4 className="text-base font-medium text-white">Sobre a Ouvidoria</h4>
@@ -31,6 +32,7 @@ export function AjudaPopover({
         href="/ajuda"
         className="flex items-center gap-3 px-4 py-3 hover:bg-white/10 transition-colors"
         onClick={onClose}
+        role="menuitem"
       >
         <div>
           <h4 className="text-base font-medium text-white">Perguntas Frequentes</h4>
@@ -42,6 +44,7 @@ export function AjudaPopover({
         href="/canais"
         className="flex items-center gap-3 px-4 py-3 hover:bg-white/10 transition-colors"
         onClick={onClose}
+        role="menuitem"
       >
         <div>
           <h4 className="text-base font-medium text-white">Canais de Atendimento</h4>

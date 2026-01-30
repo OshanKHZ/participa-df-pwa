@@ -22,6 +22,7 @@ export function TransparenciaPopover({
         rel="noopener noreferrer"
         className="flex items-center justify-between px-4 py-3 hover:bg-white/10 transition-colors"
         onClick={onClose}
+        role="menuitem"
       >
         <div>
           <h4 className="text-base font-medium text-white">Painel de Ouvidoria</h4>
@@ -36,6 +37,7 @@ export function TransparenciaPopover({
         rel="noopener noreferrer"
         className="flex items-center justify-between px-4 py-3 hover:bg-white/10 transition-colors"
         onClick={onClose}
+        role="menuitem"
       >
         <div>
           <h4 className="text-base font-medium text-white">Transparência Passiva</h4>
@@ -50,6 +52,7 @@ export function TransparenciaPopover({
         rel="noopener noreferrer"
         className="flex items-center justify-between px-4 py-3 hover:bg-white/10 transition-colors"
         onClick={onClose}
+        role="menuitem"
       >
         <div>
           <h4 className="text-base font-medium text-white">Portal da Transparência</h4>
@@ -64,6 +67,7 @@ export function TransparenciaPopover({
         rel="noopener noreferrer"
         className="flex items-center justify-between px-4 py-3 hover:bg-white/10 transition-colors"
         onClick={onClose}
+        role="menuitem"
       >
         <div>
           <h4 className="text-base font-medium text-white">Portal de Dados Abertos</h4>
