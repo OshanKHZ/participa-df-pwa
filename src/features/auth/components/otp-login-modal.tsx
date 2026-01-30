@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { RiCloseLine, RiLoader4Line, RiMailSendLine } from 'react-icons/ri'
 import { verifyOtp, sendOtp } from '@/app/actions/auth'
-import { toast } from 'sonner'
+import { toastHelper } from '@/shared/utils/toastHelper'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/shared/components/Button'
 
@@ -112,7 +112,7 @@ export function OtpModal({ isOpen, onClose, email }: OtpModalProps) {
     const fullCode = codeToProcess.join('')
     if (fullCode.length !== 6) {
       if (codeToVerify) return // Don't show toast on auto-submit attempts if incomplete
-      toast.error('Digite o código completo de 6 dígitos.')
+      toastHelper.error('Digite o código completo de 6 dígitos.')
       return
     }
 
@@ -120,7 +120,7 @@ export function OtpModal({ isOpen, onClose, email }: OtpModalProps) {
     try {
       const result = await verifyOtp(email, fullCode)
       if (result.success) {
-        toast.success('Login realizado com sucesso!')
+        toastHelper.success('Login realizado com sucesso!')
         setSuccess(true)
         if (result.user?.name) {
           setUserName(result.user.name)
@@ -128,10 +128,10 @@ export function OtpModal({ isOpen, onClose, email }: OtpModalProps) {
         router.refresh()
         // Modal remains open showing success state
       } else {
-        toast.error(result.error || 'Código inválido.')
+        toastHelper.error(result.error || 'Código inválido.')
       }
     } catch {
-      toast.error('Erro ao verificar código.')
+      toastHelper.error('Erro ao verificar código.')
     } finally {
       setLoading(false)
     }
@@ -142,15 +142,15 @@ export function OtpModal({ isOpen, onClose, email }: OtpModalProps) {
     try {
       const result = await sendOtp(email)
       if (result.success) {
-        toast.success('Novo código enviado!')
+        toastHelper.success('Novo código enviado!')
         setCode(['', '', '', '', '', '']) // Clear code on resend
         setTimeLeft(15 * 60) // Reset timer
         document.getElementById('otp-0')?.focus()
       } else {
-        toast.error(result.error)
+        toastHelper.error(result.error || 'Erro ao reenviar código.')
       }
     } catch {
-      toast.error('Erro ao reenviar código.')
+      toastHelper.error('Erro ao reenviar código.')
     } finally {
       setResending(false)
     }

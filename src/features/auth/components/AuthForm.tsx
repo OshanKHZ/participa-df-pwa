@@ -7,7 +7,7 @@ import { z } from 'zod'
 import { RiLoader4Line, RiMailLine, RiArrowRightLine } from 'react-icons/ri'
 import { OtpModal } from './otp-login-modal'
 import { sendOtp } from '@/app/actions/auth'
-import { toast } from 'sonner'
+import { toastHelper } from '@/shared/utils/toastHelper'
 import { Button } from '@/shared/components/Button'
 
 const authSchema = z.object({
@@ -41,12 +41,12 @@ export function AuthForm({ mode }: AuthFormProps) {
       if (result.success) {
         setCurrentEmail(data.email)
         setIsModalOpen(true)
-        toast.success('Código enviado para seu email!')
+        toastHelper.success('Código enviado para seu email!')
       } else {
-        toast.error(result.error || 'Erro ao enviar código.')
+        toastHelper.error(result.error || 'Erro ao enviar código.')
       }
     } catch {
-      toast.error('Ocorreu um erro inesperado. Tente novamente.')
+      toastHelper.error('Ocorreu um erro inesperado. Tente novamente.')
     } finally {
       setIsLoading(false)
     }

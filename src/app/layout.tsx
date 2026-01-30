@@ -108,7 +108,21 @@ export default function RootLayout({
             {children}
             <AccessibilityMenu />
             <PWAInstallProvider />
-            <Toaster position="top-center" richColors />
+            <PWAInstallProvider />
+            <Toaster
+              position="bottom-right"
+              toastOptions={{
+                classNames: {
+                  toast:
+                    'group !border-none !shadow-lg data-[type=success]:!bg-green-600 data-[type=error]:!bg-red-600 data-[type=warning]:!bg-amber-500 data-[type=info]:!bg-blue-600 !text-white',
+                  title: '!text-white !font-semibold text-sm',
+                  description: '!text-zinc-50 !font-medium',
+                  actionButton: '!bg-white !text-zinc-900',
+                  cancelButton: '!bg-white/20 !text-white',
+                  closeButton: '!bg-white/20 !text-white hover:!bg-white/40',
+                },
+              }}
+            />
           </AccessibilityProvider>
         </SessionProvider>
       </body>

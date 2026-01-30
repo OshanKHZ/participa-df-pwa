@@ -17,7 +17,7 @@ import {
   getUserManifestations,
   getManifestationByProtocol,
 } from '@/server/actions/manifestation'
-import { toast } from 'sonner'
+import { toastHelper } from '@/shared/utils/toastHelper'
 import type { ManifestationDraft } from '@/shared/types/manifestation'
 import { MobileHeader } from '@/shared/components/MobileHeader'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
@@ -98,17 +98,15 @@ export default function HistoryPage() {
         setSubmitted([found])
       } else {
         setSubmitted([])
-        toast.error('Protocolo não encontrado', {
-          description: 'Verifique o código e tente novamente.',
-          duration: 3000,
-        })
+        toastHelper.error(
+          'Protocolo não encontrado',
+          'Verifique o código e tente novamente.'
+        )
       }
     } catch (error) {
       console.error('Error searching protocol:', error)
       setSubmitted([])
-      toast.error('Erro ao buscar protocolo', {
-        duration: 3000,
-      })
+      toastHelper.error('Erro ao buscar protocolo')
     } finally {
       setIsSearching(false)
     }
@@ -117,14 +115,9 @@ export default function HistoryPage() {
   const handleCopyProtocol = async (protocol: string) => {
     try {
       await navigator.clipboard.writeText(protocol)
-      toast.success('Protocolo copiado!', {
-        description: protocol,
-        duration: 2000,
-      })
+      toastHelper.success('Protocolo copiado!', protocol)
     } catch {
-      toast.error('Não foi possível copiar', {
-        duration: 2000,
-      })
+      toastHelper.error('Não foi possível copiar')
     }
   }
 
@@ -168,10 +161,10 @@ export default function HistoryPage() {
     // Perform deletion
     await deleteDraft(id)
 
-    toast.success('Rascunho excluído', {
-      description: 'O rascunho foi removido dos seus registros.',
-      duration: 3000,
-    })
+    toastHelper.success(
+      'Rascunho excluído',
+      'O rascunho foi removido dos seus registros.'
+    )
 
     // Sync to be sure
     const newDrafts = await getDrafts()
