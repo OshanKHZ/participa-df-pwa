@@ -56,7 +56,7 @@ O **Participa-DF** é uma plataforma digital que facilita o registro de manifest
 - Aviso claro sobre limitações de acompanhamento
 
 **Opção 2: Manifestação Identificada**
-- Login via Google OAuth
+- Login via Email (Código OTP)
 - Dados preenchidos automaticamente
 - Acompanhamento completo via dashboard
 
@@ -86,7 +86,6 @@ O **Participa-DF** é uma plataforma digital que facilita o registro de manifest
 - **Zod** - Validação de schemas
 
 ### Backend
-- **NextAuth.js** - Autenticação OAuth2
 - **Drizzle ORM** - Gerenciamento de banco de dados
 - **SQLite** - Banco de dados local (dev)
 
@@ -125,7 +124,7 @@ npm install
 
 # 3. Configure variáveis de ambiente
 cp .env.example .env.local
-# Edite .env.local com suas credenciais
+# Edite .env.local com sua chave Resend
 
 # 4. Inicialize o banco de dados
 npm run db:push
@@ -148,20 +147,9 @@ Acesse: **http://localhost:3000**
 # Database
 DATABASE_URL="file:./database/dev.db"
 
-# NextAuth
-NEXTAUTH_SECRET=# gere com: openssl rand -base64 32
-NEXTAUTH_URL=http://localhost:3000
-
-# Google OAuth (opcional)
-GOOGLE_CLIENT_ID=seu-client-id
-GOOGLE_CLIENT_SECRET=seu-client-secret
-
-# Email (opcional)
-EMAIL_SERVER_HOST=smtp.gmail.com
-EMAIL_SERVER_PORT=587
-EMAIL_SERVER_USER=seu-email@gmail.com
-EMAIL_SERVER_PASSWORD=senha-app-gmail
-EMAIL_FROM=noreply@participa-df.com
+# Resend (Envio de Email/OTP)
+RESEND_API_KEY="re_..."
+EMAIL_FROM="nao-responda@participa.df.gov.br"
 ```
 
 ### Banco de Dados
@@ -198,7 +186,7 @@ sqlite3 database/dev.db
 
 **Passo 4: Identificação** (30s)
 - **Opção A:** Manifestação anônima (marque checkbox de consentimento)
-- **Opção B:** Faça login/cadastro via Google
+- **Opção B:** Faça login/cadastro via Email (OTP)
 
 **Passo 5: Revisão e Envio** (1min)
 - Revise todas as informações
@@ -249,7 +237,7 @@ participa-df/
 │   │   ├── constants/           # Constantes
 │   │   └── providers/           # Context Providers
 │   ├── server/                  # Lógica server-side
-│   │   ├── auth.ts             # NextAuth config
+│   │   ├── auth.ts             # Auth logic
 │   │   └── db/                 # Drizzle ORM (schema + client)
 │   └── lib/                    # Bibliotecas externas
 │       └── api/                # Integrações API
@@ -286,7 +274,7 @@ participa-df/
          │
          ├──────────► [Participa-DF API] - Busca assuntos
          │
-         ├──────────► [NextAuth] - Autenticação
+         ├──────────► [Auth Service] - Autenticação (OTP)
          │
          ▼
 ┌─────────────────┐
@@ -317,8 +305,7 @@ npm run test:a11y
 
 ```env
 DATABASE_URL=postgresql://user:pass@host:5432/db
-NEXTAUTH_SECRET=# chave segura
-NEXTAUTH_URL=https://seu-dominio.com
+RESEND_API_KEY=re_123...
 # ... outras variáveis
 ```
 
@@ -357,7 +344,6 @@ Desenvolvido para o **1º Hackathon de Controle Social** da Controladoria-Geral 
 
 **Tecnologias:**
 - [Next.js](https://nextjs.org/) - Framework React
-- [NextAuth.js](https://next-auth.js.org/) - Autenticação
 - [Drizzle ORM](https://orm.drizzle.team/) - Type-safe ORM
 - [Tailwind CSS](https://tailwindcss.com/) - Estilização
 - [React Hook Form](https://react-hook-form.com/) - Formulários

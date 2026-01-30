@@ -8,8 +8,7 @@ Este guia mostra como colocar a aplicação funcionando em **menos de 15 minutos
 - [ ] pnpm ou yarn instalado
 - [ ] Git instalado
 - [ ] Navegador moderno (Chrome, Firefox, Edge, Safari)
-- [ ] Contas nas seguintes plataformas (opcional):
-  - [ ] Google Cloud (OAuth - opcional para login)
+- [ ] Conta no [Resend](https://resend.com) (para API Key)
 
 ## 🚀 Instalação em 4 Passos
 
@@ -44,23 +43,10 @@ Ou crie manualmente o arquivo `.env.local` na raiz do projeto:
 # Database (SQLite local - já configurado)
 DATABASE_URL="file:./database/dev.db"
 
-# NextAuth (gere com: openssl rand -base64 32)
-NEXTAUTH_SECRET=sua-chave-secreta-aqui
-NEXTAUTH_URL=http://localhost:3000
-
-# Google OAuth (opcional - apenas para login)
-GOOGLE_CLIENT_ID=seu-client-id.apps.googleusercontent.com
-GOOGLE_CLIENT_SECRET=seu-client-secret
-
-# Email (opcional - apenas para magic links)
-EMAIL_SERVER_HOST=smtp.gmail.com
-EMAIL_SERVER_PORT=587
-EMAIL_SERVER_USER=seu-email@gmail.com
-EMAIL_SERVER_PASSWORD=senha-app-gmail
-EMAIL_FROM=noreply@participa-df.com
+# Resend (Envio de Email/OTP)
+RESEND_API_KEY="re_..."
+EMAIL_FROM="nao-responda@participa.df.gov.br"
 ```
-
-**Dica:** Para testar rapidamente, você só precisa do `NEXTAUTH_SECRET`. Login/cadastro são opcionais!
 
 ### 4. Inicialize o Banco de Dados (2 min)
 
@@ -174,17 +160,6 @@ export const MANIFESTATION_TYPES = [
   // Adicione novos tipos aqui
 ]
 ```
-
-### Configurar Google OAuth
-
-1. Acesse https://console.cloud.google.com
-2. Crie um novo projeto
-3. Ative "Google+ API"
-4. Crie credenciais OAuth 2.0
-5. Adicione URLs autorizadas:
-   - http://localhost:3000
-   - http://localhost:3000/api/auth/callback/google
-6. Copie Client ID e Secret para `.env.local`
 
 ---
 
