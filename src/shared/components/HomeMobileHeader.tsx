@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { RiMenuLine } from 'react-icons/ri'
+import { PiPersonArmsSpreadFill } from 'react-icons/pi'
 import { MenuDrawer } from './MenuDrawer'
 
 interface HomeMobileHeaderProps {
@@ -36,13 +37,21 @@ export function HomeMobileHeader({
             priority
             className="h-7 w-auto"
           />
-          <button
-            onClick={() => setIsDrawerOpen(true)}
-            className="w-10 h-10 flex items-center justify-center hover:bg-white/10 rounded-lg transition-colors"
-            aria-label="Menu"
-          >
-            <RiMenuLine className="size-6 text-white" />
-          </button>
+          <div className="flex items-center gap-1">
+            <button
+              className="w-10 h-10 flex items-center justify-center hover:bg-white/10 rounded-lg transition-colors text-white"
+              aria-label="Acessibilidade"
+            >
+              <PiPersonArmsSpreadFill className="size-6" />
+            </button>
+            <button
+              onClick={() => setIsDrawerOpen(true)}
+              className="w-10 h-10 flex items-center justify-center hover:bg-white/10 rounded-lg transition-colors"
+              aria-label="Menu"
+            >
+              <RiMenuLine className="size-6 text-white" />
+            </button>
+          </div>
         </div>
 
         {/* Slogan Section */}

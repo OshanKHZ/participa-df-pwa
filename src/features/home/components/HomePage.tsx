@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import {
@@ -9,14 +8,13 @@ import {
   RiCustomerService2Line,
   RiSearchLine,
   RiQuestionLine,
-  RiMenuLine,
   RiLightbulbLine,
   RiDashboardLine,
   RiExternalLinkLine,
 } from 'react-icons/ri'
 import { MobileBottomNav } from '@/shared/components/MobileBottomNav'
-import { MenuDrawer } from '@/shared/components/MenuDrawer'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
+import { HomeMobileHeader } from '@/shared/components/HomeMobileHeader'
 import { LinkButton } from '@/shared/components/Button'
 import { BlogCarousel } from './BlogCarousel'
 import type { BlogPost } from './BlogCarousel'
@@ -27,7 +25,6 @@ interface HomePageProps {
 }
 
 export function HomePage({ isAuthenticated, userName }: HomePageProps) {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
   // Mock blog posts data - replace with real data from API
   const blogPosts: BlogPost[] = [
@@ -76,39 +73,9 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
       <DesktopHeader />
 
       {/* Mobile Header */}
-      <header className="lg:hidden bg-primary text-primary-foreground">
-        <div className="px-3 py-3 flex items-center justify-between">
-          <Image
-            src="/logo.svg"
-            alt="Participa DF"
-            width={126}
-            height={32}
-            priority
-            className="h-7 w-auto"
-          />
-          <button
-            onClick={() => setIsDrawerOpen(true)}
-            className="w-10 h-10 flex items-center justify-center hover:bg-white/10 rounded-lg transition-colors"
-            aria-label="Menu"
-          >
-            <RiMenuLine className="size-6 text-white" />
-          </button>
-        </div>
-
-        {/* Slogan Section */}
-        <div className="bg-primary-light px-4 py-2.5">
-          <p className="text-center text-xs font-medium text-white">
-            Você no controle!
-          </p>
-        </div>
-      </header>
-
-      {/* Menu Drawer */}
-      <MenuDrawer
-        isOpen={isDrawerOpen}
-        onClose={() => setIsDrawerOpen(false)}
-        isAuthenticated={isAuthenticated}
-        userName={userName}
+      <HomeMobileHeader 
+        isAuthenticated={isAuthenticated} 
+        userName={userName} 
       />
 
       {/* Main Content */}

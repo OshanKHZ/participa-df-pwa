@@ -15,6 +15,7 @@ import {
   RiFileListLine,
   RiDownloadLine,
 } from 'react-icons/ri'
+import { PiPersonArmsSpreadFill } from 'react-icons/pi'
 
 interface MenuDrawerProps {
   isOpen: boolean
@@ -59,7 +60,7 @@ export function MenuDrawer({
       {/* Backdrop */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-dropdown transition-opacity"
+          className="fixed inset-0 bg-black/50 z-drawer transition-opacity"
           onClick={onClose}
           aria-hidden="true"
         />
@@ -195,7 +196,19 @@ export function MenuDrawer({
         </nav>
 
         {/* Footer */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-border bg-background">
+        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-border bg-background space-y-4">
+          <LinkButton
+            href="#"
+            variant="accent"
+            onClick={(e) => {
+              e.preventDefault()
+              // Handle accessibility menu trigger here if needed
+            }}
+            className="w-full py-2.5 rounded-lg"
+          >
+            <PiPersonArmsSpreadFill className="size-5" />
+            Acessibilidade
+          </LinkButton>
           <p className="text-xs text-muted-foreground text-center">
             Participa DF - Ouvidoria
             <br />
