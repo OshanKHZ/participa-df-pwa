@@ -292,15 +292,15 @@ body {
   --color-foreground: #ffffff;
   --color-card: #000000;
   --color-card-foreground: #ffffff;
-  --color-primary: #000000;
-  --color-primary-foreground: #ffffff;
-  --color-secondary: #ffffff;
-  --color-secondary-foreground: #000000;
-  --color-secondary-hover: #cccccc;
+  --color-primary: #ffffff;
+  --color-primary-foreground: #000000;
+  --color-secondary: #0066ff;
+  --color-secondary-foreground: #ffffff;
+  --color-secondary-hover: #0052cc;
   --color-muted: #1a1a1a;
   --color-muted-foreground: #ffffff;
-  --color-accent: #ffffff;
-  --color-accent-foreground: #000000;
+  --color-accent: #1a1a1a;
+  --color-accent-foreground: #ffffff;
   --color-border: #ffffff;
   --color-input: #ffffff;
 
@@ -310,7 +310,7 @@ body {
   }
 
   /* Buttons with strong borders */
-  button,
+  button:not(.accessibility-panel-exempt),
   .bg-secondary,
   .bg-type-denuncia,
   .bg-type-reclamacao,
@@ -323,15 +323,15 @@ body {
 
   /* Cards with borders */
   .card-border,
-  [class*='rounded'],
-  [class*='border'] {
+  [class*='rounded']:not(.accessibility-panel-exempt),
+  [class*='border']:not(.accessibility-panel-exempt) {
     border-color: #ffffff !important;
     border-width: 2px !important;
   }
 
   /* Links and interactive elements */
-  a,
-  button {
+  a:not(.accessibility-panel-exempt),
+  button:not(.accessibility-panel-exempt) {
     &:hover {
       outline: 3px solid #ffffff;
       outline-offset: 2px;
@@ -342,6 +342,54 @@ body {
       outline-offset: 2px;
     }
   }
+
+  /* Accessibility panel should keep normal colors */
+  .accessibility-panel {
+    --color-background: #ffffff;
+    --color-foreground: #1e293b;
+    --color-card: #ffffff;
+    --color-card-foreground: #1e293b;
+    --color-muted: #f3f4f6;
+    --color-muted-foreground: #404040;
+    --color-border: #d1d5db;
+    --color-secondary: #0369a1;
+    --color-secondary-foreground: #ffffff;
+
+    background: #ffffff !important;
+    color: #1e293b !important;
+    border-color: #d1d5db !important;
+  }
+}
+
+/* Monochrome Mode */
+.monochrome {
+  filter: grayscale(100%);
+}
+
+/* Saturation Controls */
+.saturation-low {
+  filter: saturate(0.5);
+}
+
+.saturation-normal {
+  filter: saturate(1);
+}
+
+.saturation-high {
+  filter: saturate(1.5);
+}
+
+/* Combined filters for monochrome + saturation */
+.monochrome.saturation-low {
+  filter: grayscale(100%) saturate(0.5);
+}
+
+.monochrome.saturation-normal {
+  filter: grayscale(100%) saturate(1);
+}
+
+.monochrome.saturation-high {
+  filter: grayscale(100%) saturate(1.5);
 }
 
 /* Reduced motion support */

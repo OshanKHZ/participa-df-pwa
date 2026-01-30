@@ -137,7 +137,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
             {/* Nova Manifestação */}
             <Link 
               href="/manifestacao" 
-              className="group flex flex-col p-5 bg-card border border-border/50 rounded-xl hover:border-secondary/50 hover:bg-accent/50 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 ring-offset-background h-full"
+              className="group flex flex-col p-5 bg-card border border-border/50 rounded-none hover:border-secondary/50 hover:bg-accent/50 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 ring-offset-background h-full"
             >
               <div className="flex items-center gap-2.5 mb-2">
                 <RiMegaphoneLine className="size-5 text-secondary" aria-hidden="true" />
@@ -146,7 +146,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
               <p className="text-sm text-muted-foreground leading-normal mb-5 flex-1">
                 Registre denúncias, elogios, sugestões ou reclamações de forma simples.
               </p>
-              <span className="w-full py-2 px-4 bg-success text-white text-xs font-medium rounded text-center hover:opacity-90 transition-opacity">
+              <span className="w-full py-2 px-4 bg-success text-white text-xs font-medium rounded-none text-center hover:opacity-90 transition-opacity">
                 Acessar
               </span>
             </Link>
@@ -154,7 +154,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
             {/* Consultar Protocolo */}
             <Link 
               href="/consultar-manifestacoes" 
-              className="group flex flex-col p-5 bg-card border border-border/50 rounded-xl hover:border-secondary/50 hover:bg-accent/50 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 ring-offset-background h-full"
+              className="group flex flex-col p-5 bg-card border border-border/50 rounded-none hover:border-secondary/50 hover:bg-accent/50 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 ring-offset-background h-full"
             >
               <div className="flex items-center gap-2.5 mb-2">
                 <RiSearchLine className="size-5 text-secondary" aria-hidden="true" />
@@ -163,7 +163,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
               <p className="text-sm text-muted-foreground leading-normal mb-5 flex-1">
                 Acompanhe o andamento da sua manifestação ou pedido de acesso.
               </p>
-              <span className="w-full py-2 px-4 bg-warning text-white text-xs font-medium rounded text-center hover:opacity-90 transition-opacity">
+              <span className="w-full py-2 px-4 bg-warning text-white text-xs font-medium rounded-none text-center hover:opacity-90 transition-opacity">
                 Acessar
               </span>
             </Link>
@@ -173,7 +173,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
               href="http://www.painel.ouv.df.gov.br/dashboard" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="group flex flex-col p-5 bg-card border border-border/50 rounded-xl hover:border-secondary/50 hover:bg-accent/50 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 ring-offset-background h-full"
+              className="group flex flex-col p-5 bg-card border border-border/50 rounded-none hover:border-secondary/50 hover:bg-accent/50 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 ring-offset-background h-full"
               aria-label="Painel da Ouvidoria (abre em nova aba)"
             >
               <div className="flex items-center gap-2.5 mb-2">
@@ -186,7 +186,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
               <p className="text-sm text-muted-foreground leading-normal mb-5 flex-1">
                 Acesse indicadores, estatísticas e dados das ouvidorias do GDF.
               </p>
-              <span className="w-full py-2 px-4 bg-secondary text-white text-xs font-medium rounded text-center hover:opacity-90 transition-opacity">
+              <span className="w-full py-2 px-4 bg-secondary text-white text-xs font-medium rounded-none text-center hover:opacity-90 transition-opacity">
                 Acessar
               </span>
             </a>

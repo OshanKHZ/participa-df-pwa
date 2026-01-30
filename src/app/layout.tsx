@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Montserrat } from 'next/font/google'
 import './globals.css'
-import { FontSizeProvider } from '@/shared/contexts/FontSizeContext'
+import { AccessibilityProvider } from '@/shared/contexts/AccessibilityContext'
 import { AccessibilityMenu } from '@/shared/components/AccessibilityMenu'
 import { ServiceWorkerRegister } from '@/shared/components/ServiceWorkerRegister'
 import { SessionProvider } from '@/shared/providers/SessionProvider'
@@ -114,12 +114,12 @@ export default function RootLayout({
         </a>
         <ServiceWorkerRegister />
         <SessionProvider>
-          <FontSizeProvider>
+          <AccessibilityProvider>
             {children}
             <AccessibilityMenu />
             <PWAInstallProvider />
             <Toaster position="top-center" richColors />
-          </FontSizeProvider>
+          </AccessibilityProvider>
         </SessionProvider>
       </body>
     </html>
