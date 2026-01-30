@@ -39,14 +39,21 @@ export function DesktopHeader() {
           <div className="max-w-6xl mx-auto px-8 py-5 grid grid-cols-3 items-center">
             {/* Logo GDF - Left */}
             <div className="justify-self-start">
-              <Image
-                src="/logo-gdf-branca.png"
-                alt="Governo do Distrito Federal"
-                width={140}
-                height={46}
-                className="h-12 w-auto object-contain"
-                priority
-              />
+              <Link
+                href="https://www.cg.df.gov.br/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:opacity-90 transition-opacity"
+              >
+                <Image
+                  src="/logo-gdf-branca.png"
+                  alt="Governo do Distrito Federal"
+                  width={140}
+                  height={46}
+                  className="h-12 w-auto object-contain"
+                  priority
+                />
+              </Link>
             </div>
 
             {/* Logo Participa DF - Center */}
