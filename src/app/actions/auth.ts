@@ -182,3 +182,13 @@ export async function getSessionData() {
   const session = await auth()
   return session?.user || null
 }
+
+export async function logout() {
+  await deleteSession()
+}
+
+export async function getSessionData() {
+  const { auth } = await import('@/server/auth')
+  const session = await auth()
+  return session?.user || null
+}

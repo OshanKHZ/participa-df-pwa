@@ -135,6 +135,14 @@ export function useDraftPersistence(options: UseDraftPersistenceOptions = {}) {
         status: 'draft',
       }
 
+      console.log('[useDraftPersistence] Saving to IDB:', {
+        id: draft.id,
+        channels: draft.channels,
+        hasText: !!draft.content?.text,
+        filesCount: draft.content?.files?.length || 0,
+        hasAudio: !!draft.content?.audio
+      })
+
       await manifestationRepo.saveDraft(draft)
       setError(null)
     } catch (err) {

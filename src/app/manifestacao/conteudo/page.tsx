@@ -59,6 +59,9 @@ export default function ContentPage() {
   // Text content state
   const [textContent, setTextContent] = useState('')
   const [charCount, setCharCount] = useState(0)
+  
+  // Flag to prevent auto-save while restoring data
+  const [isRestoring, setIsRestoring] = useState(true)
 
   // Flag to prevent auto-save while restoring data
   const [isRestoring, setIsRestoring] = useState(true)
