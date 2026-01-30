@@ -132,6 +132,9 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
             </div>
             
             <div className="max-w-xl text-left space-y-4 text-lg text-foreground/80 font-light leading-relaxed">
+              <h1 className="text-2xl font-bold text-primary mb-4">
+                Portal de Participação Social do Distrito Federal
+              </h1>
               <p>
                 Que bom que você acessou a plataforma de participação social do Governo do Distrito Federal.
                 Os sistemas e-Sic (Acesso à Informação) e Ouv-DF (Ouvidorias do GDF) passam a compor o Participa DF.
@@ -141,6 +144,27 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
               </p>
             </div>
           </div>
+          
+          {/* Structured Data */}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                '@context': 'https://schema.org',
+                '@type': 'GovernmentOrganization',
+                name: 'Ouvidoria do Distrito Federal - Participa-DF',
+                url: 'https://participa-df.gdf.df.gov.br',
+                logo: 'https://participa-df.gdf.df.gov.br/logo.svg',
+                description: 'Portal oficial de ouvidoria e participação social do Governo do Distrito Federal.',
+                contactPoint: {
+                  '@type': 'ContactPoint',
+                  telephone: '162',
+                  contactType: 'customer service',
+                  areaServed: 'Distrito Federal, Brasil',
+                },
+              }),
+            }}
+          />
 
           {/* Grid of Cards */}
           <div className="mt-12 grid grid-cols-3 gap-4 max-w-4xl w-full">

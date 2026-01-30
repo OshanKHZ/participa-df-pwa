@@ -14,15 +14,37 @@ const montserrat = Montserrat({
 })
 
 export const metadata: Metadata = {
-  title: 'Participa-DF | Ouvidoria',
-  description:
-    'PWA para registro de manifestações da Ouvidoria do Distrito Federal',
-  manifest: '/manifest.json',
-  themeColor: '#28477d',
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
+  metadataBase: new URL('https://participa-df.gdf.df.gov.br'),
+  title: {
+    default: 'Participa-DF | Ouvidoria do Distrito Federal',
+    template: '%s | Participa-DF',
   },
+  description:
+    'Portal de Ouvidoria do Distrito Federal. Registre reclamações, sugestões, elogios e denúncias de forma simples e rápida.',
+  keywords: [
+    'Ouvidoria',
+    'Brasília',
+    'Distrito Federal',
+    'GDF',
+    'Participação Social',
+    'Transparência',
+    'Serviços Públicos',
+    'Manifestações',
+    'Denúncia',
+    'Reclamação',
+    'Elogio',
+    'Sugestão',
+    'Informação',
+  ],
+  authors: [{ name: 'Governo do Distrito Federal' }],
+  creator: 'GDF',
+  publisher: 'Ouvidoria Geral do DF',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
@@ -39,12 +61,40 @@ export const metadata: Metadata = {
       { url: '/icons/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
     ],
   },
-  other: {
-    'mobile-web-app-capable': 'true',
-    'apple-mobile-web-app-capable': 'true',
-    'apple-mobile-web-app-status-bar-style': 'default',
-    'apple-mobile-web-app-title': 'Participa-DF',
-    'application-name': 'Participa-DF',
+  openGraph: {
+    type: 'website',
+    locale: 'pt_BR',
+    url: 'https://participa-df.gdf.df.gov.br',
+    siteName: 'Participa-DF',
+    title: 'Participa-DF | Ouvidoria do Distrito Federal',
+    description:
+      'Registre suas manifestações e ajude a melhorar o Distrito Federal. Portal oficial de ouvidoria.',
+    images: [
+      {
+        url: '/logo.svg',
+        width: 800,
+        height: 600,
+        alt: 'Logo Participa-DF',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Participa-DF | Ouvidoria do Distrito Federal',
+    description:
+      'Registre suas manifestações e ajude a melhorar o Distrito Federal.',
+    images: ['/logo.svg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 }
 
