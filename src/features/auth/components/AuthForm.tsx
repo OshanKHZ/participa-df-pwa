@@ -103,7 +103,6 @@ export function AuthForm({ mode }: AuthFormProps) {
         </Button>
       </form>
 
-
       <OtpModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

@@ -19,7 +19,9 @@ export const formatDate = (date: Date | string | null | undefined): string => {
   }
 }
 
-export const formatDateOnly = (date: Date | string | null | undefined): string => {
+export const formatDateOnly = (
+  date: Date | string | null | undefined
+): string => {
   if (!date) return '-'
 
   try {
@@ -55,19 +57,24 @@ export const getTypeLabel = (type: string): string => {
 export const getStatusLabel = (
   status: string
 ): { label: string; color: 'success' | 'secondary' | 'warning' } => {
-  const statuses: Record<string, { label: string; color: 'success' | 'secondary' | 'warning' }> =
-    {
-      received: { label: 'Recebida', color: 'secondary' },
-      analyzing: { label: 'Em Análise', color: 'warning' },
-      done: { label: 'Concluída', color: 'success' },
-    }
+  const statuses: Record<
+    string,
+    { label: string; color: 'success' | 'secondary' | 'warning' }
+  > = {
+    received: { label: 'Recebida', color: 'secondary' },
+    analyzing: { label: 'Em Análise', color: 'warning' },
+    done: { label: 'Concluída', color: 'success' },
+  }
   return statuses[status] || { label: 'Enviada', color: 'secondary' }
 }
 
 /**
  * Truncar texto com elipsis
  */
-export const truncateText = (text: string | null | undefined, maxLength: number = 100): string => {
+export const truncateText = (
+  text: string | null | undefined,
+  maxLength: number = 100
+): string => {
   if (!text) return ''
   if (text.length <= maxLength) return text
   return text.substring(0, maxLength) + '...'

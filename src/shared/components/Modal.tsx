@@ -70,7 +70,7 @@ export function Modal({
         className={`bg-background rounded-sm shadow-lg w-full overflow-hidden transition-all duration-200 flex flex-col max-h-[90vh] ${
           sizeClasses[size]
         } ${isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-98'} ${className}`}
-        onClick={(e) => e.stopPropagation()}
+        onClick={e => e.stopPropagation()}
       >
         {/* Header */}
         <div className="px-6 py-5 border-b border-border flex items-start justify-between gap-4 shrink-0">
@@ -89,9 +89,7 @@ export function Modal({
         </div>
 
         {/* Content */}
-        <div className="px-6 py-5 overflow-y-auto">
-          {children}
-        </div>
+        <div className="px-6 py-5 overflow-y-auto">{children}</div>
 
         {/* Footer */}
         {footer && (

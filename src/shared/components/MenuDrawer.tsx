@@ -37,7 +37,10 @@ export function MenuDrawer({
   onInstall,
 }: MenuDrawerProps) {
   const containerRef = useFocusTrap(isOpen)
-  const [internalSession, setInternalSession] = useState<{ name?: string | null; email?: string | null } | null>(null)
+  const [internalSession, setInternalSession] = useState<{
+    name?: string | null
+    email?: string | null
+  } | null>(null)
 
   useEffect(() => {
     getSessionData().then(user => {
@@ -115,13 +118,17 @@ export function MenuDrawer({
                   <RiUserLine className="size-6 text-white" />
                 </div>
                 <div>
-                  <p className="font-semibold text-foreground leading-tight">{finalUserName}</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">Cidadão • Ver perfil</p>
+                  <p className="font-semibold text-foreground leading-tight">
+                    {finalUserName}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    Cidadão • Ver perfil
+                  </p>
                 </div>
               </Link>
               <button
                 onClick={handleLogout}
-                className="w-full flex items-center gap-2 px-3 py-2 text-destructive border border-destructive/20 hover:border-destructive hover:bg-destructive/10 rounded-lg transition-all text-sm font-medium"
+                className="w-full flex items-center gap-2 px-3 py-2.5 bg-destructive text-white hover:bg-destructive/90 rounded-lg transition-all text-sm font-medium shadow-sm"
               >
                 <RiLogoutBoxRLine className="size-4" />
                 Sair da conta
@@ -226,7 +233,7 @@ export function MenuDrawer({
           <LinkButton
             href="#"
             variant="accent"
-            onClick={(e) => {
+            onClick={e => {
               e.preventDefault()
               // Handle accessibility menu trigger here if needed
             }}

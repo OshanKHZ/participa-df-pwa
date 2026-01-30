@@ -81,7 +81,7 @@ export function generateFAQSchema(
   return {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: faqs.map((faq) => ({
+    mainEntity: faqs.map(faq => ({
       '@type': 'Question',
       name: faq.question,
       acceptedAnswer: {
@@ -224,4 +224,3 @@ export function generateItemListSchema(
     })),
   }
 }
-

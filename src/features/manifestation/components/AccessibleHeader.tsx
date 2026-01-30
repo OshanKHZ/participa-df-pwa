@@ -2,11 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import {
-  RiQuestionLine,
-  RiFontSize,
-  RiLogoutBoxLine,
-} from 'react-icons/ri'
+import { RiQuestionLine, RiFontSize, RiLogoutBoxLine } from 'react-icons/ri'
 import { PiPersonArmsSpreadFill } from 'react-icons/pi'
 import { useAccessibility } from '@/shared/contexts/AccessibilityContext'
 import { ExitConfirmModal } from '@/shared/components/ExitConfirmModal'

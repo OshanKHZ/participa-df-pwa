@@ -17,44 +17,53 @@ export function FlowExitGuard() {
 
   // Ignorar o guard se já estiver na página de protocolo (sucesso)
   // ou se não for uma página de fluxo (ex: layout wrapper)
-  const isInFlow = pathname?.startsWith('/manifestacao') && 
-                  !pathname?.includes('/protocolo')
+  const isInFlow =
+    pathname?.startsWith('/manifestacao') && !pathname?.includes('/protocolo')
 
-  const handleInteract = useCallback((e: MouseEvent) => {
-    if (!isInFlow) return
+  const handleInteract = useCallback(
+    (e: MouseEvent) => {
+      if (!isInFlow) return
 
-    // Buscar o elemento âncora mais próximo (caso o clique seja em um filho do link)
-    const target = (e.target as HTMLElement).closest('a')
-    
-    if (!target) return
+      // Buscar o elemento âncora mais próximo (caso o clique seja em um filho do link)
+      const target = (e.target as HTMLElement).closest('a')
 
-    const href = target.getAttribute('href')
-    if (!href) return
+      if (!target) return
 
-    // Se for link externo, ancora, ou javascript:void, ignora
-    if (href.startsWith('http') || href.startsWith('#') || href.startsWith('javascript')) return
+      const href = target.getAttribute('href')
+      if (!href) return
 
-    // Se o link for para dentro do fluxo de manifestação, permite
-    // Exceção: Se for para /manifestacao (home do fluxo) vindo de um passo interno, talvez queira confirmar?
-    // Por enquanto vamos assumir que navegar DENTRO de /manifestacao/* é seguro/permitido
-    if (href.startsWith('/manifestacao') && !href.includes('/protocolo')) return
+      // Se for link externo, ancora, ou javascript:void, ignora
+      if (
+        href.startsWith('http') ||
+        href.startsWith('#') ||
+        href.startsWith('javascript')
+      )
+        return
 
-    // Tem dados não salvos?
-    // Verificação simples: se tem tipo, assunto ou conteúdo
-    const currentDraft = getCurrentDraft()
-    const hasData =
-      currentDraft.type || currentDraft.subject || currentDraft.content?.text
+      // Se o link for para dentro do fluxo de manifestação, permite
+      // Exceção: Se for para /manifestacao (home do fluxo) vindo de um passo interno, talvez queira confirmar?
+      // Por enquanto vamos assumir que navegar DENTRO de /manifestacao/* é seguro/permitido
+      if (href.startsWith('/manifestacao') && !href.includes('/protocolo'))
+        return
 
-    if (!hasData) return
+      // Tem dados não salvos?
+      // Verificação simples: se tem tipo, assunto ou conteúdo
+      const currentDraft = getCurrentDraft()
+      const hasData =
+        currentDraft.type || currentDraft.subject || currentDraft.content?.text
 
-    // Previne a navegação
-    e.preventDefault()
-    e.stopPropagation()
-    
-    // Mostra modal e guarda a URL
-    setPendingUrl(href)
-    setShowExitModal(true)
-  }, [isInFlow])
+      if (!hasData) return
+
+      // Previne a navegação
+      e.preventDefault()
+      e.stopPropagation()
+
+      // Mostra modal e guarda a URL
+      setPendingUrl(href)
+      setShowExitModal(true)
+    },
+    [isInFlow]
+  )
 
   useEffect(() => {
     document.addEventListener('click', handleInteract, true) // Capture phase to ensure we catch it first

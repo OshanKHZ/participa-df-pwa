@@ -1,6 +1,12 @@
 'use client'
 
-import { createContext, useContext, useState, useEffect, useCallback } from 'react'
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from 'react'
 import { FONT_LEVELS } from '@/shared/constants/designTokens'
 
 export type SaturationLevel = 'low' | 'normal' | 'high'
@@ -30,9 +36,9 @@ const DEFAULT_PREFERENCES: AccessibilityPreferences = {
 
 const STORAGE_KEY = 'accessibility-preferences'
 
-const AccessibilityContext = createContext<AccessibilityContextType | undefined>(
-  undefined
-)
+const AccessibilityContext = createContext<
+  AccessibilityContextType | undefined
+>(undefined)
 
 const FONT_SIZE_CLASSES = [
   'text-base', // Level 0 (default)
@@ -41,8 +47,13 @@ const FONT_SIZE_CLASSES = [
   'text-2xl', // Level 3
 ]
 
-export function AccessibilityProvider({ children }: { children: React.ReactNode }) {
-  const [preferences, setPreferences] = useState<AccessibilityPreferences>(DEFAULT_PREFERENCES)
+export function AccessibilityProvider({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  const [preferences, setPreferences] =
+    useState<AccessibilityPreferences>(DEFAULT_PREFERENCES)
   const [isInitialized, setIsInitialized] = useState(false)
 
   // Load preferences from localStorage on mount
@@ -79,7 +90,8 @@ export function AccessibilityProvider({ children }: { children: React.ReactNode 
 
     // Font size
     FONT_SIZE_CLASSES.forEach(cls => root.classList.remove(cls))
-    const fontClass = (FONT_SIZE_CLASSES[preferences.fontSize] || FONT_SIZE_CLASSES[0]) as string
+    const fontClass = (FONT_SIZE_CLASSES[preferences.fontSize] ||
+      FONT_SIZE_CLASSES[0]) as string
     root.classList.add(fontClass)
 
     // High contrast
@@ -97,12 +109,19 @@ export function AccessibilityProvider({ children }: { children: React.ReactNode 
     }
 
     // Saturation
-    root.classList.remove('saturation-low', 'saturation-normal', 'saturation-high')
+    root.classList.remove(
+      'saturation-low',
+      'saturation-normal',
+      'saturation-high'
+    )
     root.classList.add(`saturation-${preferences.saturation}`)
   }, [preferences, isInitialized])
 
   const setFontSize = useCallback((level: number) => {
-    const clampedLevel = Math.max(FONT_LEVELS.MIN, Math.min(FONT_LEVELS.MAX, level))
+    const clampedLevel = Math.max(
+      FONT_LEVELS.MIN,
+      Math.min(FONT_LEVELS.MAX, level)
+    )
     setPreferences(prev => ({ ...prev, fontSize: clampedLevel }))
   }, [])
 
@@ -141,7 +160,9 @@ export function AccessibilityProvider({ children }: { children: React.ReactNode 
 export function useAccessibility() {
   const context = useContext(AccessibilityContext)
   if (!context) {
-    throw new Error('useAccessibility must be used within AccessibilityProvider')
+    throw new Error(
+      'useAccessibility must be used within AccessibilityProvider'
+    )
   }
   return context
 }

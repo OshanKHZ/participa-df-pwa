@@ -14,12 +14,22 @@ import {
   RiPaletteLine,
   RiDropLine,
 } from 'react-icons/ri'
-import { useAccessibility, type SaturationLevel } from '@/shared/contexts/AccessibilityContext'
+import {
+  useAccessibility,
+  type SaturationLevel,
+} from '@/shared/contexts/AccessibilityContext'
 import { useTextToSpeech } from '@/shared/hooks/useTextToSpeech'
 import { TOGGLE, FONT_LEVELS } from '@/shared/constants/designTokens'
 
 export function AccessibilityMenu() {
-  const { preferences, setFontSize, toggleHighContrast, toggleMonochrome, setSaturation, resetAll } = useAccessibility()
+  const {
+    preferences,
+    setFontSize,
+    toggleHighContrast,
+    toggleMonochrome,
+    setSaturation,
+    resetAll,
+  } = useAccessibility()
   const { setEnabled, isEnabled } = useTextToSpeech()
   const [isOpen, setIsOpen] = useState(false)
   const [audioEnabled, setAudioEnabled] = useState(true)
@@ -65,10 +75,18 @@ export function AccessibilityMenu() {
           style={{
             background: isOpen
               ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)'
-              : 'linear-gradient(135deg, #3690FA 0%, #2266D2 100%)'
+              : 'linear-gradient(135deg, #3690FA 0%, #2266D2 100%)',
           }}
-          aria-label={isOpen ? 'Fechar menu de acessibilidade' : 'Abrir menu de acessibilidade'}
-          title={isOpen ? 'Fechar menu de acessibilidade' : 'Abrir menu de acessibilidade'}
+          aria-label={
+            isOpen
+              ? 'Fechar menu de acessibilidade'
+              : 'Abrir menu de acessibilidade'
+          }
+          title={
+            isOpen
+              ? 'Fechar menu de acessibilidade'
+              : 'Abrir menu de acessibilidade'
+          }
         >
           <Image
             src="/accessibility/eye.png"
@@ -87,7 +105,7 @@ export function AccessibilityMenu() {
           style={{
             background: audioEnabled
               ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)'
-              : 'linear-gradient(135deg, #3690FA 0%, #2266D2 100%)'
+              : 'linear-gradient(135deg, #3690FA 0%, #2266D2 100%)',
           }}
           aria-label={audioEnabled ? 'Desativar voz' : 'Ativar voz'}
           title={audioEnabled ? 'Desativar voz' : 'Ativar voz'}
@@ -279,7 +297,9 @@ export function AccessibilityMenu() {
               {/* Monochrome Toggle */}
               <div className="flex items-center justify-between py-2">
                 <div className="flex items-center gap-3">
-                  <RiPaletteLine className={`w-5 h-5 ${preferences.monochrome ? 'text-secondary' : 'text-muted-foreground'}`} />
+                  <RiPaletteLine
+                    className={`w-5 h-5 ${preferences.monochrome ? 'text-secondary' : 'text-muted-foreground'}`}
+                  />
                   <div>
                     <span className="text-base font-semibold text-foreground block">
                       Modo monocromático
@@ -329,22 +349,28 @@ export function AccessibilityMenu() {
                   </div>
                 </div>
                 <div className="flex gap-2">
-                  {(['low', 'normal', 'high'] as SaturationLevel[]).map((level) => (
-                    <button
-                      key={level}
-                      type="button"
-                      onClick={() => setSaturation(level)}
-                      className={`accessibility-panel-exempt flex-1 py-3 px-4 rounded-lg text-sm font-semibold transition-colors ${
-                        preferences.saturation === level
-                          ? 'bg-secondary text-white'
-                          : 'bg-muted hover:bg-muted-foreground/20 text-foreground'
-                      }`}
-                      aria-label={`Saturação ${level === 'low' ? 'baixa' : level === 'normal' ? 'normal' : 'alta'}`}
-                      aria-pressed={preferences.saturation === level}
-                    >
-                      {level === 'low' ? 'Baixa' : level === 'normal' ? 'Normal' : 'Alta'}
-                    </button>
-                  ))}
+                  {(['low', 'normal', 'high'] as SaturationLevel[]).map(
+                    level => (
+                      <button
+                        key={level}
+                        type="button"
+                        onClick={() => setSaturation(level)}
+                        className={`accessibility-panel-exempt flex-1 py-3 px-4 rounded-lg text-sm font-semibold transition-colors ${
+                          preferences.saturation === level
+                            ? 'bg-secondary text-white'
+                            : 'bg-muted hover:bg-muted-foreground/20 text-foreground'
+                        }`}
+                        aria-label={`Saturação ${level === 'low' ? 'baixa' : level === 'normal' ? 'normal' : 'alta'}`}
+                        aria-pressed={preferences.saturation === level}
+                      >
+                        {level === 'low'
+                          ? 'Baixa'
+                          : level === 'normal'
+                            ? 'Normal'
+                            : 'Alta'}
+                      </button>
+                    )
+                  )}
                 </div>
               </div>
 

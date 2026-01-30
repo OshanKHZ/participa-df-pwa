@@ -44,7 +44,6 @@ export default function ProtocolPage() {
 
       {/* Mobile Container */}
       <div className="lg:hidden min-h-screen bg-background">
-
         {/* Main Content */}
         <main id="main-content" className="px-4 py-8">
           {/* Success Icon */}
@@ -264,10 +263,7 @@ export default function ProtocolPage() {
           {/* Actions */}
           <div className="space-y-3">
             <div className="flex justify-center">
-              <LinkButton
-                href="/"
-                variant="secondary"
-              >
+              <LinkButton href="/" variant="secondary">
                 <RiHomeLine className="size-5" aria-hidden="true" />
                 Voltar ao início
               </LinkButton>

@@ -1,5 +1,11 @@
 import { useState, useEffect } from 'react'
-import { create, insertMultiple, search, type AnyOrama, type Results } from '@orama/orama'
+import {
+  create,
+  insertMultiple,
+  search,
+  type AnyOrama,
+  type Results,
+} from '@orama/orama'
 import assuntosData from '@/data/assuntos-completo.json'
 
 // Semantic keyword expansion for better search results
@@ -231,19 +237,21 @@ export function useOramaAssuntos() {
             .replace(/[\u0300-\u036f]/g, '')
 
           // Add semantic keywords based on expansions
-          Object.entries(SEMANTIC_EXPANSIONS).forEach(([concept, relatedWords]) => {
-            // If the name matches any of the related words OR the concept itself
-            // e.g. Name has "escola" -> adds concept "crianca" (because crianca -> [escola, ...])
-            // e.g. Name has "crianca" -> adds concept "crianca"
-            
-            const shouldAdd = 
-              normalizedName.includes(concept) || 
-              relatedWords.some(word => normalizedName.includes(word))
+          Object.entries(SEMANTIC_EXPANSIONS).forEach(
+            ([concept, relatedWords]) => {
+              // If the name matches any of the related words OR the concept itself
+              // e.g. Name has "escola" -> adds concept "crianca" (because crianca -> [escola, ...])
+              // e.g. Name has "crianca" -> adds concept "crianca"
 
-            if (shouldAdd) {
-              keywords.add(concept)
+              const shouldAdd =
+                normalizedName.includes(concept) ||
+                relatedWords.some(word => normalizedName.includes(word))
+
+              if (shouldAdd) {
+                keywords.add(concept)
+              }
             }
-          })
+          )
 
           return {
             id: String(assunto.id),
@@ -268,14 +276,20 @@ export function useOramaAssuntos() {
   const searchAssuntos = async (term: string, limit = 50) => {
     if (!globalOrama || !term.trim()) return []
 
+    interface OramaDoc {
+      id: string
+      name: string
+      keywords: string[]
+    }
+
     try {
-      const results: Results<any> = await search(globalOrama, {
+      const results: Results<OramaDoc> = await search(globalOrama, {
         term: term,
         properties: ['name', 'keywords'],
         tolerance: 1, // Reset to valid integer
-        boost: { 
+        boost: {
           name: 1.5,
-          keywords: 1.0 
+          keywords: 1.0,
         },
         limit,
       })
@@ -294,6 +308,6 @@ export function useOramaAssuntos() {
   return {
     searchAssuntos,
     isReady,
-    allAssuntos: assuntosData.assunto as Assunto[]
+    allAssuntos: assuntosData.assunto as Assunto[],
   }
 }

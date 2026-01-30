@@ -18,7 +18,10 @@ import { HomeMobileHeader } from '@/shared/components/HomeMobileHeader'
 import { LinkButton } from '@/shared/components/Button'
 import { BlogCarousel } from './BlogCarousel'
 import type { BlogPost } from './BlogCarousel'
-import { generateOrganizationSchema, generateItemListSchema } from '@/lib/seo/schemas'
+import {
+  generateOrganizationSchema,
+  generateItemListSchema,
+} from '@/lib/seo/schemas'
 
 interface HomePageProps {
   isAuthenticated?: boolean
@@ -96,16 +99,10 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
       <DesktopHeader />
 
       {/* Mobile Header */}
-      <HomeMobileHeader
-        isAuthenticated={isAuthenticated}
-        userName={userName}
-      />
+      <HomeMobileHeader isAuthenticated={isAuthenticated} userName={userName} />
 
       {/* Main Content */}
-      <main
-        id="main-content"
-        className="pb-28 lg:pb-8 min-h-screen bg-muted"
-      >
+      <main id="main-content" className="pb-28 lg:pb-8 min-h-screen bg-muted">
         {/* Desktop Layout: Clean Version */}
         <div className="hidden lg:flex flex-col items-center pt-12 px-8">
           <div className="max-w-5xl w-full flex items-center justify-center gap-16">
@@ -119,17 +116,20 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
                 className="h-auto w-[280px]"
               />
             </div>
-            
+
             <div className="max-w-xl text-left space-y-4 text-lg text-foreground/80 font-light leading-relaxed">
               <h1 className="text-2xl font-bold text-primary mb-4">
                 Portal de Participação Social do Distrito Federal
               </h1>
               <p>
-                Que bom que você acessou a plataforma de participação social do Governo do Distrito Federal.
-                Os sistemas e-Sic (Acesso à Informação) e Ouv-DF (Ouvidorias do GDF) passam a compor o Participa DF.
+                Que bom que você acessou a plataforma de participação social do
+                Governo do Distrito Federal. Os sistemas e-Sic (Acesso à
+                Informação) e Ouv-DF (Ouvidorias do GDF) passam a compor o
+                Participa DF.
               </p>
               <p className="text-primary font-medium">
-                Todos os serviços de Ouvidoria e de Acesso à Informação em um só lugar e com login único.
+                Todos os serviços de Ouvidoria e de Acesso à Informação em um só
+                lugar e com login único.
               </p>
             </div>
           </div>
@@ -137,16 +137,22 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
           {/* Grid of Cards */}
           <div className="mt-12 grid grid-cols-3 gap-4 max-w-4xl w-full">
             {/* Nova Manifestação */}
-            <Link 
-              href="/manifestacao" 
+            <Link
+              href="/manifestacao"
               className="group flex flex-col p-5 bg-card border border-border/50 rounded-none hover:border-secondary/50 hover:bg-accent/50 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 ring-offset-background h-full"
             >
               <div className="flex items-center gap-2.5 mb-2">
-                <RiMegaphoneLine className="size-5 text-secondary" aria-hidden="true" />
-                <h3 className="text-base font-semibold text-foreground font-outfit">Nova Manifestação</h3>
+                <RiMegaphoneLine
+                  className="size-5 text-secondary"
+                  aria-hidden="true"
+                />
+                <h3 className="text-base font-semibold text-foreground font-outfit">
+                  Nova Manifestação
+                </h3>
               </div>
               <p className="text-sm text-muted-foreground leading-normal mb-5 flex-1">
-                Registre denúncias, elogios, sugestões ou reclamações de forma simples.
+                Registre denúncias, elogios, sugestões ou reclamações de forma
+                simples.
               </p>
               <span className="w-full py-2 px-4 bg-success text-white text-xs font-medium rounded-none text-center hover:opacity-90 transition-opacity">
                 Acessar
@@ -154,13 +160,18 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
             </Link>
 
             {/* Consultar Protocolo */}
-            <Link 
-              href="/consultar-manifestacoes" 
+            <Link
+              href="/consultar-manifestacoes"
               className="group flex flex-col p-5 bg-card border border-border/50 rounded-none hover:border-secondary/50 hover:bg-accent/50 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 ring-offset-background h-full"
             >
               <div className="flex items-center gap-2.5 mb-2">
-                <RiSearchLine className="size-5 text-secondary" aria-hidden="true" />
-                <h3 className="text-base font-semibold text-foreground font-outfit">Consultar Protocolo</h3>
+                <RiSearchLine
+                  className="size-5 text-secondary"
+                  aria-hidden="true"
+                />
+                <h3 className="text-base font-semibold text-foreground font-outfit">
+                  Consultar Protocolo
+                </h3>
               </div>
               <p className="text-sm text-muted-foreground leading-normal mb-5 flex-1">
                 Acompanhe o andamento da sua manifestação ou pedido de acesso.
@@ -171,30 +182,41 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
             </Link>
 
             {/* Painel de Ouvidoria */}
-            <a 
-              href="http://www.painel.ouv.df.gov.br/dashboard" 
-              target="_blank" 
+            <a
+              href="http://www.painel.ouv.df.gov.br/dashboard"
+              target="_blank"
               rel="noopener noreferrer"
               className="group flex flex-col p-5 bg-card border border-border/50 rounded-none hover:border-secondary/50 hover:bg-accent/50 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 ring-offset-background h-full"
               aria-label="Painel da Ouvidoria (abre em nova aba)"
             >
               <div className="flex items-center gap-2.5 mb-2">
-                <RiDashboardLine className="size-5 text-secondary" aria-hidden="true" />
-                <h3 className="text-base font-semibold text-foreground font-outfit">Painel Ouvidoria</h3>
+                <RiDashboardLine
+                  className="size-5 text-secondary"
+                  aria-hidden="true"
+                />
+                <h3 className="text-base font-semibold text-foreground font-outfit">
+                  Painel Ouvidoria
+                </h3>
               </div>
               <p className="text-sm text-muted-foreground leading-normal mb-5 flex-1">
                 Acesse indicadores, estatísticas e dados das ouvidorias do GDF.
               </p>
               <span className="w-full py-2 px-4 bg-secondary text-white text-xs font-medium rounded-none inline-flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
                 Acessar
-                <RiExternalLinkLine className="size-3.5 text-white/90 group-hover:text-white transition-colors" aria-hidden="true" />
+                <RiExternalLinkLine
+                  className="size-3.5 text-white/90 group-hover:text-white transition-colors"
+                  aria-hidden="true"
+                />
               </span>
             </a>
           </div>
 
           {/* Desktop Blog Carousel */}
           <div className="mt-12 w-full max-w-4xl">
-             <BlogCarousel posts={blogPosts} className="hidden lg:block bg-transparent p-0" />
+            <BlogCarousel
+              posts={blogPosts}
+              className="hidden lg:block bg-transparent p-0"
+            />
           </div>
         </div>
 

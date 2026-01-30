@@ -65,7 +65,10 @@ export default function ReviewPage() {
   const { loadDraft } = useDraftPersistence()
   const [data, setData] = useState<ManifestationData | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [previewFile, setPreviewFile] = useState<{ file: File; index: number } | null>(null)
+  const [previewFile, setPreviewFile] = useState<{
+    file: File
+    index: number
+  } | null>(null)
 
   useEffect(() => {
     const loadData = async () => {
@@ -75,7 +78,9 @@ export default function ReviewPage() {
       const subject = localStorage.getItem('manifestation_subject_name') || ''
       const isAnonymous =
         localStorage.getItem('manifestation_anonymous') === 'true'
-      const personalDataStr = localStorage.getItem('manifestation_personal_data')
+      const personalDataStr = localStorage.getItem(
+        'manifestation_personal_data'
+      )
       const attachmentsStr = localStorage.getItem('manifestation_attachments')
 
       const attachments: AttachmentInfo | undefined = attachmentsStr
@@ -113,7 +118,7 @@ export default function ReviewPage() {
     }
 
     loadData()
-    
+
     // Listen for focus to refresh data (handles back/forward navigation cache)
     window.addEventListener('focus', loadData)
     return () => window.removeEventListener('focus', loadData)
@@ -294,10 +299,13 @@ export default function ReviewPage() {
                 {data.content}
               </p>
             )}
-            
+
             {/* Mobile Attachments Preview */}
             {(audioUrl || files.length > 0 || data.attachments) &&
-              (data.attachments?.hasAudio || data.attachments?.hasFiles || audioUrl || files.length > 0) && (
+              (data.attachments?.hasAudio ||
+                data.attachments?.hasFiles ||
+                audioUrl ||
+                files.length > 0) && (
                 <div
                   className={`space-y-2 ${data.content ? 'mt-3 pt-3 border-t border-border' : ''}`}
                 >
@@ -306,7 +314,9 @@ export default function ReviewPage() {
                     <div className="bg-secondary/5 rounded-lg p-3">
                       <div className="flex items-center gap-2 mb-2">
                         <RiMicLine className="size-4 text-secondary" />
-                        <span className="text-sm font-medium text-foreground">Áudio gravado</span>
+                        <span className="text-sm font-medium text-foreground">
+                          Áudio gravado
+                        </span>
                       </div>
                       <audio controls src={audioUrl} className="w-full h-8" />
                     </div>
@@ -318,13 +328,16 @@ export default function ReviewPage() {
                       {files.map((file, idx) => {
                         const isImage = file.type.startsWith('image/')
                         const isVideo = file.type.startsWith('video/')
-                        const previewUrl = (isImage || isVideo) ? URL.createObjectURL(file) : null
+                        const previewUrl =
+                          isImage || isVideo ? URL.createObjectURL(file) : null
 
                         return (
                           <div
                             key={idx}
                             className="relative aspect-video bg-muted rounded-lg overflow-hidden border border-border"
-                            onClick={() => (isImage || isVideo) && openPreview(file, idx)}
+                            onClick={() =>
+                              (isImage || isVideo) && openPreview(file, idx)
+                            }
                           >
                             {previewUrl ? (
                               <>
@@ -394,7 +407,7 @@ export default function ReviewPage() {
                   )}
                 </div>
               )}
-            
+
             {!data.content &&
               !audioUrl &&
               files.length === 0 &&
@@ -556,7 +569,9 @@ export default function ReviewPage() {
                   ) : (
                     <div className="grid grid-cols-3 gap-6">
                       <div>
-                        <p className="text-sm text-muted-foreground mb-1">Nome</p>
+                        <p className="text-sm text-muted-foreground mb-1">
+                          Nome
+                        </p>
                         <p className="text-foreground">
                           {data.personalData?.name}
                         </p>
@@ -589,16 +604,22 @@ export default function ReviewPage() {
                 {(audioUrl || files.length > 0 || data.attachments) && (
                   <div className="border-t border-border pt-6">
                     <h3 className="font-bold text-foreground mb-4">Anexos</h3>
-                    
+
                     <div className="space-y-4">
                       {/* Audio Player */}
                       {audioUrl && (
                         <div className="bg-secondary/5 rounded-lg p-4">
                           <div className="flex items-center gap-2 mb-2">
                             <RiMicLine className="size-5 text-secondary" />
-                            <span className="font-medium text-foreground">Áudio gravado</span>
+                            <span className="font-medium text-foreground">
+                              Áudio gravado
+                            </span>
                           </div>
-                          <audio controls src={audioUrl} className="w-full h-10" />
+                          <audio
+                            controls
+                            src={audioUrl}
+                            className="w-full h-10"
+                          />
                         </div>
                       )}
 
@@ -608,13 +629,18 @@ export default function ReviewPage() {
                           {files.map((file, idx) => {
                             const isImage = file.type.startsWith('image/')
                             const isVideo = file.type.startsWith('video/')
-                            const previewUrl = (isImage || isVideo) ? URL.createObjectURL(file) : null
+                            const previewUrl =
+                              isImage || isVideo
+                                ? URL.createObjectURL(file)
+                                : null
 
                             return (
                               <div
                                 key={idx}
                                 className="group relative aspect-video bg-muted rounded-lg overflow-hidden border border-border hover:border-secondary/50 transition-colors cursor-pointer"
-                                onClick={() => (isImage || isVideo) && openPreview(file, idx)}
+                                onClick={() =>
+                                  (isImage || isVideo) && openPreview(file, idx)
+                                }
                               >
                                 {previewUrl ? (
                                   <>
@@ -637,7 +663,9 @@ export default function ReviewPage() {
                                 ) : (
                                   <div className="w-full h-full flex flex-col items-center justify-center text-muted-foreground">
                                     <RiFileTextLine size={24} />
-                                    <span className="text-xs mt-1">{file.type.split('/')[1]}</span>
+                                    <span className="text-xs mt-1">
+                                      {file.type.split('/')[1]}
+                                    </span>
                                   </div>
                                 )}
                               </div>

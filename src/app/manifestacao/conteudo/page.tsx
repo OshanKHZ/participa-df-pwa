@@ -91,7 +91,9 @@ export default function ContentPage() {
   const { audioBlobs, restoreAudio } = audioRecorder
 
   // State for the current draft ID, loaded only on client
-  const [currentDraftId, setCurrentDraftId] = useState<string | undefined>(undefined)
+  const [currentDraftId, setCurrentDraftId] = useState<string | undefined>(
+    undefined
+  )
 
   // Initialize draft ID on client side only to avoid hydration mismatch
   useEffect(() => {
@@ -127,19 +129,14 @@ export default function ContentPage() {
         setIsRestoring(true)
         try {
           const savedDraftId = localStorage.getItem(STORAGE_KEYS.currentDraftId)
-          console.log('[ContentPage] Loading draft:', savedDraftId)
-          
           if (savedDraftId) {
             const draft = await loadDraft(savedDraftId)
-            console.log('[ContentPage] Draft loaded:', draft)
-            
+
             if (draft?.content) {
               if (draft.content.files && draft.content.files.length > 0) {
-                console.log('[ContentPage] Restoring files:', draft.content.files.length)
                 restoreFiles(draft.content.files)
               }
               if (draft.content.audio) {
-                console.log('[ContentPage] Restoring audio')
                 restoreAudio(draft.content.audio)
               }
             }
@@ -161,7 +158,6 @@ export default function ContentPage() {
     // Also reload when page becomes visible (handles navigation back)
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'visible') {
-        console.log('[ContentPage] Page became visible, reloading data...')
         loadAllData()
       }
     }
@@ -210,19 +206,15 @@ export default function ContentPage() {
   }
 
   const handleNext = async () => {
-    console.log('[ContentPage] handleNext - files:', files.length, 'audio:', audioBlobs.length)
-    
     // Ensure channels are correct based on usage (important for returning from review)
-    let channels = [...selectedChannels]
+    const channels = [...selectedChannels]
     if (audioBlobs.length > 0 && !channels.includes('audio')) {
       channels.push('audio')
     }
     if (files.length > 0 && !channels.includes('arquivos')) {
       channels.push('arquivos')
     }
-    
-    console.log('[ContentPage] Channels:', channels)
-    
+
     localStorage.setItem('manifestation_content', textContent)
     localStorage.setItem('manifestation_channels', JSON.stringify(channels))
 
@@ -246,11 +238,11 @@ export default function ContentPage() {
     if (audioBlobs.length > 0) {
       saveField('content.audio', audioBlobs[0])
     }
-    
+
     // Give saveField time to update draftDataRef and wait for save
     await new Promise(resolve => setTimeout(resolve, 100))
     await saveNow()
-    
+
     router.push('/manifestacao/revisar')
   }
 
@@ -342,157 +334,163 @@ export default function ContentPage() {
 
           {/* Coluna Central - Main Content (sempre centralizado) */}
           <main id="main-content" className="w-full">
-          <ManifestationHeader
-            currentStep={STEPS.CONTENT}
-            totalSteps={STEPS.TOTAL}
-            description="Descreva sua manifestação com o máximo de detalhes possível."
-            onStepClick={navigateToStep}
-          />
-
-          <div className="space-y-8">
-            {/* Text Section */}
-            <TextInput
-              id="desktop-text"
-              label="Descrição da manifestação"
-              value={textContent}
-              onChange={handleTextChange}
-              placeholder="Descreva sua manifestação aqui..."
-              minLength={LIMITS.MIN_TEXT_CHARS}
-              maxLength={LIMITS.MAX_TEXT_CHARS}
-              textareaClassName="min-h-48 p-4 border-2 border-border rounded-lg resize-y btn-focus focus:border-secondary"
+            <ManifestationHeader
+              currentStep={STEPS.CONTENT}
+              totalSteps={STEPS.TOTAL}
+              description="Descreva sua manifestação com o máximo de detalhes possível."
+              onStepClick={navigateToStep}
             />
 
-            {/* Audio Section */}
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-foreground">
-                Gravar áudio (opcional)
-              </label>
-              <div className="border-2 border-border rounded-lg p-4">
-                <AudioRecorder audioRecorder={audioRecorder} />
-              </div>
-            </div>
+            <div className="space-y-8">
+              {/* Text Section */}
+              <TextInput
+                id="desktop-text"
+                label="Descrição da manifestação"
+                value={textContent}
+                onChange={handleTextChange}
+                placeholder="Descreva sua manifestação aqui..."
+                minLength={LIMITS.MIN_TEXT_CHARS}
+                maxLength={LIMITS.MAX_TEXT_CHARS}
+                textareaClassName="min-h-48 p-4 border-2 border-border rounded-lg resize-y btn-focus focus:border-secondary"
+              />
 
-            {/* Files Section */}
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-foreground">
-                Anexar arquivos (opcional)
-              </label>
-              <div className="border-2 border-border rounded-lg p-3">
-                <div className="flex items-center justify-between">
-                  <input
-                    type="file"
-                    id="file-upload"
-                    multiple
-                    accept={acceptedFileTypes}
-                    onChange={handleFileUpload}
-                    className="hidden"
-                  />
-                  <label
-                    htmlFor="file-upload"
-                    className="flex-1 text-sm text-muted-foreground cursor-pointer hover:text-foreground"
-                  >
-                    {files.length === 0
-                      ? 'Nenhum arquivo selecionado'
-                      : `${files.length} arquivo(s) anexado(s)`}
-                  </label>
-                  <label
-                    htmlFor="file-upload"
-                    className="px-4 py-2 bg-secondary text-white rounded hover:bg-secondary-hover transition-colors text-sm font-medium cursor-pointer ml-3"
-                  >
-                    Anexar
-                  </label>
+              {/* Audio Section */}
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-foreground">
+                  Gravar áudio (opcional)
+                </label>
+                <div className="border-2 border-border rounded-lg p-4">
+                  <AudioRecorder audioRecorder={audioRecorder} />
                 </div>
               </div>
-              <p className="text-xs text-muted-foreground">
-                Formatos: PNG, JPG, WEBP, MP3, WAV, MP4, WEBM, PDF • Máx.{' '}
-                {LIMITS.MAX_FILE_COUNT} arquivos
-              </p>
 
-              {files.length > 0 && (
-                <div className="grid grid-cols-3 gap-2">
-                  {files.map((file, index) => {
-                    const fileType = file.type.startsWith('image/')
-                      ? 'image'
-                      : file.type.startsWith('video/')
-                        ? 'video'
-                        : file.type.startsWith('audio/')
-                          ? 'audio'
-                          : 'document'
-                    const isMedia = ['image', 'video', 'audio'].includes(fileType)
+              {/* Files Section */}
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-foreground">
+                  Anexar arquivos (opcional)
+                </label>
+                <div className="border-2 border-border rounded-lg p-3">
+                  <div className="flex items-center justify-between">
+                    <input
+                      type="file"
+                      id="file-upload"
+                      multiple
+                      accept={acceptedFileTypes}
+                      onChange={handleFileUpload}
+                      className="hidden"
+                    />
+                    <label
+                      htmlFor="file-upload"
+                      className="flex-1 text-sm text-muted-foreground cursor-pointer hover:text-foreground"
+                    >
+                      {files.length === 0
+                        ? 'Nenhum arquivo selecionado'
+                        : `${files.length} arquivo(s) anexado(s)`}
+                    </label>
+                    <label
+                      htmlFor="file-upload"
+                      className="px-4 py-2 bg-secondary text-white rounded hover:bg-secondary-hover transition-colors text-sm font-medium cursor-pointer ml-3"
+                    >
+                      Anexar
+                    </label>
+                  </div>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Formatos: PNG, JPG, WEBP, MP3, WAV, MP4, WEBM, PDF • Máx.{' '}
+                  {LIMITS.MAX_FILE_COUNT} arquivos
+                </p>
 
-                    return (
-                      <div
-                        key={index}
-                        className="border-2 border-border rounded-lg overflow-hidden cursor-pointer"
-                        onClick={() => isMedia && openPreview(file, index)}
-                      >
-                        <div className="relative group aspect-video bg-muted">
-                          {file.preview && isMedia ? (
-                            <>
-                              {fileType === 'image' && (
-                                <img
-                                  src={file.preview}
-                                  alt={file.name}
-                                  className="w-full h-full object-cover"
-                                />
-                              )}
-                              {fileType === 'video' && (
-                                <video
-                                  src={file.preview}
-                                  className="w-full h-full object-cover"
-                                />
-                              )}
-                              {fileType === 'audio' && (
-                                <div className="w-full h-full flex items-center justify-center bg-accent">
-                                  <RiMicLine className="size-6 text-muted-foreground" />
+                {files.length > 0 && (
+                  <div className="grid grid-cols-3 gap-2">
+                    {files.map((file, index) => {
+                      const fileType = file.type.startsWith('image/')
+                        ? 'image'
+                        : file.type.startsWith('video/')
+                          ? 'video'
+                          : file.type.startsWith('audio/')
+                            ? 'audio'
+                            : 'document'
+                      const isMedia = ['image', 'video', 'audio'].includes(
+                        fileType
+                      )
+
+                      return (
+                        <div
+                          key={index}
+                          className="border-2 border-border rounded-lg overflow-hidden cursor-pointer"
+                          onClick={() => isMedia && openPreview(file, index)}
+                        >
+                          <div className="relative group aspect-video bg-muted">
+                            {file.preview && isMedia ? (
+                              <>
+                                {fileType === 'image' && (
+                                  <img
+                                    src={file.preview}
+                                    alt={file.name}
+                                    className="w-full h-full object-cover"
+                                  />
+                                )}
+                                {fileType === 'video' && (
+                                  <video
+                                    src={file.preview}
+                                    className="w-full h-full object-cover"
+                                  />
+                                )}
+                                {fileType === 'audio' && (
+                                  <div className="w-full h-full flex items-center justify-center bg-accent">
+                                    <RiMicLine className="size-6 text-muted-foreground" />
+                                  </div>
+                                )}
+                                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                                  <RiZoomInLine className="size-6 text-white" />
                                 </div>
-                              )}
-                              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-                                <RiZoomInLine className="size-6 text-white" />
+                              </>
+                            ) : (
+                              <div className="w-full h-full flex flex-col items-center justify-center bg-accent p-2">
+                                <span className="text-3xl">📎</span>
                               </div>
-                            </>
-                          ) : (
-                            <div className="w-full h-full flex flex-col items-center justify-center bg-accent p-2">
-                              <span className="text-3xl">📎</span>
-                            </div>
-                          )}
+                            )}
+                          </div>
+                          <div className="px-2 py-1.5 bg-card flex items-center justify-between gap-1">
+                            <span
+                              className="text-xs text-foreground truncate flex-1"
+                              title={file.name}
+                            >
+                              {file.name}
+                            </span>
+                            <button
+                              onClick={e => {
+                                e.stopPropagation()
+                                removeFile(index)
+                              }}
+                              className="text-destructive hover:text-destructive/80 ml-2 cursor-pointer btn-focus p-1 text-lg leading-none"
+                              aria-label={`Remover arquivo ${file.name}`}
+                            >
+                              ×
+                            </button>
+                          </div>
                         </div>
-                        <div className="px-2 py-1.5 bg-card flex items-center justify-between gap-1">
-                          <span
-                            className="text-xs text-foreground truncate flex-1"
-                            title={file.name}
-                          >
-                            {file.name}
-                          </span>
-                          <button
-                            onClick={e => {
-                              e.stopPropagation()
-                              removeFile(index)
-                            }}
-                            className="text-destructive hover:text-destructive/80 ml-2 cursor-pointer btn-focus p-1 text-lg leading-none"
-                            aria-label={`Remover arquivo ${file.name}`}
-                          >
-                            ×
-                          </button>
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-              )}
+                      )
+                    })}
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
 
-          {/* Desktop Navigation */}
-          <div className="flex items-center justify-between pt-6 border-t border-border mt-8">
-            <Button variant="link" onClick={handleBack}>
-              Voltar
-            </Button>
-            <Button variant="success" onClick={handleNext} disabled={!hasContent}>
-              Avançar
-              <RiArrowRightLine className="size-5" />
-            </Button>
-          </div>
+            {/* Desktop Navigation */}
+            <div className="flex items-center justify-between pt-6 border-t border-border mt-8">
+              <Button variant="link" onClick={handleBack}>
+                Voltar
+              </Button>
+              <Button
+                variant="success"
+                onClick={handleNext}
+                disabled={!hasContent}
+              >
+                Avançar
+                <RiArrowRightLine className="size-5" />
+              </Button>
+            </div>
           </main>
 
           {/* Coluna Direita - Vazia (para manter centralização) */}

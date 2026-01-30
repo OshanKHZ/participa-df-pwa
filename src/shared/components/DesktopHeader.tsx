@@ -4,7 +4,12 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useState, useRef, useEffect } from 'react'
-import { RiLoginBoxLine, RiArrowDownSLine, RiUserLine, RiLogoutBoxRLine } from 'react-icons/ri'
+import {
+  RiLoginBoxLine,
+  RiArrowDownSLine,
+  RiUserLine,
+  RiLogoutBoxRLine,
+} from 'react-icons/ri'
 import { TransparenciaPopover } from '@/shared/components/TransparenciaPopover'
 import { ManifestacaoPopover } from '@/shared/components/ManifestacaoPopover'
 import { AjudaPopover } from '@/shared/components/AjudaPopover'
@@ -20,7 +25,10 @@ export function DesktopHeader() {
   const transparenciaTriggerRef = useRef<HTMLButtonElement>(null)
   const manifestacaoTriggerRef = useRef<HTMLButtonElement>(null)
   const ajudaTriggerRef = useRef<HTMLButtonElement>(null)
-  const [session, setSession] = useState<{ name?: string | null; email?: string | null } | null>(null)
+  const [session, setSession] = useState<{
+    name?: string | null
+    email?: string | null
+  } | null>(null)
 
   useEffect(() => {
     getSessionData().then(user => {
@@ -77,7 +85,10 @@ export function DesktopHeader() {
 
             {/* Logo Participa DF - Center */}
             <div className="justify-self-center">
-              <Link href="/" className="flex-shrink-0 hover:opacity-90 transition-opacity">
+              <Link
+                href="/"
+                className="flex-shrink-0 hover:opacity-90 transition-opacity"
+              >
                 <Image
                   src="/logo.svg"
                   alt="Participa DF"
@@ -97,13 +108,17 @@ export function DesktopHeader() {
                       <RiUserLine className="size-4" />
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-sm font-medium leading-none">{session.name}</span>
-                      <span className="text-xs text-white/60 leading-tight">Cidadão</span>
+                      <span className="text-sm font-medium leading-none">
+                        {session.name}
+                      </span>
+                      <span className="text-xs text-white/60 leading-tight">
+                        Cidadão
+                      </span>
                     </div>
                   </div>
                   <button
                     onClick={handleLogout}
-                    className="p-2 text-destructive border border-destructive/20 hover:border-destructive hover:bg-destructive/10 rounded-lg transition-all cursor-pointer"
+                    className="p-2 bg-destructive text-white hover:bg-destructive/90 rounded-lg transition-all cursor-pointer shadow-sm"
                     title="Sair"
                   >
                     <RiLogoutBoxRLine className="size-5" />
@@ -125,7 +140,7 @@ export function DesktopHeader() {
         {/* Bottom Layer - Lighter Blue (Primary Light) */}
         <div className="bg-primary-light">
           <div className="max-w-6xl mx-auto px-8">
-<nav className="flex items-center justify-center gap-1">
+            <nav className="flex items-center justify-center gap-1">
               <Link href="/" className={navLinkClass('/')}>
                 Início
               </Link>
@@ -146,11 +161,13 @@ export function DesktopHeader() {
                   }`}
                   aria-expanded={isManifestacaoOpen}
                   aria-haspopup="menu"
-                  onKeyDown={(e) => {
+                  onKeyDown={e => {
                     if (e.key === 'ArrowDown') {
                       e.preventDefault()
                       if (isManifestacaoOpen) {
-                        const first = (e.currentTarget.nextElementSibling as HTMLElement)?.querySelector('a, button') as HTMLElement
+                        const first = (
+                          e.currentTarget.nextElementSibling as HTMLElement
+                        )?.querySelector('a, button') as HTMLElement
                         first?.focus()
                       } else {
                         setIsManifestacaoOpen(true)
@@ -188,11 +205,13 @@ export function DesktopHeader() {
                   }`}
                   aria-expanded={isAjudaOpen}
                   aria-haspopup="menu"
-                  onKeyDown={(e) => {
+                  onKeyDown={e => {
                     if (e.key === 'ArrowDown') {
                       e.preventDefault()
                       if (isAjudaOpen) {
-                        const first = (e.currentTarget.nextElementSibling as HTMLElement)?.querySelector('a, button') as HTMLElement
+                        const first = (
+                          e.currentTarget.nextElementSibling as HTMLElement
+                        )?.querySelector('a, button') as HTMLElement
                         first?.focus()
                       } else {
                         setIsAjudaOpen(true)
@@ -228,11 +247,13 @@ export function DesktopHeader() {
                   }`}
                   aria-expanded={isTransparenciaOpen}
                   aria-haspopup="menu"
-                  onKeyDown={(e) => {
+                  onKeyDown={e => {
                     if (e.key === 'ArrowDown') {
                       e.preventDefault()
                       if (isTransparenciaOpen) {
-                        const first = (e.currentTarget.nextElementSibling as HTMLElement)?.querySelector('a, button') as HTMLElement
+                        const first = (
+                          e.currentTarget.nextElementSibling as HTMLElement
+                        )?.querySelector('a, button') as HTMLElement
                         first?.focus()
                       } else {
                         setIsTransparenciaOpen(true)

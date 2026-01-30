@@ -25,8 +25,12 @@ export function TransparenciaPopover({
         role="menuitem"
       >
         <div>
-          <h4 className="text-base font-medium text-white">Painel de Ouvidoria</h4>
-          <p className="text-sm text-white/60 mt-0.5">Dashboard de manifestações</p>
+          <h4 className="text-base font-medium text-white">
+            Painel de Ouvidoria
+          </h4>
+          <p className="text-sm text-white/60 mt-0.5">
+            Dashboard de manifestações
+          </p>
         </div>
         <RiExternalLinkLine className="size-4 text-white/50 flex-shrink-0" />
       </a>
@@ -40,7 +44,9 @@ export function TransparenciaPopover({
         role="menuitem"
       >
         <div>
-          <h4 className="text-base font-medium text-white">Transparência Passiva</h4>
+          <h4 className="text-base font-medium text-white">
+            Transparência Passiva
+          </h4>
           <p className="text-sm text-white/60 mt-0.5">Acesso à informação</p>
         </div>
         <RiExternalLinkLine className="size-4 text-white/50 flex-shrink-0" />
@@ -55,7 +61,9 @@ export function TransparenciaPopover({
         role="menuitem"
       >
         <div>
-          <h4 className="text-base font-medium text-white">Portal da Transparência</h4>
+          <h4 className="text-base font-medium text-white">
+            Portal da Transparência
+          </h4>
           <p className="text-sm text-white/60 mt-0.5">Receitas e despesas</p>
         </div>
         <RiExternalLinkLine className="size-4 text-white/50 flex-shrink-0" />
@@ -70,7 +78,9 @@ export function TransparenciaPopover({
         role="menuitem"
       >
         <div>
-          <h4 className="text-base font-medium text-white">Portal de Dados Abertos</h4>
+          <h4 className="text-base font-medium text-white">
+            Portal de Dados Abertos
+          </h4>
           <p className="text-sm text-white/60 mt-0.5">Conjuntos de dados</p>
         </div>
         <RiExternalLinkLine className="size-4 text-white/50 flex-shrink-0" />

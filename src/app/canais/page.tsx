@@ -52,8 +52,8 @@ export default function CanaisPage() {
             </h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
               Todas as manifestações são respondidas em até 30 dias úteis,
-              conforme a legislação vigente. Você pode acompanhar o
-              andamento pelo número de protocolo.
+              conforme a legislação vigente. Você pode acompanhar o andamento
+              pelo número de protocolo.
             </p>
           </div>
 
@@ -166,8 +166,8 @@ export default function CanaisPage() {
             </h2>
             <p className="text-sm text-muted-foreground leading-relaxed">
               Todas as manifestações são respondidas em até 30 dias úteis,
-              conforme a legislação vigente. Você pode acompanhar o
-              andamento pelo número de protocolo.
+              conforme a legislação vigente. Você pode acompanhar o andamento
+              pelo número de protocolo.
             </p>
           </section>
 

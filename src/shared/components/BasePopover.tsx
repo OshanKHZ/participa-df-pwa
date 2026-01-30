@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useRef, ReactNode } from 'react'
+import type { ReactNode } from 'react'
+import { useEffect, useRef } from 'react'
 
 interface BasePopoverProps {
   isOpen: boolean
@@ -42,7 +43,7 @@ export function BasePopover({
     if (isOpen) {
       document.addEventListener('mousedown', handleClickOutside)
       document.addEventListener('keydown', handleEscape)
-      
+
       // Focus first item if opened via keyboard (trigger is focused)
       if (document.activeElement === triggerRef.current) {
         const firstFocusable = popoverRef.current?.querySelector(

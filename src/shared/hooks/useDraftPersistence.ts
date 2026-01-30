@@ -95,9 +95,16 @@ export function useDraftPersistence(options: UseDraftPersistenceOptions = {}) {
 
     try {
       const currentDraftId = draftIdRef.current
-      
+
       // CRITICAL: On unmount/explicit save, if there's no ID and no data, don't create a new draft
-      if (!currentDraftId && !draftDataRef.current.type && !draftDataRef.current.channels && !draftDataRef.current.content?.text && !draftDataRef.current.content?.files?.length && !draftDataRef.current.content?.audio) {
+      if (
+        !currentDraftId &&
+        !draftDataRef.current.type &&
+        !draftDataRef.current.channels &&
+        !draftDataRef.current.content?.text &&
+        !draftDataRef.current.content?.files?.length &&
+        !draftDataRef.current.content?.audio
+      ) {
         return
       }
 

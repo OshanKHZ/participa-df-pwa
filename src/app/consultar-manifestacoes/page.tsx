@@ -31,7 +31,9 @@ export default function HistoryPage() {
   const router = useRouter() // Used for continuing drafts
   const [drafts, setDrafts] = useState<ManifestationDraft[]>([])
   const [submitted, setSubmitted] = useState<Manifestation[]>([])
-  const [submittedOriginal, setSubmittedOriginal] = useState<Manifestation[]>([])
+  const [submittedOriginal, setSubmittedOriginal] = useState<Manifestation[]>(
+    []
+  )
   const [activeTab, setActiveTab] = useState<'submitted' | 'drafts'>(
     'submitted'
   )
@@ -127,7 +129,9 @@ export default function HistoryPage() {
   }
 
   // Pagination helpers
-  const submittedTotalPages = Math.ceil(submitted.length / submittedItemsPerPage)
+  const submittedTotalPages = Math.ceil(
+    submitted.length / submittedItemsPerPage
+  )
   const paginatedSubmitted = submitted.slice(
     (submittedPage - 1) * submittedItemsPerPage,
     submittedPage * submittedItemsPerPage
@@ -296,12 +300,10 @@ export default function HistoryPage() {
                     Nenhuma manifestação encontrada
                   </p>
                   <p className="text-sm text-muted-foreground mb-6">
-                    Faça login para ver seu histórico ou busque por um protocolo acima.
+                    Faça login para ver seu histórico ou busque por um protocolo
+                    acima.
                   </p>
-                  <LinkButton
-                    href="/entrar"
-                    variant="secondary"
-                  >
+                  <LinkButton href="/entrar" variant="secondary">
                     <RiLoginBoxLine className="size-5" />
                     Acessar
                   </LinkButton>
@@ -409,9 +411,12 @@ export default function HistoryPage() {
               ) : drafts.length === 0 ? (
                 <div className="text-center py-12">
                   <RiDraftLine className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-                  <p className="text-muted-foreground font-medium">Nenhum rascunho salvo</p>
+                  <p className="text-muted-foreground font-medium">
+                    Nenhum rascunho salvo
+                  </p>
                   <p className="text-sm text-muted-foreground mt-2">
-                    Seus rascunhos aparecerão aqui quando você começar uma nova manifestação.
+                    Seus rascunhos aparecerão aqui quando você começar uma nova
+                    manifestação.
                   </p>
                 </div>
               ) : (
@@ -440,18 +445,21 @@ export default function HistoryPage() {
                         </div>
 
                         {/* Attachments & Badges */}
-                        {(draft.content?.audio || (draft.content?.files && draft.content.files.length > 0)) && (
+                        {(draft.content?.audio ||
+                          (draft.content?.files &&
+                            draft.content.files.length > 0)) && (
                           <div className="flex flex-wrap gap-2">
                             {draft.content?.audio && (
                               <span className="inline-flex items-center gap-1 text-xs bg-muted px-2.5 py-1.5 rounded-full text-muted-foreground">
                                 🎙️ Áudio gravado
                               </span>
                             )}
-                            {draft.content?.files && draft.content.files.length > 0 && (
-                              <span className="inline-flex items-center gap-1 text-xs bg-muted px-2.5 py-1.5 rounded-full text-muted-foreground">
-                                📎 {draft.content.files.length} anexo(s)
-                              </span>
-                            )}
+                            {draft.content?.files &&
+                              draft.content.files.length > 0 && (
+                                <span className="inline-flex items-center gap-1 text-xs bg-muted px-2.5 py-1.5 rounded-full text-muted-foreground">
+                                  📎 {draft.content.files.length} anexo(s)
+                                </span>
+                              )}
                           </div>
                         )}
 
@@ -508,7 +516,9 @@ export default function HistoryPage() {
       <div className="hidden lg:block min-h-screen bg-background">
         <main className="max-w-6xl mx-auto px-8 py-12">
           <div className="mb-10">
-            <h1 className="text-3xl font-bold text-foreground mb-2">Consultar Manifestações</h1>
+            <h1 className="text-3xl font-bold text-foreground mb-2">
+              Consultar Manifestações
+            </h1>
             <p className="text-muted-foreground">
               Acompanhe suas manifestações enviadas ou consulte protocolos
             </p>
@@ -548,7 +558,10 @@ export default function HistoryPage() {
           {activeTab === 'submitted' ? (
             <div className="space-y-3">
               {/* Search Box */}
-              <form onSubmit={handleSearchProtocol} className="flex gap-3 max-w-2xl">
+              <form
+                onSubmit={handleSearchProtocol}
+                className="flex gap-3 max-w-2xl"
+              >
                 <input
                   type="text"
                   placeholder="Buscar por protocolo..."
@@ -589,12 +602,10 @@ export default function HistoryPage() {
                     Nenhuma manifestação encontrada
                   </p>
                   <p className="text-muted-foreground mb-6">
-                    Faça login para ver seu histórico ou busque por um protocolo acima.
+                    Faça login para ver seu histórico ou busque por um protocolo
+                    acima.
                   </p>
-                  <LinkButton
-                    href="/entrar"
-                    variant="secondary"
-                  >
+                  <LinkButton href="/entrar" variant="secondary">
                     <RiLoginBoxLine className="size-5" />
                     Acessar
                   </LinkButton>
@@ -675,7 +686,9 @@ export default function HistoryPage() {
                             </td>
                             <td className="px-6 py-4 text-center">
                               <button
-                                onClick={() => handleCopyProtocol(item.protocol)}
+                                onClick={() =>
+                                  handleCopyProtocol(item.protocol)
+                                }
                                 className="cursor-pointer p-2 hover:bg-muted rounded-lg transition-colors inline-flex"
                                 aria-label="Copiar protocolo"
                                 title="Copiar protocolo"
@@ -705,9 +718,12 @@ export default function HistoryPage() {
               ) : drafts.length === 0 ? (
                 <div className="text-center py-16">
                   <RiDraftLine className="w-20 h-20 text-muted-foreground mx-auto mb-4" />
-                  <p className="font-medium text-muted-foreground mb-2 text-lg">Nenhum rascunho salvo</p>
+                  <p className="font-medium text-muted-foreground mb-2 text-lg">
+                    Nenhum rascunho salvo
+                  </p>
                   <p className="text-muted-foreground">
-                    Seus rascunhos aparecerão aqui quando você começar uma nova manifestação.
+                    Seus rascunhos aparecerão aqui quando você começar uma nova
+                    manifestação.
                   </p>
                 </div>
               ) : (
@@ -760,11 +776,17 @@ export default function HistoryPage() {
                               {draft.subject?.name || '-'}
                             </td>
                             <td className="px-6 py-4 text-sm text-muted-foreground">
-                              {draft.content?.audio && <span className="mr-2">🎙️</span>}
-                              {draft.content?.files && draft.content.files.length > 0 && (
-                                <span>📎 {draft.content.files.length}</span>
+                              {draft.content?.audio && (
+                                <span className="mr-2">🎙️</span>
                               )}
-                              {!draft.content?.audio && (!draft.content?.files || draft.content.files.length === 0) && '-'}
+                              {draft.content?.files &&
+                                draft.content.files.length > 0 && (
+                                  <span>📎 {draft.content.files.length}</span>
+                                )}
+                              {!draft.content?.audio &&
+                                (!draft.content?.files ||
+                                  draft.content.files.length === 0) &&
+                                '-'}
                             </td>
                             <td className="px-6 py-4 text-sm text-muted-foreground">
                               {formatDate(draft.createdAt)}

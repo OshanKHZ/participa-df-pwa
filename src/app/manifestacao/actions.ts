@@ -30,7 +30,10 @@ export async function createManifestation(data: CreateManifestationParams) {
   // 1. Validate Input
   const validated = manifestationSchema.safeParse(data)
   if (!validated.success) {
-    return { success: false, error: validated.error.issues[0]?.message || 'Erro de validação' }
+    return {
+      success: false,
+      error: validated.error.issues[0]?.message || 'Erro de validação',
+    }
   }
 
   // 2. Basic Rate Limiting / Spam Protection (Cooldown)
@@ -43,13 +46,18 @@ export async function createManifestation(data: CreateManifestationParams) {
     })
 
     if (lastManifestation) {
-      return { success: false, error: 'Aguarde um momento antes de enviar outra manifestação.' }
+      return {
+        success: false,
+        error: 'Aguarde um momento antes de enviar outra manifestação.',
+      }
     }
   }
 
   // 3. Sanitize Content
   const sanitizedContent = DOMPurify.sanitize(data.content)
-  const sanitizedSubject = data.subject ? DOMPurify.sanitize(data.subject) : undefined
+  const sanitizedSubject = data.subject
+    ? DOMPurify.sanitize(data.subject)
+    : undefined
 
   // Generate Protocol: OUV-YYYY-RANDOM (8 digits)
   const year = new Date().getFullYear()
