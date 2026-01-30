@@ -3,20 +3,39 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { useState, useRef } from 'react'
-import { RiLoginBoxLine, RiArrowDownSLine } from 'react-icons/ri'
+import { useState, useRef, useEffect } from 'react'
+import { RiLoginBoxLine, RiArrowDownSLine, RiUserLine, RiLogoutBoxRLine } from 'react-icons/ri'
 import { TransparenciaPopover } from '@/shared/components/TransparenciaPopover'
 import { ManifestacaoPopover } from '@/shared/components/ManifestacaoPopover'
 import { AjudaPopover } from '@/shared/components/AjudaPopover'
+import { getSessionData, logout } from '@/app/actions/auth'
+import { ConfirmDialog } from '@/shared/components/ConfirmDialog'
 
 export function DesktopHeader() {
   const pathname = usePathname()
   const [isTransparenciaOpen, setIsTransparenciaOpen] = useState(false)
   const [isManifestacaoOpen, setIsManifestacaoOpen] = useState(false)
   const [isAjudaOpen, setIsAjudaOpen] = useState(false)
+  const [showLogoutDialog, setShowLogoutDialog] = useState(false)
   const transparenciaTriggerRef = useRef<HTMLButtonElement>(null)
   const manifestacaoTriggerRef = useRef<HTMLButtonElement>(null)
   const ajudaTriggerRef = useRef<HTMLButtonElement>(null)
+  const [session, setSession] = useState<{ name?: string | null; email?: string | null } | null>(null)
+
+  useEffect(() => {
+    getSessionData().then(user => {
+      if (user) setSession(user)
+    })
+  }, [])
+
+  const handleLogout = () => {
+    setShowLogoutDialog(true)
+  }
+
+  const confirmLogout = async () => {
+    await logout()
+    window.location.reload()
+  }
 
   const isActive = (path: string) => pathname === path
 
@@ -69,15 +88,36 @@ export function DesktopHeader() {
               </Link>
             </div>
 
-            {/* Login - Right */}
+            {/* Login/Session - Right */}
             <div className="justify-self-end mr-12">
-              <Link
-                href="/entrar"
-                className="flex items-center gap-2 px-4 py-2 text-sm text-white/70 hover:text-white transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-white/50 rounded"
-              >
-                <RiLoginBoxLine className="size-5" />
-                <span className="font-medium">Acessar</span>
-              </Link>
+              {session ? (
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-2 text-white">
+                    <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center border border-white/20">
+                      <RiUserLine className="size-4" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-sm font-medium leading-none">{session.name}</span>
+                      <span className="text-xs text-white/60 leading-tight">Cidadão</span>
+                    </div>
+                  </div>
+                  <button
+                    onClick={handleLogout}
+                    className="p-2 text-destructive border border-destructive/20 hover:border-destructive hover:bg-destructive/10 rounded-lg transition-all cursor-pointer"
+                    title="Sair"
+                  >
+                    <RiLogoutBoxRLine className="size-5" />
+                  </button>
+                </div>
+              ) : (
+                <Link
+                  href="/entrar"
+                  className="flex items-center gap-2 px-4 py-2 text-sm text-white/70 hover:text-white transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-white/50 rounded"
+                >
+                  <RiLoginBoxLine className="size-5" />
+                  <span className="font-medium">Acessar</span>
+                </Link>
+              )}
             </div>
           </div>
         </div>
@@ -214,6 +254,17 @@ export function DesktopHeader() {
           </div>
         </div>
       </header>
+
+      <ConfirmDialog
+        isOpen={showLogoutDialog}
+        onClose={() => setShowLogoutDialog(false)}
+        onConfirm={confirmLogout}
+        title="Confirmar saída"
+        message="Deseja realmente sair da sua conta?"
+        confirmText="Sair"
+        cancelText="Voltar"
+        variant="destructive"
+      />
     </>
   )
 }

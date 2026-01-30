@@ -35,7 +35,7 @@ const Button = forwardRef<ComponentRef<'button'>, ButtonProps>(
       accent: 'bg-accent text-secondary hover:bg-accent/80',
       ghost: 'hover:bg-accent hover:text-foreground',
       link: 'text-secondary underline-offset-4 hover:underline',
-      destructive: 'text-destructive underline-offset-4 hover:underline',
+      destructive: 'border border-destructive text-destructive hover:bg-destructive/10',
     }
 
     const sizes = {
@@ -72,7 +72,7 @@ export const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>(
       accent: 'bg-accent text-secondary hover:bg-accent/80',
       ghost: 'hover:bg-accent hover:text-foreground',
       link: 'text-secondary underline-offset-4 hover:underline',
-      destructive: 'text-destructive underline-offset-4 hover:underline',
+      destructive: 'border border-destructive text-destructive hover:bg-destructive/10',
     }
 
     const sizes = {

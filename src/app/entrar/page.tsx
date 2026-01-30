@@ -1,11 +1,23 @@
 'use client'
 
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { MobileHeader } from '@/shared/components/MobileHeader'
 import { MobileBottomNav } from '@/shared/components/MobileBottomNav'
 import { AuthForm } from '@/features/auth/components/AuthForm'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
+import { getSessionData } from '@/app/actions/auth'
 
 export default function AcessarPage() {
+  const router = useRouter()
+
+  useEffect(() => {
+    getSessionData().then(user => {
+      if (user) {
+        router.replace('/')
+      }
+    })
+  }, [router])
   return (
     <>
       {/* Desktop Header */}

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useFocusTrap } from '@/shared/hooks/useFocusTrap'
 import { LinkButton } from '@/shared/components/Button'
@@ -14,8 +14,10 @@ import {
   RiCustomerService2Line,
   RiFileListLine,
   RiDownloadLine,
+  RiLogoutBoxRLine,
 } from 'react-icons/ri'
 import { PiPersonArmsSpreadFill } from 'react-icons/pi'
+import { getSessionData, logout } from '@/app/actions/auth'
 
 interface MenuDrawerProps {
   isOpen: boolean
@@ -35,6 +37,21 @@ export function MenuDrawer({
   onInstall,
 }: MenuDrawerProps) {
   const containerRef = useFocusTrap(isOpen)
+  const [internalSession, setInternalSession] = useState<{ name?: string | null; email?: string | null } | null>(null)
+
+  useEffect(() => {
+    getSessionData().then(user => {
+      if (user) setInternalSession(user)
+    })
+  }, [])
+
+  const handleLogout = async () => {
+    await logout()
+    window.location.reload()
+  }
+
+  const finalIsAuthenticated = isAuthenticated || !!internalSession
+  const finalUserName = userName || internalSession?.name
 
   // Close on ESC key
   useEffect(() => {
@@ -87,20 +104,29 @@ export function MenuDrawer({
 
         {/* User Section */}
         <div className="border-b border-border p-4">
-          {isAuthenticated ? (
-            <Link
-              href="/perfil"
-              onClick={onClose}
-              className="flex items-center gap-3"
-            >
-              <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
-                <RiUserLine className="size-6 text-white" />
-              </div>
-              <div>
-                <p className="font-semibold text-foreground">{userName}</p>
-                <p className="text-xs text-muted-foreground">Ver perfil</p>
-              </div>
-            </Link>
+          {finalIsAuthenticated ? (
+            <div className="space-y-4">
+              <Link
+                href="/perfil"
+                onClick={onClose}
+                className="flex items-center gap-3"
+              >
+                <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
+                  <RiUserLine className="size-6 text-white" />
+                </div>
+                <div>
+                  <p className="font-semibold text-foreground leading-tight">{finalUserName}</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">Cidadão • Ver perfil</p>
+                </div>
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="w-full flex items-center gap-2 px-3 py-2 text-destructive border border-destructive/20 hover:border-destructive hover:bg-destructive/10 rounded-lg transition-all text-sm font-medium"
+              >
+                <RiLogoutBoxRLine className="size-4" />
+                Sair da conta
+              </button>
+            </div>
           ) : (
             <div className="space-y-3">
               <p className="text-sm text-muted-foreground">
@@ -180,7 +206,7 @@ export function MenuDrawer({
                 <span className="font-medium text-sm">Transparência</span>
               </Link>
             </li>
-            {isAuthenticated && (
+            {finalIsAuthenticated && (
               <li>
                 <Link
                   href="/perfil"

@@ -7,7 +7,6 @@ import {
   RiCloseLine,
   RiVolumeUpLine,
   RiArrowRightLine,
-  RiCheckLine,
 } from 'react-icons/ri'
 import { AccessibleHeader } from '@/features/manifestation/components/AccessibleHeader'
 import { NavigationFooter } from '@/features/manifestation/components/NavigationFooter'
