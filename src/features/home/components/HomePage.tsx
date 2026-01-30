@@ -4,7 +4,6 @@ import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import {
-  RiAddLine,
   RiArrowRightSLine,
   RiMegaphoneLine,
   RiCustomerService2Line,
@@ -174,7 +173,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
               className="group flex flex-col p-5 bg-card border border-border/50 rounded-xl hover:border-secondary/50 hover:bg-accent/50 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 ring-offset-background h-full"
             >
               <div className="flex items-center gap-2.5 mb-2">
-                <RiAddLine className="size-5 text-secondary" aria-hidden="true" />
+                <RiMegaphoneLine className="size-5 text-secondary" aria-hidden="true" />
                 <h3 className="text-base font-semibold text-foreground font-outfit">Nova Manifestação</h3>
               </div>
               <p className="text-sm text-muted-foreground leading-normal mb-5 flex-1">
@@ -271,7 +270,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
                 variant="secondary"
                 className="w-full rounded-md py-3"
               >
-                <RiAddLine className="size-5" />
+                <RiMegaphoneLine className="size-5" />
                 Nova Manifestação
               </LinkButton>
 

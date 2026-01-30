@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useState, useRef } from 'react'
-import { RiUserLine, RiArrowDownSLine } from 'react-icons/ri'
+import { RiLoginBoxLine, RiArrowDownSLine } from 'react-icons/ri'
 import { TransparenciaPopover } from '@/shared/components/TransparenciaPopover'
 import { ManifestacaoPopover } from '@/shared/components/ManifestacaoPopover'
 import { AjudaPopover } from '@/shared/components/AjudaPopover'
@@ -68,7 +68,7 @@ export function DesktopHeader() {
                 href="/entrar"
                 className="flex items-center gap-2 px-4 py-2 text-sm text-white/70 hover:text-white transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-white/50 rounded"
               >
-                <RiUserLine className="size-5" />
+                <RiLoginBoxLine className="size-5" />
                 <span className="font-medium">Acessar</span>
               </Link>
             </div>
