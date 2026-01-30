@@ -21,7 +21,7 @@ export function DesktopHeader() {
   const isActive = (path: string) => pathname === path
 
   const navLinkClass = (path: string, startsWith = false) =>
-    `px-5 py-2 text-sm font-normal transition-all border-b-2 ${
+    `px-5 py-2 text-base font-normal transition-all border-b-2 ${
       startsWith
         ? pathname?.startsWith(path)
           ? 'text-white border-white'
@@ -36,30 +36,48 @@ export function DesktopHeader() {
       <header className="hidden lg:block sticky top-0 z-dropdown">
         {/* Top Layer - Dark (Primary) */}
         <div className="bg-primary">
-          <div className="px-8 py-4 flex items-center justify-between">
-            <Link href="/" className="flex-shrink-0">
+          <div className="max-w-6xl mx-auto px-8 py-5 grid grid-cols-3 items-center">
+            {/* Logo GDF - Left */}
+            <div className="justify-self-start">
               <Image
-                src="/logo.svg"
-                alt="Participa DF"
-                width={160}
-                height={41}
+                src="/logo-gdf-branca.png"
+                alt="Governo do Distrito Federal"
+                width={140}
+                height={46}
+                className="h-12 w-auto object-contain"
                 priority
               />
-            </Link>
+            </div>
 
-            <Link
-              href="/entrar"
-              className="flex items-center gap-2 px-4 py-2 text-sm text-white/70 hover:text-white transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-white/50 rounded"
-            >
-              <RiUserLine className="size-4" />
-              <span>Acessar</span>
-            </Link>
+            {/* Logo Participa DF - Center */}
+            <div className="justify-self-center">
+              <Link href="/" className="flex-shrink-0 hover:opacity-90 transition-opacity">
+                <Image
+                  src="/logo.svg"
+                  alt="Participa DF"
+                  width={320}
+                  height={72}
+                  priority
+                />
+              </Link>
+            </div>
+
+            {/* Login - Right */}
+            <div className="justify-self-end mr-12">
+              <Link
+                href="/entrar"
+                className="flex items-center gap-2 px-4 py-2 text-sm text-white/70 hover:text-white transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-white/50 rounded"
+              >
+                <RiUserLine className="size-5" />
+                <span className="font-medium">Acessar</span>
+              </Link>
+            </div>
           </div>
         </div>
 
         {/* Bottom Layer - Lighter Blue (Primary Light) */}
         <div className="bg-primary-light">
-          <div className="px-8">
+          <div className="max-w-6xl mx-auto px-8">
             <nav className="flex items-center justify-center gap-1">
               <Link href="/" className={navLinkClass('/')}>
                 Início
@@ -73,7 +91,7 @@ export function DesktopHeader() {
                 <button
                   ref={manifestacaoTriggerRef}
                   onClick={() => setIsManifestacaoOpen(!isManifestacaoOpen)}
-                  className={`flex items-center gap-1 px-5 py-2 text-sm font-normal transition-all border-b-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-light ${
+                  className={`flex items-center gap-1 px-5 py-2 text-base font-normal transition-all border-b-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-light ${
                     pathname?.startsWith('/manifestacao') ||
                     pathname?.startsWith('/orientacoes')
                       ? 'text-white border-white'
@@ -103,7 +121,7 @@ export function DesktopHeader() {
                 <button
                   ref={ajudaTriggerRef}
                   onClick={() => setIsAjudaOpen(!isAjudaOpen)}
-                  className={`flex items-center gap-1 px-5 py-2 text-sm font-normal transition-all border-b-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-light ${
+                  className={`flex items-center gap-1 px-5 py-2 text-base font-normal transition-all border-b-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-light ${
                     pathname?.startsWith('/ajuda') ||
                     pathname?.startsWith('/o-que-e-ouvidoria') ||
                     pathname?.startsWith('/canais')
@@ -132,7 +150,7 @@ export function DesktopHeader() {
                 <button
                   ref={transparenciaTriggerRef}
                   onClick={() => setIsTransparenciaOpen(!isTransparenciaOpen)}
-                  className={`flex items-center gap-1 px-5 py-2 text-sm font-normal transition-all border-b-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-light ${
+                  className={`flex items-center gap-1 px-5 py-2 text-base font-normal transition-all border-b-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-light ${
                     pathname?.startsWith('/transparencia')
                       ? 'text-white border-white'
                       : 'text-white/70 border-transparent hover:text-white hover:border-white/30'
