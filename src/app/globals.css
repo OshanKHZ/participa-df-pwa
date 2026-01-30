@@ -32,6 +32,10 @@
   --color-success: #499744;
   --color-success-foreground: #ffffff;
 
+  /* Warning/Yellow */
+  --color-warning: #DAA520;
+  --color-warning-foreground: #ffffff;
+
   /* Progress */
   --color-progress: #10b981;
   --color-progress-bg: #d1fae5;
@@ -162,6 +166,10 @@ body {
   /* Success colors */
   .bg-success {
     background-color: var(--color-success);
+  }
+
+  .bg-warning {
+    background-color: var(--color-warning);
   }
 
   .border-success {

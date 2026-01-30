@@ -156,7 +156,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
               <p className="text-sm text-muted-foreground leading-normal mb-5 flex-1">
                 Registre denúncias, elogios, sugestões ou reclamações de forma simples.
               </p>
-              <span className="w-full py-2 px-4 bg-secondary/10 text-secondary text-xs font-medium rounded text-center group-hover:bg-secondary group-hover:text-white transition-colors">
+              <span className="w-full py-2 px-4 bg-success text-white text-xs font-medium rounded text-center hover:opacity-90 transition-opacity">
                 Acessar
               </span>
             </Link>
@@ -173,7 +173,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
               <p className="text-sm text-muted-foreground leading-normal mb-5 flex-1">
                 Acompanhe o andamento da sua manifestação ou pedido de acesso.
               </p>
-              <span className="w-full py-2 px-4 bg-secondary/10 text-secondary text-xs font-medium rounded text-center group-hover:bg-secondary group-hover:text-white transition-colors">
+              <span className="w-full py-2 px-4 bg-warning text-white text-xs font-medium rounded text-center hover:opacity-90 transition-opacity">
                 Acessar
               </span>
             </Link>
@@ -196,7 +196,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
               <p className="text-sm text-muted-foreground leading-normal mb-5 flex-1">
                 Acesse indicadores, estatísticas e dados das ouvidorias do GDF.
               </p>
-              <span className="w-full py-2 px-4 bg-secondary/10 text-secondary text-xs font-medium rounded text-center group-hover:bg-secondary group-hover:text-white transition-colors">
+              <span className="w-full py-2 px-4 bg-secondary text-white text-xs font-medium rounded text-center hover:opacity-90 transition-opacity">
                 Acessar
               </span>
             </a>
