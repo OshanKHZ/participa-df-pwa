@@ -12,7 +12,7 @@ import { TOGGLE } from '@/shared/constants/designTokens'
 import { sendOtp, logout, getSessionData } from '@/app/actions/auth'
 import { RiMailLine } from 'react-icons/ri'
 import { Button } from '@/shared/components/Button'
-import { OtpModal } from '@/features/auth/components/otp-login-modal'
+import { OtpModal } from '@/features/auth/components/OtpLoginModal'
 import { toastHelper } from '@/shared/utils/toastHelper'
 
 interface IdentificationSectionProps {

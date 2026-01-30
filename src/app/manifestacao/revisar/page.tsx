@@ -171,7 +171,7 @@ export default function ReviewPage() {
     setIsSubmitting(true)
 
     try {
-      const { createManifestation } = await import('../actions')
+      const { createManifestation } = await import('@/app/actions/manifestation')
       const result = await createManifestation({
         type: data.type,
         content: data.content,

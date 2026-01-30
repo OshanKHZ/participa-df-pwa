@@ -21,7 +21,7 @@ import { getDrafts, deleteDraft, loadDraft } from '@/shared/utils/draftManager'
 import {
   getUserManifestations,
   getManifestationByProtocol,
-} from '@/server/actions/manifestation'
+} from '@/app/actions/manifestation'
 import { toastHelper } from '@/shared/utils/toastHelper'
 import type { ManifestationDraft } from '@/shared/types/manifestation'
 import { MobileHeader } from '@/shared/components/MobileHeader'
