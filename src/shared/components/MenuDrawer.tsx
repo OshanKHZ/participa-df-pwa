@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useFocusTrap } from '@/shared/hooks/useFocusTrap'
 import { LinkButton } from '@/shared/components/Button'
 import {
@@ -36,6 +37,7 @@ export function MenuDrawer({
   showInstallButton = false,
   onInstall,
 }: MenuDrawerProps) {
+  const pathname = usePathname()
   const containerRef = useFocusTrap(isOpen)
   const [internalSession, setInternalSession] = useState<{
     name?: string | null
@@ -140,7 +142,7 @@ export function MenuDrawer({
                 Acesse sua conta para acompanhar suas manifestações
               </p>
               <LinkButton
-                href="/entrar"
+                href={`/entrar?callbackUrl=${encodeURIComponent(pathname)}`}
                 variant="secondary"
                 onClick={onClose}
                 className="w-full py-2.5"
