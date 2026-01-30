@@ -1,12 +1,12 @@
 'use server'
 
-import { db } from '@/server/db'
-import { otpCodes, users } from '@/server/db/schema'
+import { db } from '@/database'
+import { otpCodes, users } from '@/database/schema'
 import { Resend } from 'resend'
 import { eq, and, gt } from 'drizzle-orm'
 import { createSession, deleteSession } from '@/lib/session'
 import { redirect } from 'next/navigation'
-import { EmailTemplate } from '@/components/email-template'
+import { EmailTemplate } from '@/shared/components/EmailTemplate'
 
 // Generate 6 digit code
 function generateCode() {

@@ -1,8 +1,8 @@
 'use server'
 
 import { auth } from '@/server/auth'
-import { db } from '@/server/db'
-import { users, manifestations } from '@/server/db/schema'
+import { db } from '@/database'
+import { users, manifestations } from '@/database/schema'
 import { eq, count } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 

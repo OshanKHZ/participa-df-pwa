@@ -1,15 +1,15 @@
 import { auth } from '@/server/auth'
 import { redirect } from 'next/navigation'
 import { getUserStats } from '@/app/actions/profile'
-import { AccessibilityForm } from '@/components/profile/accessibility-form'
-import { ProfileStats } from '@/components/profile/profile-stats'
-import { db } from '@/server/db'
-import { users } from '@/server/db/schema'
+import { AccessibilityForm } from '@/features/profile/components/accessibility-form'
+import { ProfileStats } from '@/features/profile/components/profile-stats'
+import { db } from '@/database'
+import { users } from '@/database/schema'
 import { eq } from 'drizzle-orm'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
 import { MobileHeader } from '@/shared/components/MobileHeader'
 import { MobileBottomNav } from '@/shared/components/MobileBottomNav'
-import { LogoutButton } from '@/components/profile/logout-button'
+import { LogoutButton } from '@/features/profile/components/logout-button'
 
 export default async function ProfilePage() {
   const session = await auth()

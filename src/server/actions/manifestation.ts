@@ -1,7 +1,7 @@
 'use server'
 
-import { db } from '@/server/db'
-import { manifestations } from '@/server/db/schema'
+import { db } from '@/database'
+import { manifestations } from '@/database/schema'
 import { desc, eq } from 'drizzle-orm'
 import { auth } from '@/server/auth'
 

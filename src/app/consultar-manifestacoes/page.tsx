@@ -23,7 +23,7 @@ import { MobileHeader } from '@/shared/components/MobileHeader'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
 import { MobileBottomNav } from '@/shared/components/MobileBottomNav'
 import { Pagination } from '@/shared/components/Pagination'
-import type { manifestations } from '@/server/db/schema'
+import type { manifestations } from '@/database/schema'
 
 type Manifestation = typeof manifestations.$inferSelect
 
