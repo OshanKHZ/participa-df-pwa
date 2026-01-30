@@ -5,6 +5,7 @@ import { RiCloseLine, RiLoader4Line, RiMailSendLine } from 'react-icons/ri'
 import { verifyOtp, sendOtp } from '@/app/actions/auth'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import { Button } from '@/shared/components/Button'
 
 interface OtpModalProps {
   isOpen: boolean
@@ -20,16 +21,53 @@ export function OtpModal({ isOpen, onClose, email }: OtpModalProps) {
 
   const [success, setSuccess] = useState(false)
   const [userName, setUserName] = useState('')
+  const [timeLeft, setTimeLeft] = useState(15 * 60) // 15 minutes in seconds
 
-  // Focus first input on open
+  // Timer logic
+  useEffect(() => {
+    if (!isOpen || success || timeLeft <= 0) return
+
+    const timer = setInterval(() => {
+      setTimeLeft(prev => prev - 1)
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [isOpen, success, timeLeft])
+
+  // Reset timer when modal closes and reopen (handled by initial state usually, but let's be safe)
   useEffect(() => {
     if (isOpen && !success) {
+      setTimeLeft(15 * 60)
       document.getElementById('otp-0')?.focus()
     }
   }, [isOpen, success])
 
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60)
+    const secs = seconds % 60
+    return `${mins}:${secs.toString().padStart(2, '0')}`
+  }
+
   const handleChange = (index: number, value: string) => {
-    if (value.length > 1) return // Prevent multiple chars
+    // If value is more than 1 char, it might be a paste or auto-fill
+    if (value.length > 1) {
+      const pastedData = value.slice(0, 6).split('')
+      const newCode = [...code]
+      pastedData.forEach((char, i) => {
+        if (index + i < 6) newCode[index + i] = char
+      })
+      setCode(newCode)
+      
+      // Focus the next empty input or the last one
+      const nextIndex = Math.min(index + pastedData.length, 5)
+      document.getElementById(`otp-${nextIndex}`)?.focus()
+      
+      // Auto-submit if full code is now present
+      if (newCode.every(c => c !== '')) {
+        handleVerify(newCode)
+      }
+      return
+    }
 
     const newCode = [...code]
     newCode[index] = value
@@ -38,18 +76,42 @@ export function OtpModal({ isOpen, onClose, email }: OtpModalProps) {
     // Auto-advance
     if (value && index < 5) {
       document.getElementById(`otp-${index + 1}`)?.focus()
+    } else if (value && index === 5) {
+      // Auto-submit ONLY when the last digit is entered
+      handleVerify(newCode)
     }
   }
 
   const handleKeyDown = (index: number, e: React.KeyboardEvent) => {
     if (e.key === 'Backspace' && !code[index] && index > 0) {
       document.getElementById(`otp-${index - 1}`)?.focus()
+    } else if (e.key === 'ArrowLeft' && index > 0) {
+      document.getElementById(`otp-${index - 1}`)?.focus()
+    } else if (e.key === 'ArrowRight' && index < 5) {
+      document.getElementById(`otp-${index + 1}`)?.focus()
     }
   }
 
-  const handleVerify = async () => {
-    const fullCode = code.join('')
+  const handlePaste = (e: React.ClipboardEvent) => {
+    e.preventDefault()
+    const pastedData = e.clipboardData.getData('text').slice(0, 6).split('')
+    if (pastedData.length > 0) {
+      const newCode = [...code]
+      pastedData.forEach((char, i) => {
+        if (i < 6) newCode[i] = char
+      })
+      setCode(newCode)
+      // Focus last filled or next empty
+      const focusIdx = Math.min(pastedData.length, 5)
+      document.getElementById(`otp-${focusIdx}`)?.focus()
+    }
+  }
+
+  const handleVerify = async (codeToVerify?: string[]) => {
+    const codeToProcess = codeToVerify || code
+    const fullCode = codeToProcess.join('')
     if (fullCode.length !== 6) {
+      if (codeToVerify) return // Don't show toast on auto-submit attempts if incomplete
       toast.error('Digite o código completo de 6 dígitos.')
       return
     }
@@ -82,6 +144,7 @@ export function OtpModal({ isOpen, onClose, email }: OtpModalProps) {
       if (result.success) {
         toast.success('Novo código enviado!')
         setCode(['', '', '', '', '', '']) // Clear code on resend
+        setTimeLeft(15 * 60) // Reset timer
         document.getElementById('otp-0')?.focus()
       } else {
         toast.error(result.error)
@@ -93,12 +156,6 @@ export function OtpModal({ isOpen, onClose, email }: OtpModalProps) {
     }
   }
 
-  // Auto-submit when all fields filled
-  useEffect(() => {
-    if (code.every(c => c !== '') && !success) {
-      handleVerify()
-    }
-  }, [code, success])
 
   if (!isOpen) return null
 
@@ -138,50 +195,68 @@ export function OtpModal({ isOpen, onClose, email }: OtpModalProps) {
               <br />
               Você já pode continuar navegando.
             </p>
-            <button
-              onClick={onClose}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl transition-colors shadow-md shadow-blue-600/10"
+            <Button
+              variant="secondary"
+              onClick={() => {
+                onClose()
+                window.location.reload()
+              }}
+              className="w-full"
+              size="lg"
             >
               Continuar
-            </button>
+            </Button>
           </div>
         ) : (
           <>
             <div className="text-center mb-8">
-              <div className="mx-auto w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-6">
-                <RiMailSendLine className="size-8 text-blue-600" />
+              <div className="mx-auto w-16 h-16 bg-accent rounded-full flex items-center justify-center mb-6">
+                <RiMailSendLine className="size-8 text-secondary" />
               </div>
-              <h2 className="text-2xl font-bold text-blue-950 mb-2">
+              <h2 className="text-2xl font-bold text-foreground mb-2">
                 Verifique seu email
               </h2>
-              <p className="text-zinc-500">
+              <p className="text-muted-foreground">
                 Enviamos um código de 6 dígitos para <br />
-                <span className="font-semibold text-zinc-900">{email}</span>
+                <span className="font-semibold text-foreground">{email}</span>
               </p>
+              <div className={`mt-4 inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium transition-colors ${
+                timeLeft === 0 
+                  ? 'bg-destructive/10 text-destructive' 
+                  : 'bg-secondary/10 text-secondary'
+              }`}>
+                {timeLeft === 0 ? 'Código expirado' : `Expira em ${formatTime(timeLeft)}`}
+              </div>
             </div>
 
-            <div className="flex justify-center gap-3 mb-8">
+            <div className="flex justify-center gap-2 mb-8">
               {code.map((digit, idx) => (
                 <input
                   key={idx}
                   id={`otp-${idx}`}
                   type="text"
                   inputMode="numeric"
-                  maxLength={1}
+                  maxLength={6} // Allow longer for paste/autofill handling in handleChange
                   value={digit}
                   onChange={e => handleChange(idx, e.target.value)}
                   onKeyDown={e => handleKeyDown(idx, e)}
-                  className="w-12 h-14 text-center text-2xl font-bold rounded-lg border border-zinc-200 bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 outline-none transition-all disabled:opacity-50 text-zinc-900 placeholder:text-zinc-300"
+                  onPaste={idx === 0 ? handlePaste : undefined}
+                  autoComplete={idx === 0 ? 'one-time-code' : 'off'}
+                  onFocus={(e) => e.target.select()}
+                  aria-label={`Dígito ${idx + 1} do código de verificação`}
+                  className="w-11 h-14 text-center text-2xl font-bold rounded-lg border border-input bg-background focus:ring-2 focus:ring-secondary focus:border-secondary outline-none transition-all disabled:opacity-50 text-foreground placeholder:text-muted-foreground"
                   disabled={loading}
                 />
               ))}
             </div>
 
             <div className="space-y-6">
-              <button
-                onClick={handleVerify}
-                disabled={loading || code.some(c => !c)}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-md shadow-blue-600/10"
+              <Button
+                onClick={() => handleVerify()}
+                disabled={loading || code.some(c => !c) || timeLeft === 0}
+                variant="secondary"
+                className="w-full"
+                size="lg"
               >
                 {loading ? (
                   <>
@@ -191,16 +266,17 @@ export function OtpModal({ isOpen, onClose, email }: OtpModalProps) {
                 ) : (
                   'Verificar código'
                 )}
-              </button>
+              </Button>
 
               <div className="text-center">
-                <button
+                <Button
                   onClick={handleResend}
                   disabled={resending || loading}
-                  className="text-sm font-medium text-blue-600 hover:text-blue-700 hover:underline underline-offset-4 transition-colors disabled:opacity-50"
+                  variant="link"
+                  className="text-sm font-medium text-secondary hover:underline underline-offset-4 transition-colors disabled:opacity-50 h-auto p-0"
                 >
                   {resending ? 'Enviando...' : 'Reenviar código'}
-                </button>
+                </Button>
               </div>
             </div>
           </>

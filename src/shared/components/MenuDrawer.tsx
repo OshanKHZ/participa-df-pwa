@@ -121,7 +121,7 @@ export function MenuDrawer({
               </Link>
               <button
                 onClick={handleLogout}
-                className="w-full flex items-center gap-2 px-3 py-2 text-destructive border border-destructive/20 hover:border-destructive hover:bg-destructive/10 rounded-lg transition-all text-sm font-medium"
+                className="w-full flex items-center gap-2 px-3 py-2.5 bg-destructive text-white hover:bg-destructive/90 rounded-lg transition-all text-sm font-medium shadow-sm"
               >
                 <RiLogoutBoxRLine className="size-4" />
                 Sair da conta

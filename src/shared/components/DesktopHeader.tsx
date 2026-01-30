@@ -103,7 +103,7 @@ export function DesktopHeader() {
                   </div>
                   <button
                     onClick={handleLogout}
-                    className="p-2 text-destructive border border-destructive/20 hover:border-destructive hover:bg-destructive/10 rounded-lg transition-all cursor-pointer"
+                    className="p-2 bg-destructive text-white hover:bg-destructive/90 rounded-lg transition-all cursor-pointer shadow-sm"
                     title="Sair"
                   >
                     <RiLogoutBoxRLine className="size-5" />
