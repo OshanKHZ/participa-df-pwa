@@ -140,7 +140,7 @@ export function useDraftPersistence(options: UseDraftPersistenceOptions = {}) {
         channels: draft.channels,
         hasText: !!draft.content?.text,
         filesCount: draft.content?.files?.length || 0,
-        hasAudio: !!draft.content?.audio
+        hasAudio: !!draft.content?.audio,
       })
 
       await manifestationRepo.saveDraft(draft)

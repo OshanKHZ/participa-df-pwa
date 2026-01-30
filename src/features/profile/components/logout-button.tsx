@@ -15,10 +15,10 @@ export function LogoutButton() {
       setIsLoading(true)
       await logout()
       toastHelper.success('Você saiu da conta', 'Até logo! 👋')
-      
+
       // Delay to let toast appear
       await new Promise(resolve => setTimeout(resolve, 1000))
-      
+
       router.push('/entrar')
       router.refresh()
     } catch (error) {

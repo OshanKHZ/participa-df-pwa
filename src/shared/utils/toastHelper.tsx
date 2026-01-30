@@ -6,7 +6,6 @@ import {
   RiInformationLine,
 } from 'react-icons/ri'
 
-
 /**
  * Toast Helper
  * Wrapper around sonner to enforce consistent design and NO EMOJIS.

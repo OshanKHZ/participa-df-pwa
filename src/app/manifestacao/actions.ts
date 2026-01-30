@@ -1,5 +1,5 @@
 'use server'
- 
+
 import { auth } from '@/server/auth'
 import { db } from '@/database'
 import { manifestations } from '@/database/schema'

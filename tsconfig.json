@@ -30,8 +30,8 @@
       "@/shared/*": ["./src/shared/*"],
       "@/lib/*": ["./src/lib/*"],
       "@/data/*": ["./src/data/*"],
-      "@/database": ["./database/index.ts"],
-      "@/database/*": ["./database/*"]
+      "@/database": ["./src/server/db/index.ts"],
+      "@/database/*": ["./src/server/db/*"]
     }
   },
   "include": [

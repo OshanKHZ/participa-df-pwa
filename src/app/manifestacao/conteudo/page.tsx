@@ -14,7 +14,7 @@ import { NavigationFooter } from '@/features/manifestation/components/Navigation
 import { FormSidebar } from '@/features/manifestation/components/FormSidebar'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
 import { Button } from '@/shared/components/Button'
-import { ManifestationHeader } from '@/shared/components/Stepper'
+import { ManifestationHeader } from '@/features/manifestation/components/ManifestationStepper'
 import { MultiSelectGrid } from '@/shared/components/MultiSelectGrid'
 import { TextInput } from '@/shared/components/TextInput'
 import { AudioRecorder } from '@/shared/components/AudioRecorder'
@@ -59,7 +59,7 @@ export default function ContentPage() {
   // Text content state
   const [textContent, setTextContent] = useState('')
   const [charCount, setCharCount] = useState(0)
-  
+
   // Flag to prevent auto-save while restoring data
   const [isRestoring, setIsRestoring] = useState(true)
 
