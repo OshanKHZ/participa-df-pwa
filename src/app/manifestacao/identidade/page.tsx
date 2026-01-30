@@ -5,37 +5,48 @@ import { useRouter } from 'next/navigation'
 import { RiArrowRightLine } from 'react-icons/ri'
 import { AccessibleHeader } from '@/features/manifestation/components/AccessibleHeader'
 import { NavigationFooter } from '@/features/manifestation/components/NavigationFooter'
-import { IdentificationSection } from '@/features/manifestation/components/IdentificationSection'
+import { AuthForm as IdentificationSection } from '@/features/auth/components/AuthForm'
 import { FormSidebar } from '@/features/manifestation/components/FormSidebar'
 import { ConfirmDialog } from '@/shared/components/ConfirmDialog'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
 import { Button } from '@/shared/components/Button'
-import { Stepper, getDesktopSteps } from '@/shared/components/Stepper'
+import { ManifestationHeader } from '@/shared/components/Stepper'
 import { getStepProgress } from '@/shared/utils/stepProgress'
 import { useStepNavigation } from '@/shared/hooks/useStepNavigation'
 import { STEPS, COMPLETED_STEPS } from '@/shared/constants/designTokens'
 
-export default function PersonalDataPage() {
+// Tipos que permitem anonimato
+const ANONYMOUS_ALLOWED_TYPES = ['denuncia', 'reclamacao', 'informacao']
+// Tipos que requerem identificação (login)
+const IDENTIFIED_ONLY_TYPES = ['elogio', 'sugestao', 'solicitacao']
+
+export default function IdentidadePage() {
   const router = useRouter()
   const { navigateToStep } = useStepNavigation()
   const [isAnonymous, setIsAnonymous] = useState(true)
   const [anonymousConsent, setAnonymousConsent] = useState(false)
   const [showConfirmDialog, setShowConfirmDialog] = useState(false)
+  const [manifestationType, setManifestationType] = useState<string | null>(null)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
   })
 
-  const [steps, setSteps] = useState(getStepProgress(STEPS.DATA, true))
+  const [steps, setSteps] = useState(getStepProgress(STEPS.IDENTITY, true))
 
   useEffect(() => {
-    setSteps(getStepProgress(STEPS.DATA))
-  }, []) // Update on mount to check localStorage
+    setSteps(getStepProgress(STEPS.IDENTITY))
+  }, [])
 
   useEffect(() => {
+    const savedType = localStorage.getItem('manifestation_type')
     const savedAnonymous = localStorage.getItem('manifestation_anonymous')
     const savedData = localStorage.getItem('manifestation_personal_data')
+
+    if (savedType) {
+      setManifestationType(savedType)
+    }
 
     if (savedAnonymous !== null) {
       setIsAnonymous(savedAnonymous === 'true')
@@ -44,7 +55,22 @@ export default function PersonalDataPage() {
     if (savedData) {
       setFormData(JSON.parse(savedData))
     }
+
+    // Se o tipo for "identificado apenas", forçar isAnonymous = false
+    if (savedType && IDENTIFIED_ONLY_TYPES.includes(savedType)) {
+      setIsAnonymous(false)
+    }
   }, [])
+
+  // Verifica se o tipo atual permite anonimato
+  const allowAnonymous = manifestationType
+    ? ANONYMOUS_ALLOWED_TYPES.includes(manifestationType)
+    : true
+
+  // Verifica se o tipo requer identificação obrigatória
+  const requiresIdentification = manifestationType
+    ? IDENTIFIED_ONLY_TYPES.includes(manifestationType)
+    : false
 
   const proceedToNextStep = () => {
     localStorage.setItem('manifestation_anonymous', isAnonymous.toString())
@@ -56,7 +82,7 @@ export default function PersonalDataPage() {
     } else {
       localStorage.removeItem('manifestation_personal_data')
     }
-    router.push('/manifestacao/revisar')
+    router.push('/manifestacao/assunto')
   }
 
   const handleNext = () => {
@@ -74,12 +100,36 @@ export default function PersonalDataPage() {
   }
 
   const handleBack = () => {
-    router.push('/manifestacao/conteudo')
+    router.push('/manifestacao')
   }
 
   const canProceed = isAnonymous
     ? anonymousConsent // Se anônimo, precisa do checkbox
     : formData.name.trim() !== '' // Se identificado, precisa do nome
+
+  const getPageTitle = () => {
+    if (requiresIdentification) {
+      return 'Identificação'
+    }
+    return 'Identificação (opcional)'
+  }
+
+  const getPageDescription = () => {
+    if (requiresIdentification) {
+      return 'Para este tipo de manifestação, é necessário se identificar.'
+    }
+    return 'Você pode se identificar ou manter o anonimato.'
+  }
+
+  const getSidebarHelpText = () => {
+    if (requiresIdentification) {
+      return 'Para elogios, sugestões e solicitações, é necessário se identificar fazendo login. Isso ajuda no contato para informações adicionais sobre sua solicitação.'
+    }
+    if (allowAnonymous) {
+      return 'Você pode se identificar ou manter sua manifestação anônima. A identificação ajuda no contato para informações adicionais sobre sua solicitação.'
+    }
+    return 'Identifique-se para prosseguir com sua manifestação.'
+  }
 
   return (
     <>
@@ -90,19 +140,19 @@ export default function PersonalDataPage() {
       <div className="lg:hidden min-h-screen bg-background pb-40">
         {/* Header */}
         <AccessibleHeader
-          currentStep={STEPS.DATA}
+          currentStep={STEPS.IDENTITY}
           totalSteps={STEPS.TOTAL}
-          completedSteps={COMPLETED_STEPS.AT_DATA}
+          completedSteps={COMPLETED_STEPS.AT_IDENTITY}
         />
 
         {/* Main Content */}
         <main id="main-content" className="px-4 py-6">
           <div className="mb-6">
             <h1 className="text-xl font-bold text-foreground">
-              Identificação (opcional)
+              {getPageTitle()}
             </h1>
             <p className="text-sm text-muted-foreground">
-              Você pode se identificar ou manter o anonimato
+              {getPageDescription()}
             </p>
           </div>
 
@@ -113,6 +163,8 @@ export default function PersonalDataPage() {
             onFormDataChange={setFormData}
             onAnonymousConsentChange={setAnonymousConsent}
             formData={formData}
+            allowAnonymous={allowAnonymous}
+            requiresIdentification={requiresIdentification}
           />
 
           {/* Info Box */}
@@ -133,7 +185,7 @@ export default function PersonalDataPage() {
 
         {/* Footer */}
         <NavigationFooter
-          currentStep={STEPS.DATA}
+          currentStep={STEPS.IDENTITY}
           totalSteps={STEPS.TOTAL}
           onBack={handleBack}
           onNext={handleNext}
@@ -148,26 +200,17 @@ export default function PersonalDataPage() {
         <div className="grid grid-cols-[1fr_600px_1fr] gap-12 py-12 px-8">
           {/* Coluna Esquerda - Sidebar */}
           <div className="flex justify-end">
-            <FormSidebar helpText="Você pode se identificar ou manter sua manifestação anônima. A identificação ajuda no contato para informações adicionais sobre sua solicitação." />
+            <FormSidebar helpText={getSidebarHelpText()} />
           </div>
 
           {/* Coluna Central - Main Content (sempre centralizado) */}
           <main id="main-content" className="w-full">
-            {/* Progress Steps */}
-            <div className="mb-10">
-              <Stepper steps={getDesktopSteps(STEPS.DATA)} />
-            </div>
-
-            {/* Title */}
-            <div className="mb-8">
-              <h1 className="text-xl font-semibold text-foreground mb-2">
-                Nova Manifestação
-              </h1>
-              <p className="text-muted-foreground">
-                Identificação opcional - você pode se identificar ou manter o
-                anonimato.
-              </p>
-            </div>
+            <ManifestationHeader
+              currentStep={STEPS.IDENTITY}
+              totalSteps={STEPS.TOTAL}
+              description={getPageDescription()}
+              onStepClick={navigateToStep}
+            />
 
             {/* Identification Section */}
             <IdentificationSection
@@ -175,6 +218,8 @@ export default function PersonalDataPage() {
               onAnonymousChange={setIsAnonymous}
               onFormDataChange={setFormData}
               onAnonymousConsentChange={setAnonymousConsent}
+              allowAnonymous={allowAnonymous}
+              requiresIdentification={requiresIdentification}
               formData={formData}
             />
 
@@ -198,7 +243,7 @@ export default function PersonalDataPage() {
               <Button variant="link" onClick={handleBack}>
                 Voltar
               </Button>
-              <Button onClick={handleNext} disabled={!canProceed}>
+              <Button variant="success" onClick={handleNext} disabled={!canProceed}>
                 {isAnonymous ? 'Continuar' : 'Avançar'}
                 <RiArrowRightLine className="size-5" />
               </Button>
@@ -229,7 +274,7 @@ export default function PersonalDataPage() {
               </strong>
             </p>
             <p className="mt-3 text-xs">
-              ⚠️ Lembre-se de copiar o protocolo após o envio, pois ele será sua
+              Lembre-se de copiar o protocolo após o envio, pois ele será sua
               única forma de consulta.
             </p>
           </>

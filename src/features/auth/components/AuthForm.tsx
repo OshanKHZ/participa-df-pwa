@@ -7,35 +7,41 @@ import {
   RiEyeCloseLine,
   RiPhoneLine,
   RiCheckLine,
+  RiUser3Line,
 } from 'react-icons/ri'
 import { TOGGLE } from '@/shared/constants/designTokens'
 import { sendOtp, verifyOtp, logout, getSessionData } from '@/app/actions/auth'
 import { RiMailLine, RiLockPasswordLine } from 'react-icons/ri'
 import { Button } from '@/shared/components/Button'
 
-interface IdentificationSectionProps {
-  isAnonymous: boolean
-  onAnonymousChange: (value: boolean) => void
-  onFormDataChange: (data: {
+interface AuthFormProps {
+  isAnonymous?: boolean
+  onAnonymousChange?: (value: boolean) => void
+  onFormDataChange?: (data: {
     name: string
     email: string
     phone: string
   }) => void
   onAnonymousConsentChange?: (hasConsent: boolean) => void
-  formData: {
-    name: string
-    email: string
-    phone: string
-  }
+  allowAnonymous?: boolean
+  requiresIdentification?: boolean
+  mode?: 'default' | 'login'
 }
 
-export function IdentificationSection({
-  isAnonymous,
-  onAnonymousChange,
-  onFormDataChange,
+export function AuthForm({
+  isAnonymous = false,
+  onAnonymousChange = () => {},
+  onFormDataChange = () => {},
   onAnonymousConsentChange,
-  formData,
-}: IdentificationSectionProps) {
+  allowAnonymous = true,
+  requiresIdentification = false,
+  mode = 'default',
+}: AuthFormProps) {
+  const isAuthPage = mode === 'login'
+  const effectiveRequiresIdentification = isAuthPage
+    ? true
+    : requiresIdentification
+  const effectiveAllowAnonymous = isAuthPage ? false : allowAnonymous
   const [session, setSession] = useState<{
     user?: {
       name?: string | null
@@ -43,13 +49,17 @@ export function IdentificationSection({
       image?: string | null
     }
   } | null>(null)
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+  })
 
   useEffect(() => {
     getSessionData().then(user => {
       if (user) setSession({ user })
     })
   }, [])
-
   const [anonymousConsent, setAnonymousConsent] = useState(false)
 
   // OTP State
@@ -85,7 +95,9 @@ export function IdentificationSection({
   }, [anonymousConsent, onAnonymousConsentChange])
 
   const handleInputChange = (field: string, value: string) => {
-    onFormDataChange({ ...formData, [field]: value })
+    const newFormData = { ...formData, [field]: value }
+    setFormData(newFormData)
+    onFormDataChange(newFormData)
   }
 
   const handleSendOtp = async () => {
@@ -144,46 +156,66 @@ export function IdentificationSection({
 
   return (
     <>
-      {/* Anonymous Toggle */}
-      <div className="bg-card rounded-sm p-4 card-border mb-6">
-        <div className="grid grid-cols-[auto_1fr_auto] items-center gap-3">
-          {isAnonymous ? (
-            <RiEyeCloseLine className="size-6 text-secondary flex-shrink-0" />
-          ) : (
-            <RiEye2Line className="size-6 text-secondary flex-shrink-0" />
-          )}
-          <div>
-            <h3 className="font-semibold text-foreground">
-              {isAnonymous
-                ? 'Prosseguir sem identificação'
-                : 'Prefiro me identificar'}
-            </h3>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              {isAnonymous
-                ? 'Sua identidade será mantida em sigilo'
-                : 'Seus dados pessoais estarão seguros'}
-            </p>
+      {/* Auth Page Header */}
+      {isAuthPage && (
+        <div className="flex flex-col items-center text-center mb-10">
+          <div className="size-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+            <RiUser3Line className="size-8 text-primary" />
           </div>
-          <button
-            type="button"
-            onClick={() => onAnonymousChange(!isAnonymous)}
-            role="switch"
-            aria-checked={isAnonymous}
-            aria-label={
-              isAnonymous ? 'Desativar anonimato' : 'Ativar anonimato'
-            }
-            className={`relative flex-shrink-0 inline-flex h-6 w-11 items-center rounded-full transition-colors btn-focus ${
-              isAnonymous ? 'bg-secondary' : 'bg-muted'
-            }`}
-          >
-            <span
-              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                isAnonymous ? TOGGLE.TRANSITION_ON : TOGGLE.TRANSITION_OFF
-              }`}
-            />
-          </button>
+          <h2 className="text-2xl font-bold text-foreground">
+            Acesse sua conta
+          </h2>
+          <p className="text-sm text-muted-foreground mt-2 max-w-[280px]">
+            Entre para acompanhar suas manifestações e facilitar novos
+            registros.
+          </p>
         </div>
-      </div>
+      )}
+
+      {/* Anonymous Toggle - Only show if not requiresIdentification */}
+      {!effectiveRequiresIdentification && (
+        <div className="bg-card rounded-sm p-4 card-border mb-6">
+          <div className="grid grid-cols-[auto_1fr_auto] items-center gap-3">
+            {isAnonymous ? (
+              <RiEyeCloseLine className="size-6 text-secondary flex-shrink-0" />
+            ) : (
+              <RiEye2Line className="size-6 text-secondary flex-shrink-0" />
+            )}
+            <div>
+              <h3 className="font-semibold text-foreground">
+                {isAnonymous
+                  ? 'Prosseguir sem identificação'
+                  : 'Prefiro me identificar'}
+              </h3>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                {isAnonymous
+                  ? 'Sua identidade será mantida em sigilo'
+                  : 'Seus dados pessoais estarão seguros'}
+              </p>
+            </div>
+            {effectiveAllowAnonymous && (
+              <button
+                type="button"
+                onClick={() => onAnonymousChange(!isAnonymous)}
+                role="switch"
+                aria-checked={isAnonymous}
+                aria-label={
+                  isAnonymous ? 'Desativar anonimato' : 'Ativar anonimato'
+                }
+                className={`relative flex-shrink-0 inline-flex h-6 w-11 items-center rounded-full transition-colors btn-focus ${
+                  isAnonymous ? 'bg-secondary' : 'bg-muted'
+                }`}
+              >
+                <span
+                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                    isAnonymous ? TOGGLE.TRANSITION_ON : TOGGLE.TRANSITION_OFF
+                  }`}
+                />
+              </button>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Anonymous Consent */}
       {isAnonymous && (
@@ -288,7 +320,7 @@ export function IdentificationSection({
                     onChange={e => handleInputChange('phone', e.target.value)}
                     placeholder="(00) 00000-0000"
                     autoComplete="tel"
-                    className="w-full pl-10 pr-4 py-3 border card-border rounded-lg btn-focus"
+                    className="w-full pl-10 pr-4 py-3 bg-card border border-border rounded-lg text-foreground placeholder:text-muted-foreground btn-focus focus:border-transparent transition-all"
                   />
                 </div>
               </div>
@@ -300,7 +332,7 @@ export function IdentificationSection({
                 <h4 className="text-sm font-semibold text-foreground mb-4">
                   {showOtpInput
                     ? 'Digite o código enviado'
-                    : 'Identifique-se para continuar'}
+                    : 'Identifique-se para acessar'}
                 </h4>
 
                 {error && (
@@ -319,16 +351,13 @@ export function IdentificationSection({
                         Código de Verificação
                       </label>
                       <div className="relative">
-                        <RiLockPasswordLine
-                          className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-                          aria-hidden="true"
-                        />
+                        <RiLockPasswordLine className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-muted-foreground" aria-hidden="true" />
                         <input
                           id="otp-code"
                           type="text"
                           value={otpCode}
                           onChange={e => setOtpCode(e.target.value)}
-                          className="w-full pl-10 pr-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
+                          className="w-full pl-10 pr-4 py-3 bg-card border border-border rounded-lg text-foreground placeholder:text-muted-foreground btn-focus focus:border-transparent transition-all"
                           placeholder="000000"
                           maxLength={6}
                           aria-describedby="otp-help"
@@ -352,7 +381,8 @@ export function IdentificationSection({
                     <Button
                       onClick={handleVerifyOtp}
                       disabled={isLoading}
-                      className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+                      variant="secondary"
+                      className="w-full"
                     >
                       {isLoading ? 'Verificando...' : 'Verificar Código'}
                     </Button>
@@ -367,16 +397,13 @@ export function IdentificationSection({
                         E-mail
                       </label>
                       <div className="relative">
-                        <RiMailLine
-                          className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-                          aria-hidden="true"
-                        />
+                        <RiMailLine className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-muted-foreground" aria-hidden="true" />
                         <input
                           id="auth-email"
                           type="email"
                           value={authEmail}
                           onChange={e => setAuthEmail(e.target.value)}
-                          className="w-full pl-10 pr-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
+                          className="w-full pl-10 pr-4 py-3 bg-card border border-border rounded-lg text-foreground placeholder:text-muted-foreground btn-focus focus:border-transparent transition-all"
                           placeholder="seu@email.com"
                           autoComplete="email"
                         />
@@ -386,9 +413,10 @@ export function IdentificationSection({
                     <Button
                       onClick={handleSendOtp}
                       disabled={isLoading}
-                      className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+                      variant="secondary"
+                      className="w-full"
                     >
-                      {isLoading ? 'Enviando...' : 'Entrar com E-mail'}
+                      {isLoading ? 'Enviando...' : 'Acessar com E-mail'}
                     </Button>
                   </div>
                 )}

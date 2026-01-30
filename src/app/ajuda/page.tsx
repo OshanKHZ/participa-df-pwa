@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
+import Image from 'next/image'
 import {
   RiSearchLine,
   RiArrowDownSLine,
@@ -14,6 +15,7 @@ import {
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
 import { HomeMobileHeader } from '@/shared/components/HomeMobileHeader'
 import { MobileBottomNav } from '@/shared/components/MobileBottomNav'
+import { generateFAQSchema } from '@/lib/seo/schemas'
 
 interface FAQItem {
   question: string
@@ -122,8 +124,22 @@ export default function AjudaPage() {
     setOpenIndex(openIndex === index ? null : index)
   }
 
+  // Generate FAQ Schema for SEO
+  const faqSchema = generateFAQSchema(
+    faqData.map(faq => ({
+      question: faq.question,
+      answer: faq.answer,
+    }))
+  )
+
   return (
     <>
+      {/* FAQ Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+
       {/* Desktop Header */}
       <DesktopHeader />
 
@@ -133,20 +149,74 @@ export default function AjudaPage() {
       <div className="min-h-screen bg-background pb-24 lg:pb-8 lg:max-w-6xl lg:mx-auto">
         {/* Main Content */}
         <main className="px-4 py-4 lg:px-8 lg:py-8">
-          {/* Desktop Title */}
-          <div className="hidden lg:block mb-8">
-            <h1 className="text-2xl font-bold text-foreground mb-2">
-              Central de Ajuda
-            </h1>
-            <p className="text-muted-foreground">
-              Encontre respostas para as perguntas mais frequentes sobre a
-              Ouvidoria
-            </p>
-          </div>
+          <div className="lg:grid lg:grid-cols-[280px_1fr] lg:gap-8">
+            {/* Left Column - Logo and Contact Card (Desktop) */}
+            <div className="hidden lg:block">
+              <div className="sticky top-32">
+                {/* Logo */}
+                <div className="mb-6">
+                  <Image
+                    src="/Logo-OUV.svg"
+                    alt="Ouvidoria Governo do Distrito Federal"
+                    width={280}
+                    height={162}
+                    className="flex-shrink-0"
+                  />
+                </div>
 
-          <div className="lg:grid lg:grid-cols-3 lg:gap-8">
-            {/* Left Column - Search and FAQ */}
-            <div className="lg:col-span-2">
+                {/* Contact */}
+                <div className="border-t border-border pt-6">
+                  <h3 className="font-semibold text-foreground mb-4">
+                    Ainda precisa de ajuda?
+                  </h3>
+                  <div className="space-y-2.5">
+                    <a
+                      href="tel:162"
+                      className="flex items-center gap-2.5 p-3 bg-primary-light hover:bg-primary-light/90 rounded-lg transition-colors"
+                    >
+                      <div className="size-8 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                        <RiPhoneLine className="size-4 text-white" />
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-xs text-white/70">Telefone</p>
+                        <p className="font-semibold text-sm text-white">162</p>
+                      </div>
+                    </a>
+                    <a
+                      href="mailto:ouvidoria@df.gov.br"
+                      className="flex items-center gap-2.5 p-3 bg-primary-light hover:bg-primary-light/90 rounded-lg transition-colors"
+                    >
+                      <div className="size-8 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                        <RiMailLine className="size-4 text-white" />
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-xs text-white/70">Email</p>
+                        <p className="font-semibold text-sm text-white truncate">
+                          ouvidoria@df.gov.br
+                        </p>
+                      </div>
+                    </a>
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-4 pt-4 border-t border-border">
+                    Atendimento: Segunda a sexta, 8h às 18h
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column - Title, Search and FAQ */}
+            <div>
+              {/* Desktop Title */}
+              <div className="hidden lg:block mb-8">
+                <h1 className="text-2xl font-bold text-foreground mb-2">
+                  Central de Ajuda
+                </h1>
+                <p className="text-muted-foreground">
+                  Encontre respostas para as perguntas mais frequentes sobre a
+                  Ouvidoria
+                </p>
+              </div>
+
               {/* Search Bar */}
               <div className="mb-4">
                 <div className="relative">
@@ -255,48 +325,6 @@ export default function AjudaPage() {
                 )}
               </div>
             </div>
-
-            {/* Right Column - Contact Card (Desktop) */}
-            <div className="hidden lg:block lg:col-span-1">
-              <div className="sticky top-32">
-                <div className="border-t border-border pt-6">
-                  <h3 className="font-semibold text-foreground mb-4">
-                    Ainda precisa de ajuda?
-                  </h3>
-                  <div className="space-y-2">
-                    <a
-                      href="tel:162"
-                      className="flex items-center gap-3 p-3 border-2 border-secondary rounded-lg"
-                    >
-                      <RiPhoneLine className="w-5 h-5 text-secondary flex-shrink-0" />
-                      <div className="flex-1">
-                        <p className="text-xs text-muted-foreground mb-0.5">
-                          Telefone
-                        </p>
-                        <p className="font-semibold text-foreground">162</p>
-                      </div>
-                    </a>
-                    <a
-                      href="mailto:ouvidoria@df.gov.br"
-                      className="flex items-center gap-3 p-3 border-2 border-secondary rounded-lg"
-                    >
-                      <RiMailLine className="w-5 h-5 text-secondary flex-shrink-0" />
-                      <div className="flex-1">
-                        <p className="text-xs text-muted-foreground mb-0.5">
-                          Email
-                        </p>
-                        <p className="font-semibold text-sm text-foreground truncate">
-                          ouvidoria@df.gov.br
-                        </p>
-                      </div>
-                    </a>
-                  </div>
-                  <p className="text-xs text-muted-foreground mt-4 pt-4 border-t border-border">
-                    Atendimento: Segunda a sexta, 8h às 18h
-                  </p>
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* Contact Section (Mobile only) */}
@@ -339,7 +367,9 @@ export default function AjudaPage() {
         </main>
 
         {/* Mobile Bottom Nav */}
-        <MobileBottomNav activeTab="help" isAuthenticated={false} />
+        <div className="lg:hidden">
+          <MobileBottomNav activeTab="help" isAuthenticated={false} />
+        </div>
       </div>
     </>
   )

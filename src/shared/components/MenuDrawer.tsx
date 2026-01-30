@@ -3,23 +3,27 @@
 import { useEffect } from 'react'
 import Link from 'next/link'
 import { useFocusTrap } from '@/shared/hooks/useFocusTrap'
+import { LinkButton } from '@/shared/components/Button'
 import {
   RiCloseLine,
   RiUserLine,
   RiLoginBoxLine,
-  RiUserAddLine,
   RiQuestionLine,
   RiBarChartBoxLine,
   RiSettings4Line,
   RiCustomerService2Line,
   RiFileListLine,
+  RiDownloadLine,
 } from 'react-icons/ri'
+import { PiPersonArmsSpreadFill } from 'react-icons/pi'
 
 interface MenuDrawerProps {
   isOpen: boolean
   onClose: () => void
   isAuthenticated?: boolean
   userName?: string
+  showInstallButton?: boolean
+  onInstall?: () => void
 }
 
 export function MenuDrawer({
@@ -27,6 +31,8 @@ export function MenuDrawer({
   onClose,
   isAuthenticated = false,
   userName,
+  showInstallButton = false,
+  onInstall,
 }: MenuDrawerProps) {
   const containerRef = useFocusTrap(isOpen)
 
@@ -54,7 +60,7 @@ export function MenuDrawer({
       {/* Backdrop */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-dropdown transition-opacity"
+          className="fixed inset-0 bg-black/50 z-drawer transition-opacity"
           onClick={onClose}
           aria-hidden="true"
         />
@@ -98,24 +104,17 @@ export function MenuDrawer({
           ) : (
             <div className="space-y-3">
               <p className="text-sm text-muted-foreground">
-                Entre ou cadastre-se para acompanhar suas manifestações
+                Acesse sua conta para acompanhar suas manifestações
               </p>
-              <Link
+              <LinkButton
                 href="/entrar"
+                variant="secondary"
                 onClick={onClose}
-                className="flex items-center justify-center gap-2 w-full bg-secondary hover:bg-secondary-hover text-secondary-foreground font-medium py-2.5 px-4 rounded-lg transition-colors"
+                className="w-full py-2.5"
               >
                 <RiLoginBoxLine className="size-5" />
-                Entrar
-              </Link>
-              <Link
-                href="/cadastrar"
-                onClick={onClose}
-                className="w-full text-secondary hover:text-secondary-hover font-medium py-2 text-sm flex items-center justify-center gap-2"
-              >
-                <RiUserAddLine className="size-4" />
-                Cadastrar-se
-              </Link>
+                Acessar
+              </LinkButton>
             </div>
           )}
         </div>
@@ -123,16 +122,30 @@ export function MenuDrawer({
         {/* Navigation Links */}
         <nav className="p-4">
           <ul className="space-y-1">
+            {/* Install App Button */}
+            {showInstallButton && onInstall && (
+              <li>
+                <button
+                  onClick={() => {
+                    onInstall()
+                    onClose()
+                  }}
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-accent transition-colors text-foreground"
+                >
+                  <RiDownloadLine className="size-5 text-muted-foreground" />
+                  <span className="font-medium text-sm">Instalar App</span>
+                </button>
+              </li>
+            )}
+
             <li>
               <Link
-                href="/historico"
+                href="/consultar-manifestacoes"
                 onClick={onClose}
                 className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-accent transition-colors text-foreground"
               >
                 <RiFileListLine className="size-5 text-muted-foreground" />
-                <span className="font-medium text-sm">
-                  Minhas Manifestações
-                </span>
+                <span className="font-medium text-sm">Acompanhar Registro</span>
               </Link>
             </li>
             <li>
@@ -183,7 +196,19 @@ export function MenuDrawer({
         </nav>
 
         {/* Footer */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-border bg-background">
+        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-border bg-background space-y-4">
+          <LinkButton
+            href="#"
+            variant="accent"
+            onClick={(e) => {
+              e.preventDefault()
+              // Handle accessibility menu trigger here if needed
+            }}
+            className="w-full py-2.5 rounded-lg"
+          >
+            <PiPersonArmsSpreadFill className="size-5" />
+            Acessibilidade
+          </LinkButton>
           <p className="text-xs text-muted-foreground text-center">
             Participa DF - Ouvidoria
             <br />

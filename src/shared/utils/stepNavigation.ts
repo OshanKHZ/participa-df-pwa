@@ -6,9 +6,9 @@ import { STEPS } from '@/shared/constants/designTokens'
 export function getStepUrl(stepNumber: number): string {
   const stepUrls: Record<number, string> = {
     [STEPS.TYPE]: '/manifestacao',
+    [STEPS.IDENTITY]: '/manifestacao/identidade',
     [STEPS.SUBJECT]: '/manifestacao/assunto',
     [STEPS.CONTENT]: '/manifestacao/conteudo',
-    [STEPS.DATA]: '/manifestacao/dados',
     [STEPS.REVIEW]: '/manifestacao/revisar',
   }
 

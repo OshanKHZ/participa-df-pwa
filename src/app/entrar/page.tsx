@@ -2,17 +2,17 @@
 
 import { MobileHeader } from '@/shared/components/MobileHeader'
 import { MobileBottomNav } from '@/shared/components/MobileBottomNav'
-import { AuthForm } from '../../shared/components/AuthForm'
+import { AuthForm } from '@/features/auth/components/AuthForm'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
 
-export default function EntrarPage() {
+export default function AcessarPage() {
   return (
     <>
       {/* Desktop Header */}
       <DesktopHeader />
 
       {/* Mobile Header */}
-      <MobileHeader title="Entrar" />
+      <MobileHeader title="Acessar" />
 
       {/* Main Content */}
       <main className="min-h-screen bg-background">
@@ -23,7 +23,7 @@ export default function EntrarPage() {
 
       {/* Bottom Navigation - Mobile only */}
       <div className="lg:hidden">
-        <MobileBottomNav activeTab="login" />
+        <MobileBottomNav activeTab="acessar" />
       </div>
     </>
   )

@@ -29,7 +29,7 @@
       "@/features/*": ["./src/features/*"],
       "@/shared/*": ["./src/shared/*"],
       "@/lib/*": ["./src/lib/*"],
-      "@/data/*": ["./data/*"]
+      "@/data/*": ["./src/data/*"]
     }
   },
   "include": [
