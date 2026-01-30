@@ -530,7 +530,7 @@ export default function ReviewPage() {
                       <RiEditLine className="size-4" />
                     </Link>
                   </div>
-                  <p className="text-foreground leading-relaxed whitespace-pre-wrap">
+                  <p className="text-foreground leading-relaxed whitespace-pre-wrap break-words">
                     {data.content || (
                       <span className="text-muted-foreground italic">
                         Sem conteúdo
@@ -689,6 +689,7 @@ export default function ReviewPage() {
               <Button
                 onClick={handleSubmit}
                 disabled={isSubmitting}
+                variant="success"
                 className="min-w-[200px]"
               >
                 {isSubmitting ? (

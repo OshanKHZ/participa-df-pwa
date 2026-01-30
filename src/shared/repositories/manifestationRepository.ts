@@ -37,9 +37,13 @@ async function base64ToFile(
   filename: string,
   type: string
 ): Promise<File> {
-  const response = await fetch(`data:${type};base64,${base64}`)
-  const blob = await response.blob()
-  return new File([blob], filename, { type })
+  const byteCharacters = atob(base64)
+  const byteNumbers = new Array(byteCharacters.length)
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i)
+  }
+  const byteArray = new Uint8Array(byteNumbers)
+  return new File([byteArray], filename, { type })
 }
 
 // Convert Blob to Base64
@@ -62,8 +66,13 @@ async function blobToBase64(blob: Blob): Promise<string> {
 
 // Convert Base64 back to Blob
 async function base64ToBlob(base64: string, type: string): Promise<Blob> {
-  const response = await fetch(`data:${type};base64,${base64}`)
-  return await response.blob()
+  const byteCharacters = atob(base64)
+  const byteNumbers = new Array(byteCharacters.length)
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i)
+  }
+  const byteArray = new Uint8Array(byteNumbers)
+  return new Blob([byteArray], { type })
 }
 
 // Serializable draft format for IndexedDB

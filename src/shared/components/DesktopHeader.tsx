@@ -78,11 +78,11 @@ export function DesktopHeader() {
         {/* Bottom Layer - Lighter Blue (Primary Light) */}
         <div className="bg-primary-light">
           <div className="max-w-6xl mx-auto px-8">
-            <nav className="flex items-center justify-center gap-1">
+<nav className="flex items-center justify-center gap-1">
               <Link href="/" className={navLinkClass('/')}>
                 Início
               </Link>
-
+              <div className="h-4 w-px bg-white/20 mx-2" />
               <div
                 className="relative"
                 onMouseEnter={() => setIsManifestacaoOpen(true)}
@@ -122,7 +122,7 @@ export function DesktopHeader() {
                 />
               </div>
 
-
+              <div className="h-4 w-px bg-white/20 mx-2" />
 
               <div
                 className="relative"
@@ -163,6 +163,8 @@ export function DesktopHeader() {
                   triggerRef={ajudaTriggerRef}
                 />
               </div>
+
+              <div className="h-4 w-px bg-white/20 mx-2" />
 
               <div
                 className="relative"

@@ -406,7 +406,7 @@ export default function ContentPage() {
                   </label>
                   <label
                     htmlFor="file-upload"
-                    className="px-4 py-2 bg-secondary text-white rounded hover:bg-secondary-hover transition-colors text-sm font-medium cursor-pointer ml-3"
+                    className="px-4 py-2 bg-secondary text-white rounded-none hover:bg-secondary-hover transition-colors text-sm font-medium cursor-pointer ml-3"
                   >
                     Anexar
                   </label>

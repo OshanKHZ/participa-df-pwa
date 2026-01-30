@@ -518,7 +518,7 @@ export default function HistoryPage() {
           <div className="flex border-b border-border mb-4">
             <button
               onClick={() => handleTabChange('submitted')}
-              className={`py-3 px-6 font-medium transition-colors border-b-2 ${
+              className={`cursor-pointer py-3 px-6 font-medium transition-colors border-b-2 ${
                 activeTab === 'submitted'
                   ? 'text-secondary border-secondary'
                   : 'text-muted-foreground hover:text-foreground border-transparent'
@@ -531,7 +531,7 @@ export default function HistoryPage() {
             </button>
             <button
               onClick={() => handleTabChange('drafts')}
-              className={`py-3 px-6 font-medium transition-colors border-b-2 ${
+              className={`cursor-pointer py-3 px-6 font-medium transition-colors border-b-2 ${
                 activeTab === 'drafts'
                   ? 'text-secondary border-secondary'
                   : 'text-muted-foreground hover:text-foreground border-transparent'
@@ -676,7 +676,7 @@ export default function HistoryPage() {
                             <td className="px-6 py-4 text-center">
                               <button
                                 onClick={() => handleCopyProtocol(item.protocol)}
-                                className="p-2 hover:bg-muted rounded-lg transition-colors inline-flex"
+                                className="cursor-pointer p-2 hover:bg-muted rounded-lg transition-colors inline-flex"
                                 aria-label="Copiar protocolo"
                                 title="Copiar protocolo"
                               >
@@ -734,13 +734,13 @@ export default function HistoryPage() {
                             Assunto
                           </th>
                           <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">
-                            Conteúdo
-                          </th>
-                          <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">
                             Anexos
                           </th>
                           <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">
-                            Atualizado
+                            Criado em
+                          </th>
+                          <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">
+                            Atualizado em
                           </th>
                           <th className="px-6 py-3 text-center text-sm font-semibold text-foreground">
                             Ações
@@ -759,9 +759,6 @@ export default function HistoryPage() {
                             <td className="px-6 py-4 text-sm text-secondary font-medium">
                               {draft.subject?.name || '-'}
                             </td>
-                            <td className="px-6 py-4 text-sm text-muted-foreground max-w-xs truncate">
-                              {draft.content?.text || '-'}
-                            </td>
                             <td className="px-6 py-4 text-sm text-muted-foreground">
                               {draft.content?.audio && <span className="mr-2">🎙️</span>}
                               {draft.content?.files && draft.content.files.length > 0 && (
@@ -770,25 +767,30 @@ export default function HistoryPage() {
                               {!draft.content?.audio && (!draft.content?.files || draft.content.files.length === 0) && '-'}
                             </td>
                             <td className="px-6 py-4 text-sm text-muted-foreground">
+                              {formatDate(draft.createdAt)}
+                            </td>
+                            <td className="px-6 py-4 text-sm text-muted-foreground">
                               {formatDate(draft.updatedAt)}
                             </td>
                             <td className="px-6 py-4 text-center">
                               <div className="flex items-center justify-center gap-2">
                                 <button
                                   onClick={() => handleContinueDraft(draft)}
-                                  className="p-2 hover:bg-muted rounded-lg transition-colors"
-                                  aria-label="Continuar rascunho"
-                                  title="Continuar"
+                                  className="cursor-pointer px-4 py-2 bg-secondary text-white hover:bg-secondary/90 transition-colors text-sm font-medium flex items-center gap-2"
+                                  aria-label="Editar rascunho"
+                                  title="Editar"
                                 >
-                                  <RiEditLine className="size-4 text-secondary" />
+                                  <RiEditLine className="size-4" />
+                                  Editar
                                 </button>
                                 <button
                                   onClick={() => handleDeleteDraft(draft.id)}
-                                  className="p-2 hover:bg-destructive/10 rounded-lg transition-colors"
-                                  aria-label="Excluir rascunho"
-                                  title="Excluir"
+                                  className="cursor-pointer px-4 py-2 bg-red-600 text-white hover:bg-red-700 transition-colors text-sm font-medium flex items-center gap-2"
+                                  aria-label="Apagar rascunho"
+                                  title="Apagar"
                                 >
-                                  <RiDeleteBinLine className="size-4 text-destructive" />
+                                  <RiDeleteBinLine className="size-4" />
+                                  Apagar
                                 </button>
                               </div>
                             </td>

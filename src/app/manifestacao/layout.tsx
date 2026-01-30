@@ -9,10 +9,17 @@ export const metadata: Metadata = {
   },
 }
 
+import { FlowExitGuard } from '@/features/manifestation/components/FlowExitGuard'
+
 export default function ManifestacaoLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  return children
+  return (
+    <>
+      <FlowExitGuard />
+      {children}
+    </>
+  )
 }
