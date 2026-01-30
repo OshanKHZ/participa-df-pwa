@@ -18,6 +18,7 @@ export interface UseAudioRecorderReturn {
   stopRecording: () => void
   deleteAudio: (index: number) => void
   clearAll: () => void
+  restoreAudio: (audio: Blob) => void
 }
 
 export function useAudioRecorder(
@@ -104,6 +105,10 @@ export function useAudioRecorder(
     setIsRecording(false)
   }, [])
 
+  const restoreAudio = useCallback((audio: Blob) => {
+    setAudioBlobs([audio])
+  }, [])
+
   const canRecord = audioBlobs.length < maxAudios
 
   return {
@@ -116,6 +121,7 @@ export function useAudioRecorder(
     stopRecording,
     deleteAudio,
     clearAll,
+    restoreAudio,
   }
 }
 

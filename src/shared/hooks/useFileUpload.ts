@@ -24,6 +24,7 @@ export interface UseFileUploadReturn {
   nextPreview: () => void
   prevPreview: () => void
   clearAll: () => void
+  restoreFiles: (files: File[]) => void
 }
 
 export function useFileUpload(
@@ -144,6 +145,21 @@ export function useFileUpload(
     setPreviewIndex(0)
   }, [files])
 
+  const restoreFiles = useCallback((filesToRestore: File[]) => {
+    const filesWithPreview = filesToRestore.map(file => {
+      const fileWithPreview = file as FileWithPreview
+      if (
+        file.type.startsWith('image/') ||
+        file.type.startsWith('video/') ||
+        file.type.startsWith('audio/')
+      ) {
+        fileWithPreview.preview = URL.createObjectURL(file)
+      }
+      return fileWithPreview
+    })
+    setFiles(filesWithPreview)
+  }, [])
+
   const canAddMore = files.length < maxFiles
 
   return {
@@ -158,6 +174,7 @@ export function useFileUpload(
     nextPreview,
     prevPreview,
     clearAll,
+    restoreFiles,
   }
 }
 

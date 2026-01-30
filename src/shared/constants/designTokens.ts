@@ -89,9 +89,9 @@ export const FONT_LEVELS = {
 
 export const STEPS = {
   TYPE: 1,
-  SUBJECT: 2,
-  CONTENT: 3,
-  DATA: 4,
+  IDENTITY: 2,
+  SUBJECT: 3,
+  CONTENT: 4,
   REVIEW: 5,
   /** Total number of steps */
   TOTAL: 5,
@@ -100,9 +100,9 @@ export const STEPS = {
 /** Completed steps count for each step */
 export const COMPLETED_STEPS = {
   AT_TYPE: 0,
-  AT_SUBJECT: 1,
-  AT_CONTENT: 2,
-  AT_DATA: 3,
+  AT_IDENTITY: 1,
+  AT_SUBJECT: 2,
+  AT_CONTENT: 3,
   AT_REVIEW: 4,
 } as const
 

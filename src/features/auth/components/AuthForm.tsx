@@ -8,7 +8,7 @@ import { RiLoader4Line, RiMailLine, RiArrowRightLine } from 'react-icons/ri'
 import { OtpModal } from '@/components/auth/otp-login-modal'
 import { sendOtp } from '@/app/actions/auth'
 import { toast } from 'sonner'
-import Link from 'next/link'
+import { Button } from '@/shared/components/Button'
 
 const authSchema = z.object({
   email: z.string().email('Digite um email válido'),
@@ -86,10 +86,11 @@ export function AuthForm({ mode }: AuthFormProps) {
           )}
         </div>
 
-        <button
+        <Button
           type="submit"
           disabled={isLoading}
-          className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium py-3 rounded-lg flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
+          variant="secondary"
+          className="w-full"
         >
           {isLoading ? (
             <RiLoader4Line className="size-5 animate-spin" />
@@ -99,32 +100,9 @@ export function AuthForm({ mode }: AuthFormProps) {
               <RiArrowRightLine className="size-5" />
             </>
           )}
-        </button>
+        </Button>
       </form>
 
-      <div className="text-center text-sm">
-        {mode === 'login' ? (
-          <p className="text-muted-foreground">
-            Não tem uma conta?{' '}
-            <Link
-              href="/cadastrar"
-              className="text-primary hover:underline font-medium"
-            >
-              Cadastre-se
-            </Link>
-          </p>
-        ) : (
-          <p className="text-muted-foreground">
-            Já tem uma conta?{' '}
-            <Link
-              href="/entrar"
-              className="text-primary hover:underline font-medium"
-            >
-              Entre agora
-            </Link>
-          </p>
-        )}
-      </div>
 
       <OtpModal
         isOpen={isModalOpen}

@@ -8,27 +8,27 @@ export const AUDIO_TEXTS = {
   manifestationType: {
     denuncia: {
       label: 'Denúncia',
-      description: 'Relatar irregularidades ou ilegalidades',
+      description: 'Comunique um ato ilícito praticado contra a administração pública',
     },
     reclamacao: {
       label: 'Reclamação',
-      description: 'Manifestar insatisfação com serviços',
+      description: 'Manifeste sua insatisfação com um serviço público',
     },
     sugestao: {
       label: 'Sugestão',
-      description: 'Propor melhorias e ideias',
+      description: 'Envie sugestões de melhorias e simplificação de um serviço público',
     },
     elogio: {
       label: 'Elogio',
-      description: 'Reconhecer bom atendimento',
+      description: 'Expresse se você está satisfeito com um atendimento público',
     },
     solicitacao: {
       label: 'Solicitação',
-      description: 'Requisitar informações ou serviços',
+      description: 'Peça um atendimento ou uma solicitação de serviço',
     },
     informacao: {
-      label: 'Informação',
-      description: 'Solicitar acesso a informações públicas',
+      label: 'Acesso à Informação',
+      description: 'Solicite acesso a informações públicas',
     },
   },
 

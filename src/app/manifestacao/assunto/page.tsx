@@ -8,340 +8,74 @@ import {
   RiVolumeUpLine,
   RiArrowRightLine,
 } from 'react-icons/ri'
-import { create, insertMultiple, search, type AnyOrama } from '@orama/orama'
 import { AccessibleHeader } from '@/features/manifestation/components/AccessibleHeader'
 import { NavigationFooter } from '@/features/manifestation/components/NavigationFooter'
 import { FormSidebar } from '@/features/manifestation/components/FormSidebar'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
 import { Button } from '@/shared/components/Button'
-import { Stepper, getDesktopSteps } from '@/shared/components/Stepper'
+import { ManifestationHeader } from '@/shared/components/Stepper'
 import { getStepProgress } from '@/shared/utils/stepProgress'
 import { useStepNavigation } from '@/shared/hooks/useStepNavigation'
 import { useTextToSpeech } from '@/shared/hooks/useTextToSpeech'
+import { useOramaAssuntos } from '@/shared/hooks/useOramaAssuntos'
 import {
   COMPLETED_STEPS,
   DURATION,
   STEPS,
 } from '@/shared/constants/designTokens'
-import assuntosData from '@/data/assuntos-completo.json'
 
 interface Assunto {
   id: number
   name: string
 }
 
-// Semantic keyword expansion for better search results
-const SEMANTIC_EXPANSIONS: Record<string, string[]> = {
-  // Educação e crianças
-  crianca: [
-    'escola',
-    'creche',
-    'uniforme',
-    'merenda',
-    'ensino',
-    'infantil',
-    'educacao',
-    'aluno',
-    'matricula',
-    'bercario',
-  ],
-  filho: [
-    'escola',
-    'creche',
-    'uniforme',
-    'merenda',
-    'ensino',
-    'infantil',
-    'educacao',
-    'aluno',
-    'matricula',
-  ],
-  estudante: [
-    'escola',
-    'uniforme',
-    'merenda',
-    'ensino',
-    'educacao',
-    'aluno',
-    'professor',
-    'aula',
-  ],
-  escola: [
-    'ensino',
-    'educacao',
-    'professor',
-    'aluno',
-    'sala',
-    'uniforme',
-    'merenda',
-    'matricula',
-  ],
-  professor: ['escola', 'ensino', 'educacao', 'docente', 'aula'],
-
-  // Saúde
-  saude: [
-    'medico',
-    'hospital',
-    'ubs',
-    'posto',
-    'vacina',
-    'consulta',
-    'exame',
-    'atendimento',
-    'tratamento',
-    'remedio',
-    'medicamento',
-  ],
-  doente: [
-    'medico',
-    'hospital',
-    'ubs',
-    'posto',
-    'consulta',
-    'atendimento',
-    'saude',
-    'tratamento',
-  ],
-  medico: [
-    'hospital',
-    'ubs',
-    'posto',
-    'consulta',
-    'atendimento',
-    'saude',
-    'especialista',
-  ],
-  hospital: [
-    'medico',
-    'atendimento',
-    'consulta',
-    'emergencia',
-    'internacao',
-    'saude',
-  ],
-  vacina: ['vacinacao', 'imunizacao', 'saude', 'posto', 'ubs'],
-  remedio: ['medicamento', 'farmacia', 'receita', 'saude'],
-
-  // Transporte
-  transporte: [
-    'onibus',
-    'metro',
-    'brt',
-    'linha',
-    'passe',
-    'tarifa',
-    'bilhete',
-    'cartao',
-  ],
-  onibus: [
-    'transporte',
-    'linha',
-    'horario',
-    'ponto',
-    'parada',
-    'itinerario',
-    'passagem',
-  ],
-  metro: ['transporte', 'estacao', 'linha', 'trem', 'bilhete'],
-
-  // Saneamento e infraestrutura
-  agua: [
-    'caesb',
-    'encanamento',
-    'esgoto',
-    'vazamento',
-    'abastecimento',
-    'fornecimento',
-    'falta',
-  ],
-  esgoto: ['caesb', 'saneamento', 'vazamento', 'entupimento', 'fossa'],
-  vazamento: ['agua', 'encanamento', 'cano', 'tubulacao'],
-
-  // Limpeza urbana
-  lixo: ['coleta', 'entulho', 'limpeza', 'gari', 'caminhao', 'caçamba'],
-  entulho: ['lixo', 'coleta', 'remocao', 'caçamba'],
-
-  // Vias e ruas
-  rua: [
-    'via',
-    'logradouro',
-    'pavimentacao',
-    'asfalto',
-    'buraco',
-    'tapa-buraco',
-  ],
-  buraco: ['pavimentacao', 'asfalto', 'via', 'rua', 'tapa-buraco'],
-  asfalto: ['pavimentacao', 'via', 'rua', 'recapeamento'],
-
-  // Iluminação
-  luz: ['iluminacao', 'poste', 'lampada', 'energia', 'ceb'],
-  poste: ['iluminacao', 'luz', 'lampada', 'energia'],
-
-  // Segurança
-  policia: ['seguranca', 'viatura', 'patrulhamento', 'delegacia', 'pm'],
-  violencia: ['seguranca', 'policia', 'crime', 'agressao'],
-  roubo: ['seguranca', 'policia', 'crime', 'furto'],
-
-  // Documentos e serviços
-  documento: ['identidade', 'rg', 'cpf', 'certidao', 'carteira'],
-  carteira: ['cnh', 'motorista', 'habilitacao', 'detran'],
-
-  // Veículos e trânsito
-  carro: [
-    'veiculo',
-    'automovel',
-    'cnh',
-    'detran',
-    'ipva',
-    'licenciamento',
-    'multa',
-  ],
-  veiculo: ['carro', 'automovel', 'moto', 'detran', 'ipva', 'licenciamento'],
-  moto: ['veiculo', 'motocicleta', 'cnh', 'detran', 'ipva'],
-  multa: ['infracao', 'detran', 'transito', 'veiculo'],
-  detran: ['cnh', 'habilitacao', 'veiculo', 'licenciamento', 'ipva'],
-
-  // Assistência social
-  assistencia: ['social', 'ajuda', 'beneficio', 'auxilio', 'programa'],
-  bolsa: ['familia', 'beneficio', 'auxilio', 'assistencia'],
-
-  // Animais
-  animal: ['cachorro', 'gato', 'pet', 'veterinario', 'zoonose'],
-  cachorro: ['animal', 'pet', 'castracao', 'vacina', 'zoonose'],
-
-  // Meio ambiente
-  ambiente: ['meio', 'arvore', 'poda', 'parque', 'verde'],
-  arvore: ['poda', 'corte', 'ambiente', 'meio'],
-
-  // Comércio e fiscalização
-  comercio: ['loja', 'estabelecimento', 'fiscalizacao', 'licenca', 'alvara'],
-  bar: ['comercio', 'estabelecimento', 'fiscalizacao', 'barulho', 'som'],
-  barulho: ['som', 'ruido', 'poluicao', 'sonora'],
-}
-
 export default function AssuntoPage() {
   const router = useRouter()
   const { navigateToStep } = useStepNavigation()
   const { speak } = useTextToSpeech()
+  const { searchAssuntos, allAssuntos } = useOramaAssuntos()
+
   const [searchTerm, setSearchTerm] = useState('')
   const [desktopSearchTerm, setDesktopSearchTerm] = useState('')
   const [selectedAssunto, setSelectedAssunto] = useState<Assunto | null>(null)
-  const [oramaDB, setOramaDB] = useState<AnyOrama | null>(null)
+  
+  // Initialize filtered list when allAssuntos is available
   const [filteredAssuntos, setFilteredAssuntos] = useState<Assunto[]>([])
   const [isSearching, setIsSearching] = useState(false)
   const [dropdownOpen, setDropdownOpen] = useState(false)
 
-  const assuntos = assuntosData.assunto as Assunto[]
-
-  // Initialize Orama database
+  // Initialize filtered list when allAssuntos is available
   useEffect(() => {
-    async function initOrama() {
-      try {
-        const db = await create({
-          schema: {
-            id: 'string',
-            name: 'string',
-          },
-        })
-
-        // Convert id to string for Orama
-        const assuntosWithStringId = assuntos.map(a => ({
-          ...a,
-          id: String(a.id),
-        }))
-
-        await insertMultiple(db, assuntosWithStringId)
-        setOramaDB(db)
-        setFilteredAssuntos(assuntos) // Show all initially
-      } catch (error) {
-        console.error('Failed to initialize Orama:', error)
-        // Fallback to showing all assuntos
-        setFilteredAssuntos(assuntos)
-      }
+    if (allAssuntos.length > 0 && !searchTerm && !desktopSearchTerm) {
+      setFilteredAssuntos(allAssuntos)
     }
+  }, [allAssuntos, searchTerm, desktopSearchTerm])
 
-    initOrama()
-  }, [assuntos])
-
-  // Expand search term with semantic keywords
-  const expandSearchTerm = (term: string): string[] => {
-    const normalized = term
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-    const terms = [normalized]
-
-    // Add semantic expansions
-    Object.entries(SEMANTIC_EXPANSIONS).forEach(([key, expansions]) => {
-      if (normalized.includes(key)) {
-        terms.push(...expansions)
-      }
-    })
-
-    return [...new Set(terms)]
-  }
-
-  // Perform semantic search with Orama
+  // Optimized search effect
   useEffect(() => {
-    async function performSearch() {
-      const currentSearchTerm = desktopSearchTerm || searchTerm
+    const currentSearchTerm = desktopSearchTerm || searchTerm
+
+    const performSearch = async () => {
       if (!currentSearchTerm.trim()) {
-        setFilteredAssuntos(assuntos)
+        setFilteredAssuntos(allAssuntos)
         setIsSearching(false)
         return
       }
 
       setIsSearching(true)
-
       try {
-        const expandedTerms = expandSearchTerm(currentSearchTerm)
-        const resultsMap = new Map<number, Assunto>()
-
-        if (!oramaDB) {
-          // Fallback to simple filter if Orama not ready
-          expandedTerms.forEach(term => {
-            assuntos.forEach(assunto => {
-              const normalizedName = assunto.name
-                .toLowerCase()
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-              if (normalizedName.includes(term)) {
-                resultsMap.set(assunto.id, assunto)
-              }
-            })
-          })
-        } else {
-          // Search for each expanded term
-          for (const term of expandedTerms) {
-            const searchResults = await search(oramaDB, {
-              term: term,
-              properties: ['name'],
-              tolerance: 2,
-              boost: { name: 1.5 },
-              limit: 50,
-            })
-
-            searchResults.hits.forEach(hit => {
-              const stringId = hit.document.id as string
-              const assunto = assuntos.find(a => String(a.id) === stringId)
-              if (assunto) {
-                resultsMap.set(assunto.id, assunto)
-              }
-            })
-          }
-        }
-
-        setFilteredAssuntos(Array.from(resultsMap.values()))
+        const results = await searchAssuntos(currentSearchTerm)
+        setFilteredAssuntos(results)
       } catch (error) {
         console.error('Search error:', error)
-        // Fallback to simple search on error
-        const normalizedSearch = searchTerm
+        // Fallback to simple filtering
+        const normalizedSearch = currentSearchTerm
           .toLowerCase()
           .normalize('NFD')
           .replace(/[\u0300-\u036f]/g, '')
-
-        const filtered = assuntos.filter(assunto => {
-          const normalizedName = assunto.name
+        
+        const filtered = allAssuntos.filter(assunto => {
+             const normalizedName = assunto.name
             .toLowerCase()
             .normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '')
@@ -355,18 +89,18 @@ export default function AssuntoPage() {
 
     const timeoutId = setTimeout(performSearch, DURATION.SEARCH_DEBOUNCE)
     return () => clearTimeout(timeoutId)
-  }, [searchTerm, desktopSearchTerm, oramaDB, assuntos])
+  }, [searchTerm, desktopSearchTerm, searchAssuntos, allAssuntos])
 
   // Load saved selection on mount
   useEffect(() => {
     const savedAssuntoId = localStorage.getItem('manifestation_subject_id')
-    if (savedAssuntoId) {
-      const saved = assuntos.find(a => a.id === parseInt(savedAssuntoId))
+    if (savedAssuntoId && allAssuntos.length > 0) {
+      const saved = allAssuntos.find(a => a.id === parseInt(savedAssuntoId))
       if (saved) {
         setSelectedAssunto(saved)
       }
     }
-  }, [assuntos])
+  }, [allAssuntos])
 
   const handleSelectAssunto = (assunto: Assunto) => {
     setSelectedAssunto(assunto)
@@ -379,7 +113,7 @@ export default function AssuntoPage() {
   }
 
   const handleBack = () => {
-    router.push('/manifestacao')
+    router.push('/manifestacao/identidade')
   }
 
   const handleNext = () => {
@@ -530,20 +264,12 @@ export default function AssuntoPage() {
 
           {/* Coluna Central - Main Content (sempre centralizado) */}
           <main className="w-full">
-            {/* Progress Steps */}
-            <div className="mb-10">
-              <Stepper steps={getDesktopSteps(STEPS.SUBJECT)} />
-            </div>
-
-            {/* Title */}
-            <div className="mb-8">
-              <h1 className="text-xl font-semibold text-foreground mb-2">
-                Nova Manifestação
-              </h1>
-              <p className="text-muted-foreground">
-                Selecione o assunto da sua manifestação.
-              </p>
-            </div>
+            <ManifestationHeader
+              currentStep={STEPS.SUBJECT}
+              totalSteps={STEPS.TOTAL}
+              description="Selecione o assunto da sua manifestação."
+              onStepClick={navigateToStep}
+            />
 
             {/* Subject Select */}
             <div className="mb-8 relative">
@@ -635,7 +361,7 @@ export default function AssuntoPage() {
               <Button variant="link" onClick={handleBack}>
                 Voltar
               </Button>
-              <Button onClick={handleNext} disabled={!selectedAssunto}>
+              <Button variant="success" onClick={handleNext} disabled={!selectedAssunto}>
                 Avançar
                 <RiArrowRightLine className="size-5" />
               </Button>

@@ -12,7 +12,7 @@ import fs from 'fs/promises'
 import path from 'path'
 
 const API_BASE_URL = 'https://www.painel.ouv.df.gov.br/api/v1'
-const DATA_DIR = path.join(process.cwd(), 'data')
+const DATA_DIR = path.join(process.cwd(), 'src', 'data')
 
 /**
  * Fetch collections data (classificacoes, assuntos)

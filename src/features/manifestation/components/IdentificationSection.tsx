@@ -27,6 +27,8 @@ interface IdentificationSectionProps {
     email: string
     phone: string
   }
+  allowAnonymous?: boolean
+  requiresIdentification?: boolean
 }
 
 export function IdentificationSection({
@@ -35,6 +37,8 @@ export function IdentificationSection({
   onFormDataChange,
   onAnonymousConsentChange,
   formData,
+  allowAnonymous = true,
+  requiresIdentification = false,
 }: IdentificationSectionProps) {
   const [session, setSession] = useState<{
     user?: {
@@ -144,9 +148,10 @@ export function IdentificationSection({
 
   return (
     <>
-      {/* Anonymous Toggle */}
-      <div className="bg-card rounded-sm p-4 card-border mb-6">
-        <div className="grid grid-cols-[auto_1fr_auto] items-center gap-3">
+      {/* Anonymous Toggle - Only show if anonymous is allowed and identification is not mandatory */}
+      {allowAnonymous && !requiresIdentification && (
+        <div className="bg-card rounded-sm p-4 card-border mb-6">
+          <div className="grid grid-cols-[auto_1fr_auto] items-center gap-3">
           {isAnonymous ? (
             <RiEyeCloseLine className="size-6 text-secondary flex-shrink-0" />
           ) : (
@@ -182,8 +187,9 @@ export function IdentificationSection({
               }`}
             />
           </button>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Anonymous Consent */}
       {isAnonymous && (
@@ -352,7 +358,8 @@ export function IdentificationSection({
                     <Button
                       onClick={handleVerifyOtp}
                       disabled={isLoading}
-                      className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+                      variant="secondary"
+                      className="w-full"
                     >
                       {isLoading ? 'Verificando...' : 'Verificar Código'}
                     </Button>
@@ -386,7 +393,8 @@ export function IdentificationSection({
                     <Button
                       onClick={handleSendOtp}
                       disabled={isLoading}
-                      className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+                      variant="secondary"
+                      className="w-full"
                     >
                       {isLoading ? 'Enviando...' : 'Entrar com E-mail'}
                     </Button>

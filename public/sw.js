@@ -54,6 +54,11 @@ self.addEventListener('fetch', event => {
           return response
         }
 
+        // Only cache GET requests (Cache API only supports cacheable requests)
+        if (event.request.method !== 'GET') {
+          return response
+        }
+
         // Clone the response
         const responseToCache = response.clone()
 
