@@ -7,10 +7,19 @@ import { MobileHeader } from '@/shared/components/MobileHeader'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
 import { ChannelCard } from '@/shared/components/ChannelCard'
 import { channels } from '@/shared/data/channels'
+import { generateContactPageSchema } from '@/lib/seo/schemas'
 
 export default function CanaisPage() {
+  const contactSchema = generateContactPageSchema()
+
   return (
     <>
+      {/* Contact Page Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactSchema) }}
+      />
+
       {/* Desktop Header */}
       <DesktopHeader />
 

@@ -1,8 +1,12 @@
 import { Metadata } from 'next'
+import { getCanonicalUrl, ROUTES } from '@/lib/seo/config'
 
 export const metadata: Metadata = {
-  title: 'Nova Manifestação',
-  description: 'Registre sua manifestação (reclamação, sugestão, elogio, denúncia ou pedido de informação) na Ouvidoria do DF.',
+  title: ROUTES.manifestacao.title,
+  description: ROUTES.manifestacao.description,
+  alternates: {
+    canonical: getCanonicalUrl('manifestacao'),
+  },
 }
 
 export default function ManifestacaoLayout({

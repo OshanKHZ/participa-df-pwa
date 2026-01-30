@@ -18,6 +18,7 @@ import { HomeMobileHeader } from '@/shared/components/HomeMobileHeader'
 import { LinkButton } from '@/shared/components/Button'
 import { BlogCarousel } from './BlogCarousel'
 import type { BlogPost } from './BlogCarousel'
+import { generateOrganizationSchema, generateItemListSchema } from '@/lib/seo/schemas'
 
 interface HomePageProps {
   isAuthenticated?: boolean
@@ -25,6 +26,8 @@ interface HomePageProps {
 }
 
 export function HomePage({ isAuthenticated, userName }: HomePageProps) {
+  // Use fixed dates to prevent hydration mismatches (avoid Date.now() which changes per render)
+  const NOW = new Date('2026-01-29')
 
   // Mock blog posts data - replace with real data from API
   const blogPosts: BlogPost[] = [
@@ -33,21 +36,21 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
       title: 'Acessibilidade digital',
       image:
         '/imagens-blog/Participa-DF-e-Portal-da-Transparencia-passam-a-ser-100-acessiveis-digitalmente-620x420.webp',
-      publishedAt: new Date(Date.now() - 1000 * 60 * 30),
+      publishedAt: new Date(NOW.getTime() - 1000 * 60 * 30),
       slug: 'acessibilidade-digital',
     },
     {
       id: '2',
       title: 'Ouvidoria do DF',
       image: '/imagens-blog/ouvidoria-620x620.webp',
-      publishedAt: new Date(Date.now() - 1000 * 60 * 60 * 3),
+      publishedAt: new Date(NOW.getTime() - 1000 * 60 * 60 * 3),
       slug: 'conheca-ouvidoria',
     },
     {
       id: '3',
       title: 'Sua voz transforma',
       image: '/imagens-blog/09.PartcipaDF.webp',
-      publishedAt: new Date(Date.now() - 1000 * 60 * 60 * 24),
+      publishedAt: new Date(NOW.getTime() - 1000 * 60 * 60 * 24),
       slug: 'sua-voz-transforma',
     },
     {
@@ -55,27 +58,47 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
       title: 'Canais de atendimento',
       image:
         '/imagens-blog/Participa-DF-e-Portal-da-Transparencia-passam-a-ser-100-acessiveis-digitalmente-620x420.webp',
-      publishedAt: new Date(Date.now() - 1000 * 60 * 60 * 48),
+      publishedAt: new Date(NOW.getTime() - 1000 * 60 * 60 * 48),
       slug: 'canais-atendimento',
     },
     {
       id: '5',
       title: 'Novidades do Participa',
       image: '/imagens-blog/ouvidoria-620x620.webp',
-      publishedAt: new Date(Date.now() - 1000 * 60 * 60 * 72),
+      publishedAt: new Date(NOW.getTime() - 1000 * 60 * 60 * 72),
       slug: 'novidades-participa',
     },
   ]
 
+  // Generate structured data
+  const organizationSchema = generateOrganizationSchema()
+  const blogListSchema = generateItemListSchema(
+    blogPosts.map(post => ({
+      headline: post.title,
+      image: post.image,
+      datePublished: post.publishedAt.toISOString(),
+    }))
+  )
+
   return (
     <>
+      {/* Structured Data - Available on all screen sizes */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogListSchema) }}
+      />
+
       {/* Desktop Header */}
       <DesktopHeader />
 
       {/* Mobile Header */}
-      <HomeMobileHeader 
-        isAuthenticated={isAuthenticated} 
-        userName={userName} 
+      <HomeMobileHeader
+        isAuthenticated={isAuthenticated}
+        userName={userName}
       />
 
       {/* Main Content */}
@@ -110,27 +133,6 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
               </p>
             </div>
           </div>
-          
-          {/* Structured Data */}
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{
-              __html: JSON.stringify({
-                '@context': 'https://schema.org',
-                '@type': 'GovernmentOrganization',
-                name: 'Ouvidoria do Distrito Federal - Participa-DF',
-                url: 'https://participa-df.gdf.df.gov.br',
-                logo: 'https://participa-df.gdf.df.gov.br/logo.svg',
-                description: 'Portal oficial de ouvidoria e participação social do Governo do Distrito Federal.',
-                contactPoint: {
-                  '@type': 'ContactPoint',
-                  telephone: '162',
-                  contactType: 'customer service',
-                  areaServed: 'Distrito Federal, Brasil',
-                },
-              }),
-            }}
-          />
 
           {/* Grid of Cards */}
           <div className="mt-12 grid grid-cols-3 gap-4 max-w-4xl w-full">
@@ -178,16 +180,14 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
             >
               <div className="flex items-center gap-2.5 mb-2">
                 <RiDashboardLine className="size-5 text-secondary" aria-hidden="true" />
-                <div className="flex items-center gap-2">
-                  <h3 className="text-base font-semibold text-foreground font-outfit">Painel Ouvidoria</h3>
-                  <RiExternalLinkLine className="size-3.5 text-muted-foreground group-hover:text-secondary transition-colors" aria-hidden="true" />
-                </div>
+                <h3 className="text-base font-semibold text-foreground font-outfit">Painel Ouvidoria</h3>
               </div>
               <p className="text-sm text-muted-foreground leading-normal mb-5 flex-1">
                 Acesse indicadores, estatísticas e dados das ouvidorias do GDF.
               </p>
-              <span className="w-full py-2 px-4 bg-secondary text-white text-xs font-medium rounded-none text-center hover:opacity-90 transition-opacity">
+              <span className="w-full py-2 px-4 bg-secondary text-white text-xs font-medium rounded-none inline-flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
                 Acessar
+                <RiExternalLinkLine className="size-3.5 text-white/90 group-hover:text-white transition-colors" aria-hidden="true" />
               </span>
             </a>
           </div>

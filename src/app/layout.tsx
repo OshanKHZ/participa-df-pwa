@@ -7,6 +7,7 @@ import { ServiceWorkerRegister } from '@/shared/components/ServiceWorkerRegister
 import { SessionProvider } from '@/shared/providers/SessionProvider'
 import { PWAInstallProvider } from '@/shared/components/pwa/PWAInstallProvider'
 import { Toaster } from 'sonner'
+import { SITE_URL, SITE_CONFIG, getCanonicalUrl } from '@/lib/seo/config'
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -14,31 +15,16 @@ const montserrat = Montserrat({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://participa-df.gdf.df.gov.br'),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Participa-DF | Ouvidoria do Distrito Federal',
-    template: '%s | Participa-DF',
+    default: SITE_CONFIG.fullName,
+    template: `%s | ${SITE_CONFIG.name}`,
   },
-  description:
-    'Portal de Ouvidoria do Distrito Federal. Registre reclamações, sugestões, elogios e denúncias de forma simples e rápida.',
-  keywords: [
-    'Ouvidoria',
-    'Brasília',
-    'Distrito Federal',
-    'GDF',
-    'Participação Social',
-    'Transparência',
-    'Serviços Públicos',
-    'Manifestações',
-    'Denúncia',
-    'Reclamação',
-    'Elogio',
-    'Sugestão',
-    'Informação',
-  ],
+  description: SITE_CONFIG.description,
+  keywords: SITE_CONFIG.keywords,
   authors: [{ name: 'Governo do Distrito Federal' }],
-  creator: 'GDF',
-  publisher: 'Ouvidoria Geral do DF',
+  creator: SITE_CONFIG.organization.creator,
+  publisher: SITE_CONFIG.organization.publisher,
   formatDetection: {
     email: false,
     address: false,
@@ -64,26 +50,15 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'pt_BR',
-    url: 'https://participa-df.gdf.df.gov.br',
-    siteName: 'Participa-DF',
-    title: 'Participa-DF | Ouvidoria do Distrito Federal',
-    description:
-      'Registre suas manifestações e ajude a melhorar o Distrito Federal. Portal oficial de ouvidoria.',
-    images: [
-      {
-        url: '/logo.svg',
-        width: 800,
-        height: 600,
-        alt: 'Logo Participa-DF',
-      },
-    ],
+    url: SITE_URL,
+    siteName: SITE_CONFIG.name,
+    title: SITE_CONFIG.fullName,
+    description: SITE_CONFIG.shortDescription,
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Participa-DF | Ouvidoria do Distrito Federal',
-    description:
-      'Registre suas manifestações e ajude a melhorar o Distrito Federal.',
-    images: ['/logo.svg'],
+    title: SITE_CONFIG.fullName,
+    description: SITE_CONFIG.shortDescription,
   },
   robots: {
     index: true,
@@ -96,6 +71,17 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+  alternates: {
+    canonical: getCanonicalUrl('home'),
+  },
+}
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  themeColor: SITE_CONFIG.themeColor,
 }
 
 export default function RootLayout({

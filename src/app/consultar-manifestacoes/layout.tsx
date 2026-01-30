@@ -1,8 +1,12 @@
 import { Metadata } from 'next'
+import { getCanonicalUrl, ROUTES } from '@/lib/seo/config'
 
 export const metadata: Metadata = {
-  title: 'Consultar Manifestação',
-  description: 'Acompanhe o andamento da sua manifestação utilizando o número do protocolo e sua senha.',
+  title: ROUTES.consultar.title,
+  description: ROUTES.consultar.description,
+  alternates: {
+    canonical: getCanonicalUrl('consultar'),
+  },
 }
 
 export default function ConsultarLayout({

@@ -1,8 +1,12 @@
 import { Metadata } from 'next'
+import { getCanonicalUrl, ROUTES } from '@/lib/seo/config'
 
 export const metadata: Metadata = {
-  title: 'Ajuda e FAQ',
-  description: 'Encontre respostas para as perguntas mais frequentes sobre a Ouvidoria do Distrito Federal e saiba como registrar sua manifestação.',
+  title: ROUTES.ajuda.title,
+  description: ROUTES.ajuda.description,
+  alternates: {
+    canonical: getCanonicalUrl('ajuda'),
+  },
 }
 
 export default function AjudaLayout({

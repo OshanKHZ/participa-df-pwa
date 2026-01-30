@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   RiArrowLeftLine,
   RiArrowRightLine,
@@ -37,9 +37,15 @@ export function NavigationFooter({
   backVariant = 'default',
 }: NavigationFooterProps) {
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const [hydrationSteps, setHydrationSteps] = useState<Step[]>(steps)
+
+  // Update steps after hydration to match client-side state
+  useEffect(() => {
+    setHydrationSteps(steps)
+  }, [steps])
 
   const handleStepClick = (stepNumber: number) => {
-    const step = steps.find(s => s.number === stepNumber)
+    const step = hydrationSteps.find(s => s.number === stepNumber)
     // Allow navigation to current step, completed steps, and previous steps
     const canNavigate = step && (step.completed || stepNumber <= currentStep)
     if (canNavigate && onNavigateToStep) {
@@ -82,7 +88,7 @@ export function NavigationFooter({
 
           {/* Steps List */}
           <div className="space-y-2 mb-4">
-            {steps.map(step => {
+            {hydrationSteps.map(step => {
               const isCurrent = step.number === currentStep
               // Can navigate to current, completed, or previous steps
               const canNavigate = step.completed || step.number <= currentStep

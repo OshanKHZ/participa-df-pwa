@@ -1,8 +1,12 @@
 import { Metadata } from 'next'
+import { getCanonicalUrl, ROUTES } from '@/lib/seo/config'
 
 export const metadata: Metadata = {
-  title: 'Orientações para o registro',
-  description: 'Confira as orientações importantes antes de registrar sua manifestação na Ouvidoria do DF.',
+  title: ROUTES.orientacoes.title,
+  description: ROUTES.orientacoes.description,
+  alternates: {
+    canonical: getCanonicalUrl('orientacoes'),
+  },
 }
 
 export default function OrientacoesLayout({

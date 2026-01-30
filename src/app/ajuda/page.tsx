@@ -15,6 +15,7 @@ import {
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
 import { HomeMobileHeader } from '@/shared/components/HomeMobileHeader'
 import { MobileBottomNav } from '@/shared/components/MobileBottomNav'
+import { generateFAQSchema } from '@/lib/seo/schemas'
 
 interface FAQItem {
   question: string
@@ -123,8 +124,22 @@ export default function AjudaPage() {
     setOpenIndex(openIndex === index ? null : index)
   }
 
+  // Generate FAQ Schema for SEO
+  const faqSchema = generateFAQSchema(
+    faqData.map(faq => ({
+      question: faq.question,
+      answer: faq.answer,
+    }))
+  )
+
   return (
     <>
+      {/* FAQ Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+
       {/* Desktop Header */}
       <DesktopHeader />
 

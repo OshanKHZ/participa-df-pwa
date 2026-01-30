@@ -1,8 +1,12 @@
 import { Metadata } from 'next'
+import { getCanonicalUrl, ROUTES } from '@/lib/seo/config'
 
 export const metadata: Metadata = {
-  title: 'Transparência',
-  description: 'Acompanhe os dados e indicadores da Ouvidoria do DF em nosso portal da transparência.',
+  title: ROUTES.transparencia.title,
+  description: ROUTES.transparencia.description,
+  alternates: {
+    canonical: getCanonicalUrl('transparencia'),
+  },
 }
 
 export default function TransparenciaLayout({

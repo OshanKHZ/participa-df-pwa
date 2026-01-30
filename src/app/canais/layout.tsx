@@ -1,8 +1,12 @@
 import { Metadata } from 'next'
+import { getCanonicalUrl, ROUTES } from '@/lib/seo/config'
 
 export const metadata: Metadata = {
-  title: 'Canais de Atendimento',
-  description: 'Conheça todos os canais de atendimento da Ouvidoria do DF: telefone 162, presencial e internet.',
+  title: ROUTES.canais.title,
+  description: ROUTES.canais.description,
+  alternates: {
+    canonical: getCanonicalUrl('canais'),
+  },
 }
 
 export default function CanaisLayout({

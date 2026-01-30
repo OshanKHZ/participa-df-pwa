@@ -1,8 +1,12 @@
 import { Metadata } from 'next'
+import { getCanonicalUrl, ROUTES } from '@/lib/seo/config'
 
 export const metadata: Metadata = {
-  title: 'O que é a Ouvidoria',
-  description: 'Saiba mais sobre o papel da Ouvidoria e como ela atua na defesa dos direitos do cidadão no Distrito Federal.',
+  title: ROUTES.oQueE.title,
+  description: ROUTES.oQueE.description,
+  alternates: {
+    canonical: getCanonicalUrl('oQueE'),
+  },
 }
 
 export default function OQueEOuvidoriaLayout({
