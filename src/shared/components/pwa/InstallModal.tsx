@@ -1,6 +1,6 @@
-'use client';
+'use client'
 
-import { useEffect } from 'react';
+import { useEffect } from 'react'
 import {
   RiCloseLine,
   RiDownloadLine,
@@ -8,36 +8,40 @@ import {
   RiSmartphoneLine,
   RiFlashlightLine,
   RiNotification3Line,
-} from 'react-icons/ri';
+} from 'react-icons/ri'
 
 interface InstallModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onConfirm: () => void;
+  isOpen: boolean
+  onClose: () => void
+  onConfirm: () => void
 }
 
-export function InstallModal({ isOpen, onClose, onConfirm }: InstallModalProps) {
+export function InstallModal({
+  isOpen,
+  onClose,
+  onConfirm,
+}: InstallModalProps) {
   // Close modal on ESC key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) {
-        onClose();
+        onClose()
       }
-    };
+    }
 
     if (isOpen) {
-      document.addEventListener('keydown', handleEscape);
+      document.addEventListener('keydown', handleEscape)
       // Prevent body scroll when modal is open
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden'
     }
 
     return () => {
-      document.removeEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'unset';
-    };
-  }, [isOpen, onClose]);
+      document.removeEventListener('keydown', handleEscape)
+      document.body.style.overflow = 'unset'
+    }
+  }, [isOpen, onClose])
 
-  if (!isOpen) return null;
+  if (!isOpen) return null
 
   return (
     <>
@@ -57,15 +61,21 @@ export function InstallModal({ isOpen, onClose, onConfirm }: InstallModalProps) 
       >
         <div
           className="bg-white rounded-lg shadow-xl max-w-md w-full animate-slide-up"
-          onClick={(e) => e.stopPropagation()}
+          onClick={e => e.stopPropagation()}
         >
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-gray-200">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
-                <RiDownloadLine className="w-5 h-5 text-white" aria-hidden="true" />
+                <RiDownloadLine
+                  className="w-5 h-5 text-white"
+                  aria-hidden="true"
+                />
               </div>
-              <h2 id="install-modal-title" className="text-lg font-semibold text-gray-900">
+              <h2
+                id="install-modal-title"
+                className="text-lg font-semibold text-gray-900"
+              >
                 Instalar Participa-DF
               </h2>
             </div>
@@ -74,24 +84,33 @@ export function InstallModal({ isOpen, onClose, onConfirm }: InstallModalProps) 
               className="p-2 rounded-lg hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
               aria-label="Fechar modal"
             >
-              <RiCloseLine className="w-5 h-5 text-gray-500" aria-hidden="true" />
+              <RiCloseLine
+                className="w-5 h-5 text-gray-500"
+                aria-hidden="true"
+              />
             </button>
           </div>
 
           {/* Content */}
           <div className="p-6 space-y-4">
             <p className="text-sm text-gray-600">
-              Instale o aplicativo na tela inicial do seu dispositivo para uma experiência melhor:
+              Instale o aplicativo na tela inicial do seu dispositivo para uma
+              experiência melhor:
             </p>
 
             {/* Benefits list */}
             <ul className="space-y-3" role="list">
               <li className="flex items-start gap-3">
                 <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <RiWifiLine className="w-4 h-4 text-green-600" aria-hidden="true" />
+                  <RiWifiLine
+                    className="w-4 h-4 text-green-600"
+                    aria-hidden="true"
+                  />
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium text-gray-900">Acesso offline</h3>
+                  <h3 className="text-sm font-medium text-gray-900">
+                    Acesso offline
+                  </h3>
                   <p className="text-xs text-gray-600">
                     Use mesmo sem conexão com a internet
                   </p>
@@ -100,10 +119,15 @@ export function InstallModal({ isOpen, onClose, onConfirm }: InstallModalProps) 
 
               <li className="flex items-start gap-3">
                 <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <RiSmartphoneLine className="w-4 h-4 text-blue-600" aria-hidden="true" />
+                  <RiSmartphoneLine
+                    className="w-4 h-4 text-blue-600"
+                    aria-hidden="true"
+                  />
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium text-gray-900">Ícone na tela inicial</h3>
+                  <h3 className="text-sm font-medium text-gray-900">
+                    Ícone na tela inicial
+                  </h3>
                   <p className="text-xs text-gray-600">
                     Acesso rápido como um aplicativo nativo
                   </p>
@@ -112,10 +136,15 @@ export function InstallModal({ isOpen, onClose, onConfirm }: InstallModalProps) 
 
               <li className="flex items-start gap-3">
                 <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <RiFlashlightLine className="w-4 h-4 text-purple-600" aria-hidden="true" />
+                  <RiFlashlightLine
+                    className="w-4 h-4 text-purple-600"
+                    aria-hidden="true"
+                  />
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium text-gray-900">Carregamento rápido</h3>
+                  <h3 className="text-sm font-medium text-gray-900">
+                    Carregamento rápido
+                  </h3>
                   <p className="text-xs text-gray-600">
                     Performance otimizada para seu dispositivo
                   </p>
@@ -124,10 +153,15 @@ export function InstallModal({ isOpen, onClose, onConfirm }: InstallModalProps) 
 
               <li className="flex items-start gap-3">
                 <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <RiNotification3Line className="w-4 h-4 text-orange-600" aria-hidden="true" />
+                  <RiNotification3Line
+                    className="w-4 h-4 text-orange-600"
+                    aria-hidden="true"
+                  />
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium text-gray-900">Notificações (em breve)</h3>
+                  <h3 className="text-sm font-medium text-gray-900">
+                    Notificações (em breve)
+                  </h3>
                   <p className="text-xs text-gray-600">
                     Receba atualizações sobre suas manifestações
                   </p>
@@ -137,7 +171,8 @@ export function InstallModal({ isOpen, onClose, onConfirm }: InstallModalProps) 
 
             <div className="pt-2 text-xs text-gray-500">
               <p>
-                <strong>Nota:</strong> O aplicativo ocupa menos de 1MB e pode ser desinstalado a qualquer momento.
+                <strong>Nota:</strong> O aplicativo ocupa menos de 1MB e pode
+                ser desinstalado a qualquer momento.
               </p>
             </div>
           </div>
@@ -152,8 +187,8 @@ export function InstallModal({ isOpen, onClose, onConfirm }: InstallModalProps) 
             </button>
             <button
               onClick={() => {
-                onConfirm();
-                onClose();
+                onConfirm()
+                onClose()
               }}
               className="flex-1 px-4 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
             >
@@ -163,5 +198,5 @@ export function InstallModal({ isOpen, onClose, onConfirm }: InstallModalProps) 
         </div>
       </div>
     </>
-  );
+  )
 }

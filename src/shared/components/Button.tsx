@@ -4,12 +4,28 @@ import { forwardRef, type ComponentRef } from 'react'
 import Link from 'next/link'
 
 export interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
-  variant?: 'primary' | 'secondary' | 'success' | 'ghost' | 'link' | 'destructive' | 'accent'
+  variant?:
+    | 'primary'
+    | 'secondary'
+    | 'success'
+    | 'ghost'
+    | 'link'
+    | 'destructive'
+    | 'accent'
   size?: 'sm' | 'default' | 'lg'
 }
 
-export interface LinkButtonProps extends React.ComponentPropsWithoutRef<typeof Link> {
-  variant?: 'primary' | 'secondary' | 'success' | 'ghost' | 'link' | 'destructive' | 'accent'
+export interface LinkButtonProps extends React.ComponentPropsWithoutRef<
+  typeof Link
+> {
+  variant?:
+    | 'primary'
+    | 'secondary'
+    | 'success'
+    | 'ghost'
+    | 'link'
+    | 'destructive'
+    | 'accent'
   size?: 'sm' | 'default' | 'lg'
 }
 
@@ -30,12 +46,14 @@ const Button = forwardRef<ComponentRef<'button'>, ButtonProps>(
 
     const variants = {
       primary: 'bg-primary text-primary-foreground hover:bg-primary/90',
-      secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary-hover',
+      secondary:
+        'bg-secondary text-secondary-foreground hover:bg-secondary-hover',
       success: 'bg-success text-white hover:opacity-90',
       accent: 'bg-accent text-secondary hover:bg-accent/80',
       ghost: 'hover:bg-accent hover:text-foreground',
       link: 'text-secondary underline-offset-4 hover:underline',
-      destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
+      destructive:
+        'bg-destructive text-destructive-foreground hover:bg-destructive/90',
     }
 
     const sizes = {
@@ -61,18 +79,23 @@ Button.displayName = 'Button'
 
 // LinkButton component for Next.js links with button styling
 export const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>(
-  ({ className, variant = 'primary', size = 'default', children, ...props }, ref) => {
+  (
+    { className, variant = 'primary', size = 'default', children, ...props },
+    ref
+  ) => {
     const baseStyles =
       'inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors btn-focus cursor-pointer'
 
     const variants = {
       primary: 'bg-primary text-primary-foreground hover:bg-primary/90',
-      secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary-hover',
+      secondary:
+        'bg-secondary text-secondary-foreground hover:bg-secondary-hover',
       success: 'bg-success text-white hover:opacity-90',
       accent: 'bg-accent text-secondary hover:bg-accent/80',
       ghost: 'hover:bg-accent hover:text-foreground',
       link: 'text-secondary underline-offset-4 hover:underline',
-      destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
+      destructive:
+        'bg-destructive text-destructive-foreground hover:bg-destructive/90',
     }
 
     const sizes = {

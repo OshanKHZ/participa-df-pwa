@@ -1,24 +1,27 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import { RiCloseLine, RiDownloadLine, RiSmartphoneLine } from 'react-icons/ri';
-import { InstallModal } from './InstallModal';
+import { useState } from 'react'
+import { RiCloseLine, RiDownloadLine, RiSmartphoneLine } from 'react-icons/ri'
+import { InstallModal } from './InstallModal'
 
 interface InstallPromptBannerProps {
-  onInstall: () => void;
-  onDismiss: () => void;
+  onInstall: () => void
+  onDismiss: () => void
 }
 
-export function InstallPromptBanner({ onInstall, onDismiss }: InstallPromptBannerProps) {
-  const [showModal, setShowModal] = useState(false);
+export function InstallPromptBanner({
+  onInstall,
+  onDismiss,
+}: InstallPromptBannerProps) {
+  const [showModal, setShowModal] = useState(false)
 
   const handleInstallClick = () => {
-    setShowModal(true);
-  };
+    setShowModal(true)
+  }
 
   const handleModalConfirm = () => {
-    onInstall();
-  };
+    onInstall()
+  }
 
   return (
     <>
@@ -41,14 +44,18 @@ export function InstallPromptBanner({ onInstall, onDismiss }: InstallPromptBanne
           {/* Content */}
           <div className="flex items-start gap-3 pr-8">
             <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
-              <RiSmartphoneLine className="w-5 h-5 text-white" aria-hidden="true" />
+              <RiSmartphoneLine
+                className="w-5 h-5 text-white"
+                aria-hidden="true"
+              />
             </div>
             <div className="flex-1">
               <h3 className="text-sm font-semibold text-gray-900 mb-1">
                 Instale o Participa-DF
               </h3>
               <p className="text-xs text-gray-600 mb-3">
-                Acesse offline, tenha um ícone na tela inicial e receba notificações sobre suas manifestações.
+                Acesse offline, tenha um ícone na tela inicial e receba
+                notificações sobre suas manifestações.
               </p>
 
               {/* Actions */}
@@ -79,5 +86,5 @@ export function InstallPromptBanner({ onInstall, onDismiss }: InstallPromptBanne
         onConfirm={handleModalConfirm}
       />
     </>
-  );
+  )
 }

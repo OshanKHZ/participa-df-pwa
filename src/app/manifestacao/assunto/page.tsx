@@ -38,7 +38,7 @@ export default function AssuntoPage() {
   const [searchTerm, setSearchTerm] = useState('')
   const [desktopSearchTerm, setDesktopSearchTerm] = useState('')
   const [selectedAssunto, setSelectedAssunto] = useState<Assunto | null>(null)
-  
+
   // Initialize filtered list when allAssuntos is available
   const [filteredAssuntos, setFilteredAssuntos] = useState<Assunto[]>([])
   const [isSearching, setIsSearching] = useState(false)
@@ -73,9 +73,9 @@ export default function AssuntoPage() {
           .toLowerCase()
           .normalize('NFD')
           .replace(/[\u0300-\u036f]/g, '')
-        
+
         const filtered = allAssuntos.filter(assunto => {
-             const normalizedName = assunto.name
+          const normalizedName = assunto.name
             .toLowerCase()
             .normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '')
@@ -361,7 +361,11 @@ export default function AssuntoPage() {
               <Button variant="link" onClick={handleBack}>
                 Voltar
               </Button>
-              <Button variant="success" onClick={handleNext} disabled={!selectedAssunto}>
+              <Button
+                variant="success"
+                onClick={handleNext}
+                disabled={!selectedAssunto}
+              >
                 Avançar
                 <RiArrowRightLine className="size-5" />
               </Button>

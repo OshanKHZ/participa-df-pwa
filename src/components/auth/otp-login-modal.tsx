@@ -57,11 +57,11 @@ export function OtpModal({ isOpen, onClose, email }: OtpModalProps) {
         if (index + i < 6) newCode[index + i] = char
       })
       setCode(newCode)
-      
+
       // Focus the next empty input or the last one
       const nextIndex = Math.min(index + pastedData.length, 5)
       document.getElementById(`otp-${nextIndex}`)?.focus()
-      
+
       // Auto-submit if full code is now present
       if (newCode.every(c => c !== '')) {
         handleVerify(newCode)
@@ -156,7 +156,6 @@ export function OtpModal({ isOpen, onClose, email }: OtpModalProps) {
     }
   }
 
-
   if (!isOpen) return null
 
   return (
@@ -220,12 +219,16 @@ export function OtpModal({ isOpen, onClose, email }: OtpModalProps) {
                 Enviamos um código de 6 dígitos para <br />
                 <span className="font-semibold text-foreground">{email}</span>
               </p>
-              <div className={`mt-4 inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium transition-colors ${
-                timeLeft === 0 
-                  ? 'bg-destructive/10 text-destructive' 
-                  : 'bg-secondary/10 text-secondary'
-              }`}>
-                {timeLeft === 0 ? 'Código expirado' : `Expira em ${formatTime(timeLeft)}`}
+              <div
+                className={`mt-4 inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium transition-colors ${
+                  timeLeft === 0
+                    ? 'bg-destructive/10 text-destructive'
+                    : 'bg-secondary/10 text-secondary'
+                }`}
+              >
+                {timeLeft === 0
+                  ? 'Código expirado'
+                  : `Expira em ${formatTime(timeLeft)}`}
               </div>
             </div>
 
@@ -242,7 +245,7 @@ export function OtpModal({ isOpen, onClose, email }: OtpModalProps) {
                   onKeyDown={e => handleKeyDown(idx, e)}
                   onPaste={idx === 0 ? handlePaste : undefined}
                   autoComplete={idx === 0 ? 'one-time-code' : 'off'}
-                  onFocus={(e) => e.target.select()}
+                  onFocus={e => e.target.select()}
                   aria-label={`Dígito ${idx + 1} do código de verificação`}
                   className="w-11 h-14 text-center text-2xl font-bold rounded-lg border border-input bg-background focus:ring-2 focus:ring-secondary focus:border-secondary outline-none transition-all disabled:opacity-50 text-foreground placeholder:text-muted-foreground"
                   disabled={loading}

@@ -20,7 +20,8 @@ export const SITE_CONFIG = {
   fullName: 'Participa-DF | Ouvidoria do Distrito Federal',
   description:
     'Portal de Ouvidoria do Distrito Federal. Registre reclamações, sugestões, elogios e denúncias de forma simples e rápida.',
-  shortDescription: 'Registre suas manifestações e ajude a melhorar o Distrito Federal.',
+  shortDescription:
+    'Registre suas manifestações e ajude a melhorar o Distrito Federal.',
 
   // Organization info
   organization: {

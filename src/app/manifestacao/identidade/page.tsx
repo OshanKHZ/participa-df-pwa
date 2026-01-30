@@ -26,7 +26,9 @@ export default function IdentidadePage() {
   const [isAnonymous, setIsAnonymous] = useState(true)
   const [anonymousConsent, setAnonymousConsent] = useState(false)
   const [showConfirmDialog, setShowConfirmDialog] = useState(false)
-  const [manifestationType, setManifestationType] = useState<string | null>(null)
+  const [manifestationType, setManifestationType] = useState<string | null>(
+    null
+  )
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -243,7 +245,11 @@ export default function IdentidadePage() {
               <Button variant="link" onClick={handleBack}>
                 Voltar
               </Button>
-              <Button variant="success" onClick={handleNext} disabled={!canProceed}>
+              <Button
+                variant="success"
+                onClick={handleNext}
+                disabled={!canProceed}
+              >
                 {isAnonymous ? 'Continuar' : 'Avançar'}
                 <RiArrowRightLine className="size-5" />
               </Button>

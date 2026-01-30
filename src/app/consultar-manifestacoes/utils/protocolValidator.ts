@@ -7,7 +7,8 @@ export const PROTOCOL_PATTERNS = {
   // YYYYMMDD-NNNN format (e.g., 20260116-0001)
   DATE_FORMAT: /^\d{8}-\d{4}$/,
   // UUID format with hyphens (e.g., a1b2c3d4-e5f6-7890-abcd-ef1234567890)
-  UUID_WITH_HYPHENS: /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i,
+  UUID_WITH_HYPHENS:
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i,
   // UUID format without hyphens
   UUID_WITHOUT_HYPHENS: /^[0-9a-f]{32}$/i,
 }
@@ -61,7 +62,9 @@ export const normalizeProtocol = (protocol: string): string => {
 /**
  * Get protocol format type
  */
-export const getProtocolType = (protocol: string): 'date' | 'uuid' | 'invalid' => {
+export const getProtocolType = (
+  protocol: string
+): 'date' | 'uuid' | 'invalid' => {
   const trimmed = protocol.trim().toUpperCase()
 
   if (PROTOCOL_PATTERNS.DATE_FORMAT.test(trimmed)) return 'date'

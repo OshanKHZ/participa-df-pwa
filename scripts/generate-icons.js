@@ -19,7 +19,7 @@ async function generateIcons() {
 
     // Check if PWA SVG exists
     await fs.access(pwaSvgPath)
-    
+
     console.log('🎨 Generating PWA icons from pwa-logo.svg...')
 
     for (const size of sizes) {
@@ -29,7 +29,7 @@ async function generateIcons() {
       await sharp(pwaSvgPath)
         .resize(size, size, {
           fit: 'contain',
-          background: { r: 0, g: 0, b: 0, alpha: 0 }, 
+          background: { r: 0, g: 0, b: 0, alpha: 0 },
         })
         .png()
         .toFile(outputPath)
@@ -45,33 +45,38 @@ async function generateIcons() {
       })
       .png()
       .toFile(path.join(iconsDir, 'apple-touch-icon.png'))
-     console.log('  ✅ Generated apple-touch-icon.png')
+    console.log('  ✅ Generated apple-touch-icon.png')
 
     // Handle Favicon
     console.log('\n🎨 Generating Favicon from favicon.svg...')
     try {
-        await fs.access(faviconSvgPath)
-        
-        // Generate 32x32 PNG favicon (transparent)
-        await sharp(faviconSvgPath)
-            .resize(32, 32, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
-            .png()
-            .toFile(path.join(process.cwd(), 'public', 'favicon.png'))
-            
-        console.log('  ✅ Generated favicon.png (32x32)')
-        
-         // Also generate a 16x16 as favicon.ico (technically png but often accepted) 
-         // OR just copy the 32x32 as favicon.ico for compatibility if standard tools look for it
-         // But let's actually make a 32x32 one named favicon.ico for simple compatibility
-        await sharp(faviconSvgPath)
-            .resize(32, 32, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
-            .png()
-            .toFile(path.join(process.cwd(), 'public', 'favicon.ico')) // Note: this is a PNG with .ico extension, which works in most modern browsers.
+      await fs.access(faviconSvgPath)
 
-        console.log('  ✅ Generated favicon.ico (32x32)')
+      // Generate 32x32 PNG favicon (transparent)
+      await sharp(faviconSvgPath)
+        .resize(32, 32, {
+          fit: 'contain',
+          background: { r: 0, g: 0, b: 0, alpha: 0 },
+        })
+        .png()
+        .toFile(path.join(process.cwd(), 'public', 'favicon.png'))
 
+      console.log('  ✅ Generated favicon.png (32x32)')
+
+      // Also generate a 16x16 as favicon.ico (technically png but often accepted)
+      // OR just copy the 32x32 as favicon.ico for compatibility if standard tools look for it
+      // But let's actually make a 32x32 one named favicon.ico for simple compatibility
+      await sharp(faviconSvgPath)
+        .resize(32, 32, {
+          fit: 'contain',
+          background: { r: 0, g: 0, b: 0, alpha: 0 },
+        })
+        .png()
+        .toFile(path.join(process.cwd(), 'public', 'favicon.ico')) // Note: this is a PNG with .ico extension, which works in most modern browsers.
+
+      console.log('  ✅ Generated favicon.ico (32x32)')
     } catch (e) {
-        console.warn('⚠️ Could not find or process favicon.svg:', e)
+      console.warn('⚠️ Could not find or process favicon.svg:', e)
     }
 
     console.log('\n✅ All icons generated successfully!')

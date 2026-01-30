@@ -127,41 +127,41 @@ export function IdentificationSection({
       {allowAnonymous && !requiresIdentification && (
         <div className="bg-card rounded-sm p-4 card-border mb-6">
           <div className="grid grid-cols-[auto_1fr_auto] items-center gap-3">
-          {isAnonymous ? (
-            <RiEyeCloseLine className="size-6 text-secondary flex-shrink-0" />
-          ) : (
-            <RiEye2Line className="size-6 text-secondary flex-shrink-0" />
-          )}
-          <div>
-            <h3 className="font-semibold text-foreground">
-              {isAnonymous
-                ? 'Prosseguir sem identificação'
-                : 'Prefiro me identificar'}
-            </h3>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              {isAnonymous
-                ? 'Sua identidade será mantida em sigilo'
-                : 'Seus dados pessoais estarão seguros'}
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={() => onAnonymousChange(!isAnonymous)}
-            role="switch"
-            aria-checked={isAnonymous}
-            aria-label={
-              isAnonymous ? 'Desativar anonimato' : 'Ativar anonimato'
-            }
-            className={`relative flex-shrink-0 inline-flex h-6 w-11 items-center rounded-full transition-colors btn-focus ${
-              isAnonymous ? 'bg-secondary' : 'bg-muted'
-            }`}
-          >
-            <span
-              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                isAnonymous ? TOGGLE.TRANSITION_ON : TOGGLE.TRANSITION_OFF
+            {isAnonymous ? (
+              <RiEyeCloseLine className="size-6 text-secondary flex-shrink-0" />
+            ) : (
+              <RiEye2Line className="size-6 text-secondary flex-shrink-0" />
+            )}
+            <div>
+              <h3 className="font-semibold text-foreground">
+                {isAnonymous
+                  ? 'Prosseguir sem identificação'
+                  : 'Prefiro me identificar'}
+              </h3>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                {isAnonymous
+                  ? 'Sua identidade será mantida em sigilo'
+                  : 'Seus dados pessoais estarão seguros'}
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => onAnonymousChange(!isAnonymous)}
+              role="switch"
+              aria-checked={isAnonymous}
+              aria-label={
+                isAnonymous ? 'Desativar anonimato' : 'Ativar anonimato'
+              }
+              className={`relative flex-shrink-0 inline-flex h-6 w-11 items-center rounded-full transition-colors btn-focus ${
+                isAnonymous ? 'bg-secondary' : 'bg-muted'
               }`}
-            />
-          </button>
+            >
+              <span
+                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                  isAnonymous ? TOGGLE.TRANSITION_ON : TOGGLE.TRANSITION_OFF
+                }`}
+              />
+            </button>
           </div>
         </div>
       )}

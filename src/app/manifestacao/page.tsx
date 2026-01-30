@@ -233,12 +233,12 @@ export default function ManifestationTypePage() {
 
           {/* Coluna Central - Main Content (sempre centralizado) */}
           <main className="w-full">
-          <ManifestationHeader
-            currentStep={STEPS.TYPE}
-            totalSteps={STEPS.TOTAL}
-            description="Selecione o tipo de manifestação desejada."
-            onStepClick={navigateToStep}
-          />
+            <ManifestationHeader
+              currentStep={STEPS.TYPE}
+              totalSteps={STEPS.TOTAL}
+              description="Selecione o tipo de manifestação desejada."
+              onStepClick={navigateToStep}
+            />
 
             {/* Types Select */}
             <div className="mb-8">
@@ -272,16 +272,20 @@ export default function ManifestationTypePage() {
               </Select>
             </div>
 
-          {/* Desktop Navigation */}
-          <div className="flex items-center justify-between pt-6 border-t border-border">
-            <Button variant="destructive" onClick={handleBack}>
-              Cancelar
-            </Button>
-            <Button variant="success" onClick={handleNext} disabled={!selectedType}>
-              Avançar
-              <RiArrowRightLine className="size-5" />
-            </Button>
-          </div>
+            {/* Desktop Navigation */}
+            <div className="flex items-center justify-between pt-6 border-t border-border">
+              <Button variant="destructive" onClick={handleBack}>
+                Cancelar
+              </Button>
+              <Button
+                variant="success"
+                onClick={handleNext}
+                disabled={!selectedType}
+              >
+                Avançar
+                <RiArrowRightLine className="size-5" />
+              </Button>
+            </div>
           </main>
 
           {/* Coluna Direita - Vazia (para manter centralização) */}

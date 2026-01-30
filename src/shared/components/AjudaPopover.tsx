@@ -23,8 +23,12 @@ export function AjudaPopover({
         role="menuitem"
       >
         <div>
-          <h4 className="text-base font-medium text-white">Sobre a Ouvidoria</h4>
-          <p className="text-sm text-white/60 mt-0.5">Conheça o papel da ouvidoria</p>
+          <h4 className="text-base font-medium text-white">
+            Sobre a Ouvidoria
+          </h4>
+          <p className="text-sm text-white/60 mt-0.5">
+            Conheça o papel da ouvidoria
+          </p>
         </div>
       </Link>
 
@@ -35,7 +39,9 @@ export function AjudaPopover({
         role="menuitem"
       >
         <div>
-          <h4 className="text-base font-medium text-white">Perguntas Frequentes</h4>
+          <h4 className="text-base font-medium text-white">
+            Perguntas Frequentes
+          </h4>
           <p className="text-sm text-white/60 mt-0.5">Tire suas dúvidas</p>
         </div>
       </Link>
@@ -47,8 +53,12 @@ export function AjudaPopover({
         role="menuitem"
       >
         <div>
-          <h4 className="text-base font-medium text-white">Canais de Atendimento</h4>
-          <p className="text-sm text-white/60 mt-0.5">Telefone, presencial e outros</p>
+          <h4 className="text-base font-medium text-white">
+            Canais de Atendimento
+          </h4>
+          <p className="text-sm text-white/60 mt-0.5">
+            Telefone, presencial e outros
+          </p>
         </div>
       </Link>
     </BasePopover>

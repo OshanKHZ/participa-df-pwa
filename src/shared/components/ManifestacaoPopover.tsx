@@ -23,8 +23,12 @@ export function ManifestacaoPopover({
         role="menuitem"
       >
         <div>
-          <h4 className="text-base font-medium text-white">Nova Manifestação</h4>
-          <p className="text-sm text-white/60 mt-0.5">Registre sua manifestação</p>
+          <h4 className="text-base font-medium text-white">
+            Nova Manifestação
+          </h4>
+          <p className="text-sm text-white/60 mt-0.5">
+            Registre sua manifestação
+          </p>
         </div>
       </Link>
 
@@ -35,8 +39,12 @@ export function ManifestacaoPopover({
         role="menuitem"
       >
         <div>
-          <h4 className="text-base font-medium text-white">Acompanhar Registro</h4>
-          <p className="text-sm text-white/60 mt-0.5">Consulte seus protocolos</p>
+          <h4 className="text-base font-medium text-white">
+            Acompanhar Registro
+          </h4>
+          <p className="text-sm text-white/60 mt-0.5">
+            Consulte seus protocolos
+          </p>
         </div>
       </Link>
 
@@ -48,7 +56,9 @@ export function ManifestacaoPopover({
       >
         <div>
           <h4 className="text-base font-medium text-white">Orientações</h4>
-          <p className="text-sm text-white/60 mt-0.5">Como registrar sua manifestação</p>
+          <p className="text-sm text-white/60 mt-0.5">
+            Como registrar sua manifestação
+          </p>
         </div>
       </Link>
     </BasePopover>

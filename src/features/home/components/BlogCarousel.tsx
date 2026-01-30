@@ -93,7 +93,7 @@ export function BlogCarousel({ posts, className }: BlogCarouselProps) {
       if (currentIndex >= totalItems + BUFFER_SIZE) {
         // Jump back to real start
         updatePosition(currentIndex - totalItems, false)
-      } 
+      }
       // If we've scrolled into the start buffer (clones of end)
       else if (currentIndex < BUFFER_SIZE) {
         // Jump forward to real end
@@ -122,7 +122,9 @@ export function BlogCarousel({ posts, className }: BlogCarouselProps) {
   // Get real index for dots (0 to totalItems-1)
   const getRealIndex = useCallback(() => {
     // Map current buffer-shifted index back to 0..totalItems-1
-    return ((currentIndex - BUFFER_SIZE) % totalItems + totalItems) % totalItems
+    return (
+      (((currentIndex - BUFFER_SIZE) % totalItems) + totalItems) % totalItems
+    )
   }, [currentIndex, totalItems])
 
   const activeDotIndex = getRealIndex()
@@ -177,7 +179,10 @@ export function BlogCarousel({ posts, className }: BlogCarouselProps) {
   if (posts.length === 0) return null
 
   return (
-    <section className={`bg-card px-3 py-3 ${className || ''}`} aria-label="Blog posts">
+    <section
+      className={`bg-card px-3 py-3 ${className || ''}`}
+      aria-label="Blog posts"
+    >
       <div className="flex items-center justify-between mb-4 px-1">
         <h2 className="text-base font-semibold text-foreground">Novidades</h2>
         <div className="flex items-center gap-2">
@@ -247,7 +252,9 @@ export function BlogCarousel({ posts, className }: BlogCarouselProps) {
           <span
             key={index}
             className={`h-1.5 rounded-full transition-all duration-200 ${
-              index === activeDotIndex ? 'w-6 bg-secondary' : 'w-1.5 bg-foreground/20'
+              index === activeDotIndex
+                ? 'w-6 bg-secondary'
+                : 'w-1.5 bg-foreground/20'
             }`}
             aria-current={index === activeDotIndex ? 'true' : undefined}
           />

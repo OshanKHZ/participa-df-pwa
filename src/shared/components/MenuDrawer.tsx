@@ -37,7 +37,10 @@ export function MenuDrawer({
   onInstall,
 }: MenuDrawerProps) {
   const containerRef = useFocusTrap(isOpen)
-  const [internalSession, setInternalSession] = useState<{ name?: string | null; email?: string | null } | null>(null)
+  const [internalSession, setInternalSession] = useState<{
+    name?: string | null
+    email?: string | null
+  } | null>(null)
 
   useEffect(() => {
     getSessionData().then(user => {
@@ -115,8 +118,12 @@ export function MenuDrawer({
                   <RiUserLine className="size-6 text-white" />
                 </div>
                 <div>
-                  <p className="font-semibold text-foreground leading-tight">{finalUserName}</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">Cidadão • Ver perfil</p>
+                  <p className="font-semibold text-foreground leading-tight">
+                    {finalUserName}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    Cidadão • Ver perfil
+                  </p>
                 </div>
               </Link>
               <button
@@ -226,7 +233,7 @@ export function MenuDrawer({
           <LinkButton
             href="#"
             variant="accent"
-            onClick={(e) => {
+            onClick={e => {
               e.preventDefault()
               // Handle accessibility menu trigger here if needed
             }}

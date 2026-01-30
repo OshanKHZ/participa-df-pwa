@@ -8,7 +8,8 @@ export const AUDIO_TEXTS = {
   manifestationType: {
     denuncia: {
       label: 'Denúncia',
-      description: 'Comunique um ato ilícito praticado contra a administração pública',
+      description:
+        'Comunique um ato ilícito praticado contra a administração pública',
     },
     reclamacao: {
       label: 'Reclamação',
@@ -16,11 +17,13 @@ export const AUDIO_TEXTS = {
     },
     sugestao: {
       label: 'Sugestão',
-      description: 'Envie sugestões de melhorias e simplificação de um serviço público',
+      description:
+        'Envie sugestões de melhorias e simplificação de um serviço público',
     },
     elogio: {
       label: 'Elogio',
-      description: 'Expresse se você está satisfeito com um atendimento público',
+      description:
+        'Expresse se você está satisfeito com um atendimento público',
     },
     solicitacao: {
       label: 'Solicitação',

@@ -1,4 +1,4 @@
-import { MetadataRoute } from 'next'
+import type { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://participa-df.gdf.df.gov.br'
@@ -18,7 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/manifestacao/elogio',
     '/manifestacao/denuncia',
     '/manifestacao/informacao',
-  ].map((route) => ({
+  ].map(route => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,

@@ -309,7 +309,10 @@ export function ManifestationHeader({
 
       {/* Progress Steps */}
       <div className="mb-6">
-        <Stepper steps={getDesktopSteps(currentStep)} onStepClick={onStepClick} />
+        <Stepper
+          steps={getDesktopSteps(currentStep)}
+          onStepClick={onStepClick}
+        />
       </div>
 
       {/* Step Progress Info */}
