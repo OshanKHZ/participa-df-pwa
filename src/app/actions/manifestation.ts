@@ -4,7 +4,7 @@ import { auth } from '@/server/auth'
 import { db } from '@/database'
 import { manifestations } from '@/database/schema'
 import { z } from 'zod'
-import DOMPurify from 'isomorphic-dompurify'
+import sanitizeHtml from 'sanitize-html'
 import { eq, and, gt, sql, desc } from 'drizzle-orm'
 
 const manifestationSchema = z.object({
@@ -54,9 +54,9 @@ export async function createManifestation(data: CreateManifestationParams) {
   }
 
   // 3. Sanitize Content
-  const sanitizedContent = DOMPurify.sanitize(data.content)
+  const sanitizedContent = sanitizeHtml(data.content)
   const sanitizedSubject = data.subject
-    ? DOMPurify.sanitize(data.subject)
+    ? sanitizeHtml(data.subject)
     : undefined
 
   // Generate Protocol: OUV-YYYY-RANDOM (8 digits)
