@@ -1,17 +1,18 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { signIn, signOut, useSession } from 'next-auth/react'
+
 import {
   RiEye2Line,
   RiEyeCloseLine,
   RiPhoneLine,
-  RiLoginCircleLine,
-  RiUserAddLine,
   RiCheckLine,
 } from 'react-icons/ri'
 import { TOGGLE } from '@/shared/constants/designTokens'
+import { sendOtp, logout, getSessionData } from '@/app/actions/auth'
+import { RiMailLine } from 'react-icons/ri'
 import { Button } from '@/shared/components/Button'
+import { OtpModal } from '@/components/auth/otp-login-modal'
 
 interface IdentificationSectionProps {
   isAnonymous: boolean
@@ -22,6 +23,13 @@ interface IdentificationSectionProps {
     phone: string
   }) => void
   onAnonymousConsentChange?: (hasConsent: boolean) => void
+  formData: {
+    name: string
+    email: string
+    phone: string
+  }
+  allowAnonymous?: boolean
+  requiresIdentification?: boolean
 }
 
 export function IdentificationSection({
@@ -29,37 +37,49 @@ export function IdentificationSection({
   onAnonymousChange,
   onFormDataChange,
   onAnonymousConsentChange,
+  formData,
+  allowAnonymous = true,
+  requiresIdentification = false,
 }: IdentificationSectionProps) {
-  const { data: session, status } = useSession()
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-  })
-  const [anonymousConsent, setAnonymousConsent] = useState(false)
-
-  // Load saved data on mount
-  useEffect(() => {
-    const savedData = localStorage.getItem('manifestation_personal_data')
-    if (savedData) {
-      const parsed = JSON.parse(savedData)
-      setFormData(parsed)
+  const [session, setSession] = useState<{
+    user?: {
+      name?: string | null
+      email?: string | null
+      image?: string | null
     }
+  } | null>(null)
+
+  useEffect(() => {
+    getSessionData().then(user => {
+      if (user) setSession({ user })
+    })
   }, [])
 
+  const [anonymousConsent, setAnonymousConsent] = useState(false)
+
+  // OTP State
+  const [authEmail, setAuthEmail] = useState('')
+  const [isOtpModalOpen, setIsOtpModalOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
+
+  // Load saved data on mount
+
   // Update parent when form data changes
+  // Update parent when session changes or visibility changes
   useEffect(() => {
-    if (!isAnonymous) {
-      const dataToUse = session?.user
-        ? {
-            name: session.user.name || '',
-            email: session.user.email || '',
-            phone: formData.phone,
-          }
-        : formData
-      onFormDataChange(dataToUse)
+    // We only update if session exists and user is not anonymous
+    // This populates the name/email fields from session
+    if (!isAnonymous && session?.user) {
+      onFormDataChange({
+        name: session.user.name || '',
+        email: session.user.email || '',
+        phone: formData.phone,
+      })
     }
-  }, [formData, session, isAnonymous, onFormDataChange])
+    // We only want to run this when session loads or anonymity mode changes,
+    // NOT when formData changes (to avoid loops)
+  }, [session, isAnonymous, onFormDataChange])
 
   // Update parent when consent changes
   useEffect(() => {
@@ -69,62 +89,82 @@ export function IdentificationSection({
   }, [anonymousConsent, onAnonymousConsentChange])
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }))
+    onFormDataChange({ ...formData, [field]: value })
   }
 
-  const handleLogin = async () => {
-    await signIn('google', { callbackUrl: window.location.href })
+  const handleSendOtp = async () => {
+    if (!authEmail) {
+      setError('Por favor, informe seu e-mail')
+      return
+    }
+
+    setIsLoading(true)
+    setError('')
+
+    try {
+      const result = await sendOtp(authEmail)
+      if (result.success) {
+        setIsOtpModalOpen(true)
+      } else {
+        setError(result.error || 'Erro ao enviar código.')
+      }
+    } catch (err) {
+      setError('Erro ao enviar código. Tente novamente.')
+      console.error(err)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleLogout = async () => {
-    await signOut({ callbackUrl: window.location.href })
+    await logout()
+    window.location.reload()
   }
-
-  const displayName = session?.user?.name || formData.name
-  const displayEmail = session?.user?.email || formData.email
 
   return (
     <>
-      {/* Anonymous Toggle */}
-      <div className="bg-card rounded-sm p-4 card-border mb-6">
-        <div className="grid grid-cols-[auto_1fr_auto] items-center gap-3">
-          {isAnonymous ? (
-            <RiEyeCloseLine className="size-6 text-secondary flex-shrink-0" />
-          ) : (
-            <RiEye2Line className="size-6 text-secondary flex-shrink-0" />
-          )}
-          <div>
-            <h3 className="font-semibold text-foreground">
-              {isAnonymous
-                ? 'Prosseguir sem identificação'
-                : 'Prefiro me identificar'}
-            </h3>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              {isAnonymous
-                ? 'Sua identidade será mantida em sigilo'
-                : 'Seus dados pessoais estarão seguros'}
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={() => onAnonymousChange(!isAnonymous)}
-            role="switch"
-            aria-checked={isAnonymous}
-            aria-label={
-              isAnonymous ? 'Desativar anonimato' : 'Ativar anonimato'
-            }
-            className={`relative flex-shrink-0 inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 ${
-              isAnonymous ? 'bg-secondary' : 'bg-muted'
-            }`}
-          >
-            <span
-              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                isAnonymous ? TOGGLE.TRANSITION_ON : TOGGLE.TRANSITION_OFF
+      {/* Anonymous Toggle - Only show if anonymous is allowed and identification is not mandatory */}
+      {allowAnonymous && !requiresIdentification && (
+        <div className="bg-card rounded-sm p-4 card-border mb-6">
+          <div className="grid grid-cols-[auto_1fr_auto] items-center gap-3">
+            {isAnonymous ? (
+              <RiEyeCloseLine className="size-6 text-secondary flex-shrink-0" />
+            ) : (
+              <RiEye2Line className="size-6 text-secondary flex-shrink-0" />
+            )}
+            <div>
+              <h3 className="font-semibold text-foreground">
+                {isAnonymous
+                  ? 'Prosseguir sem identificação'
+                  : 'Prefiro me identificar'}
+              </h3>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                {isAnonymous
+                  ? 'Sua identidade será mantida em sigilo'
+                  : 'Seus dados pessoais estarão seguros'}
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => onAnonymousChange(!isAnonymous)}
+              role="switch"
+              aria-checked={isAnonymous}
+              aria-label={
+                isAnonymous ? 'Desativar anonimato' : 'Ativar anonimato'
+              }
+              className={`relative flex-shrink-0 inline-flex h-6 w-11 items-center rounded-full transition-colors btn-focus ${
+                isAnonymous ? 'bg-secondary' : 'bg-muted'
               }`}
-            />
-          </button>
+            >
+              <span
+                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                  isAnonymous ? TOGGLE.TRANSITION_ON : TOGGLE.TRANSITION_OFF
+                }`}
+              />
+            </button>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Anonymous Consent */}
       {isAnonymous && (
@@ -133,34 +173,44 @@ export function IdentificationSection({
           <div className="flex items-start gap-3 bg-accent rounded-sm p-4">
             <button
               type="button"
+              role="checkbox"
+              aria-checked={anonymousConsent}
               onClick={() => setAnonymousConsent(!anonymousConsent)}
-              className={`mt-0.5 w-5 h-5 flex-shrink-0 rounded border-2 flex items-center justify-center transition-colors ${
+              className={`mt-0.5 w-5 h-5 flex-shrink-0 rounded border-2 flex items-center justify-center transition-colors btn-focus ${
                 anonymousConsent
                   ? 'bg-secondary border-secondary'
                   : 'bg-white border-gray-400'
               }`}
             >
-              {anonymousConsent && <RiCheckLine className="size-4 text-white" />}
+              {anonymousConsent && (
+                <RiCheckLine className="size-4 text-white" aria-hidden="true" />
+              )}
             </button>
-            <div className="flex-1 cursor-pointer" onClick={() => setAnonymousConsent(!anonymousConsent)}>
+            <button
+              type="button"
+              className="flex-1 text-left p-0 btn-focus"
+              onClick={() => setAnonymousConsent(!anonymousConsent)}
+              aria-label="Aceitar termos de anonimato"
+            >
               <p className="text-xs text-accent-foreground leading-relaxed">
-                <span className="text-destructive">*</span> Solicito que minha identidade seja preservada neste pedido, em
-                atendimento ao princípio constitucional da impessoalidade e, ainda,
-                conforme o disposto no art. 11, § 7º da Lei Distrital nº 6.519/2020.
+                <span className="text-destructive">*</span> Solicito que minha
+                identidade seja preservada neste pedido, em atendimento ao
+                princípio constitucional da impessoalidade e, ainda, conforme o
+                disposto no art. 11, § 7º da Lei Distrital nº 6.519/2020.
               </p>
               <p className="text-xs text-accent-foreground leading-relaxed mt-2">
                 Estou ciente de que, com a identidade preservada, somente a
-                Controladoria-Geral do Distrito Federal terá acesso aos meus dados
-                pessoais, ressalvadas as exceções previstas nos parágrafos 3º e 4º,
-                do art. 33 da Lei Distrital nº 4.990/2012.
+                Controladoria-Geral do Distrito Federal terá acesso aos meus
+                dados pessoais, ressalvadas as exceções previstas nos parágrafos
+                3º e 4º, do art. 33 da Lei Distrital nº 4.990/2012.
               </p>
               <p className="text-xs text-accent-foreground leading-relaxed mt-2 font-bold">
                 Estou ciente, também, de que o órgão destinatário não poderá
-                solicitar esclarecimentos adicionais, assim como não poderá atender
-                a pedidos de informação pessoal, uma vez que não terá como confirmar
-                minha identidade.
+                solicitar esclarecimentos adicionais, assim como não poderá
+                atender a pedidos de informação pessoal, uma vez que não terá
+                como confirmar minha identidade.
               </p>
-            </div>
+            </button>
           </div>
         </div>
       )}
@@ -192,7 +242,7 @@ export function IdentificationSection({
                 <button
                   type="button"
                   onClick={handleLogout}
-                  className="text-xs text-destructive hover:underline"
+                  className="text-xs text-destructive hover:underline btn-focus"
                 >
                   Sair
                 </button>
@@ -219,37 +269,69 @@ export function IdentificationSection({
                     onChange={e => handleInputChange('phone', e.target.value)}
                     placeholder="(00) 00000-0000"
                     autoComplete="tel"
-                    className="w-full pl-10 pr-4 py-3 border card-border rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary"
+                    className="w-full pl-10 pr-4 py-3 border card-border rounded-lg btn-focus"
                   />
                 </div>
               </div>
             </div>
           ) : (
-            /* Not logged in - show login/register */
-            <div className="space-y-3">
-              <p className="text-sm text-muted-foreground">
-                Entre ou cadastre-se para acompanhar suas manifestações
-              </p>
-              <button
-                type="button"
-                onClick={handleLogin}
-                className="flex items-center justify-center gap-2 w-full bg-secondary hover:bg-secondary-hover text-secondary-foreground font-medium py-2.5 px-4 rounded-lg transition-colors"
-              >
-                <RiLoginCircleLine className="size-5" />
-                Entrar
-              </button>
-              <button
-                type="button"
-                onClick={handleLogin}
-                className="w-full text-secondary hover:text-secondary-hover font-medium py-2 text-sm flex items-center justify-center gap-2"
-              >
-                <RiUserAddLine className="size-4" />
-                Cadastrar-se
-              </button>
+            /* Not logged in - show login/register with OTP */
+            <div className="space-y-4 pt-1">
+              <div className="bg-muted/30 p-4 rounded-lg border border-border">
+                <h4 className="text-sm font-semibold text-foreground mb-4">
+                  Identifique-se para continuar
+                </h4>
+
+                {error && (
+                  <div className="bg-destructive/10 text-destructive text-xs p-3 rounded-md mb-4">
+                    {error}
+                  </div>
+                )}
+
+                <div className="space-y-3">
+                  <div>
+                    <label
+                      htmlFor="auth-email"
+                      className="text-xs text-muted-foreground mb-1 block"
+                    >
+                      E-mail
+                    </label>
+                    <div className="relative">
+                      <RiMailLine
+                        className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                        aria-hidden="true"
+                      />
+                      <input
+                        id="auth-email"
+                        type="email"
+                        value={authEmail}
+                        onChange={e => setAuthEmail(e.target.value)}
+                        className="w-full pl-10 pr-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
+                        placeholder="seu@email.com"
+                        autoComplete="email"
+                      />
+                    </div>
+                  </div>
+
+                  <Button
+                    onClick={handleSendOtp}
+                    disabled={isLoading}
+                    variant="secondary"
+                    className="w-full"
+                  >
+                    {isLoading ? 'Enviando...' : 'Entrar com E-mail'}
+                  </Button>
+                </div>
+              </div>
             </div>
           )}
         </div>
       )}
+      <OtpModal
+        isOpen={isOtpModalOpen}
+        onClose={() => setIsOtpModalOpen(false)}
+        email={authEmail}
+      />
     </>
   )
 }

@@ -4,8 +4,8 @@ import {
   text,
   primaryKey,
   integer,
+  jsonb,
 } from 'drizzle-orm/pg-core'
-import type { AdapterAccountType } from 'next-auth/adapters'
 
 export const users = pgTable('user', {
   id: text('id')
@@ -24,7 +24,7 @@ export const accounts = pgTable(
     userId: text('userId')
       .notNull()
       .references(() => users.id, { onDelete: 'cascade' }),
-    type: text('type').$type<AdapterAccountType>().notNull(),
+    type: text('type').notNull(),
     provider: text('provider').notNull(),
     providerAccountId: text('providerAccountId').notNull(),
     refresh_token: text('refresh_token'),
@@ -68,13 +68,22 @@ export const manifestations = pgTable('manifestation', {
   id: text('id')
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
-  userId: text('userId')
-    .notNull()
-    .references(() => users.id, { onDelete: 'cascade' }),
+  userId: text('userId').references(() => users.id, { onDelete: 'cascade' }),
   protocol: text('protocol').notNull().unique(), // e.g., OUV-2024-001
   type: text('type').notNull(), // Denúncia, Elogio, etc.
+  subject: text('subject'),
   description: text('description'),
+  attachments: jsonb('attachments'), // Store file metadata/counts
   status: text('status').notNull().default('received'), // received, analyzing, done
   createdAt: timestamp('createdAt', { mode: 'date' }).defaultNow().notNull(),
   updatedAt: timestamp('updatedAt', { mode: 'date' }).defaultNow().notNull(),
+})
+
+export const otpCodes = pgTable('otp_codes', {
+  id: text('id')
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  email: text('email').notNull(),
+  code: text('code').notNull(),
+  expiresAt: timestamp('expiresAt', { mode: 'date' }).notNull(),
 })

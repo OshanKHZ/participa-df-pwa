@@ -7,6 +7,9 @@ import { db } from '@/server/db'
 import { users } from '@/server/db/schema'
 import { eq } from 'drizzle-orm'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
+import { MobileHeader } from '@/shared/components/MobileHeader'
+import { MobileBottomNav } from '@/shared/components/MobileBottomNav'
+import { LogoutButton } from '@/components/profile/logout-button'
 
 export default async function ProfilePage() {
   const session = await auth()
@@ -29,11 +32,16 @@ export default async function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 pb-20 lg:pb-0">
       <DesktopHeader />
+      <MobileHeader
+        title="Meu Perfil"
+        isAuthenticated={true}
+        userName={user.name || undefined}
+      />
 
       <main className="max-w-4xl mx-auto px-4 py-8">
-        <div className="mb-8">
+        <div className="mb-8 hidden lg:block">
           <h1 className="text-3xl font-bold text-gray-900">Meu Perfil</h1>
           <p className="text-gray-500 mt-1">
             Olá,{' '}
@@ -61,6 +69,10 @@ export default async function ProfilePage() {
                 </div>
               </div>
             </div>
+
+            <div className="md:hidden">
+              <LogoutButton />
+            </div>
           </div>
 
           {/* Right Column: Settings */}
@@ -69,10 +81,16 @@ export default async function ProfilePage() {
               initialAccessibilityInfo={user.accessibility_info}
             />
 
+            <div className="hidden md:block">
+              <LogoutButton />
+            </div>
+
             {/* Placeholder for other settings */}
           </div>
         </div>
       </main>
+
+      <MobileBottomNav activeTab="profile" isAuthenticated={true} />
     </div>
   )
 }

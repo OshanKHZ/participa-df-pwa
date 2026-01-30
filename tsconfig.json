@@ -28,8 +28,8 @@
       "@/*": ["./src/*"],
       "@/features/*": ["./src/features/*"],
       "@/shared/*": ["./src/shared/*"],
-      "@/lib/*": ["./lib/*"],
-      "@/data/*": ["./data/*"]
+      "@/lib/*": ["./src/lib/*"],
+      "@/data/*": ["./src/data/*"]
     }
   },
   "include": [

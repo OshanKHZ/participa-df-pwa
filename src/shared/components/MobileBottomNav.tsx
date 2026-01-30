@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import { PiPersonArmsSpreadFill } from 'react-icons/pi'
 import {
   RiHomeLine,
   RiAppsLine,
@@ -12,7 +11,7 @@ import {
 } from 'react-icons/ri'
 
 interface MobileBottomNavProps {
-  activeTab?: 'home' | 'services' | 'help' | 'profile' | 'login'
+  activeTab?: 'home' | 'services' | 'help' | 'profile' | 'acessar'
   isAuthenticated?: boolean
 }
 
@@ -22,16 +21,8 @@ export function MobileBottomNav({
 }: MobileBottomNavProps) {
   return (
     <>
-      {/* Floating accessibility button */}
-      <button
-        className="fixed bottom-20 right-4 z-fab flex items-center justify-center w-14 h-14 bg-secondary text-secondary-foreground rounded-full shadow-lg transition-all hover:scale-105 active:scale-95"
-        aria-label="Acessibilidade"
-      >
-        <PiPersonArmsSpreadFill className="size-7" />
-      </button>
-
       <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-border z-fab">
-        <div className="flex items-center justify-around py-2">
+        <div className="flex items-center justify-around pt-2 pb-6">
           <Link
             href="/"
             className={`flex flex-col items-center justify-center gap-0.5 w-14 h-14 rounded-lg transition-colors ${
@@ -58,7 +49,8 @@ export function MobileBottomNav({
 
           <Link
             href="/manifestacao"
-            className="flex items-center justify-center w-14 h-14 fab-button-offset bg-secondary hover:bg-secondary-hover rounded-xl shadow-lg transition-colors"
+            className="flex items-center justify-center w-14 h-14 -mt-6 bg-secondary hover:bg-secondary-hover rounded-xl shadow-lg transition-colors"
+            aria-label="Nova manifestação"
           >
             <RiAddLine className="size-7 text-white" strokeWidth={0.5} />
           </Link>
@@ -78,7 +70,7 @@ export function MobileBottomNav({
           <Link
             href={isAuthenticated ? '/perfil' : '/entrar'}
             className={`flex flex-col items-center justify-center gap-0.5 w-14 h-14 rounded-lg transition-colors ${
-              activeTab === 'profile' || activeTab === 'login'
+              activeTab === 'profile' || activeTab === 'acessar'
                 ? 'text-secondary bg-secondary/10'
                 : 'text-muted-foreground'
             }`}
@@ -91,7 +83,7 @@ export function MobileBottomNav({
             ) : (
               <>
                 <RiLoginBoxLine className="size-6" />
-                <span className="text-xs font-medium">Entrar</span>
+                <span className="text-xs font-medium">Acessar</span>
               </>
             )}
           </Link>

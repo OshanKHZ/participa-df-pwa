@@ -1,15 +1,10 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import {
-  RiQuestionLine,
-  RiVolumeUpLine,
-  RiFontSize,
-  RiLogoutBoxLine,
-} from 'react-icons/ri'
-import { useTextToSpeech } from '@/shared/hooks/useTextToSpeech'
-import { useFontSize } from '@/shared/contexts/FontSizeContext'
+import { RiQuestionLine, RiFontSize, RiLogoutBoxLine } from 'react-icons/ri'
+import { PiPersonArmsSpreadFill } from 'react-icons/pi'
+import { useAccessibility } from '@/shared/contexts/AccessibilityContext'
 import { ExitConfirmModal } from '@/shared/components/ExitConfirmModal'
 import {
   getCurrentDraft,
@@ -30,15 +25,14 @@ export function AccessibleHeader({
   completedSteps = 0,
 }: AccessibleHeaderProps) {
   const router = useRouter()
-  const { setEnabled, isEnabled } = useTextToSpeech()
-  const { fontSizeLevel, setFontSizeLevel } = useFontSize()
-  const [audioEnabled, setAudioEnabled] = useState(false)
+  const { preferences, setFontSize } = useAccessibility()
   const [showFontLevel, setShowFontLevel] = useState(false)
   const [showExitModal, setShowExitModal] = useState(false)
+  const [showAccessibilityMenu, setShowAccessibilityMenu] = useState(false)
 
   const handleFontSize = () => {
-    const newLevel = (fontSizeLevel + 1) % FONT_LEVELS.COUNT
-    setFontSizeLevel(newLevel)
+    const newLevel = (preferences.fontSize + 1) % FONT_LEVELS.COUNT
+    setFontSize(newLevel)
 
     // Show level indicator
     setShowFontLevel(true)
@@ -70,16 +64,9 @@ export function AccessibleHeader({
     router.push('/')
   }
 
-  const handleAudioToggle = () => {
-    const newState = !audioEnabled
-    setAudioEnabled(newState)
-    setEnabled(newState)
+  const handleAccessibilityToggle = () => {
+    setShowAccessibilityMenu(!showAccessibilityMenu)
   }
-
-  // Sync state on mount
-  useEffect(() => {
-    setAudioEnabled(isEnabled())
-  }, [isEnabled])
 
   return (
     <header className="bg-primary">
@@ -106,30 +93,26 @@ export function AccessibleHeader({
             </button>
 
             <button
-              onClick={handleAudioToggle}
-              className={`w-10 h-10 rounded flex items-center justify-center transition-colors ${
-                audioEnabled
-                  ? 'bg-white text-primary'
-                  : 'bg-white/10 text-white hover:bg-white/20'
-              }`}
-              aria-label={audioEnabled ? 'Desativar áudio' : 'Ativar áudio'}
+              onClick={handleAccessibilityToggle}
+              className="w-10 h-10 rounded flex items-center justify-center bg-white/10 text-white hover:bg-white/20 transition-colors"
+              aria-label="Acessibilidade"
             >
-              <RiVolumeUpLine className="size-5" />
+              <PiPersonArmsSpreadFill className="size-6" />
             </button>
 
             <button
               onClick={handleFontSize}
               className={`w-10 h-10 rounded flex items-center justify-center transition-colors relative ${
-                fontSizeLevel > FONT_LEVELS.MIN
+                preferences.fontSize > FONT_LEVELS.MIN
                   ? 'bg-white text-primary'
                   : 'bg-white/10 text-white hover:bg-white/20'
               }`}
-              aria-label={`Tamanho da fonte: nível ${fontSizeLevel + 1}`}
+              aria-label={`Tamanho da fonte: nível ${preferences.fontSize + 1}`}
             >
               <RiFontSize className="size-5" />
               {showFontLevel && (
                 <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-white text-primary text-xs font-semibold px-2 py-1 rounded shadow-lg animate-in fade-in slide-in-from-top-2 duration-200">
-                  {fontSizeLevel + 1}
+                  {preferences.fontSize + 1}
                 </div>
               )}
             </button>

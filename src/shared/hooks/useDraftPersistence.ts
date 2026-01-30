@@ -77,7 +77,7 @@ export function useDraftPersistence(options: UseDraftPersistenceOptions = {}) {
   const createdAtRef = useRef<string | undefined>(undefined)
 
   // Store draftId in ref to always have current value (avoid stale closures)
-  const draftIdRef = useRef<string | undefined>(undefined)
+  const draftIdRef = useRef<string | undefined>(initialDraftId)
 
   // Sync draftId state to ref
   useEffect(() => {
@@ -94,8 +94,20 @@ export function useDraftPersistence(options: UseDraftPersistenceOptions = {}) {
     if (!autoSave) return
 
     try {
-      // Use ref to always get current draftId (avoid stale closures)
       const currentDraftId = draftIdRef.current
+
+      // CRITICAL: On unmount/explicit save, if there's no ID and no data, don't create a new draft
+      if (
+        !currentDraftId &&
+        !draftDataRef.current.type &&
+        !draftDataRef.current.channels &&
+        !draftDataRef.current.content?.text &&
+        !draftDataRef.current.content?.files?.length &&
+        !draftDataRef.current.content?.audio
+      ) {
+        return
+      }
+
       const id = currentDraftId || generateId()
       const isNewDraft = !currentDraftId
 
@@ -122,6 +134,14 @@ export function useDraftPersistence(options: UseDraftPersistenceOptions = {}) {
         updatedAt: new Date().toISOString(),
         status: 'draft',
       }
+
+      console.log('[useDraftPersistence] Saving to IDB:', {
+        id: draft.id,
+        channels: draft.channels,
+        hasText: !!draft.content?.text,
+        filesCount: draft.content?.files?.length || 0,
+        hasAudio: !!draft.content?.audio
+      })
 
       await manifestationRepo.saveDraft(draft)
       setError(null)

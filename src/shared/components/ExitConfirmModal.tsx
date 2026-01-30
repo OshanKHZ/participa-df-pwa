@@ -1,6 +1,7 @@
 'use client'
 
 import { RiCloseLine, RiSaveLine, RiDeleteBinLine } from 'react-icons/ri'
+import { useFocusTrap } from '@/shared/hooks/useFocusTrap'
 
 interface ExitConfirmModalProps {
   isOpen: boolean
@@ -15,6 +16,8 @@ export function ExitConfirmModal({
   onSaveAndExit,
   onExitWithoutSaving,
 }: ExitConfirmModalProps) {
+  const containerRef = useFocusTrap(isOpen)
+
   if (!isOpen) return null
 
   return (
@@ -28,6 +31,7 @@ export function ExitConfirmModal({
 
       {/* Modal */}
       <div
+        ref={containerRef}
         className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-modal modal-width-mobile max-w-md"
         role="dialog"
         aria-modal="true"

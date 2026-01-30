@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import {
   RiAlarmWarningLine,
@@ -15,10 +15,11 @@ import {
 } from 'react-icons/ri'
 import { AccessibleHeader } from '@/features/manifestation/components/AccessibleHeader'
 import { NavigationFooter } from '@/features/manifestation/components/NavigationFooter'
+import { FormSidebar } from '@/features/manifestation/components/FormSidebar'
 import { ExitConfirmModal } from '@/shared/components/ExitConfirmModal'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
 import { Button } from '@/shared/components/Button'
-import { Stepper, getDesktopSteps } from '@/shared/components/Stepper'
+import { ManifestationHeader } from '@/shared/components/Stepper'
 import {
   Select,
   SelectContent,
@@ -84,6 +85,14 @@ export default function ManifestationTypePage() {
   const [selectedType, setSelectedType] = useState<string | null>(null)
   const [showExitModal, setShowExitModal] = useState(false)
 
+  // Load saved type on mount
+  useEffect(() => {
+    const savedType = localStorage.getItem('manifestation_type')
+    if (savedType) {
+      setSelectedType(savedType)
+    }
+  }, [])
+
   const handleSelectType = (typeId: string) => {
     const typeData =
       AUDIO_TEXTS.manifestationType[
@@ -100,7 +109,7 @@ export default function ManifestationTypePage() {
 
   const handleNext = () => {
     if (selectedType) {
-      router.push('/manifestacao/assunto')
+      router.push('/manifestacao/identidade')
     }
   }
 
@@ -143,16 +152,16 @@ export default function ManifestationTypePage() {
         <main className="px-4 py-6">
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-2">
-              <h2 className="text-xl font-bold text-foreground">
+              <h1 className="text-xl font-bold text-foreground">
                 Qual tipo de manifestação?
-              </h2>
+              </h1>
               <button
                 onClick={() =>
                   speak(
                     `Qual tipo de manifestação? ${AUDIO_TEXTS.instructions.typeSelection}`
                   )
                 }
-                className="size-5 rounded-full bg-secondary hover:bg-secondary-hover flex items-center justify-center transition-colors flex-shrink-0"
+                className="size-5 rounded-full bg-secondary hover:bg-secondary-hover flex items-center justify-center transition-colors flex-shrink-0 btn-focus"
                 aria-label="Ouvir instruções"
               >
                 <RiVolumeUpLine className="size-3 text-white" />
@@ -172,7 +181,7 @@ export default function ManifestationTypePage() {
                 <button
                   key={type.id}
                   onClick={() => handleSelectType(type.id)}
-                  className={`w-full bg-card rounded-lg p-3 text-left flex items-center gap-3 hover:bg-accent transition-all ${
+                  className={`w-full bg-card rounded-lg p-3 text-left flex items-center gap-3 hover:bg-accent transition-all btn-focus ${
                     isSelected ? 'border-2 border-success' : 'card-border'
                   }`}
                 >
@@ -209,65 +218,79 @@ export default function ManifestationTypePage() {
           onNavigateToStep={navigateToStep}
           nextDisabled={!selectedType}
           steps={getStepProgress(STEPS.TYPE)}
+          backLabel="Cancelar"
+          backVariant="destructive"
         />
       </div>
 
       {/* Desktop Container */}
       <div className="hidden lg:block min-h-screen bg-background">
-        <main className="lg:max-w-2xl lg:mx-auto lg:px-8 lg:py-12">
-          {/* Progress Steps */}
-          <div className="mb-10">
-            <Stepper steps={getDesktopSteps(STEPS.TYPE)} />
+        <div className="grid grid-cols-[1fr_600px_1fr] gap-12 py-12 px-8">
+          {/* Coluna Esquerda - Sidebar */}
+          <div className="flex justify-end">
+            <FormSidebar helpText="Selecione o tipo de manifestação que melhor descreve sua solicitação. Esta informação ajuda a direcionar seu caso para o setor responsável." />
           </div>
 
-          {/* Title */}
-          <div className="mb-8">
-            <h1 className="text-xl font-semibold text-foreground mb-2">
-              Nova Manifestação
-            </h1>
-            <p className="text-muted-foreground">
-              Selecione o tipo de manifestação desejada.
-            </p>
-          </div>
+          {/* Coluna Central - Main Content (sempre centralizado) */}
+          <main className="w-full">
+            <ManifestationHeader
+              currentStep={STEPS.TYPE}
+              totalSteps={STEPS.TOTAL}
+              description="Selecione o tipo de manifestação desejada."
+              onStepClick={navigateToStep}
+            />
 
-          {/* Types Select */}
-          <div className="mb-8">
-            <label
-              htmlFor="manifestation-type"
-              className="block text-sm font-medium text-foreground mb-2"
-            >
-              Tipo de manifestação
-            </label>
-            <Select value={selectedType || ''} onValueChange={handleSelectType}>
-              <SelectTrigger id="manifestation-type">
-                <SelectValue placeholder="Selecione..." />
-              </SelectTrigger>
-              <SelectContent>
-                {manifestationTypes.map(type => (
-                  <SelectItem key={type.id} value={type.id}>
-                    <div className="flex items-center gap-3">
-                      <span className="font-medium text-sm">{type.label}</span>
-                      <span className="text-xs text-muted-foreground">
-                        {type.description}
-                      </span>
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+            {/* Types Select */}
+            <div className="mb-8">
+              <label
+                htmlFor="manifestation-type"
+                className="block text-sm font-medium text-foreground mb-2"
+              >
+                Tipo de manifestação
+              </label>
+              <Select
+                value={selectedType || ''}
+                onValueChange={handleSelectType}
+              >
+                <SelectTrigger id="manifestation-type">
+                  <SelectValue placeholder="Selecione..." />
+                </SelectTrigger>
+                <SelectContent>
+                  {manifestationTypes.map(type => (
+                    <SelectItem key={type.id} value={type.id}>
+                      <div className="flex items-center gap-3">
+                        <span className="font-medium text-sm">
+                          {type.label}
+                        </span>
+                        <span className="text-xs text-muted-foreground">
+                          {type.description}
+                        </span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
 
-          {/* Desktop Navigation */}
-          <div className="flex items-center justify-between pt-6 border-t border-border">
-            <Button variant="link" onClick={handleBack}>
-              Cancelar
-            </Button>
-            <Button onClick={handleNext} disabled={!selectedType}>
-              Avançar
-              <RiArrowRightLine className="size-5" />
-            </Button>
-          </div>
-        </main>
+            {/* Desktop Navigation */}
+            <div className="flex items-center justify-between pt-6 border-t border-border">
+              <Button variant="destructive" onClick={handleBack}>
+                Cancelar
+              </Button>
+              <Button
+                variant="success"
+                onClick={handleNext}
+                disabled={!selectedType}
+              >
+                Avançar
+                <RiArrowRightLine className="size-5" />
+              </Button>
+            </div>
+          </main>
+
+          {/* Coluna Direita - Vazia (para manter centralização) */}
+          <div />
+        </div>
       </div>
 
       {/* Exit Confirmation Modal */}

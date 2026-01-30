@@ -13,8 +13,11 @@ export interface BlogPost {
   slug: string
 }
 
+const SWIPE_THRESHOLD = 50 // px - minimum distance to trigger swipe
+
 interface BlogCarouselProps {
   posts: BlogPost[]
+  className?: string
 }
 
 const formatTimeAgo = (date: Date): string => {
@@ -36,16 +39,27 @@ const formatTimeAgo = (date: Date): string => {
 
 const CARD_WIDTH = 180 // px
 const GAP = 8 // px
+const BUFFER_SIZE = 6
 
-export function BlogCarousel({ posts }: BlogCarouselProps) {
+export function BlogCarousel({ posts, className }: BlogCarouselProps) {
   const trackRef = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const [currentIndex, setCurrentIndex] = useState(1)
+  const [currentIndex, setCurrentIndex] = useState(BUFFER_SIZE)
   const [isAnimating, setIsAnimating] = useState(false)
+  const touchStartRef = useRef<number | null>(null)
 
-  // Create infinite loop: [last, ...posts, first]
-  const infinitePosts =
-    posts.length > 0 ? [posts[posts.length - 1], ...posts, posts[0]] : []
+  // Generate buffers handling any posts length
+  const startBuffer = []
+  for (let i = 0; i < BUFFER_SIZE; i++) {
+    startBuffer.unshift(posts[posts.length - 1 - (i % posts.length)])
+  }
+  const endBuffer = []
+  for (let i = 0; i < BUFFER_SIZE; i++) {
+    endBuffer.push(posts[i % posts.length])
+  }
+
+  // Infinite loop: [buffer_end, ...posts, buffer_start]
+  const infinitePosts = [...startBuffer, ...posts, ...endBuffer]
 
   const totalItems = posts.length
 
@@ -56,7 +70,6 @@ export function BlogCarousel({ posts }: BlogCarouselProps) {
     setIsAnimating(animate)
 
     const cardWidthWithGap = CARD_WIDTH + GAP
-    // Calculate scroll to center the card
     const scrollPos = index * cardWidthWithGap - CARD_WIDTH / 2
 
     el.style.transition = animate ? 'transform 0.4s ease-out' : 'none'
@@ -68,19 +81,23 @@ export function BlogCarousel({ posts }: BlogCarouselProps) {
   // Initial position
   useEffect(() => {
     if (posts.length > 0 && containerRef.current) {
-      updatePosition(1, false)
+      // Start at the first real item (after the start buffer)
+      updatePosition(BUFFER_SIZE, false)
     }
   }, [posts.length, updatePosition])
 
   // Handle infinite loop reset after animation
   useEffect(() => {
     const handleTransitionEnd = () => {
-      if (currentIndex === infinitePosts.length - 1) {
-        // At end clone, jump to real first
-        updatePosition(1, false)
-      } else if (currentIndex === 0) {
-        // At start clone, jump to real last
-        updatePosition(totalItems, false)
+      // If we've scrolled into the end buffer (clones of start)
+      if (currentIndex >= totalItems + BUFFER_SIZE) {
+        // Jump back to real start
+        updatePosition(currentIndex - totalItems, false)
+      }
+      // If we've scrolled into the start buffer (clones of end)
+      else if (currentIndex < BUFFER_SIZE) {
+        // Jump forward to real end
+        updatePosition(currentIndex + totalItems, false)
       }
       setIsAnimating(false)
     }
@@ -88,7 +105,7 @@ export function BlogCarousel({ posts }: BlogCarouselProps) {
     const el = trackRef.current
     el?.addEventListener('transitionend', handleTransitionEnd)
     return () => el?.removeEventListener('transitionend', handleTransitionEnd)
-  }, [currentIndex, infinitePosts.length, totalItems, updatePosition])
+  }, [currentIndex, totalItems, updatePosition])
 
   const nextPage = useCallback(() => {
     if (isAnimating) return
@@ -104,40 +121,97 @@ export function BlogCarousel({ posts }: BlogCarouselProps) {
 
   // Get real index for dots (0 to totalItems-1)
   const getRealIndex = useCallback(() => {
-    if (currentIndex === 0) return totalItems - 1
-    if (currentIndex === infinitePosts.length - 1) return 0
-    return currentIndex - 1
-  }, [currentIndex, infinitePosts.length, totalItems])
+    // Map current buffer-shifted index back to 0..totalItems-1
+    return (
+      (((currentIndex - BUFFER_SIZE) % totalItems) + totalItems) % totalItems
+    )
+  }, [currentIndex, totalItems])
 
   const activeDotIndex = getRealIndex()
+
+  // Touch handlers for swipe navigation
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    const touch = e.touches[0]
+    if (touch) {
+      touchStartRef.current = touch.clientX
+    }
+  }, [])
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    // Prevent scrolling while swiping horizontally
+    if (touchStartRef.current !== null) {
+      const touch = e.touches[0]
+      if (!touch) return
+      const touchX = touch.clientX
+      const diff = touchStartRef.current - touchX
+      if (Math.abs(diff) > 10) {
+        e.preventDefault()
+      }
+    }
+  }, [])
+
+  const handleTouchEnd = useCallback(
+    (e: React.TouchEvent) => {
+      if (touchStartRef.current === null || isAnimating) return
+
+      const touch = e.changedTouches[0]
+      if (!touch) return
+      const touchEndX = touch.clientX
+      const diff = touchStartRef.current - touchEndX
+
+      // Reset touch start
+      touchStartRef.current = null
+
+      // Check if swipe threshold met
+      if (Math.abs(diff) > SWIPE_THRESHOLD) {
+        if (diff > 0) {
+          // Swiped left - next
+          nextPage()
+        } else {
+          // Swiped right - previous
+          prevPage()
+        }
+      }
+    },
+    [isAnimating, nextPage, prevPage]
+  )
 
   if (posts.length === 0) return null
 
   return (
-    <div className="lg:hidden bg-card px-3 py-3">
-      <div className="flex items-center justify-between mb-2">
-        <h3 className="text-base font-semibold text-foreground">Blog</h3>
+    <section
+      className={`bg-card px-3 py-3 ${className || ''}`}
+      aria-label="Blog posts"
+    >
+      <div className="flex items-center justify-between mb-4 px-1">
+        <h2 className="text-base font-semibold text-foreground">Novidades</h2>
         <div className="flex items-center gap-2">
           <button
             onClick={prevPage}
-            className="w-6 h-6 bg-white hover:bg-gray-50 rounded-full flex items-center justify-center shadow-sm border border-border transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
+            className="w-8 h-8 bg-white hover:bg-gray-50 rounded-full flex items-center justify-center shadow-sm border border-border transition-colors btn-focus"
             aria-label="Anterior"
           >
-            <RiArrowLeftSLine className="size-3 text-foreground" />
+            <RiArrowLeftSLine className="size-5 text-foreground" />
           </button>
 
           <button
             onClick={nextPage}
-            className="w-6 h-6 bg-white hover:bg-gray-50 rounded-full flex items-center justify-center shadow-sm border border-border transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
+            className="w-8 h-8 bg-white hover:bg-gray-50 rounded-full flex items-center justify-center shadow-sm border border-border transition-colors btn-focus"
             aria-label="Próximo"
           >
-            <RiArrowRightSLine className="size-3 text-foreground" />
+            <RiArrowRightSLine className="size-5 text-foreground" />
           </button>
         </div>
       </div>
 
       <div ref={containerRef} className="relative overflow-hidden">
-        <div ref={trackRef} className="flex gap-2">
+        <div
+          ref={trackRef}
+          className="flex gap-2"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
           {infinitePosts.map((post, index) => {
             if (!post) return null
             return (
@@ -148,7 +222,7 @@ export function BlogCarousel({ posts }: BlogCarouselProps) {
               >
                 <Link
                   href={`/blog/${post.slug}`}
-                  className="block group focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 rounded"
+                  className="block group btn-focus rounded"
                 >
                   <div className="relative aspect-[16/9] rounded-md overflow-hidden bg-muted mb-1.5">
                     <Image
@@ -162,9 +236,9 @@ export function BlogCarousel({ posts }: BlogCarouselProps) {
                   <p className="text-[10px] text-muted-foreground mb-0.5">
                     {formatTimeAgo(post.publishedAt)}
                   </p>
-                  <h4 className="text-xs font-medium text-foreground line-clamp-2 leading-tight">
+                  <h3 className="text-xs font-medium text-foreground line-clamp-2 leading-tight">
                     {post.title}
-                  </h4>
+                  </h3>
                 </Link>
               </div>
             )
@@ -173,19 +247,19 @@ export function BlogCarousel({ posts }: BlogCarouselProps) {
       </div>
 
       {/* Page Counter - Oval Dots */}
-      <div className="flex justify-center gap-1.5 mt-2">
+      <div className="flex justify-center gap-1.5 mt-4">
         {Array.from({ length: totalItems }).map((_, index) => (
-          <button
+          <span
             key={index}
-            onClick={() => !isAnimating && updatePosition(index + 1, true)}
-            className={`h-1.5 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 ${
-              index === activeDotIndex ? 'w-6 bg-secondary' : 'w-1.5 bg-muted'
+            className={`h-1.5 rounded-full transition-all duration-200 ${
+              index === activeDotIndex
+                ? 'w-6 bg-secondary'
+                : 'w-1.5 bg-foreground/20'
             }`}
-            aria-label={`Ir para página ${index + 1}`}
             aria-current={index === activeDotIndex ? 'true' : undefined}
           />
         ))}
       </div>
-    </div>
+    </section>
   )
 }

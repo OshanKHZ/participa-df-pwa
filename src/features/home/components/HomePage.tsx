@@ -1,23 +1,27 @@
 'use client'
 
-import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import {
-  RiAddLine,
   RiArrowRightSLine,
   RiMegaphoneLine,
   RiCustomerService2Line,
   RiSearchLine,
   RiQuestionLine,
-  RiMenuLine,
   RiLightbulbLine,
+  RiDashboardLine,
+  RiExternalLinkLine,
 } from 'react-icons/ri'
 import { MobileBottomNav } from '@/shared/components/MobileBottomNav'
-import { MenuDrawer } from '@/shared/components/MenuDrawer'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
+import { HomeMobileHeader } from '@/shared/components/HomeMobileHeader'
+import { LinkButton } from '@/shared/components/Button'
 import { BlogCarousel } from './BlogCarousel'
 import type { BlogPost } from './BlogCarousel'
+import {
+  generateOrganizationSchema,
+  generateItemListSchema,
+} from '@/lib/seo/schemas'
 
 interface HomePageProps {
   isAuthenticated?: boolean
@@ -25,7 +29,8 @@ interface HomePageProps {
 }
 
 export function HomePage({ isAuthenticated, userName }: HomePageProps) {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+  // Use fixed dates to prevent hydration mismatches (avoid Date.now() which changes per render)
+  const NOW = new Date('2026-01-29')
 
   // Mock blog posts data - replace with real data from API
   const blogPosts: BlogPost[] = [
@@ -34,21 +39,21 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
       title: 'Acessibilidade digital',
       image:
         '/imagens-blog/Participa-DF-e-Portal-da-Transparencia-passam-a-ser-100-acessiveis-digitalmente-620x420.webp',
-      publishedAt: new Date(Date.now() - 1000 * 60 * 30),
+      publishedAt: new Date(NOW.getTime() - 1000 * 60 * 30),
       slug: 'acessibilidade-digital',
     },
     {
       id: '2',
       title: 'Ouvidoria do DF',
       image: '/imagens-blog/ouvidoria-620x620.webp',
-      publishedAt: new Date(Date.now() - 1000 * 60 * 60 * 3),
+      publishedAt: new Date(NOW.getTime() - 1000 * 60 * 60 * 3),
       slug: 'conheca-ouvidoria',
     },
     {
       id: '3',
       title: 'Sua voz transforma',
       image: '/imagens-blog/09.PartcipaDF.webp',
-      publishedAt: new Date(Date.now() - 1000 * 60 * 60 * 24),
+      publishedAt: new Date(NOW.getTime() - 1000 * 60 * 60 * 24),
       slug: 'sua-voz-transforma',
     },
     {
@@ -56,220 +61,294 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
       title: 'Canais de atendimento',
       image:
         '/imagens-blog/Participa-DF-e-Portal-da-Transparencia-passam-a-ser-100-acessiveis-digitalmente-620x420.webp',
-      publishedAt: new Date(Date.now() - 1000 * 60 * 60 * 48),
+      publishedAt: new Date(NOW.getTime() - 1000 * 60 * 60 * 48),
       slug: 'canais-atendimento',
     },
     {
       id: '5',
       title: 'Novidades do Participa',
       image: '/imagens-blog/ouvidoria-620x620.webp',
-      publishedAt: new Date(Date.now() - 1000 * 60 * 60 * 72),
+      publishedAt: new Date(NOW.getTime() - 1000 * 60 * 60 * 72),
       slug: 'novidades-participa',
     },
   ]
 
+  // Generate structured data
+  const organizationSchema = generateOrganizationSchema()
+  const blogListSchema = generateItemListSchema(
+    blogPosts.map(post => ({
+      headline: post.title,
+      image: post.image,
+      datePublished: post.publishedAt.toISOString(),
+    }))
+  )
+
   return (
     <>
+      {/* Structured Data - Available on all screen sizes */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogListSchema) }}
+      />
+
       {/* Desktop Header */}
       <DesktopHeader />
 
       {/* Mobile Header */}
-      <header className="lg:hidden bg-primary text-primary-foreground">
-        <div className="px-3 py-3 flex items-center justify-between">
-          <Image
-            src="/logo.svg"
-            alt="Participa DF"
-            width={126}
-            height={32}
-            priority
-            className="h-7 w-auto"
-          />
-          <button
-            onClick={() => setIsDrawerOpen(true)}
-            className="w-10 h-10 flex items-center justify-center hover:bg-white/10 rounded-lg transition-colors"
-            aria-label="Menu"
-          >
-            <RiMenuLine className="size-6 text-white" />
-          </button>
-        </div>
-
-        {/* Slogan Section */}
-        <div className="bg-primary-light px-4 py-2.5">
-          <p className="text-center text-xs font-medium text-white">
-            Você no controle!
-          </p>
-        </div>
-      </header>
-
-      {/* Menu Drawer */}
-      <MenuDrawer
-        isOpen={isDrawerOpen}
-        onClose={() => setIsDrawerOpen(false)}
-        isAuthenticated={isAuthenticated}
-        userName={userName}
-      />
+      <HomeMobileHeader isAuthenticated={isAuthenticated} userName={userName} />
 
       {/* Main Content */}
-      <main className="pb-28 lg:pb-8 min-h-screen bg-muted lg:max-w-6xl lg:mx-auto">
-        {/* Main Action Card Section - White background */}
-        <div className="bg-card px-4 py-6 lg:px-8 lg:py-10">
-          {/* Mobile: centered, Desktop: two columns */}
-          <div className="flex flex-col lg:flex-row lg:items-center lg:gap-12 max-w-5xl mx-auto">
-            {/* Image - hidden on desktop */}
-            <div className="lg:hidden flex flex-col items-center text-center mb-6">
+      <main id="main-content" className="pb-28 lg:pb-8 min-h-screen bg-muted">
+        {/* Desktop Layout: Clean Version */}
+        <div className="hidden lg:flex flex-col items-center pt-12 px-8">
+          <div className="max-w-5xl w-full flex items-center justify-center gap-16">
+            <div className="flex-shrink-0">
               <Image
-                src="/megaphone-woman.png"
-                alt="Registre sua manifestação"
-                width={120}
-                height={120}
-                className="mb-4"
+                src="/Logo-OUV.svg"
+                alt="Participa DF - Ouvidoria e e-Sic"
+                width={280}
+                height={100}
+                priority
+                className="h-auto w-[280px]"
               />
+            </div>
 
-              {/* Title - mobile only */}
-              <h1 className="text-lg font-semibold text-foreground mb-2">
-                Registre sua manifestação
+            <div className="max-w-xl text-left space-y-4 text-lg text-foreground/80 font-light leading-relaxed">
+              <h1 className="text-2xl font-bold text-primary mb-4">
+                Portal de Participação Social do Distrito Federal
               </h1>
-
-              {/* Description - mobile only */}
-              <p className="text-sm text-muted-foreground mb-6">
-                Faça denúncias, elogios, sugestões
-                <br />
-                ou reclamações de forma simples e<br />
-                rápida
+              <p>
+                Que bom que você acessou a plataforma de participação social do
+                Governo do Distrito Federal. Os sistemas e-Sic (Acesso à
+                Informação) e Ouv-DF (Ouvidorias do GDF) passam a compor o
+                Participa DF.
+              </p>
+              <p className="text-primary font-medium">
+                Todos os serviços de Ouvidoria e de Acesso à Informação em um só
+                lugar e com login único.
               </p>
             </div>
+          </div>
 
-            {/* Desktop: Title and description */}
-            <div className="hidden lg:block flex-1">
-              <div className="flex items-start gap-4 mb-6">
-                <div className="w-12 h-12 bg-secondary/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <RiMegaphoneLine className="size-6 text-secondary" />
-                </div>
-                <div>
-                  <h1 className="text-2xl font-semibold text-foreground mb-2">
-                    Registre sua manifestação
-                  </h1>
-                  <p className="text-muted-foreground">
-                    Faça denúncias, elogios, sugestões ou reclamações de forma
-                    simples e rápida. Sua voz é importante para transformar o
-                    DF.
-                  </p>
-                </div>
-              </div>
-
-              {/* Action Buttons - Desktop */}
-              <div className="flex flex-wrap gap-3">
-                <Link
-                  href="/manifestacao"
-                  className="inline-flex items-center gap-2 bg-secondary hover:bg-secondary-hover text-secondary-foreground font-medium py-3 px-6 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
-                >
-                  <RiAddLine className="size-5" />
+          {/* Grid of Cards */}
+          <div className="mt-12 grid grid-cols-3 gap-4 max-w-4xl w-full">
+            {/* Nova Manifestação */}
+            <Link
+              href="/manifestacao"
+              className="group flex flex-col p-5 bg-card border border-border/50 rounded-none hover:border-secondary/50 hover:bg-accent/50 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 ring-offset-background h-full"
+            >
+              <div className="flex items-center gap-2.5 mb-2">
+                <RiMegaphoneLine
+                  className="size-5 text-secondary"
+                  aria-hidden="true"
+                />
+                <h3 className="text-base font-semibold text-foreground font-outfit">
                   Nova Manifestação
-                </Link>
-
-                <Link
-                  href="/historico"
-                  className="inline-flex items-center gap-2 text-secondary hover:text-secondary-hover font-medium py-3 px-4 transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 rounded"
-                >
-                  <RiSearchLine className="size-5" />
-                  Consultar protocolo
-                </Link>
+                </h3>
               </div>
-            </div>
+              <p className="text-sm text-muted-foreground leading-normal mb-5 flex-1">
+                Registre denúncias, elogios, sugestões ou reclamações de forma
+                simples.
+              </p>
+              <span className="w-full py-2 px-4 bg-success text-white text-xs font-medium rounded-none text-center hover:opacity-90 transition-opacity">
+                Acessar
+              </span>
+            </Link>
 
-            {/* Mobile Buttons */}
-            <div className="lg:hidden w-full space-y-3">
-              <Link
-                href="/manifestacao"
-                className="block w-full bg-secondary hover:bg-secondary-hover text-secondary-foreground font-medium py-3 px-6 rounded-md transition-colors"
-              >
-                <span className="flex items-center justify-center gap-2">
-                  <RiAddLine className="size-5" />
-                  Nova Manifestação
-                </span>
-              </Link>
+            {/* Consultar Protocolo */}
+            <Link
+              href="/consultar-manifestacoes"
+              className="group flex flex-col p-5 bg-card border border-border/50 rounded-none hover:border-secondary/50 hover:bg-accent/50 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 ring-offset-background h-full"
+            >
+              <div className="flex items-center gap-2.5 mb-2">
+                <RiSearchLine
+                  className="size-5 text-secondary"
+                  aria-hidden="true"
+                />
+                <h3 className="text-base font-semibold text-foreground font-outfit">
+                  Consultar Protocolo
+                </h3>
+              </div>
+              <p className="text-sm text-muted-foreground leading-normal mb-5 flex-1">
+                Acompanhe o andamento da sua manifestação ou pedido de acesso.
+              </p>
+              <span className="w-full py-2 px-4 bg-warning text-white text-xs font-medium rounded-none text-center hover:opacity-90 transition-opacity">
+                Acessar
+              </span>
+            </Link>
 
-              <Link
-                href="/historico"
-                className="w-full text-secondary hover:text-secondary-hover font-medium py-2 px-4 text-sm flex items-center justify-center gap-2"
-              >
-                <RiSearchLine className="size-4" />
-                Consultar protocolo
-              </Link>
-            </div>
+            {/* Painel de Ouvidoria */}
+            <a
+              href="http://www.painel.ouv.df.gov.br/dashboard"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex flex-col p-5 bg-card border border-border/50 rounded-none hover:border-secondary/50 hover:bg-accent/50 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 ring-offset-background h-full"
+              aria-label="Painel da Ouvidoria (abre em nova aba)"
+            >
+              <div className="flex items-center gap-2.5 mb-2">
+                <RiDashboardLine
+                  className="size-5 text-secondary"
+                  aria-hidden="true"
+                />
+                <h3 className="text-base font-semibold text-foreground font-outfit">
+                  Painel Ouvidoria
+                </h3>
+              </div>
+              <p className="text-sm text-muted-foreground leading-normal mb-5 flex-1">
+                Acesse indicadores, estatísticas e dados das ouvidorias do GDF.
+              </p>
+              <span className="w-full py-2 px-4 bg-secondary text-white text-xs font-medium rounded-none inline-flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+                Acessar
+                <RiExternalLinkLine
+                  className="size-3.5 text-white/90 group-hover:text-white transition-colors"
+                  aria-hidden="true"
+                />
+              </span>
+            </a>
+          </div>
+
+          {/* Desktop Blog Carousel */}
+          <div className="mt-12 w-full max-w-4xl">
+            <BlogCarousel
+              posts={blogPosts}
+              className="hidden lg:block bg-transparent p-0"
+            />
           </div>
         </div>
 
-        {/* Gray spacer */}
-        <div className="h-3 bg-muted lg:hidden" />
+        {/* Mobile Layout */}
+        <div className="lg:hidden">
+          {/* Main Action Card Section - White background */}
+          <div className="bg-card px-4 py-6">
+            {/* Mobile: centered */}
+            <div className="flex flex-col">
+              {/* Image */}
+              <div className="flex flex-col items-center text-center mb-6">
+                <Image
+                  src="/megaphone-woman.png"
+                  alt="Registre sua manifestação"
+                  width={120}
+                  height={120}
+                  className="mb-4"
+                  priority
+                  fetchPriority="high"
+                />
 
-        {/* Blog Carousel - Mobile only */}
-        <BlogCarousel posts={blogPosts} />
+                {/* Title */}
+                <h1 className="text-lg font-semibold text-foreground mb-2">
+                  Registre sua manifestação
+                </h1>
 
-        {/* Gray spacer */}
-        <div className="h-3 bg-muted lg:hidden" />
+                {/* Description */}
+                <p className="text-sm text-muted-foreground mb-6">
+                  Faça denúncias, elogios, sugestões
+                  <br />
+                  ou reclamações de forma simples e<br />
+                  rápida
+                </p>
+              </div>
 
-        {/* Services List Section - Mobile only, Desktop has sidebar */}
-        <div className="lg:hidden bg-card px-4 py-4">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="text-lg font-semibold text-foreground">Serviços</h3>
-            <Link
-              href="/servicos"
-              className="text-xs text-secondary font-medium"
-            >
-              Ver tudo
-            </Link>
+              {/* Mobile Buttons */}
+              <div className="w-full space-y-3">
+                <LinkButton
+                  href="/manifestacao"
+                  variant="secondary"
+                  className="w-full rounded-md py-3"
+                >
+                  <RiMegaphoneLine className="size-5" />
+                  Nova Manifestação
+                </LinkButton>
+
+                <LinkButton
+                  href="/consultar-manifestacoes"
+                  variant="accent"
+                  size="sm"
+                  className="w-full"
+                >
+                  <RiSearchLine className="size-4" />
+                  Consultar protocolo
+                </LinkButton>
+              </div>
+            </div>
           </div>
 
-          <div className="border border-border rounded-lg divide-y divide-border">
-            {/* O que é a Ouvidoria */}
-            <Link
-              href="/o-que-e-ouvidoria"
-              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-inset"
-            >
-              <RiMegaphoneLine className="size-5 text-secondary flex-shrink-0" />
-              <span className="flex-1 text-sm font-medium text-foreground">
-                Sobre a Ouvidoria
-              </span>
-              <RiArrowRightSLine className="size-5 text-muted-foreground flex-shrink-0" />
-            </Link>
+          {/* Gray spacer */}
+          <div className="h-3 bg-muted" />
 
-            {/* Orientações */}
-            <Link
-              href="/orientacoes"
-              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-inset"
-            >
-              <RiLightbulbLine className="size-5 text-secondary flex-shrink-0" />
-              <span className="flex-1 text-sm font-medium text-foreground">
-                Orientações para o registro
-              </span>
-              <RiArrowRightSLine className="size-5 text-muted-foreground flex-shrink-0" />
-            </Link>
+          {/* Blog Carousel - Mobile only */}
+          <BlogCarousel posts={blogPosts} />
 
-            {/* Perguntas frequentes */}
-            <Link
-              href="/ajuda"
-              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-inset"
-            >
-              <RiQuestionLine className="size-5 text-secondary flex-shrink-0" />
-              <span className="flex-1 text-sm font-medium text-foreground">
-                Perguntas frequentes
-              </span>
-              <RiArrowRightSLine className="size-5 text-muted-foreground flex-shrink-0" />
-            </Link>
+          {/* Gray spacer */}
+          <div className="h-3 bg-muted" />
 
-            {/* Canais de atendimento */}
-            <Link
-              href="/canais"
-              className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-inset"
-            >
-              <RiCustomerService2Line className="size-5 text-secondary flex-shrink-0" />
-              <span className="flex-1 text-sm font-medium text-foreground">
-                Canais de atendimento
-              </span>
-              <RiArrowRightSLine className="size-5 text-muted-foreground flex-shrink-0" />
-            </Link>
-          </div>
+          {/* Services List Section - Mobile only */}
+          <section className="bg-card px-4 py-4" aria-label="Serviços">
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="text-lg font-semibold text-foreground">
+                Serviços
+              </h2>
+              <Link
+                href="/servicos"
+                className="text-xs text-secondary font-medium"
+              >
+                Ver tudo
+              </Link>
+            </div>
+
+            <div className="border border-border rounded-lg divide-y divide-border">
+              {/* O que é a Ouvidoria */}
+              <Link
+                href="/o-que-e-ouvidoria"
+                className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors btn-focus focus:ring-inset"
+              >
+                <RiMegaphoneLine className="size-5 text-secondary flex-shrink-0" />
+                <span className="flex-1 text-sm font-medium text-foreground">
+                  Sobre a Ouvidoria
+                </span>
+                <RiArrowRightSLine className="size-5 text-muted-foreground flex-shrink-0" />
+              </Link>
+
+              {/* Orientações */}
+              <Link
+                href="/orientacoes"
+                className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors btn-focus focus:ring-inset"
+              >
+                <RiLightbulbLine className="size-5 text-secondary flex-shrink-0" />
+                <span className="flex-1 text-sm font-medium text-foreground">
+                  Orientações para o registro
+                </span>
+                <RiArrowRightSLine className="size-5 text-muted-foreground flex-shrink-0" />
+              </Link>
+
+              {/* Perguntas frequentes */}
+              <Link
+                href="/ajuda"
+                className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors btn-focus focus:ring-inset"
+              >
+                <RiQuestionLine className="size-5 text-secondary flex-shrink-0" />
+                <span className="flex-1 text-sm font-medium text-foreground">
+                  Perguntas frequentes
+                </span>
+                <RiArrowRightSLine className="size-5 text-muted-foreground flex-shrink-0" />
+              </Link>
+
+              {/* Canais de atendimento */}
+              <Link
+                href="/canais"
+                className="flex items-center gap-3 p-3.5 hover:bg-accent transition-colors btn-focus focus:ring-inset"
+              >
+                <RiCustomerService2Line className="size-5 text-secondary flex-shrink-0" />
+                <span className="flex-1 text-sm font-medium text-foreground">
+                  Canais de atendimento
+                </span>
+                <RiArrowRightSLine className="size-5 text-muted-foreground flex-shrink-0" />
+              </Link>
+            </div>
+          </section>
         </div>
       </main>
 

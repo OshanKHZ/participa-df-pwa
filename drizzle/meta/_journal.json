@@ -22,6 +22,13 @@
       "when": 1769064309832,
       "tag": "0002_far_elektra",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1769564158942,
+      "tag": "0003_clever_rachel_grey",
+      "breakpoints": true
     }
   ]
 }
