@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import {
@@ -9,7 +9,8 @@ import {
   RiImageLine,
   RiVideoLine,
   RiMicLine,
-  RiCheckLine,
+  RiZoomInLine,
+  RiFileTextLine,
 } from 'react-icons/ri'
 import { AccessibleHeader } from '@/features/manifestation/components/AccessibleHeader'
 import { NavigationFooter } from '@/features/manifestation/components/NavigationFooter'
@@ -17,9 +18,13 @@ import { FormSidebar } from '@/features/manifestation/components/FormSidebar'
 import { DesktopHeader } from '@/shared/components/DesktopHeader'
 import { Button } from '@/shared/components/Button'
 import { ManifestationHeader } from '@/shared/components/Stepper'
+import { FilePreviewModal } from '@/shared/components/FilePreviewModal'
 import { getStepProgress } from '@/shared/utils/stepProgress'
 import { useStepNavigation } from '@/shared/hooks/useStepNavigation'
+import { useDraftPersistence } from '@/shared/hooks/useDraftPersistence'
+import { STORAGE_KEYS } from '@/shared/constants/storageKeys'
 import { STEPS, COMPLETED_STEPS } from '@/shared/constants/designTokens'
+import type { FileWithPreview } from '@/shared/hooks/useFileUpload'
 
 interface AttachmentInfo {
   hasAudio: boolean
@@ -41,6 +46,9 @@ interface ManifestationData {
     email: string
     phone: string
   }
+  // Actual file/audio data from IndexedDB
+  files?: File[]
+  audio?: Blob
 }
 
 const typeLabels: Record<string, string> = {
@@ -54,33 +62,103 @@ const typeLabels: Record<string, string> = {
 export default function ReviewPage() {
   const router = useRouter()
   const { navigateToStep } = useStepNavigation()
+  const { loadDraft } = useDraftPersistence()
   const [data, setData] = useState<ManifestationData | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [previewFile, setPreviewFile] = useState<{ file: File; index: number } | null>(null)
 
   useEffect(() => {
-    const type = localStorage.getItem('manifestation_type') || ''
-    const channel = localStorage.getItem('manifestation_channel') || ''
-    const content = localStorage.getItem('manifestation_content') || ''
-    const subject = localStorage.getItem('manifestation_subject_name') || ''
-    const isAnonymous =
-      localStorage.getItem('manifestation_anonymous') === 'true'
-    const personalDataStr = localStorage.getItem('manifestation_personal_data')
-    const attachmentsStr = localStorage.getItem('manifestation_attachments')
+    const loadData = async () => {
+      const type = localStorage.getItem('manifestation_type') || ''
+      const channel = localStorage.getItem('manifestation_channel') || ''
+      const content = localStorage.getItem('manifestation_content') || ''
+      const subject = localStorage.getItem('manifestation_subject_name') || ''
+      const isAnonymous =
+        localStorage.getItem('manifestation_anonymous') === 'true'
+      const personalDataStr = localStorage.getItem('manifestation_personal_data')
+      const attachmentsStr = localStorage.getItem('manifestation_attachments')
 
-    const attachments: AttachmentInfo | undefined = attachmentsStr
-      ? JSON.parse(attachmentsStr)
-      : undefined
+      const attachments: AttachmentInfo | undefined = attachmentsStr
+        ? JSON.parse(attachmentsStr)
+        : undefined
 
-    setData({
-      type,
-      channel,
-      content,
-      subject,
-      isAnonymous,
-      attachments,
-      personalData: personalDataStr ? JSON.parse(personalDataStr) : undefined,
-    })
-  }, [])
+      // Try to load files and audio from IndexedDB
+      let files: File[] | undefined
+      let audio: Blob | undefined
+
+      try {
+        const draftId = localStorage.getItem(STORAGE_KEYS.currentDraftId)
+        if (draftId) {
+          const draft = await loadDraft(draftId)
+          if (draft) {
+            files = draft.content?.files
+            audio = draft.content?.audio
+          }
+        }
+      } catch (e) {
+        console.error('Error loading draft from IndexedDB:', e)
+      }
+
+      setData({
+        type,
+        channel,
+        content,
+        subject,
+        isAnonymous,
+        attachments,
+        personalData: personalDataStr ? JSON.parse(personalDataStr) : undefined,
+        files,
+        audio,
+      })
+    }
+
+    loadData()
+    
+    // Listen for focus to refresh data (handles back/forward navigation cache)
+    window.addEventListener('focus', loadData)
+    return () => window.removeEventListener('focus', loadData)
+  }, [loadDraft])
+
+  const files = useMemo(() => data?.files || [], [data?.files])
+
+  const audioUrl = useMemo(() => {
+    if (data?.audio) {
+      return URL.createObjectURL(data.audio)
+    }
+    return null
+  }, [data?.audio])
+
+  useEffect(() => {
+    return () => {
+      if (audioUrl) URL.revokeObjectURL(audioUrl)
+    }
+  }, [audioUrl])
+
+  const openPreview = (file: File, index: number) => {
+    setPreviewFile({ file, index })
+  }
+
+  const closePreview = () => {
+    setPreviewFile(null)
+  }
+
+  const handleNextPreview = useCallback(() => {
+    if (!previewFile || files.length === 0) return
+    const newIndex = (previewFile.index + 1) % files.length
+    const nextFile = files[newIndex]
+    if (nextFile) {
+      setPreviewFile({ file: nextFile, index: newIndex })
+    }
+  }, [files, previewFile])
+
+  const handlePrevPreview = useCallback(() => {
+    if (!previewFile || files.length === 0) return
+    const newIndex = (previewFile.index - 1 + files.length) % files.length
+    const prevFile = files[newIndex]
+    if (prevFile) {
+      setPreviewFile({ file: prevFile, index: newIndex })
+    }
+  }, [files, previewFile])
 
   const handleSubmit = async () => {
     if (!data) return
@@ -100,10 +178,8 @@ export default function ReviewPage() {
       if (result.success && result.protocol) {
         const protocol = result.protocol
 
-        // Store protocol for reference if needed locally, though standard flow is redirection
         localStorage.setItem('last_protocol', protocol)
 
-        // Clear form data
         localStorage.removeItem('manifestation_type')
         localStorage.removeItem('manifestation_channel')
         localStorage.removeItem('manifestation_channels')
@@ -114,7 +190,6 @@ export default function ReviewPage() {
         localStorage.removeItem('manifestation_anonymous')
         localStorage.removeItem('manifestation_personal_data')
 
-        // Navigate to confirmation
         router.push(`/manifestacao/protocolo/${protocol}`)
       } else {
         console.error('Failed to submit:', result.error)
@@ -142,19 +217,16 @@ export default function ReviewPage() {
 
   return (
     <>
-      {/* Desktop Header */}
       <DesktopHeader />
 
       {/* Mobile Container */}
       <div className="lg:hidden min-h-screen bg-background pb-40">
-        {/* Header */}
         <AccessibleHeader
           currentStep={STEPS.REVIEW}
           totalSteps={STEPS.TOTAL}
           completedSteps={COMPLETED_STEPS.AT_REVIEW}
         />
 
-        {/* Main Content */}
         <main id="main-content" className="px-4 py-6 space-y-3">
           <div className="mb-4">
             <h1 className="text-xl font-bold text-foreground">
@@ -222,49 +294,110 @@ export default function ReviewPage() {
                 {data.content}
               </p>
             )}
-            {data.attachments &&
-              (data.attachments.hasAudio || data.attachments.hasFiles) && (
+            
+            {/* Mobile Attachments Preview */}
+            {(audioUrl || files.length > 0 || data.attachments) &&
+              (data.attachments?.hasAudio || data.attachments?.hasFiles || audioUrl || files.length > 0) && (
                 <div
                   className={`space-y-2 ${data.content ? 'mt-3 pt-3 border-t border-border' : ''}`}
                 >
-                  {data.attachments.hasAudio && (
-                    <div className="flex items-center gap-2 bg-secondary/5 rounded px-3 py-2">
-                      <RiMicLine
-                        className="size-4 text-secondary flex-shrink-0"
-                        aria-hidden="true"
-                      />
-                      <span className="text-sm text-foreground">
-                        {data.attachments.audioCount} áudio
-                        {data.attachments.audioCount > 1 ? 's' : ''} gravado
-                        {data.attachments.audioCount > 1 ? 's' : ''}
-                      </span>
+                  {/* Audio Player */}
+                  {audioUrl && (
+                    <div className="bg-secondary/5 rounded-lg p-3">
+                      <div className="flex items-center gap-2 mb-2">
+                        <RiMicLine className="size-4 text-secondary" />
+                        <span className="text-sm font-medium text-foreground">Áudio gravado</span>
+                      </div>
+                      <audio controls src={audioUrl} className="w-full h-8" />
                     </div>
                   )}
-                  {data.attachments.hasFiles && (
-                    <div className="flex items-center gap-2 bg-secondary/5 rounded px-3 py-2">
-                      {data.attachments.fileTypes.some(t =>
-                        t.startsWith('image/')
-                      ) ? (
-                        <RiImageLine
-                          className="size-4 text-secondary flex-shrink-0"
-                          aria-hidden="true"
-                        />
-                      ) : (
-                        <RiVideoLine
-                          className="size-4 text-secondary flex-shrink-0"
-                          aria-hidden="true"
-                        />
-                      )}
-                      <span className="text-sm text-foreground">
-                        {data.attachments.fileCount} arquivo
-                        {data.attachments.fileCount > 1 ? 's' : ''} anexado
-                        {data.attachments.fileCount > 1 ? 's' : ''}
-                      </span>
+
+                  {/* Files Grid */}
+                  {files.length > 0 && (
+                    <div className="grid grid-cols-2 gap-2">
+                      {files.map((file, idx) => {
+                        const isImage = file.type.startsWith('image/')
+                        const isVideo = file.type.startsWith('video/')
+                        const previewUrl = (isImage || isVideo) ? URL.createObjectURL(file) : null
+
+                        return (
+                          <div
+                            key={idx}
+                            className="relative aspect-video bg-muted rounded-lg overflow-hidden border border-border"
+                            onClick={() => (isImage || isVideo) && openPreview(file, idx)}
+                          >
+                            {previewUrl ? (
+                              <>
+                                {isImage ? (
+                                  <img
+                                    src={previewUrl}
+                                    className="w-full h-full object-cover"
+                                    alt={file.name}
+                                  />
+                                ) : (
+                                  <video
+                                    src={previewUrl}
+                                    className="w-full h-full object-cover"
+                                  />
+                                )}
+                              </>
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center">
+                                <RiFileTextLine className="text-2xl text-muted-foreground" />
+                              </div>
+                            )}
+                          </div>
+                        )
+                      })}
                     </div>
+                  )}
+
+                  {/* Fallback: Show metadata if no actual files loaded */}
+                  {!audioUrl && files.length === 0 && data.attachments && (
+                    <>
+                      {data.attachments.hasAudio && (
+                        <div className="flex items-center gap-2 bg-secondary/5 rounded px-3 py-2">
+                          <RiMicLine
+                            className="size-4 text-secondary flex-shrink-0"
+                            aria-hidden="true"
+                          />
+                          <span className="text-sm text-foreground">
+                            {data.attachments.audioCount} áudio
+                            {data.attachments.audioCount > 1 ? 's' : ''} gravado
+                            {data.attachments.audioCount > 1 ? 's' : ''}
+                          </span>
+                        </div>
+                      )}
+                      {data.attachments.hasFiles && (
+                        <div className="flex items-center gap-2 bg-secondary/5 rounded px-3 py-2">
+                          {data.attachments.fileTypes.some(t =>
+                            t.startsWith('image/')
+                          ) ? (
+                            <RiImageLine
+                              className="size-4 text-secondary flex-shrink-0"
+                              aria-hidden="true"
+                            />
+                          ) : (
+                            <RiVideoLine
+                              className="size-4 text-secondary flex-shrink-0"
+                              aria-hidden="true"
+                            />
+                          )}
+                          <span className="text-sm text-foreground">
+                            {data.attachments.fileCount} arquivo
+                            {data.attachments.fileCount > 1 ? 's' : ''} anexado
+                            {data.attachments.fileCount > 1 ? 's' : ''}
+                          </span>
+                        </div>
+                      )}
+                    </>
                   )}
                 </div>
               )}
+            
             {!data.content &&
+              !audioUrl &&
+              files.length === 0 &&
               !data.attachments?.hasAudio &&
               !data.attachments?.hasFiles && (
                 <p className="text-muted-foreground text-sm italic">
@@ -314,17 +447,8 @@ export default function ReviewPage() {
               </div>
             )}
           </div>
-
-          {/* Confirmation Info */}
-          <div className="bg-primary/5 border border-primary/20 rounded-sm p-4 mt-4">
-            <p className="text-xs text-foreground leading-relaxed">
-              ✓ Ao confirmar, sua manifestação será registrada e você receberá
-              um protocolo para acompanhamento.
-            </p>
-          </div>
         </main>
 
-        {/* Footer */}
         <NavigationFooter
           currentStep={STEPS.REVIEW}
           totalSteps={STEPS.TOTAL}
@@ -340,209 +464,119 @@ export default function ReviewPage() {
       {/* Desktop Container */}
       <div className="hidden lg:block min-h-screen bg-background">
         <div className="grid grid-cols-[1fr_700px_1fr] gap-12 py-12 px-8">
-          {/* Coluna Esquerda - Sidebar */}
+          {/* Left Sidebar */}
           <div className="flex justify-end">
-            <FormSidebar helpText="Revise todas as informações antes de enviar. Certifique-se de que todos os dados estão corretos para que sua manifestação seja processada adequadamente." />
+            <FormSidebar helpText="Revise todas as informações antes de enviar." />
           </div>
 
-          {/* Coluna Central - Main Content (sempre centralizado) */}
+          {/* Main Content */}
           <main id="main-content" className="w-full">
             <ManifestationHeader
               currentStep={STEPS.REVIEW}
               totalSteps={STEPS.TOTAL}
-              description="Confira todas as informações antes de enviar sua manifestação."
               title="Revisar manifestação"
+              description="Confira todas as informações antes de enviar."
               onStepClick={navigateToStep}
             />
 
-            {/* Two Column Layout */}
-            <div className="grid grid-cols-3 gap-6 mb-8">
-              {/* Left Column - Main Info */}
-              <div className="col-span-2 space-y-4">
-                {/* Type Card */}
-                <div className="bg-card border border-border rounded-xl p-6 hover:border-secondary/50 transition-colors">
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-3">
-                        <div className="w-8 h-8 rounded-lg bg-secondary/10 flex items-center justify-center">
-                          <span className="text-sm font-semibold text-secondary">
-                            1
-                          </span>
-                        </div>
-                        <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
-                          Tipo
-                        </h3>
-                      </div>
-                      <p className="text-lg font-semibold text-foreground">
-                        {typeLabels[data.type] || data.type}
-                      </p>
+            {/* Main Card */}
+            <div className="bg-card border border-border rounded-sm p-8 mb-6">
+              {/* Form Fields - Simple Layout */}
+              <div className="space-y-8">
+                {/* Row 1: Type and Subject */}
+                <div className="grid grid-cols-2 gap-8">
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 className="font-bold text-foreground">Tipo</h3>
+                      <Link
+                        href="/manifestacao"
+                        className="text-secondary hover:text-secondary-hover"
+                        aria-label="Editar tipo"
+                      >
+                        <RiEditLine className="size-4" />
+                      </Link>
                     </div>
-                    <Link
-                      href="/manifestacao"
-                      className="p-2 rounded-lg hover:bg-accent transition-colors text-secondary hover:text-secondary-hover"
-                      aria-label="Editar tipo"
-                    >
-                      <RiEditLine className="size-5" />
-                    </Link>
+                    <p className="text-foreground">
+                      {typeLabels[data.type] || data.type}
+                    </p>
+                  </div>
+
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 className="font-bold text-foreground">Assunto</h3>
+                      <Link
+                        href="/manifestacao/assunto"
+                        className="text-secondary hover:text-secondary-hover"
+                        aria-label="Editar assunto"
+                      >
+                        <RiEditLine className="size-4" />
+                      </Link>
+                    </div>
+                    <p className="text-foreground">
+                      {data.subject || 'Não selecionado'}
+                    </p>
                   </div>
                 </div>
 
-                {/* Subject Card */}
-                <div className="bg-card border border-border rounded-xl p-6 hover:border-secondary/50 transition-colors">
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-3">
-                        <div className="w-8 h-8 rounded-lg bg-secondary/10 flex items-center justify-center">
-                          <span className="text-sm font-semibold text-secondary">
-                            2
-                          </span>
-                        </div>
-                        <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
-                          Assunto
-                        </h3>
-                      </div>
-                      <p className="text-lg font-semibold text-foreground">
-                        {data.subject || 'Não selecionado'}
-                      </p>
-                    </div>
-                    <Link
-                      href="/manifestacao/assunto"
-                      className="p-2 rounded-lg hover:bg-accent transition-colors text-secondary hover:text-secondary-hover"
-                      aria-label="Editar assunto"
-                    >
-                      <RiEditLine className="size-5" />
-                    </Link>
-                  </div>
-                </div>
-
-                {/* Content Card */}
-                <div className="bg-card border border-border rounded-xl p-6 hover:border-secondary/50 transition-colors">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-lg bg-secondary/10 flex items-center justify-center">
-                        <span className="text-sm font-semibold text-secondary">
-                          3
-                        </span>
-                      </div>
-                      <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
-                        Conteúdo
-                      </h3>
-                    </div>
+                {/* Row 2: Content */}
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="font-bold text-foreground">Conteúdo</h3>
                     <Link
                       href="/manifestacao/conteudo"
-                      className="p-2 rounded-lg hover:bg-accent transition-colors text-secondary hover:text-secondary-hover"
+                      className="text-secondary hover:text-secondary-hover"
                       aria-label="Editar conteúdo"
                     >
-                      <RiEditLine className="size-5" />
+                      <RiEditLine className="size-4" />
                     </Link>
                   </div>
-
-                  {data.content && (
-                    <div className="bg-muted/50 rounded-lg p-4 mb-4">
-                      <p className="text-foreground text-sm leading-relaxed whitespace-pre-wrap">
-                        {data.content}
-                      </p>
-                    </div>
-                  )}
-
-                  {data.attachments &&
-                    (data.attachments.hasAudio ||
-                      data.attachments.hasFiles) && (
-                      <div className="flex flex-wrap gap-2">
-                        {data.attachments.hasAudio && (
-                          <div className="inline-flex items-center gap-2 bg-secondary/10 text-secondary rounded-lg px-3 py-2">
-                            <RiMicLine className="size-4" />
-                            <span className="text-sm font-medium">
-                              {data.attachments.audioCount} áudio
-                              {data.attachments.audioCount > 1 ? 's' : ''}
-                            </span>
-                          </div>
-                        )}
-                        {data.attachments.hasFiles && (
-                          <div className="inline-flex items-center gap-2 bg-secondary/10 text-secondary rounded-lg px-3 py-2">
-                            {data.attachments.fileTypes.some(t =>
-                              t.startsWith('image/')
-                            ) ? (
-                              <RiImageLine className="size-4" />
-                            ) : (
-                              <RiVideoLine className="size-4" />
-                            )}
-                            <span className="text-sm font-medium">
-                              {data.attachments.fileCount} arquivo
-                              {data.attachments.fileCount > 1 ? 's' : ''}
-                            </span>
-                          </div>
-                        )}
-                      </div>
+                  <p className="text-foreground leading-relaxed whitespace-pre-wrap">
+                    {data.content || (
+                      <span className="text-muted-foreground italic">
+                        Sem conteúdo
+                      </span>
                     )}
-
-                  {!data.content &&
-                    !data.attachments?.hasAudio &&
-                    !data.attachments?.hasFiles && (
-                      <p className="text-muted-foreground text-sm italic">
-                        Sem conteúdo adicionado
-                      </p>
-                    )}
+                  </p>
                 </div>
-              </div>
 
-              {/* Right Column - Sidebar */}
-              <div className="col-span-1 space-y-4">
-                {/* Identification Card */}
-                <div className="bg-card border border-border rounded-xl p-6 hover:border-secondary/50 transition-colors">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-lg bg-secondary/10 flex items-center justify-center">
-                        <span className="text-sm font-semibold text-secondary">
-                          4
-                        </span>
-                      </div>
-                      <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
-                        Identificação
-                      </h3>
-                    </div>
+                {/* Row 3: Identification */}
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="font-bold text-foreground">Identificação</h3>
                     <Link
                       href="/manifestacao/identidade"
-                      className="p-2 rounded-lg hover:bg-accent transition-colors text-secondary hover:text-secondary-hover"
+                      className="text-secondary hover:text-secondary-hover"
                       aria-label="Editar identificação"
                     >
-                      <RiEditLine className="size-5" />
+                      <RiEditLine className="size-4" />
                     </Link>
                   </div>
-
                   {data.isAnonymous ? (
-                    <div className="bg-muted/50 rounded-lg p-4 text-center">
-                      <p className="font-semibold text-foreground">Anônima</p>
-                      <p className="text-xs text-muted-foreground mt-1">
-                        Sem identificação
-                      </p>
-                    </div>
+                    <p className="text-foreground">Manifestação anônima</p>
                   ) : (
-                    <div className="space-y-3">
+                    <div className="grid grid-cols-3 gap-6">
                       <div>
-                        <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">
-                          Nome
-                        </p>
-                        <p className="font-medium text-foreground">
+                        <p className="text-sm text-muted-foreground mb-1">Nome</p>
+                        <p className="text-foreground">
                           {data.personalData?.name}
                         </p>
                       </div>
                       {data.personalData?.email && (
                         <div>
-                          <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">
+                          <p className="text-sm text-muted-foreground mb-1">
                             Email
                           </p>
-                          <p className="font-medium text-foreground">
+                          <p className="text-foreground">
                             {data.personalData.email}
                           </p>
                         </div>
                       )}
                       {data.personalData?.phone && (
                         <div>
-                          <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">
+                          <p className="text-sm text-muted-foreground mb-1">
                             Telefone
                           </p>
-                          <p className="font-medium text-foreground">
+                          <p className="text-foreground">
                             {data.personalData.phone}
                           </p>
                         </div>
@@ -551,27 +585,103 @@ export default function ReviewPage() {
                   )}
                 </div>
 
-                {/* Confirmation Notice */}
-                <div className="bg-success/5 border border-success/20 rounded-xl p-6">
-                  <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-full bg-success/10 flex items-center justify-center flex-shrink-0">
-                      <RiCheckLine className="size-5 text-success" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-foreground mb-2">
-                        Pronto para enviar
-                      </h4>
-                      <p className="text-sm text-muted-foreground leading-relaxed">
-                        Ao confirmar, sua manifestação será registrada e você
-                        receberá um protocolo para acompanhamento.
-                      </p>
+                {/* Attachments Section */}
+                {(audioUrl || files.length > 0 || data.attachments) && (
+                  <div className="border-t border-border pt-6">
+                    <h3 className="font-bold text-foreground mb-4">Anexos</h3>
+                    
+                    <div className="space-y-4">
+                      {/* Audio Player */}
+                      {audioUrl && (
+                        <div className="bg-secondary/5 rounded-lg p-4">
+                          <div className="flex items-center gap-2 mb-2">
+                            <RiMicLine className="size-5 text-secondary" />
+                            <span className="font-medium text-foreground">Áudio gravado</span>
+                          </div>
+                          <audio controls src={audioUrl} className="w-full h-10" />
+                        </div>
+                      )}
+
+                      {/* Files Grid */}
+                      {files.length > 0 && (
+                        <div className="grid grid-cols-4 gap-3">
+                          {files.map((file, idx) => {
+                            const isImage = file.type.startsWith('image/')
+                            const isVideo = file.type.startsWith('video/')
+                            const previewUrl = (isImage || isVideo) ? URL.createObjectURL(file) : null
+
+                            return (
+                              <div
+                                key={idx}
+                                className="group relative aspect-video bg-muted rounded-lg overflow-hidden border border-border hover:border-secondary/50 transition-colors cursor-pointer"
+                                onClick={() => (isImage || isVideo) && openPreview(file, idx)}
+                              >
+                                {previewUrl ? (
+                                  <>
+                                    {isImage ? (
+                                      <img
+                                        src={previewUrl}
+                                        className="w-full h-full object-cover"
+                                        alt={file.name}
+                                      />
+                                    ) : (
+                                      <video
+                                        src={previewUrl}
+                                        className="w-full h-full object-cover"
+                                      />
+                                    )}
+                                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                      <RiZoomInLine className="text-white size-6" />
+                                    </div>
+                                  </>
+                                ) : (
+                                  <div className="w-full h-full flex flex-col items-center justify-center text-muted-foreground">
+                                    <RiFileTextLine size={24} />
+                                    <span className="text-xs mt-1">{file.type.split('/')[1]}</span>
+                                  </div>
+                                )}
+                              </div>
+                            )
+                          })}
+                        </div>
+                      )}
+
+                      {/* Fallback: Show metadata if no actual files loaded */}
+                      {!audioUrl && files.length === 0 && data.attachments && (
+                        <div className="flex flex-wrap gap-3">
+                          {data.attachments.hasAudio && (
+                            <div className="inline-flex items-center gap-2 text-foreground">
+                              <RiMicLine className="size-5 text-secondary" />
+                              <span>
+                                {data.attachments.audioCount} áudio
+                                {data.attachments.audioCount > 1 ? 's' : ''}
+                              </span>
+                            </div>
+                          )}
+                          {data.attachments.hasFiles && (
+                            <div className="inline-flex items-center gap-2 text-foreground">
+                              {data.attachments.fileTypes.some(t =>
+                                t.startsWith('image/')
+                              ) ? (
+                                <RiImageLine className="size-5 text-secondary" />
+                              ) : (
+                                <RiVideoLine className="size-5 text-secondary" />
+                              )}
+                              <span>
+                                {data.attachments.fileCount} arquivo
+                                {data.attachments.fileCount > 1 ? 's' : ''}
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
 
-            {/* Desktop Navigation */}
+            {/* Actions */}
             <div className="flex items-center justify-between pt-6 border-t border-border">
               <Button variant="link" onClick={handleBack}>
                 Voltar e editar
@@ -596,10 +706,28 @@ export default function ReviewPage() {
             </div>
           </main>
 
-          {/* Coluna Direita - Vazia (para manter centralização) */}
+          {/* Right Sidebar (empty for symmetry) */}
           <div />
         </div>
       </div>
+
+      {/* File Preview Modal */}
+      {previewFile && (
+        <FilePreviewModal
+          file={(() => {
+            const fileWithPreview = previewFile.file as FileWithPreview
+            if (!fileWithPreview.preview) {
+              fileWithPreview.preview = URL.createObjectURL(previewFile.file)
+            }
+            return fileWithPreview
+          })()}
+          index={previewFile.index}
+          total={files.length}
+          onClose={closePreview}
+          onNext={handleNextPreview}
+          onPrevious={handlePrevPreview}
+        />
+      )}
     </>
   )
 }

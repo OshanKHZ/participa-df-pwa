@@ -63,6 +63,9 @@ export default function ContentPage() {
   // Text content state
   const [textContent, setTextContent] = useState('')
   const [charCount, setCharCount] = useState(0)
+  
+  // Flag to prevent auto-save while restoring data
+  const [isRestoring, setIsRestoring] = useState(true)
 
   // Audio recording - using custom hook (shared between mobile and desktop)
   const audioRecorder = useAudioRecorder({
@@ -86,61 +89,115 @@ export default function ContentPage() {
     closePreview,
     nextPreview,
     prevPreview,
+    restoreFiles,
   } = fileUpload
 
-  const { audioBlobs } = audioRecorder
+  const { audioBlobs, restoreAudio } = audioRecorder
 
-  // Get current draft ID from localStorage
-  const currentDraftId =
-    typeof window !== 'undefined'
-      ? localStorage.getItem(STORAGE_KEYS.currentDraftId) || undefined
-      : undefined
+  // State for the current draft ID, loaded only on client
+  const [currentDraftId, setCurrentDraftId] = useState<string | undefined>(undefined)
+
+  // Initialize draft ID on client side only to avoid hydration mismatch
+  useEffect(() => {
+    const id = localStorage.getItem(STORAGE_KEYS.currentDraftId) || undefined
+    if (id) {
+      setCurrentDraftId(id)
+    }
+  }, [])
 
   // Draft persistence hook
-  const { saveField, loadDraft } = useDraftPersistence({
+  const { saveField, loadDraft, saveNow } = useDraftPersistence({
     autoSave: true,
     debounceMs: 1000,
     draftId: currentDraftId,
   })
 
-  // Load saved data on mount
+  // Load saved data on mount AND when page becomes visible
   useEffect(() => {
-    const savedChannels = localStorage.getItem('manifestation_channels')
-    if (savedChannels) {
-      setSelectedChannels(JSON.parse(savedChannels))
-    }
+    const loadAllData = () => {
+      const savedChannels = localStorage.getItem('manifestation_channels')
+      if (savedChannels) {
+        setSelectedChannels(JSON.parse(savedChannels))
+      }
 
-    const savedContent = localStorage.getItem('manifestation_content')
-    if (savedContent) {
-      setTextContent(savedContent)
-      setCharCount(savedContent.length)
-    }
+      const savedContent = localStorage.getItem('manifestation_content')
+      if (savedContent) {
+        setTextContent(savedContent)
+        setCharCount(savedContent.length)
+      }
 
-    // Load saved draft from IndexedDB
-    const loadSavedDraft = async () => {
-      try {
-        const savedDraftId = localStorage.getItem(STORAGE_KEYS.currentDraftId)
-        if (savedDraftId) {
-          const draft = await loadDraft(savedDraftId)
-          if (draft?.content?.files) {
-            // Restore files with previews
-            // Note: useFileUpload manages its own state, so this would need to be integrated differently
-            // For now, this is left as a TODO for proper integration
-            void draft.content.files
+      // Load saved draft from IndexedDB
+      const loadSavedDraft = async () => {
+        setIsRestoring(true)
+        try {
+          const savedDraftId = localStorage.getItem(STORAGE_KEYS.currentDraftId)
+          console.log('[ContentPage] Loading draft:', savedDraftId)
+          
+          if (savedDraftId) {
+            const draft = await loadDraft(savedDraftId)
+            console.log('[ContentPage] Draft loaded:', draft)
+            
+            if (draft?.content) {
+              if (draft.content.files && draft.content.files.length > 0) {
+                console.log('[ContentPage] Restoring files:', draft.content.files.length)
+                restoreFiles(draft.content.files)
+              }
+              if (draft.content.audio) {
+                console.log('[ContentPage] Restoring audio')
+                restoreAudio(draft.content.audio)
+              }
+            }
           }
+        } catch (e) {
+          console.error('Error loading draft from IndexedDB:', e)
+        } finally {
+          // Ensure the state updates have been processed before enabling auto-save
+          setTimeout(() => setIsRestoring(false), 300)
         }
-      } catch (e) {
-        console.error('Error loading draft from IndexedDB:', e)
+      }
+
+      loadSavedDraft()
+    }
+
+    // Load on mount
+    loadAllData()
+
+    // Also reload when page becomes visible (handles navigation back)
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        console.log('[ContentPage] Page became visible, reloading data...')
+        loadAllData()
       }
     }
 
-    loadSavedDraft()
-  }, [loadDraft])
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+    }
+  }, [loadDraft, restoreFiles, restoreAudio])
 
   // Save draft when content changes
   useEffect(() => {
-    saveField('content.text', textContent)
-  }, [textContent, saveField])
+    if (!isRestoring) {
+      saveField('content.text', textContent)
+    }
+  }, [textContent, saveField, isRestoring])
+
+  // Save files when they change
+  useEffect(() => {
+    if (!isRestoring && files.length > 0) {
+      saveField('content.files', files)
+    }
+  }, [files, saveField, isRestoring])
+
+  // Save audio when it changes
+  useEffect(() => {
+    if (!isRestoring && audioBlobs.length > 0) {
+      // Save only the first audio blob (we only support 1 audio)
+      saveField('content.audio', audioBlobs[0])
+    }
+  }, [audioBlobs, saveField, isRestoring])
 
   const handleTextChange = (value: string) => {
     setTextContent(value)
@@ -156,10 +213,24 @@ export default function ContentPage() {
     })
   }
 
-  const handleNext = () => {
+  const handleNext = async () => {
+    console.log('[ContentPage] handleNext - files:', files.length, 'audio:', audioBlobs.length)
+    
+    // Ensure channels are correct based on usage (important for returning from review)
+    let channels = [...selectedChannels]
+    if (audioBlobs.length > 0 && !channels.includes('audio')) {
+      channels.push('audio')
+    }
+    if (files.length > 0 && !channels.includes('arquivos')) {
+      channels.push('arquivos')
+    }
+    
+    console.log('[ContentPage] Channels:', channels)
+    
     localStorage.setItem('manifestation_content', textContent)
+    localStorage.setItem('manifestation_channels', JSON.stringify(channels))
 
-    // Save attachment info
+    // Save attachment info for metadata summary
     const attachmentInfo = {
       hasAudio: audioBlobs.length > 0,
       audioCount: audioBlobs.length,
@@ -172,6 +243,18 @@ export default function ContentPage() {
       JSON.stringify(attachmentInfo)
     )
 
+    // Force immediate save to IndexedDB before navigating
+    saveField('channels', channels)
+    saveField('content.text', textContent)
+    saveField('content.files', files)
+    if (audioBlobs.length > 0) {
+      saveField('content.audio', audioBlobs[0])
+    }
+    
+    // Give saveField time to update draftDataRef and wait for save
+    await new Promise(resolve => setTimeout(resolve, 100))
+    await saveNow()
+    
     router.push('/manifestacao/revisar')
   }
 
