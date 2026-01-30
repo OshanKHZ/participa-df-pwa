@@ -126,7 +126,7 @@ export function DesktopHeader() {
                 </div>
               ) : (
                 <Link
-                  href="/entrar"
+                  href={`/entrar?callbackUrl=${encodeURIComponent(pathname)}`}
                   className="flex items-center gap-2 px-4 py-2 text-sm text-white/70 hover:text-white transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-white/50 rounded"
                 >
                   <RiLoginBoxLine className="size-5" />
