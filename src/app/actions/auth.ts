@@ -4,16 +4,22 @@ import { signIn } from '@/server/auth'
 import { db } from '@/server/db'
 import { users } from '@/server/db/schema'
 import { eq } from 'drizzle-orm'
+import DOMPurify from 'isomorphic-dompurify'
 
 export async function registerAnonymousUser(formData: FormData) {
-  const name = formData.get('name') as string
-  const email = formData.get('email') as string
+  const rawName = formData.get('name') as string
+  const rawEmail = formData.get('email') as string
   const needsAccessibility = formData.get('needsAccessibility') === 'on'
-  const accessibilityInfo = formData.get('accessibilityInfo') as string
+  const rawAccessibilityInfo = formData.get('accessibilityInfo') as string
 
-  if (!name || !email) {
+  if (!rawName || !rawEmail) {
     throw new Error('Nome e e-mail são obrigatórios.')
   }
+
+  // Sanitize inputs
+  const name = DOMPurify.sanitize(rawName)
+  const email = DOMPurify.sanitize(rawEmail)
+  const accessibilityInfo = rawAccessibilityInfo ? DOMPurify.sanitize(rawAccessibilityInfo) : ''
 
   // Check if user exists
   const existingUser = await db.query.users.findFirst({

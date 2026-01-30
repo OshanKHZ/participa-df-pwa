@@ -37,7 +37,9 @@ export function NavigationFooter({
   backVariant = 'default',
 }: NavigationFooterProps) {
   const [drawerOpen, setDrawerOpen] = useState(false)
-  const [hydrationSteps, setHydrationSteps] = useState<Step[]>(steps)
+  const [hydrationSteps, setHydrationSteps] = useState<Step[]>(() =>
+    steps.map(s => ({ ...s, completed: s.number < currentStep }))
+  )
 
   // Update steps after hydration to match client-side state
   useEffect(() => {

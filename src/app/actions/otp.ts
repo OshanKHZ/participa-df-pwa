@@ -3,7 +3,8 @@
 import { db } from '@/server/db'
 import { otpCodes } from '@/server/db/schema'
 import { Resend } from 'resend'
-import { eq } from 'drizzle-orm'
+import { eq, and, gt, sql } from 'drizzle-orm'
+import DOMPurify from 'isomorphic-dompurify'
 
 // Generate 6 digit code
 function generateCode() {
@@ -15,14 +16,29 @@ export async function sendOtp(email: string) {
     throw new Error('Email é obrigatório.')
   }
 
+  // Sanitize input
+  const sanitizedEmail = DOMPurify.sanitize(email).toLowerCase()
+
+  // Rate Limiting: Check if a code was sent recently (60s cooldown)
+  const recentCode = await db.query.otpCodes.findFirst({
+    where: and(
+      eq(otpCodes.email, sanitizedEmail),
+      gt(otpCodes.createdAt, sql`now() - interval '60 seconds'`)
+    ),
+  })
+
+  if (recentCode) {
+    return { success: false, error: 'Aguarde um momento antes de solicitar outro código.' }
+  }
+
   const code = generateCode()
   const expiresAt = new Date(Date.now() + 15 * 60 * 1000) // 15 mins
 
   // Delete previous codes for this email to ensure clean slate
-  await db.delete(otpCodes).where(eq(otpCodes.email, email))
+  await db.delete(otpCodes).where(eq(otpCodes.email, sanitizedEmail))
 
   await db.insert(otpCodes).values({
-    email,
+    email: sanitizedEmail,
     code,
     expiresAt,
   })

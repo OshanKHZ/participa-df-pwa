@@ -87,4 +87,5 @@ export const otpCodes = pgTable('otp_codes', {
   email: text('email').notNull(),
   code: text('code').notNull(),
   expiresAt: timestamp('expiresAt', { mode: 'date' }).notNull(),
+  createdAt: timestamp('createdAt', { mode: 'date' }).defaultNow().notNull(),
 })
