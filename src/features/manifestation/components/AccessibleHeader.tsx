@@ -1,14 +1,13 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import {
   RiQuestionLine,
-  RiVolumeUpLine,
   RiFontSize,
   RiLogoutBoxLine,
 } from 'react-icons/ri'
-import { useTextToSpeech } from '@/shared/hooks/useTextToSpeech'
+import { PiPersonArmsSpreadFill } from 'react-icons/pi'
 import { useAccessibility } from '@/shared/contexts/AccessibilityContext'
 import { ExitConfirmModal } from '@/shared/components/ExitConfirmModal'
 import {
@@ -30,11 +29,10 @@ export function AccessibleHeader({
   completedSteps = 0,
 }: AccessibleHeaderProps) {
   const router = useRouter()
-  const { setEnabled, isEnabled } = useTextToSpeech()
   const { preferences, setFontSize } = useAccessibility()
-  const [audioEnabled, setAudioEnabled] = useState(false)
   const [showFontLevel, setShowFontLevel] = useState(false)
   const [showExitModal, setShowExitModal] = useState(false)
+  const [showAccessibilityMenu, setShowAccessibilityMenu] = useState(false)
 
   const handleFontSize = () => {
     const newLevel = (preferences.fontSize + 1) % FONT_LEVELS.COUNT
@@ -70,16 +68,9 @@ export function AccessibleHeader({
     router.push('/')
   }
 
-  const handleAudioToggle = () => {
-    const newState = !audioEnabled
-    setAudioEnabled(newState)
-    setEnabled(newState)
+  const handleAccessibilityToggle = () => {
+    setShowAccessibilityMenu(!showAccessibilityMenu)
   }
-
-  // Sync state on mount
-  useEffect(() => {
-    setAudioEnabled(isEnabled())
-  }, [isEnabled])
 
   return (
     <header className="bg-primary">
@@ -106,15 +97,11 @@ export function AccessibleHeader({
             </button>
 
             <button
-              onClick={handleAudioToggle}
-              className={`w-10 h-10 rounded flex items-center justify-center transition-colors ${
-                audioEnabled
-                  ? 'bg-white text-primary'
-                  : 'bg-white/10 text-white hover:bg-white/20'
-              }`}
-              aria-label={audioEnabled ? 'Desativar áudio' : 'Ativar áudio'}
+              onClick={handleAccessibilityToggle}
+              className="w-10 h-10 rounded flex items-center justify-center bg-white/10 text-white hover:bg-white/20 transition-colors"
+              aria-label="Acessibilidade"
             >
-              <RiVolumeUpLine className="size-5" />
+              <PiPersonArmsSpreadFill className="size-6" />
             </button>
 
             <button
