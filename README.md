@@ -32,6 +32,8 @@ O Participa-DF é uma plataforma que:
 5. Protege a identidade com opções de envio anônimo ou identificado
 6. Processa feedback cidadão gerando protocolos instantâneos de acompanhamento
 
+---
+
 ## ⚙️ Funcionalidades
 
 ### 1. Registro Simplificado e Guiado
@@ -389,6 +391,8 @@ chore: Manutenção
 **Recursos:**
 - [WCAG 2.1](https://www.w3.org/WAI/WCAG21/quickref/) - Diretrizes de Acessibilidade
 - [PWA Checklist](https://web.dev/pwa-checklist/) - Guia PWA
+- **[Vídeo Demonstrativo (Google Drive)](https://drive.google.com/drive/folders/1YrNpLEiCC6jgdrOd870PsWuCyxPFwGPt)**.
+
 
 ---
 
