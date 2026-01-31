@@ -30,7 +30,7 @@ export function HomeMobileHeader({
       <header className="lg:hidden bg-primary text-primary-foreground">
         <div className="px-3 py-3 flex items-center justify-between">
           <Image
-            src="/logo.svg"
+            src="/logos/logo.svg"
             alt="Participa DF"
             width={126}
             height={32}

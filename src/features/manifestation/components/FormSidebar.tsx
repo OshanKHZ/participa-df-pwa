@@ -14,7 +14,7 @@ export function FormSidebar({ helpText, className = '' }: FormSidebarProps) {
         {/* Logo */}
         <div className="w-[240px] -ml-[30px]">
           <Image
-            src="/Logo-OUV.svg"
+            src="/logos/Logo-OUV.svg"
             alt="Logo Ouvidoria do Distrito Federal"
             width={360}
             height={240}

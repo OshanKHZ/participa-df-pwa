@@ -158,7 +158,7 @@ export default function OQueEOuvidoriaPage() {
           {/* Header */}
           <div className="mb-8 flex items-start gap-6">
             <Image
-              src="/Logo-OUV.svg"
+              src="/logos/Logo-OUV.svg"
               alt="Logo da Ouvidoria do Governo do Distrito Federal"
               width={280}
               height={162}

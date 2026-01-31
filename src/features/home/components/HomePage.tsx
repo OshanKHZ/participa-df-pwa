@@ -38,21 +38,21 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
       id: '1',
       title: 'Acessibilidade digital',
       image:
-        '/imagens-blog/Participa-DF-e-Portal-da-Transparencia-passam-a-ser-100-acessiveis-digitalmente-620x420.webp',
+        '/img/blog/Participa-DF-e-Portal-da-Transparencia-passam-a-ser-100-acessiveis-digitalmente-620x420.webp',
       publishedAt: new Date(NOW.getTime() - 1000 * 60 * 30),
       slug: 'acessibilidade-digital',
     },
     {
       id: '2',
       title: 'Ouvidoria do DF',
-      image: '/imagens-blog/ouvidoria-620x620.webp',
+      image: '/img/blog/ouvidoria-620x620.webp',
       publishedAt: new Date(NOW.getTime() - 1000 * 60 * 60 * 3),
       slug: 'conheca-ouvidoria',
     },
     {
       id: '3',
       title: 'Sua voz transforma',
-      image: '/imagens-blog/09.PartcipaDF.webp',
+      image: '/img/blog/09.PartcipaDF.webp',
       publishedAt: new Date(NOW.getTime() - 1000 * 60 * 60 * 24),
       slug: 'sua-voz-transforma',
     },
@@ -60,14 +60,14 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
       id: '4',
       title: 'Canais de atendimento',
       image:
-        '/imagens-blog/Participa-DF-e-Portal-da-Transparencia-passam-a-ser-100-acessiveis-digitalmente-620x420.webp',
+        '/img/blog/Participa-DF-e-Portal-da-Transparencia-passam-a-ser-100-acessiveis-digitalmente-620x420.webp',
       publishedAt: new Date(NOW.getTime() - 1000 * 60 * 60 * 48),
       slug: 'canais-atendimento',
     },
     {
       id: '5',
       title: 'Novidades do Participa',
-      image: '/imagens-blog/ouvidoria-620x620.webp',
+      image: '/img/blog/ouvidoria-620x620.webp',
       publishedAt: new Date(NOW.getTime() - 1000 * 60 * 60 * 72),
       slug: 'novidades-participa',
     },
@@ -108,7 +108,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
           <div className="max-w-5xl w-full flex items-center justify-center gap-16">
             <div className="flex-shrink-0">
               <Image
-                src="/Logo-OUV.svg"
+                src="/logos/Logo-OUV.svg"
                 alt="Participa DF - Ouvidoria e e-Sic"
                 width={280}
                 height={100}
@@ -229,7 +229,7 @@ export function HomePage({ isAuthenticated, userName }: HomePageProps) {
               {/* Image */}
               <div className="flex flex-col items-center text-center mb-6">
                 <Image
-                  src="/megaphone-woman.png"
+                  src="/img/megaphone-woman.png"
                   alt="Registre sua manifestação"
                   width={120}
                   height={120}
