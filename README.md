@@ -9,19 +9,17 @@ Progressive Web App (PWA) para registro de manifestações da Ouvidoria do Distr
 
 ## 📋 Índice
 
-- [Visão Geral](#visão-geral)
-- [Funcionalidades](#funcionalidades)
-- [Critérios do Hackathon](#critérios-do-hackathon)
-- [Tecnologias](#tecnologias)
-- [Instalação Rápida](#instalação-rápida)
-- [Configuração](#configuração)
-- [Como Usar](#como-usar)
-- [Arquitetura](#arquitetura)
-- [Acessibilidade](#acessibilidade)
-- [Testes](#testes)
-- [Deploy](#deploy)
-- [Contribuindo](#contribuindo)
-- [Licença](#licença)
+- [Visão Geral](#-visão-geral)
+- [Funcionalidades](#-funcionalidades)
+- [Tecnologias](#-tecnologias)
+- [Instalação Rápida](#-instalação-rápida)
+- [Configuração](#-configuração)
+- [APIs Necessárias](#-apis-necessárias)
+- [SEO e Metadados](#-seo-e-metadados)
+- [Como Usar](#-como-usar)
+- [Arquitetura](#-arquitetura)
+- [Estatísticas (SQL)](#-estatísticas-sql)
+- [Contribuindo](#-contribuindo)
 
 ## 🎯 Visão Geral
 
@@ -73,29 +71,23 @@ O Participa-DF é uma plataforma que:
 
 ## 🛠️ Tecnologias
 
-### Frontend
-- **Next.js 16** - Framework React com App Router
-- **TypeScript** - Tipagem estática
-- **Tailwind CSS** - Estilização utilitária
-- **React Hook Form** - Gerenciamento de formulários
-- **Zod** - Validação de schemas
-
-### Backend
-- **Drizzle ORM** - Gerenciamento de banco de dados
-- **SQLite** - Banco de dados local (dev)
-
-### PWA
-- **next-pwa** - Service Worker e manifest
-- **Workbox** - Estratégias de cache
-
-### Acessibilidade
-- **React ARIA** - Patterns acessíveis
-- **axe-core** - Testes de acessibilidade
-
-### Qualidade
-- **ESLint** - Linting
-- **Prettier** - Formatação de código
-- **Husky** - Git hooks
+| Categoria | Tecnologia | Descrição |
+|-----------|------------|-----------|
+| **Frontend** | **Next.js 16** | Framework React com App Router e Server Actions |
+| | **TypeScript** | Tipagem estática e segurança de código |
+| | **Tailwind CSS** | Estilização utilitária e Design System |
+| | **React Hook Form** | Gerenciamento performático de formulários |
+| | **Zod** | Validação de schemas e dados em tempo real |
+| **Backend** | **Drizzle ORM** | ORM moderno e type-safe para SQL |
+| | **PostgreSQL** | Banco de dados relacional (Produção) |
+| | **SQLite** | Banco de dados local (Desenvolvimento) |
+| **PWA** | **next-pwa** | Configuração de Service Workers e Manifest |
+| | **Workbox** | Estratégias de cache (Offline-First) |
+| | **IndexedDB** | Armazenamento local de rascunhos e mídias |
+| **Acessibilidade** | **React ARIA** | Primitivos acessíveis (WAI-ARIA) |
+| | **axe-core** | Testes automatizados de contraste e a11y |
+| **Qualidade** | **ESLint** / **Prettier** | Padronização e formatação de código |
+| | **Husky** | Git hooks para garantir commits seguros |
 
 ## 🚀 Instalação Rápida
 
