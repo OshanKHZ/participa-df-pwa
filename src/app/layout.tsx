@@ -108,7 +108,7 @@ export default function RootLayout({
             {children}
             <AccessibilityMenu />
             <PWAInstallProvider />
-            <PWAInstallProvider />
+
             <Toaster
               position="bottom-right"
               toastOptions={{

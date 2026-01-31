@@ -11,7 +11,10 @@ import {
   RiMicLine,
   RiZoomInLine,
   RiFileTextLine,
+  RiWifiOffLine,
+  RiWifiLine,
 } from 'react-icons/ri'
+import { toast } from 'sonner'
 import { AccessibleHeader } from '@/features/manifestation/components/AccessibleHeader'
 import { NavigationFooter } from '@/features/manifestation/components/NavigationFooter'
 import { FormSidebar } from '@/features/manifestation/components/FormSidebar'
@@ -65,6 +68,7 @@ export default function ReviewPage() {
   const { loadDraft, deleteDraft, draftId } = useDraftPersistence()
   const [data, setData] = useState<ManifestationData | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isWaitingForConnection, setIsWaitingForConnection] = useState(false)
   const [previewFile, setPreviewFile] = useState<{
     file: File
     index: number
@@ -165,8 +169,24 @@ export default function ReviewPage() {
     }
   }, [files, previewFile])
 
-  const handleSubmit = async () => {
+  /* eslint-disable react-hooks/exhaustive-deps */
+  const handleSubmit = useCallback(async () => {
     if (!data) return
+
+    // Offline check
+    if (!navigator.onLine) {
+      if (!isWaitingForConnection) {
+        setIsWaitingForConnection(true)
+        toast.info(
+          'Sem conexão. Sua manifestação será enviada automaticamente assim que a internet voltar.',
+          {
+            duration: 5000,
+            icon: <RiWifiOffLine className="size-5" />,
+          }
+        )
+      }
+      return
+    }
 
     setIsSubmitting(true)
 
@@ -200,18 +220,35 @@ export default function ReviewPage() {
         localStorage.removeItem('manifestation_anonymous')
         localStorage.removeItem('manifestation_personal_data')
 
+        toast.success(`Manifestação enviada com sucesso! Protocolo: ${protocol}`)
         router.push(`/manifestacao/protocolo/${protocol}`)
       } else {
         console.error('Failed to submit:', result.error)
-        alert('Ocorreu um erro ao enviar sua manifestação. Tente novamente.')
+        toast.error('Ocorreu um erro ao enviar sua manifestação. Tente novamente.')
+        setIsSubmitting(false)
       }
     } catch (error) {
       console.error('Submission error:', error)
-      alert('Erro inesperado ao enviar. Verifique sua conexão.')
-    } finally {
+      toast.error('Erro inesperado ao enviar. Verifique sua conexão.')
       setIsSubmitting(false)
     }
-  }
+  }, [data, draftId, deleteDraft, router, isWaitingForConnection])
+
+  // Auto-sync listener
+  useEffect(() => {
+    const handleOnline = () => {
+      if (isWaitingForConnection) {
+        toast.success('Conexão restabelecida! Enviando manifestação...', {
+          icon: <RiWifiLine className="size-5" />,
+        })
+        handleSubmit()
+        setIsWaitingForConnection(false)
+      }
+    }
+
+    window.addEventListener('online', handleOnline)
+    return () => window.removeEventListener('online', handleOnline)
+  }, [isWaitingForConnection, handleSubmit])
 
   const handleBack = () => {
     router.push('/manifestacao/conteudo')
